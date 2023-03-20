@@ -1,0 +1,352 @@
+<!-- <app-secondcomp (SendValue)="ValueFromComp1($event)"></app-secondcomp>
+
+{{ValueFromComponent1}} -->
+
+<mat-card>
+    <div class="print ">
+      <!-- <button onclick="getPrint()">Print</button> -->
+      <button [print]="['demo', config]" class="btn btn-info" style="margin-right:1%;margin-left:1%">
+        Print
+      </button>
+      <button (click)="backtodmr()" class="btn btn-info">
+        Back
+      </button>
+      <!-- <form action="#" (ngSubmit)="getUserFormData()" class="savebutton">
+        <input
+          type="text"
+          name="key"
+          id="key"
+          [(ngModel)]="key"
+          placeholder="Enter Code"
+        />
+        <input type="hidden" name="field" id="field" value="number" />
+        <input type="hidden" name="command" id="command" value="mat" />
+        <br /><br />
+        <button>Submit</button>
+      </form> -->
+  
+      <!-- GEPPL/22-23/GRN/001 -->
+  
+      <div class="formbody mt-3" id="demo">
+        <div>
+          <!-- <div class="row">
+            <div class="col-6">
+              <img src="https://testgeps.greenko.net/ui/assets/greenko/newlogo_greeenko_eps.svg" width="200px" />
+            </div>
+            <div class="col-6 float-right text-right">
+              <h5><b>GREENKO INTEGRATED MANAGEMENT SYSTEM</b></h5>
+            </div>
+          </div> -->
+          <div class="row ">
+            <div class="col-6">
+              <h5><b style="margin-left:1%" *ngFor="let user of userData">{{user.company_name}} </b></h5>
+            </div>
+            <div class="col-6 float-right text-right">
+              <h5><b>GOODS RECEIPT NOTE</b></h5>
+            </div>
+          </div>
+  
+          <div class="row ">
+            <div class="col-2 border" style="border-left: none !important;">
+              <p>GRN No:</p>
+            </div>
+            <div class="col-2 border" style="border-left: none !important;">
+              <p *ngFor="let user of userData">{{ user.number }}</p>
+            </div>
+            <div class="col-2 border" style="border-left: none !important;">
+              <div class=" row">
+                <div class="col-2">
+                  <p>Date:</p>
+                </div>
+                <div class="col-10">
+                  <p *ngFor="let user of userData">
+                    &nbsp;&nbsp;{{ user.date | date: "dd-MM-yyyy" }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-2 border" style="border-left: none !important;">
+              <p>Gate Entry No:</p>
+            </div>
+            <div class="col-2 border" style="border-left: none !important;">
+              <p *ngFor="let user of userData">{{ user.gate_entry_number }}</p>
+            </div>
+            <div class="col-2 border" style="border-left: none !important;border-right:none !important">
+              <div class=" row">
+                <div class="col-2" style="border-left: none !important">
+                  <p>Date:</p>
+                </div>
+                <div class="col-10">
+                  <p *ngFor="let user of userData">
+                    &nbsp;&nbsp;{{ user.gate_entry_date | date: "dd-MM-yyyy" }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="row ">
+            <div class="col-6 " style="
+            border-right: 1px solid #000">
+              <div class="row">
+                <p style="margin-left: 1%;"><b>Supplier's Name: </b></p>
+                &nbsp;&nbsp;<p *ngFor="let user of userData">{{ user.vendor_name }}</p>
+              </div>
+              <div class="row">
+                <p style="margin-left: 1%;">
+                  <b>Address:</b>
+                </p>
+                <p *ngFor="let user of userData">
+                  &nbsp;&nbsp;{{ getaddress(user.vendor_name) }}
+                </p>
+              </div>
+              <!-- <div class="row">
+                <p class="break" *ngFor="let user of dataSource">
+                  {{user.address_1}}
+                  
+                </p>
+              </div> -->
+            </div>
+            <div class="col-6">
+              <div class="row sub " style="
+              border-bottom: 1px solid #000;padding: 12px 2px;">
+                <div class="col-4 ">P.O No:</div>
+                <div class="col-8" *ngFor="let user of userData">
+                  {{ user.purchase_order_number }}
+                </div>
+              </div>
+              <div class="row sub " style="
+              border-bottom: 1px solid #000;padding: 12px 2px;">
+                <div class="col-4">P.O Date:</div>
+                <div class="col-8" *ngFor="let user of userData">
+                  {{ user.purchase_order_date | date: "dd-MM-yyyy" }}
+                </div>
+              </div>
+              <div class="row sub " style="
+              border-bottom: 1px solid #000;padding:-1px">
+                <!-- <div class="col-3"></div>
+                <div class="col-2"*ngFor="let data of table"> -->
+                <table>
+                  <tr>
+                    <td style="width:33%">Invoice No:</td>
+                    <td ><span *ngFor="let data of duplicateinv_num | slice:0:4; let $last=last">{{data}}
+                        <span *ngIf="!$last; LastElem" class="list-format">&#44;&nbsp;</span>
+                        <ng-template #LastElem>
+                          <span *ngIf="record.referrerItemList.length > 4" class="hellip-format">
+                            &hellip;
+                          </span>
+                        </ng-template>
+  
+                      </span></td>
+                  </tr>
+                </table>
+                <!-- <p></p> -->
+                <!-- </div> -->
+              </div>
+              <div class="row sub " style="
+              border-bottom: 1px solid #000; padding:-1px">
+                <!-- <div class="col-3">Date:</div>
+                <div class="col-3" *ngFor="let user of userData">
+                  {{ user.date | date: "dd-MM-yyyy" }}
+                </div> -->
+                <table>
+                  <tr>
+                    <td style="width:33%">Invoice Date:</td>
+                    <td ><span *ngFor="let data of duplicateinv_date | slice:0:4; let $last=last">{{data | date:
+                        "dd-MM-yyyy"}}
+                        <span *ngIf="!$last; LastElem" class="list-format">&#44;&nbsp;</span>
+                        <ng-template #LastElem>
+                          <span *ngIf="record.referrerItemList.length > 4" class="hellip-format">
+                            &hellip;
+                          </span>
+                        </ng-template>
+  
+                      </span></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="row sub " style="
+              border-bottom: 1px solid #000; padding:-1px">
+                <!-- <div class="col-3">Delivery Challan No.:</div>
+                <div class="col-3" *ngFor="let user of userData">
+                  {{ user.dc_number }}
+                </div> -->
+                <table>
+                  <tr>
+                    <td style="width:33%">Delivery Challan No:</td>
+                    <td ><span *ngFor="let data of duplicatedc_number | slice:0:4; let $last=last">{{data}}
+                        <span *ngIf="!$last; LastElem" class="list-format">&#44;&nbsp;</span>
+                        <ng-template #LastElem>
+                          <span *ngIf="record.referrerItemList.length > 4" class="hellip-format">
+                            &hellip;
+                          </span>
+                        </ng-template>
+  
+                      </span></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="row sub " style="padding: 12px 2px;">
+                <div class="col-4">DC Date:</div>
+                <div class="col-8" *ngFor="let user of userData">
+                  {{ user.date | date: "dd-MM-yyyy" }}
+                </div>
+  
+              </div>
+            </div>
+          </div>
+  
+          <div class="row">
+            <table class="table table-bordered table1">
+              <tr class="center ">
+                <th rowspan="2" class="border">S.No.</th>
+                <th rowspan="2" class="border">Item Code</th>
+                <th rowspan="2" class="border">Item Description</th>
+                <th rowspan="2" class="border">UOM</th>
+                <th colspan="6" class="border">Quantity</th>
+                <th rowspan="2" class="border">Rate (Rs.)</th>
+                <th colspan="2" class="border">
+                  Amount of accepted quantity
+                </th>
+              </tr>
+  
+              <tr scope="row" class="center ">
+                <th class="border">Invoiced</th>
+                <th class="border">Received</th>
+                <th class="border">Accepted</th>
+                <th class="border">Rejected</th>
+                <th class="border">Shortage</th>
+                <th class="border">Exccess</th>
+                <th class="border">Rs.</th>
+                <th class="border">Ps.</th>
+              </tr>
+  
+              <tr scope="row" *ngFor="let user of table;let i=index" ng-init="$parent.total=total+">
+                <td class="center border">{{ i+1}}</td>
+                <td class="border">{{ user.material_code }}</td>
+                <td class="border">{{ user.material_description }}</td>
+                <td class="border">{{ user.unit_of_measurment }}</td>
+                <td class="center border">{{ user.invoice_quantity }}</td>
+                <td class="center border">{{ user.received_quantity }}</td>
+                <td class="center border">{{ user.accepted_quantity }}</td>
+                <td class="center border">{{ user.rejected_quantity }}</td>
+                <td class="center border">{{ user.shortage_quantity }}</td>
+                <td class="center border">{{ user.excess_quantity }}</td>
+                <td class="right border">{{ user.unit_price }}</td>
+                <td class="right border">
+                  {{ user.accepted_quantity*user.unit_price | number: "2.2-3" }}
+                </td>
+                <td class="right border">00</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-6">
+            <p><b>Amount In Words:</b></p>
+            <p>{{ outputWords | titlecase }} Rupees</p>
+          </div>
+          <div class="col-6 row">
+            <div class="col-6 font-weight-bold border-bottom ">
+              <p>Total Value(A):</p>
+            </div>
+            <div class="col-6 float-right text-right font-weight-bold border-bottom">
+              <p>{{ total | currency: "INR":"" }}</p>
+              <!-- <p *ngFor="let sum of basic_price">{{sum}}</p> -->
+            </div>
+            <div class="col-6 font-weight-bold border-bottom ">
+              <p>Discount Value(B):</p>
+            </div>
+            <div class="col-6 float-right text-right font-weight-bold border-bottom">
+              <p>{{ totalDiscount | currency: "INR":"" }}</p>
+            </div>
+            <div class="col-6 font-weight-bold border-bottom ">
+              <p>
+                Total (C = A-B):
+              </p>
+            </div>
+            <div class="col-6 float-right text-right font-weight-bold border-bottom">
+              <p>{{ total - totalDiscount | currency: "INR":"" }}</p>
+            </div>
+            <div class="col-6 font-weight-bold border-bottom ">
+              <p>
+                GST value(D):
+              </p>
+            </div>
+            <div class="col-6 float-right text-right font-weight-bold border-bottom">
+              <p>{{ totalTax | currency: "INR":"" }}</p>
+            </div>
+            <div class="col-6 font-weight-bold border-bottom ">
+              <p>OtherTax(E):</p>
+            </div>
+            <div class="col-6 float-right text-right font-weight-bold border-bottom">
+              <p *ngFor="let user of userData">
+                {{ user.other_tax_value | currency: "INR":"" }}
+              </p>
+            </div>
+            <div class="col-6 font-weight-bold border-bottom ">
+              <p>Transportaion Charges (F):</p>
+            </div>
+            <div class="col-6 float-right text-right font-weight-bold border-bottom">
+              <p *ngFor="let user of userData">
+                {{ user.total_freight | currency: "INR":"" }}
+              </p>
+            </div>
+            <div class="col-6 font-weight-bold border-bottom ">
+              <p>Other Charges (G):</p>
+            </div>
+            <div class="col-6 float-right text-right font-weight-bold border-bottom">
+              <p>
+                {{ otherCharges | currency: "INR":"" }}
+              </p>
+            </div>
+            <div class="col-6 font-weight-bold border-bottom ">
+              <p>Round off:</p>
+            </div>
+            <div class="col-6 float-right text-right font-weight-bold border-bottom">
+              <p>{{ grandTotal - roundOff | number: "0.0-2" }}</p>
+            </div>
+            <div class="col-6 font-weight-bold border-bottom ">
+              <p>Grand Total (C+D+E+F+G):</p>
+            </div>
+            <div class="col-6 float-right text-right font-weight-bold border-bottom">
+              <p>{{ grandTotall | number: "2.0-0" }}.00</p>
+            </div>
+          </div>
+          <div class="row ml-2">
+            <p *ngFor="let user of userData">{{ user.dmr_number }}</p>
+          </div>
+        </div>
+  
+        <div class="remarks" >
+          <div class="row grey" style="border-top:1px solid #000">
+            <p class="ml-3"><b>Remarks:</b></p>
+            &nbsp;&nbsp; <p *ngFor="let user of userData">{{ user.comments }}</p>
+          </div>
+          <div class="row grey" style="border-top:1px solid #000">
+            <p class="ml-3"><b>Inspection Comments and Advice:</b></p>
+          </div>
+          <div class="row padding" style="border-top:1px solid #000; border-bottom:1px solid #000">
+            <div class="col-4 ">
+              <p class="ml-1 "><b>Store In-charge</b></p>
+            </div>
+            <div class="col-4 text-center">
+              <p><b>Inspected by</b></p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="mr-4"><b>Project In-charge/ Authorized Signatory</b></p>
+              <!-- <p><b>Authorized Signatory</b></p> -->
+            </div>
+          </div>
+  
+        </div>
+      
+        <br />
+        <div class="row justify-content-center">
+          <p><b>Accounts/ Indenter/ Stores</b></p>
+        </div>
+  
+      </div>
+    </div>
+  </mat-card>

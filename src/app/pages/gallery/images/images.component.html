@@ -1,0 +1,211 @@
+<!-- <div class="page-breadcrumb page-header">
+   <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Gallery </h4>
+        </div>
+    </div>
+</div> -->
+<!-- <hr> -->
+<div class=" page-breadcrumb page-header pb-3 ">
+    <div class="row mt-0  pl-3">
+        <div class="col-md-3 col-12 ">
+            <mat-form-field class="example-full-width w-full" appearance="outline" >
+                <mat-label >Select Project</mat-label>
+                <input type="text" placeholder="Search Project Title" matInput [formControl]="myControl"
+                    [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                    (optionSelected)="onSelectionChanged($event.option.value)">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.proj_short_name">
+                        {{option.proj_short_name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2 col-12 ">
+            <mat-form-field appearance="outline" style="display: block !important;">
+                <mat-label>Images Per Page </mat-label>
+                <mat-select required name="records" [(value)]="records" (selectionChange)="pageNumber = 1">
+                    <mat-option [value]="10">10</mat-option>
+                    <mat-option [value]="20">20</mat-option>
+                    <mat-option [value]="30">30</mat-option>
+                    <mat-option [value]="40">40</mat-option>
+                    <mat-option [value]="50">50</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3 col-12 ">
+            <button mat-raised-button class="m-t-10" [disabled]="!projectId"
+                (click)="getProjectImages();images$ = [];imageCounts=0;pageNumber=1;"
+                color="primary">Search</button>
+        </div>
+        <div class="col-md-4 col-12">
+            <div class="col-12 pagination1 mt-2" *ngIf="images$.length  imageCounts">
+                <!-- <div class="col-md-12 text-center">
+                    <button mat-button color="primary" (click)="loadMoreImages()">Load More</button>
+                </div> -->
+            
+                <div class="d-flex justify-content-center">
+                    <!-- <ngb-pagination style="float: right;" [(page)]="pageNumber" (pageChange)="pageChanged($event)"
+                        [pageSize]="records" [collectionSize]="imageCounts">
+                       </ngb-pagination> -->
+            
+                    <ngb-pagination [(page)]="pageNumber" (pageChange)="pageChanged($event)"
+                        [pageSize]="records" [collectionSize]="imageCounts">
+                        <ng-template ngbPaginationPages let-page let-pages="pages">
+                            <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                <div class="mb-3 d-flex flex-nowrap px-2">
+                                    <label id="paginationInputLabel" for="paginationInput"
+                                        class="col-form-label me-2 ms-1">Page</label>
+                                    <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                        class="form-control custom-pages-input" id="paginationInput" [value]="page"
+                                        (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+                                        (input)="formatInput($any($event).target)"
+                                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
+                                    <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                                        of {{pages.length}}</span>
+                                </div>
+                            </li>
+                        </ng-template>
+                    </ngb-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+</div>
+<!-- <div class="row pageset">
+<div class="col-md-3 col-12" *ngFor="let item of images$">
+    <mat-card class="example-card cursor">
+
+        <a (click)="getActivityModal(item,infodialog)"><img mat-card-image class="p-10" style="max-height: 200px;"
+                src="{{item.img_info?.thumb_nail}}" alt="Task Images"></a> -->
+<!-- gettaskimages(item.img_info.id) -->
+                <!-- <button #btn style="display: none;" (click)="gettaskimages(item.img_info.id)">Hit image</button> -->
+        <!-- <mat-card-content>
+            <h4>{{item?.img_info?.Task_name}}</h4>
+            <p>Created Date : {{item?.img_info?.created_date | date:'medium'}}</p>
+            <span>{{getstructure(item.structure)}}</span> -->
+            <!-- <span *ngFor="let demo of item.structure?.reverse();let i=index">
+                {{demo}} <span *ngIf="item.structure.length != i+1 "> ></span>
+            </span> -->
+        <!-- </mat-card-content> -->
+
+    <!-- </mat-card>
+
+</div> -->
+<!-- {{structures[3]}} > {{structures[2]}} > {{structures[1]}} > {{structures[0]}} -->
+<!-- </div> -->
+<div class="row ">
+<div class="col-xs-6  col-xl-2 col-sm-4 col-lg-3 mb-0 mt-4" *ngFor="let item of images$"> 
+    <div  class="card " >
+        <a (click)="getActivityModal(item,infodialog)"><img class="image"
+            src="{{item.img_info?.thumb_nail}}" alt="Task Images"></a>
+        <div class="card-body">
+            <p>  {{item?.img_info?.created_date | date:'medium'}}</p>
+             <span>{{getstructure(item.structure)}}</span>
+        </div>
+    </div>
+    </div>
+    </div>
+  
+
+
+<!-- <div fxLayout="row wrap">
+<div class="item m-4" *ngFor="let item of images$">
+    <div class="galleryCard cursor" (click)="getActivityModal(item,infodialog)">
+        <img mat-card-image class="p-10" style="max-height: 200px;" src="{{item?.img_info?.task_image}}"
+            alt="Photo of a Shiba Inu">
+        <span>
+            <div class="galleryDesc">{{item?.img_info?.Task_name}}</div>
+            <div class="galleryDesc">
+                Created Date : {{item?.img_info?.created_date | date:'medium'}}
+            </div>
+            <div class="galleryDesc">{{getstructure(item.structure)}}</div>
+        </span>
+    </div>
+</div>
+</div> -->
+<div class="row pagination mt-2" *ngIf="images$.length < imageCounts">
+<!-- <div class="col-md-12 text-center">
+    <button mat-button color="primary" (click)="loadMoreImages()">Load More</button>
+</div> -->
+
+<div class="d-flex justify-content-center">
+    <!-- <ngb-pagination style="float: right;" [(page)]="pageNumber" (pageChange)="pageChanged($event)"
+        [pageSize]="records" [collectionSize]="imageCounts">
+       </ngb-pagination> -->
+
+    <ngb-pagination [(page)]="pageNumber" (pageChange)="pageChanged($event)"
+        [pageSize]="records" [collectionSize]="imageCounts">
+        <ng-template ngbPaginationPages let-page let-pages="pages">
+            <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="mb-3 d-flex flex-nowrap px-2">
+                    <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label me-2 ms-1">Page</label>
+                    <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                        class="form-control custom-pages-input" id="paginationInput" [value]="page"
+                        (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+                        (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
+                    <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                        of {{pages.length}}</span>
+                </div>
+            </li>
+        </ng-template>
+    </ngb-pagination>
+</div>
+</div>
+
+
+
+<ng-template #infodialog>
+<mat-dialog>
+    <mat-dialog-title>
+        <span>{{getstructure1()}}</span>
+        <!-- <span *ngFor="let structure of structures;let i=index">
+            {{structure}} <span *ngIf="structures.length != i+1 "> ></span>
+        </span> -->
+        <mat-icon class="float-right" mat-dialog-close>close</mat-icon>
+    </mat-dialog-title>
+    <mat-dialog-content>
+        <table class="table mt-3 table-hover ">
+            <thead>
+                <tr class="text-center">
+                    <!-- <th>TaskName</th>
+                    <th>Status</th> -->
+                    <th>Uom</th>
+                    <th>Quantity</th>
+                    <!-- <th>AvailableQuantity</th>
+                    <th>PlannedQuantity</th> -->
+                    <th>StartDate</th>
+                    <th>EndDate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center">
+                    <!-- <td>{{Activity$.Task_name}}</td>
+                    <td>{{Activity$.Status}}</td> -->
+                    <td>{{Activity$.Uom}}</td>
+                    <td>{{Activity$.Planned_qty}}</td>
+                    <!-- <td>{{Activity$.Available_qty}}</td>
+                    <td>{{Activity$.Planned_qty}}</td> -->
+                    <td>{{Activity$.Target_start_date | date:'mediumDate'}}</td>
+                    <td>{{Activity$.Target_end_date | date:'mediumDate'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <img mat-card-image class="p-10" src="{{image1}}" alt="Photo of a Shiba Inu" class="imgs">
+    </mat-dialog-content>
+</mat-dialog>
+</ng-template>
+
+
+
+
+<!-- <div *ngIf="images$.length==0">
+<h2>{{response$}}</h2>
+</div> -->

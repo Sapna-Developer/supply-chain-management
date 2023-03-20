@@ -1,0 +1,221 @@
+
+  <mat-card>
+    <div class="print">
+      <button
+        [print]="['demo', config]"
+        class="btn btn-info"
+        style="margin-right: 1%; margin-left: 36px;"
+      >
+        Print
+      </button>
+      <button (click)="backtowc()" class="btn btn-info">Back</button>
+    </div>
+    <div class="formbody styleprint" id="demo">
+        <div class="row border">
+            <div class="col-12">
+                 <img src="https://testgeps.greenko.net/ui/assets/greenko/newlogo_greeenko_eps.svg" height="70" alt="homepage" class="dark-logo" />
+            </div>
+            <div class="col-12 text-right">
+                <h5><b>GREENKO INTEGRATED MANAGEMENT SYSTEM</b></h5>
+                <h5><b>WORK COMPLETION & RETENTION RELEASE</b></h5>
+            </div>
+            <div class="col-12 text-center">
+                <h5>
+                    <b><u>WORK COMPLETION</u></b>
+                </h5>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-5 border">
+                <p>
+                    <b>1. Name of the Project:</b>
+                </p>
+            </div>
+            <div class="col-7 border">
+                <p *ngFor="let item of WCRdetails">{{item.company_name}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5 border">
+                <p>
+                    <b>2. Location and address:</b>
+                </p>
+            </div>
+            <div class="col-7 border">
+                <p *ngFor="let item of WCRdetails">{{item.address}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-5 border">
+                <p>
+                    <b>3. Name of Vendor:</b>
+                </p>
+            </div>
+            <div class="col-7 border">
+                <p *ngFor="let item of WCRdetails">M/s {{item.contractor_name}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5 border">
+                <p>
+                    <b>4. Work Order No. & Date:</b>
+                </p>
+            </div>
+            <div class="col-7 border">
+                <p *ngFor="let item of WCRdetails">{{item.work_order_number}} 
+                    <span *ngFor="let item of WCRdetails" class="ml-4 pl-4"><b>Date:  </b>{{item.work_order_date}}</span></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5 border">
+                <p>
+                    <b>5. Contract Duration:</b>
+                </p>
+            </div>
+            <div class="col-7 border">
+                <p *ngFor="let item of WCRdetails">{{item.contract_duration}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 border">
+                <p>
+                    <b>6. Brief Description of Work:</b>
+                </p>
+                <p *ngFor="let item of WCRdetails">{{item.brief_description_of_work}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 border">
+                <p>
+                    <b>7. Details of variations/Amendments if any</b>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border text-center">
+                <p>
+                    <b>Variation</b>
+                </p>
+            </div>
+            <div class="col-6 border text-center">
+                <p>
+                    <b>Ref. Variation order (No. & date)</b>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p *ngFor="let item of WCRdetails"></p>
+                <p></p>
+            </div>
+            <div class="col-6 border">
+                <p></p>
+                <p></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p>
+                    <b>Completion of All activities/Scope defines As per the
+                        Drawing/BOQ/Schedule</b>
+                </p>
+            </div>
+            <div class="col-6 border">
+                <p *ngFor="let item of WCRdetails"><b>Work Completion Date: {{item.work_completion_date |
+                        date:'dd-MM-yy'}} </b></p>
+                <p><b>In All Respects: </b> <input /></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p>
+                    <b>Contractor Acceptance regards Work/Order Completion Date:</b>
+                </p>
+            </div>
+            <div class="col-6 border">
+                <p *ngFor="let item of WCRdetails">{{item.work_order_date | date:'dd-MM-yy'}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p>
+                    <b>Name & Signature of the stores In charge:</b>
+                </p>
+                <p>
+                    <b>Date of Reconciliation statement:</b>
+                </p>
+            </div>
+            <div class="col-6 border"></div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p>
+                    <b>Name and Signature of the taking over person:</b>
+                </p>
+            </div>
+            <div class="col-6 border">
+                <p><b>O & M - Site: </b> <input /></p>
+                <p><b>O & M - Head (If Applicable): </b> <input /></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p>
+                    <b>Name and Signature of Quality(QA/QC) Team/Person:</b>
+                </p>
+            </div>
+            <div class="col-6 border"></div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p>
+                    <b>Name and Signature of the Project Manager/In charge</b>
+                </p>
+            </div>
+            <div class="col-6 border"></div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-12 text-center">
+                <h5>
+                    <b><u>RETENTION</u></b>
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p>
+                    <b>DLP/Warranty Period of Work Order:</b>
+                </p>
+            </div>
+            <div class="col-6 border">
+                <p *ngFor="let item of WCRdetails">{{item.warranty_period_of_work_order}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p>
+                    <b>Name & Signature of Retention Release Recommendation:</b>
+                </p>
+            </div>
+            <div class="col-6 border">
+                <p *ngFor="let item of WCRdetails">{{item.retention_release_recommendation}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 border">
+                <p>
+                    <b>Name and Signature of Retention Release Clearance:</b>
+                </p>
+            </div>
+            <div class="col-6 border">
+                <p *ngFor="let item of WCRdetails">{{item.retention_release_clearance}}</p>
+            </div>
+        </div>
+    </div>
+</mat-card>

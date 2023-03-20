@@ -1,0 +1,249 @@
+<div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title h4Title">{{projectName}}</h4>
+            <div class="d-flex align-items-center">
+                <span class="m-r-20">Start Date : {{startDate | date}} </span>
+                <span>End Date : {{endDate | date}} </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row p-t-10">
+    <div class="col-12 col-md-12">
+        <mat-card class="p-0">
+            <mat-card-content>
+                <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar>
+                <div class="table-responsive mat-table-wrapper">
+                    <div class="example-table-container">
+                        <table mat-table [dataSource]="dataSource">
+
+
+                            <ng-container matColumnDef="sno">
+                                <th mat-header-cell *matHeaderCellDef>SNO#</th>
+                                <td mat-cell *matCellDef="let row;let i=index;">
+                                    {{i+1}}
+
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="structure">
+                                <th mat-header-cell *matHeaderCellDef>Task</th>
+                                <td mat-cell *matCellDef="let row;let i=index;">
+                                    <!-- {{row.structure | json}} -->
+                                    {{utils.getStructure(row.structure)}}
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="issue">
+                                <th mat-header-cell *matHeaderCellDef>Issue</th>
+                                <td mat-cell *matCellDef="let row">
+
+                                    {{row.issue }}
+
+
+
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="severity">
+                                <th mat-header-cell *matHeaderCellDef>Severity</th>
+                                <td mat-cell *matCellDef="let row">{{row.severity}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef>Status </th>
+                                <td mat-cell *matCellDef="let row">{{row.status}}</td>
+                            </ng-container>
+
+
+
+
+                            <ng-container matColumnDef="created_date">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    Created By / Date
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+
+                                    {{row.created_by}}
+                                    <br />
+                                    {{row.created_date | date:'medium'}}
+                                </td>
+                            </ng-container>
+
+
+
+
+
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef> Action</th>
+                                <td mat-cell *matCellDef="let row ">
+
+
+
+                                    <mat-icon aria-hidden="false" value="View" matTooltip="View" class="cursor"
+                                        (click)="openTempModel(row,emailDetailsDialog)" aria-label="Example home icon">
+                                        visibility
+                                    </mat-icon>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                        </table>
+                    </div>
+
+
+                    <ng-container *ngIf="tableData$.length > 0; then loadPlanData; else noRecords"></ng-container>
+
+                    <ng-template #loadPlanData>
+                        <mat-paginator
+                        [length]="totalRecords"
+                        [pageSize]="10"
+                        [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                        #paginator
+                      >
+                      </mat-paginator>
+                    </ng-template>
+
+                    <ng-template #noRecords>
+                        <div *ngIf="tableData$.length <= 0" class="text-center">
+                            <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                Loading...
+                            </h4>
+                            <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                No Data Found
+                            </h4>
+                        </div>
+                    </ng-template>
+                   
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+</div>
+
+
+<ng-template #emailDetailsDialog>
+    <h1 mat-dialog-title>Issue Details</h1>
+    <div mat-dialog-content>
+        <div class="d-md-flex align-items-center row">
+
+            <div class="col-12 col-md-12 m-b-20">
+                <h5 class="m-b-0 font-14 text-muted">Task</h5>
+                <span>{{utils.getStructure(logDataObj.structure)}}</span>
+            </div>
+
+            <div class="col-12 col-md-6 m-b-20">
+                <h5 class="m-b-0 font-14 text-muted">Issue</h5>
+                <span>{{logDataObj.issue}}</span>
+            </div>
+
+            <div class="col-12 col-md-6 m-b-20">
+                <h5 class="m-b-0 font-14 text-muted">Severity</h5>
+                <span>{{logDataObj.severity}}</span>
+            </div>
+
+            <div class="col-12 col-md-6 m-b-20">
+                <h5 class="m-b-0 font-14 text-muted">Status</h5>
+                <span>{{logDataObj.status}}</span>
+            </div>
+
+            <div class="col-12 col-md-6 m-b-20">
+                <h5 class="m-b-0 font-14 text-muted">Created Date</h5>
+                <span>{{logDataObj.created_date | date:'medium'}}</span>
+            </div>
+
+            <div class="col-12 col-md-6 m-b-20">
+                <h5 class="m-b-0 font-14 text-muted">Created By</h5>
+                <span>{{logDataObj.created_by}}</span>
+            </div>
+
+            <ng-container *ngIf="logDataObj.create_gmat">
+                <div class="col-12 col-md-6 m-b-20">
+                    <h5 class="m-b-0 font-14 text-muted">Title</h5>
+                    <span>{{logDataObj.title}}</span>
+                </div>
+                <div class="col-12 col-md-6 m-b-20">
+                    <h5 class="m-b-0 font-14 text-muted">Responsible</h5>
+                    <span>{{logDataObj.responsible}}</span>
+                </div>
+                <div class="col-12 col-md-6 m-b-20">
+                    <h5 class="m-b-0 font-14 text-muted">Start Date</h5>
+                    <span>{{logDataObj.start_date | date}}</span>
+                </div>
+                <div class="col-12 col-md-6 m-b-20">
+                    <h5 class="m-b-0 font-14 text-muted">Due Date</h5>
+                    <span>{{logDataObj.due_date | date}}</span>
+                </div>
+
+            </ng-container>
+
+
+        </div>
+
+        <ng-container *ngIf="logDataObj.gmatStatus">
+            <mat-form-field class="example-full-width w-100" appearance="outline" [floatLabel]="'always'"
+                [floatLabel]="'always'">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="Enter Title" name="title" required [(ngModel)]="logDataObj.title" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Responsible</mat-label>
+                <input type="text" required placeholder="Search User" [formControl]="myControl" matInput
+                    [matAutocomplete]="auto">
+                <button *ngIf="logDataObj.responsible" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="logDataObj.responsible='';myControl.setValue(null);">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete #auto="matAutocomplete"
+                    (optionSelected)="logDataObj.responsible = $event.option.value">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.usename">
+                        <span> {{option.usename}}</span> |
+                        <small> {{option.work_email}}</small>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="picker"  [min]="minDate" [(ngModel)]="logDataObj.start_date" name="start_date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Due Date</mat-label>
+                <input matInput [matDatepicker]="picker1" [min]="logDataObj.start_date" [(ngModel)]="logDataObj.due_date" name="due_date">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </ng-container>
+
+    </div>
+    <div mat-dialog-actions align="end">
+
+
+        <ng-container *ngIf="logDataObj.status != 'Closed'">
+            <mat-checkbox color="primary" name="status" class="example-margin m-r-30 m-t-10"
+                [(ngModel)]="logDataObj.gmatStatus" [disabled]="logDataObj.create_gmat==true"
+                (change)="updateCheckBox($event.checked,2)">Create GMAT
+            </mat-checkbox>
+
+            <mat-checkbox color="primary" name="status" class="example-margin m-r-30 m-t-10"
+                [(ngModel)]="logDataObj.closeStatus" (change)="updateCheckBox($event.checked,1)">Close</mat-checkbox>
+        </ng-container>
+
+
+        <button mat-button mat-dialog-close>No Thanks</button>
+        <button mat-raised-button color="primary" *ngIf="logDataObj.status != 'Closed'"
+            [disabled]="logDataObj.gmatStatus ?  !logDataObj.title || !logDataObj.responsible : !logDataObj.closeStatus"
+            (click)="updateIssueLog()">SAVE</button>
+    </div>
+
+</ng-template>

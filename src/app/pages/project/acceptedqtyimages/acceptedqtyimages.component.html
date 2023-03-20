@@ -1,0 +1,51 @@
+<div class="card m-b-0 model">
+    <div class="card-body">
+        <h4 class="card-title">{{data.taskname}}</h4>
+        <i class="fas fa-window-close font-24 close-icon" (click)="closeModel()"></i>
+    </div>
+    <div class="card-body p-0">
+        <h4 class="card-title p-l-20">Total Images : {{totalimages}}</h4>
+        <!-- <h3>Date: {{data.created_date}}</h3> -->
+    </div>
+    <div class="card-body text-center">
+       
+        <!-- 
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3 cursor" *ngFor="let slide of taskImages$;let i=index;">
+                    <div class="card card-hover" (click)="openPhoto(i)">
+                        <img class="card-img" src="{{slide.src}}" alt="Images" height="200">
+                        <div class="card-img-overlay text-white d-flex flex-column justify-content-center">
+                            <h4 class="card-title text-center">
+                                <i class="fas fa-eye font-24"></i>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- <owl-carousel-o [options]="customOptions">
+
+            <ng-container *ngFor="let slide of taskImages$">
+                <ng-template carouselSlide [id]="slide.id">
+                    <img [src]="slide.src" alt="Card image cap">
+                </ng-template>
+            </ng-container>
+
+        </owl-carousel-o> -->
+
+        <ngb-carousel #carousel [pauseOnHover]="true">
+            <ng-template ngbSlide *ngFor="let slide of taskImages$;let i=index;">
+                 <p >Date: {{slide.created_date | date:'MMM d, y, h:mm a'}}</p>
+                <img src="{{slide.src}}" alt="Random first slide" class="slide cursor" (click)="openPhoto(i)">
+
+            </ng-template>
+
+        </ngb-carousel>
+
+
+
+
+    </div>
+</div>

@@ -1,0 +1,68 @@
+.inputstyles{
+    padding:5px;
+    width:89%;
+    //margin-top:5px;
+    border-radius: 5px;
+    border:1px solid #b0b0b0;
+}
+.inputstyles:hover{
+    border: 2px solid #000; 
+ }
+.closeicon{
+    float: right;
+    margin-top: -8%;
+}
+.savebutton:hover{
+    background-color: whitesmoke;
+ 
+}
+.savebutton{
+   margin-left: 43%;
+    margin-top: 3%;
+    height: 33px;
+    // width: 10%;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    outline: none;
+    // border: 1px solid;
+    // background: #89c240;
+    background-color: rgba(0, 0, 0, 0.12);
+    font-size: medium;
+}
+.mat-dialog-content{
+    overflow: initial;
+}
+.searchfield{
+    padding: 0.375rem 0.75rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    outline: none;
+}
+label {
+    font-weight: 450;
+}
+.nguntouched:hover {
+    border: 2px solid #000;
+ }
+ .searchfield:hover{
+    border: 2px solid #000;
+ }
+ ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    color:white;
+    background-color: rgba(0, 0, 0, 0.12);
+    // border: 5px solid orange
+    }
+    table, th, td {
+        border: 1px solid #e5dfdf;
+        text-align: center;
+      }
+      .mandetory{
+        color:red;
+        font-size: 17px;
+      }

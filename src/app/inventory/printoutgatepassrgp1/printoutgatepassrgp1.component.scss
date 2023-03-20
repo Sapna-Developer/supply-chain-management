@@ -1,0 +1,103 @@
+.border {
+    border: 1px solid black !important;
+}
+table{
+    width: 100%;
+}
+th,
+td {
+    border: none;
+    padding: 12px;
+    font-size: 17px;
+}
+
+.side {
+    border-left: 1px solid black;
+}
+
+.top {
+    border-top: 1px solid black;
+}
+
+.right {
+    border-right: 1px solid black;
+}
+
+.bottom {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.thead {
+    display: table-header-group;
+}
+tbody tr td p{
+    margin-bottom: 0 !important;
+}
+
+.tbody {
+    display: table-row-group;
+}
+
+.tfoot {
+    display: table-footer-group;
+}
+
+@media print {
+    #spacer {
+        height: 2em;
+    }
+
+    /* height of footer + a little extra */
+    #footer {
+        position: fixed;
+        bottom: 0;
+        width: 36%;
+    }
+}
+.footerTable{
+    width: 100% ;text-align: center;  position: absolute;
+        bottom: 5%;font-weight: 400;
+}
+
+.sign-width {
+    width: 150px;
+    height: 50px;
+  }
+.col:first-child{
+    text-align: start;
+  }
+  .col{
+    text-align: center;
+  }
+  .col:last-child{
+    text-align: end;
+  }
+  .btn-custom{
+    background-color: #888;
+    padding: 5px 10px;
+    width: 80px;
+    color: #fff;
+    border-radius: 3px;
+  }
+  .companyAddr{
+    // text-align: justify;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+    .inputstyles {
+    padding: 5px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    height: 35px;
+    width: 100%;
+    }
+    .inputstyles:placeholder-shown {
+        color: #da2424;
+    }
+    .inputstyles:hover {
+        border: 2px solid black
+    }

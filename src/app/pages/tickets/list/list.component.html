@@ -1,0 +1,123 @@
+<mat-card class="p-0">
+    <mat-card-content>
+        <div class="row  p-1">
+            <div class="col-12 col-md-10 float-right text-left">
+                All Tickets<br />
+                <p>{{totalRecords}} Found</p>
+            </div>
+            <div class="col-12 col-md-2 float-right text-right">
+                <button mat-icon-button value="Refresh" matTooltip="Refresh" (click)="getTickets()"
+                    class="custom-icon-button">
+                    <span class="material-icons">
+                        refresh
+                    </span>
+                </button>
+            </div>
+
+        </div>
+
+        <ng-container>
+
+            <div class="row p-t-10">
+                <div class="col-12 col-md-12">
+                    <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar>
+                    <div class="table-responsive mat-table-wrapper">
+                        <div class="example-table-container">
+                            <table mat-table [dataSource]="tableData$" matSort matSortActive="purchaseDate"
+                                matSortDisableClear matSortDirection="asc" (matSortChange)="sortBySelection($event)">
+
+
+                                <ng-container matColumnDef="sno">
+                                    <th mat-header-cell *matHeaderCellDef>SNO#</th>
+                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                        {{i+1}}
+
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ticket_number">
+                                    <th mat-header-cell *matHeaderCellDef>Ticket ID</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.ticket_number}}
+
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="subject">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.subject}}
+                                    </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="description">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.description | slice:0:50 }}...
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ticket_status">
+                                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                                    <td mat-cell *matCellDef="let row">{{row.ticket_status}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="created_date">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        Created At
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.created_date | date}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="username">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created By</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.username }}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action</th>
+                                    <td mat-cell *matCellDef="let row ">
+
+                                        <mat-icon aria-hidden="false" class="cursor" (click)="openDetails(row)"
+                                            aria-label="Example home icon">
+                                            visibility
+                                        </mat-icon>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                            </table>
+                        </div>
+
+
+                        <ng-container *ngIf="tableData$.length > 0; then loadPlanData; else noRecords"></ng-container>
+
+                        <ng-template #loadPlanData>
+                            <mat-paginator *ngIf="tableData$.length > 0" [length]="totalRecords"
+                                [pageSize]="recordsPerPage" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                                (page)="pageChanged($event)">
+                            </mat-paginator>
+                        </ng-template>
+
+                        <ng-template #noRecords>
+                            <div *ngIf="tableData$.length <= 0" class="text-center">
+                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                    Loading...
+                                </h4>
+                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                    No Data Found
+                                </h4>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+    </mat-card-content>
+</mat-card>

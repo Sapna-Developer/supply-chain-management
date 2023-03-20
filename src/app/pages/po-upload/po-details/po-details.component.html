@@ -1,0 +1,640 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-body printableArea">
+            <!-- <h3 class="m-b-5"><b>GEPS NO: </b><span class="pull-right">{{poFileData.geps_no}}</span></h3> -->
+
+            <div class="row">
+                <div class="col-md-6 text-left col-12">
+
+                    <address>
+                        <h3 class="m-b-0"> <b>To</b></h3>
+                        <ng-container *ngIf="type == 'temp'">
+                            <div class="form-group row">
+                                <div class="col-12 col-md-3">
+                                    <label for="vendor_name" class="text-muted">Vendor Name</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input class="form-control" name="vendor_name"
+                                        [(ngModel)]="poFileData.vendor_name" />
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-12 col-md-3">
+                                    <label for="vendor_address" class="text-muted">Address</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input class="form-control" name="vendor_address"
+                                        [(ngModel)]="poFileData.vendor_address" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-12 col-md-3">
+                                    <label for="kind_attn" class="text-muted">KIND ATTN</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input class="form-control" name="kind_attn" [(ngModel)]="poFileData.kind_attn" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-12 col-md-3">
+                                    <label for="vendor_mobile_no" class="text-muted"> Mobile</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input class="form-control" name="vendor_mobile_no"
+                                        [(ngModel)]="poFileData.vendor_mobile_no" />
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-12 col-md-3">
+                                    <label for="vendor_mail_id" class="text-muted"> Mail Id</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input class="form-control" name="vendor_mail_id"
+                                        [(ngModel)]="poFileData.vendor_mail_id" />
+                                </div>
+
+
+                            </div>
+
+                        </ng-container>
+                        <ng-container *ngIf="type != 'temp'">
+                            <p class="text-muted m-l-5">{{poFileData.vendor_name}}, <br />
+                                {{poFileData.vendor_address}},
+                                <br />Kind Attn: {{poFileData.kind_attn}},
+                                <br /> Mobile : {{poFileData.vendor_mobile_no}}
+                                <br />Mail Id: {{poFileData.vendor_mail_id}}
+                            </p>
+                        </ng-container>
+
+                    </address>
+
+
+                </div>
+                <div class="col-md-6 text-left col-12">
+                    <ng-container *ngIf="type == 'temp'">
+                        <!-- <div class="form-group m-t-20">
+                            <p class="m-b-0"><span class="text-muted">ORDER NO : </span> {{poFileData.order_no}}</p>
+                        </div> -->
+                        <div class="form-group row m-t-20">
+                            <div class="col-12 col-md-3">
+                                <label for="date1" class="text-muted"> ORDER DATE </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="date1" type="text" [(ngModel)]="poFileData.date1" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12 col-md-3">
+                                <label for="prno" class="text-muted"> P.R No </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="prno" type="text" [(ngModel)]="poFileData.prno" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12 col-md-3">
+                                <label for="date2" class="text-muted">P.R DATE </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="date2" type="text" [(ngModel)]="poFileData.date2" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12 col-md-3">
+                                <label for="mail_date" class="text-muted">Your REF </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="mail_date" type="text"
+                                    [(ngModel)]="poFileData.mail_date" />
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="type != 'temp'">
+                        <!-- <p class="m-b-0"><span class="text-muted">ORDER NO : </span> {{poFileData.order_no}}</p> -->
+                        <p class="m-b-0"><span class="text-muted">ORDER DATE : </span> {{poFileData.date1}}</p>
+                        <p class="m-b-0"><span class="text-muted">P.R No. : </span> {{poFileData.prno}}</p>
+                        <p class="m-b-0"><span class="text-muted">P.R DATE : </span> {{poFileData.date2}}</p>
+                        <p class="m-b-0"><span class="text-muted">Your REF : </span> {{poFileData.mail_date}}</p>
+                    </ng-container>
+
+                </div>
+
+                <div class="col-md-12">
+                    <div class="table-responsive m-t-0" style="clear: both;">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>SNO#</th>
+                                    <th>Item</th>
+                                    <th>Description</th>
+                                    <th>UOM</th>
+                                    <th>QTY</th>
+                                    <!-- <th nowrap>Unit Price (Rs)</th> -->
+                                    <!-- <th nowrap>Amount (Rs)</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of items$;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{item.item_name}}
+                                        </ng-container>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="item_name" type="text"
+                                                [(ngModel)]="item.item_name" />
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{item.item_desc}}
+                                        </ng-container>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <textarea class="form-control" name="item_desc" type="text"
+                                                [(ngModel)]="item.item_desc" rows="2">
+
+                                            </textarea>
+                                        </ng-container>
+
+                                    </td>
+                                    <td>
+
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{item.item_uom}}
+                                        </ng-container>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="item_uom" type="text"
+                                                [(ngModel)]="item.item_uom" />
+                                        </ng-container>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{item.item_qty}}
+                                        </ng-container>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="item_qty" type="text"
+                                                [(ngModel)]="item.item_qty" />
+                                        </ng-container>
+                                    </td>
+                                    <!-- <td class="text-right">
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{item.item_unit_price | number}} /-
+                                        </ng-container>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="item_unit_price" type="text"
+                                                [(ngModel)]="item.item_unit_price" />
+                                        </ng-container>
+
+                                    </td>
+                                    <td class="text-right">
+
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{item.item_amount | number}} /-
+                                        </ng-container>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="item_amount" type="text"
+                                                [(ngModel)]="item.item_amount" />
+                                        </ng-container>
+                                    </td> -->
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <p *ngIf="itemsCount > 2 && items$.length != itemsCount" (click)="seeMore()"
+                            class="m-b-5 cursor text-center text-muted font-16">
+                            See More Items
+                        </p>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-12">
+                    <div class="pull-right m-t-0 text-right">
+                        <h3><b>Total Basic (INR):</b> {{getTotal() | number}} /-</h3>
+                    </div>
+
+                </div> -->
+
+                <!-- <div class="col-md-12 inner-table">
+                    <div class="table-responsive m-t-0" style="clear: both;">
+                        <table class="table  table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold">Indian Rupees (in words)</td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="item_total_in_words" type="text"
+                                                [(ngModel)]="poFileData.item_total_in_words" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.item_total_in_words}}
+                                        </ng-container>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Price Basis </td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="price_basis" type="text"
+                                                [(ngModel)]="poFileData.price_basis" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.price_basis}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Freight</td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="freight" type="text"
+                                                [(ngModel)]="poFileData.freight" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.freight}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Transit Insurance</td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="transit_insurance" type="text"
+                                                [(ngModel)]="poFileData.transit_insurance" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.transit_insurance}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Packing & Forwarding</td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="packing_forwarding" type="text"
+                                                [(ngModel)]="poFileData.packing_forwarding" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.packing_forwarding}}
+                                        </ng-container>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Quantity Tolerance</td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="quantity_tolerance" type="text"
+                                                [(ngModel)]="poFileData.quantity_tolerance" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.quantity_tolerance}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold"> GST (IGST or SGST and CGST)</td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="gst" type="text"
+                                                [(ngModel)]="poFileData.gst" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.gst}}
+                                        </ng-container>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold"> Delivery: </td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="delivery" type="text"
+                                                [(ngModel)]="poFileData.delivery" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.delivery}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div> -->
+
+
+                <div class="col-md-6 text-left col-12">
+
+                    <address>
+                        <h3> <b>Ship to: </b></h3>
+                        <ng-container *ngIf="type == 'temp'">
+                            <textarea class="form-control" rows="3" name="ship_to" type="text"
+                                [(ngModel)]="poFileData.ship_to"></textarea>
+                        </ng-container>
+                        <p class="text-muted p-r-20" *ngIf="type != 'temp'">
+
+                            {{poFileData.ship_to}}
+                        </p>
+                    </address>
+
+
+                </div>
+                <div class="col-md-6 text-left col-12">
+                    <h3> <b>Bill to: </b></h3>
+                    <ng-container *ngIf="type == 'temp'">
+                        <textarea class="form-control" rows="3" name="bill_to" type="text"
+                            [(ngModel)]="poFileData.bill_to"></textarea>
+                    </ng-container>
+                    <p class="text-muted p-r-20" *ngIf="type != 'temp'">
+
+                        {{poFileData.bill_to}}
+                    </p>
+
+                </div>
+
+                <!-- <div class="col-md-12 inner-table">
+                    <div class="table-responsive m-t-0" style="clear: both;">
+                        <table class="table  table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold">Payment Terms</td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="payment_terms" type="text"
+                                                [(ngModel)]="poFileData.payment_terms" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.payment_terms}}
+                                        </ng-container>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Unloading </td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="unloading" type="text"
+                                                [(ngModel)]="poFileData.unloading" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.unloading}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Mode of Payment </td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="payment_mode" type="text"
+                                                [(ngModel)]="poFileData.payment_mode" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.payment_mode}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Risk and Cost</td>
+                                    <td>
+
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="risk_and_cost" type="text"
+                                                [(ngModel)]="poFileData.risk_and_cost" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.risk_and_cost}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Material Test Certificates</td>
+                                    <td>
+
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="material_test_certificates" type="text"
+                                                [(ngModel)]="poFileData.material_test_certificates" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.material_test_certificates}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">All Terms and Conditions</td>
+                                    <td>
+                                        <ng-container *ngIf="type == 'temp'">
+                                            <input class="form-control" name="terms_conditions" type="text"
+                                                [(ngModel)]="poFileData.terms_conditions" />
+                                        </ng-container>
+                                        <ng-container *ngIf="type != 'temp'">
+                                            {{poFileData.terms_conditions}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <ng-container *ngIf="type == 'temp'">
+                        <div class="form-group row">
+                            <div class="col-12 col-md-3">
+                                <label for="note" class="text-muted">Notes </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea class="form-control" name="note" rows="4"
+                                    [(ngModel)]="poFileData.note"></textarea>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="type != 'temp'">
+                        <p><span class="text-muted">Notes:</span> {{poFileData.note}}</p>
+                    </ng-container>
+
+                </div> -->
+                <br />
+                <br />
+                <!-- <div class="col-md-6">
+                    <ng-container *ngIf="type == 'temp'">
+                        <div class="form-group row">
+                            <div class="col-12 col-md-3">
+                                <label for="enclosures" class="text-muted">Enclosures </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="enclosures" type="text"
+                                    [(ngModel)]="poFileData.enclosures" />
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="type != 'temp'">
+                        <p><span class="font-bold"> Enclosures:</span> {{poFileData.enclosures}} </p>
+                    </ng-container>
+
+                </div> -->
+
+                <div class="col-md-6">
+                    <ng-container *ngIf="type == 'temp'">
+                        <div class="form-group row">
+                            <div class="col-12 col-md-3">
+                                <label for="buyer_gst_details" class="text-muted">Buyer GST Details </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="buyer_gst_details" type="text"
+                                    [(ngModel)]="poFileData.buyer_gst_details" />
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="type != 'temp'">
+                        <p><span class="font-bold"> Buyer GST Details:</span> {{poFileData.buyer_gst_details}} </p>
+                    </ng-container>
+
+                </div>
+
+
+                <div class="col-md-6 text-center">
+                    <ng-container *ngIf="type == 'temp'">
+                        <div class="form-group row">
+                            <div class="col-12 col-md-3">
+                                <label for="buyer" class="text-muted">Buyer </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="buyer" type="text" [(ngModel)]="poFileData.buyer" />
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="type != 'temp'">
+                        <p>{{poFileData.buyer}}</p>
+                    </ng-container>
+
+                </div>
+
+
+                <div class="col-md-6">
+                    <ng-container *ngIf="type == 'temp'">
+                        <div class="form-group row">
+                            <div class="col-12 col-md-3">
+                                <label for="supplier_gstn_details" class="text-muted">Supplier GSTIN Details </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="supplier_gstn_details" type="text"
+                                    [(ngModel)]="poFileData.supplier_gstn_details" />
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="type != 'temp'">
+                        <p><span class="font-bold"> Supplier GSTIN Details:</span> {{poFileData.supplier_gstn_details}}
+                        </p>
+                    </ng-container>
+
+                </div>
+
+                <div class="col-md-6 text-center">
+                    Authorised Signatory
+                </div>
+
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-1">
+                    <button mat-icon-button color="primary" value="Add Items" matTooltip="Add Items"
+                        class="custom-icon-button m-r-10" (click)="autoFileUpload.click()">
+                        <span class="material-icons">
+                            add
+                        </span>
+
+                    </button>
+                    <div class="file" hidden>
+                        <input class="form-control-file" name="file" multiple
+                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                            type="file" (change)="uploadFile($event,confirmDialog)" #autoFileUpload />
+                        <span class="file-custom"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t-10" *ngIf="poFileData.items_log && poFileData.items_log.length > 0 && type != 'temp'">
+                <div class="col-md-12 col-12">
+                    <mat-accordion>
+                        <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Show Items Log
+                                </mat-panel-title>
+                                <!-- <mat-panel-description>
+                                    This is a summary of the content
+                                </mat-panel-description> -->
+                            </mat-expansion-panel-header>
+                            <div class="table-responsive m-t-0" style="clear: both;">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>SNO#</th>
+                                            <th>Item</th>
+                                            <th>Description</th>
+                                            <th>UOM</th>
+                                            <th>QTY</th>
+                                            <th>
+                                                Created Date
+                                            </th>
+                                            <!-- <th nowrap>Unit Price (Rs)</th>
+                                            <th nowrap>Amount (Rs)</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of poFileData.items_log;let i=index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.item_name}}</td>
+                                            <td>{{item.item_desc}} </td>
+                                            <td>{{item.item_uom}} </td>
+                                            <td>{{item.item_qty}} </td>
+                                            <td>{{item.uploaded_date_time }}</td>
+                                            <!-- <td class="text-right">{{item.item_unit_price | number}} /- </td>
+                                            <td class="text-right">{{item.item_amount | number}} / - </td> -->
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #confirmDialog>
+    <h1 mat-dialog-title>Items Upload</h1>
+    <div mat-dialog-content>
+        <p>Are you sure you want to upload this items?</p>
+
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button cdkFocusInitial (click)="updateFile()">Submit</button>
+    </div>
+
+</ng-template>

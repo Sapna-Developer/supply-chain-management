@@ -1,0 +1,106 @@
+.border {
+  border: 1px solid black !important;
+  // border-bottom: none !important;
+}
+
+.row p {
+  margin-top: 14px;
+}
+
+
+.padding {
+  padding-top: 60px;
+}
+.padding1 {
+  padding-top: 10px;
+}
+
+@media print {
+  .print {
+    display: none !important;
+  }
+
+}
+
+.formbody {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  line-height: 11px;
+  font-size: small;
+}
+
+// .remarks-margin {
+//   margin-left: 0px !important;
+//   margin-right: 0px !important;
+// }
+
+
+.border-bottom {
+  border-bottom: 1px solid black !important;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+
+}
+
+.grey {
+  background-color: rgb(200, 200, 200);
+}
+
+.border-left {
+  border-left: 1px solid black !important;
+}
+
+.break {
+  line-height: 16px;
+}
+table{
+  table-layout:fixed;
+    width:100%;
+    font-size: 13px !important;
+}
+table tr th{
+  padding: 5px 2px !important;
+  vertical-align: middle !important;
+  white-space: break-spaces;
+  font-size: 13px !important;
+}
+table th,
+td {
+  padding:  5px 2px !important;
+  vertical-align: middle !important;
+  text-align: center;
+}
+table tr td:nth-child(3){
+  text-align: left;
+  font-size: 10px;
+}
+
+.print {
+  padding: 10px !important;
+}
+.sign-width {
+  width: 150px;
+  height: 50px;
+}
+.col:first-child{
+  text-align: start;
+}
+.col{
+  text-align: center;
+}
+.col:last-child{
+  text-align: end;
+}
+.btn-custom{
+  background-color: #888;
+  padding: 5px 10px;
+  color: #fff;
+  border-radius: 3px;
+}

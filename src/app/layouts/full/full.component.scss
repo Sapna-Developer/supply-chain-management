@@ -1,0 +1,81 @@
+// .topbar {
+//   box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+//     0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+// }
+.user {
+  position: absolute;
+  right: 20px;
+  top: 0px;
+}
+
+
+
+.mobile-margin {
+  margin-left: 0px !important;
+}
+
+.dropdown-menu ,.dropdown-menu-right ,.user-dd ,.pb-0  {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  will-change: transform;
+  transform: translate(450px!important, 51px)!important;
+}
+
+.usernameDetails{
+  font-size: 16px;
+  background: none;
+}
+.usernameDetails:focus,.usernameDetails:hover,.usernameDetails:active{
+  background: none;
+  outline: none;
+}
+// .dropdown-menu {
+//   min-width:94px;
+// }
+.fa,.fas {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+   font-size: 20px;
+}
+.hide {
+  display: none;
+}
+// .myDIV:hover + .hide {
+//   display: block;
+//   color: black;
+//   width:100%;
+//   height: auto;
+// }
+.btn1 {
+  position: absolute;
+      top: 0px;
+      left: 0px;
+      will-change: transform;
+      transform: translate(123px, 2px)!important;
+  }
+  .bg-success{
+    background-color: #62BEDA!important;
+  }
+  .btn2{
+    background-color: #62BEDA!important;
+    border-color: #62BEDA;
+  }
+  .customizer .service-panel-toggle {
+    background: #F62D51;
+    padding: 4px 10px!important;
+    color: #fff;
+    position: absolute;
+    top: 30%;
+    left: -33px;
+  }
+  .steamline .sl-item {
+    border-bottom: 1px solid #E9ECEF;
+    margin: 9px 0!important;
+  }
+  :host ::ng-deep.steamline .sl-right .desc {
+    margin-bottom: 10px!important;
+  }
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 0.5em 0 !important;
+}

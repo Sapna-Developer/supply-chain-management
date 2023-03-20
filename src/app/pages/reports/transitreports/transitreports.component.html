@@ -1,0 +1,155 @@
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>Goods on Transit</ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <table mat-table [dataSource]="dataSourcemain">
+                            <ng-container matColumnDef="sno">
+                                <th mat-header-cell *matHeaderCellDef style="width: 6%">
+                                    SNO
+                                </th>
+                        
+                                <td mat-cell *matCellDef="let row; let i = index" class="text-center">
+                                    {{i + 1 }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Date">
+                                <th mat-header-cell *matHeaderCellDef>Date</th>
+                               
+                                <td mat-cell *matCellDef="let row">
+                                  {{ row.date | date: "dd/MM/yyyy" }}
+                                </td>
+                              </ng-container>
+                            <ng-container matColumnDef="Document_name">
+                                <th mat-header-cell *matHeaderCellDef>Document Name</th>
+                                <td mat-cell *matCellDef="let row" class="text-left">
+                                    {{ row.document_name}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Document_No">
+                                <th mat-header-cell *matHeaderCellDef>Document No</th>
+                                <td mat-cell *matCellDef="let row" class="text-left">
+                                    {{ row.document_number }}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="From_Location">
+                                <th mat-header-cell *matHeaderCellDef>From Location</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.from_location }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="to_Company">
+                                <th mat-header-cell *matHeaderCellDef>To Company</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.company_name }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="From_Company">
+                                <th mat-header-cell *matHeaderCellDef>From Company</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.concern_name }}
+                                </td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="View">
+                                <th mat-header-cell *matHeaderCellDef style="width: 14%">
+                                    View
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <button type="button" class="btn btn-custom" (click)="printdmr(row)">View</button>
+                                </td>
+                            </ng-container> -->
+
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef style="width: 16%" class="text-center">
+                                    Action
+                                </th>
+                                <td mat-cell *matCellDef="let row" class="text-center">
+                                    <div class="mb-0">
+                                        <mat-icon matTooltip="view" (click)="printdmr(row)"  style="border:none;background: none;cursor: pointer;">remove_red_eye</mat-icon>
+                                        <mat-icon matTooltip="Upload" (click)="
+                                        openfileuploadmodel(fileuploadmodel, row)
+                                      " style="cursor: pointer; font-size: 24px">file_upload</mat-icon>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                        </table>
+                        <div *ngIf="reaData==true" class="text-center">
+                            <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                Loading...
+                            </h4>
+                            <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                No Records Found
+                            </h4>
+                        </div>
+                        <mat-paginator [length]="totalRecords" [pageSize]="10"
+                            [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #masterpaginator (page)="onpageevent($event)">
+                        </mat-paginator>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+
+    </mat-tab-group>
+</div>
+
+<!-- model -->
+<ng-template #fileuploadmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>{{doc_name}}: {{grnumber}}</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon"
+            (click)="closemodel()" style="border:none;background:none;margin-top: -9%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+   <div  mat-dialog-content class="row">
+    <div *ngIf="filedata">
+    <table>
+        <thead style="background: #e9ecef;">
+            <!-- <tr> -->
+                <th>Cread By</th>
+                <th>Created Date</th>
+                <th>File Name</th>
+                <th>Action</th>
+            <!-- </tr> -->
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of filedata">
+                <td>{{item.created_by}}</td>
+                <td>{{item.created_date}}</td>
+                <td >{{item.file_name}} &nbsp;&nbsp;&nbsp;<i class="fas fa-eye text-cyan m-r-20 " 
+                    style="cursor: pointer;" title="View File" (click)="viewDoc(item)"></i></td>
+                    <td>
+                        <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                           aria-label="Example icon button with a vertical three dot icon"
+                            (click)="deleterowfile(deletefileModel,item)">
+                             <mat-icon>delete</mat-icon>
+                             </button>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+   </div><br>
+<button mat-raised-button type="button" (click)="autoFileUpload1.click()">Attach File</button>
+<div class="file">
+<input hidden class="form-control-file" name="file" type="file"
+(change)="uploadWbsFile($event);showContent(i);" #autoFileUpload1 />
+<ng-container *ngIf="fileUploadUrls.length>0">
+<span >Selected: {{fileUploadUrls.length}} files</span>  
+</ng-container>         
+</div>
+</ng-template>
+<!-- upload file delete -->
+<ng-template #deletefileModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete file?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" >Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteexistingfile()" class="matButton">Delete</button>
+    </div>
+</ng-template>

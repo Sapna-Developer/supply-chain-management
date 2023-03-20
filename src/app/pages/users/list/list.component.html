@@ -1,0 +1,286 @@
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Users</mat-label>
+                    <input type="text" placeholder="Search User" [formControl]="myControl" matInput
+                        [matAutocomplete]="auto">
+                    <button *ngIf="userSearchObj.user" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.user='';myControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-autocomplete #auto="matAutocomplete"
+                        (optionSelected)="getUserDetails($event.option.value,'user')">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.work_email">
+                            <span> {{option.usename}}</span> |
+                            <small> {{option.work_email}}</small>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Project</mat-label>
+                    <mat-select (closed)="getUserRoleDetails()" [(ngModel)]="userSearchObj.project"
+                        [formControl]="projectControl" name="project" multiple>
+                        <input class="w-full" (keyup)="onKey($event.target.value)">
+                        <mat-select-trigger>
+                            {{projectControl.value ? projectControl.value[0] : ''}}
+                            <span *ngIf="projectControl.value?.length > 1" class="example-additional-selection">
+                                (+{{projectControl.value.length - 1}} {{projectControl.value?.length === 2 ? 'other' :
+                                'others'}})
+                            </span>
+                        </mat-select-trigger>
+
+
+                        <mat-option *ngFor="let topping of selectedProjects$" [value]="topping.proj_short_name">
+                            {{topping.proj_short_name}}</mat-option>
+                    </mat-select>
+                    <button *ngIf="userSearchObj.project" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.project='';projectControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+
+
+                <!-- <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Project</mat-label>
+                    <input type="text" placeholder="Search Project" name="project" [formControl]="projectControl"
+                        matInput [matAutocomplete]="auto1">
+
+                    <button *ngIf="userSearchObj.project" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.project='';projectControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+
+                    <mat-autocomplete #auto1="matAutocomplete"
+                        (optionSelected)="getUserDetails($event.option.value,'project')">
+                        <mat-option *ngFor="let option of filteredProjects | async" [value]="option.proj_short_name">
+                            <span> {{option.proj_short_name}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field> -->
+            </div>
+            <div class="col-12 col-md-2">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Department</mat-label>
+                    <input type="text" placeholder="Search Department" name="dept" [formControl]="deptControl" matInput
+                        [matAutocomplete]="auto2">
+
+                    <button *ngIf="userSearchObj.dept" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.dept='';deptControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+
+                    <mat-autocomplete #auto2="matAutocomplete"
+                        (optionSelected)="getUserDetails($event.option.value,'dept')">
+                        <mat-option *ngFor="let option of filteredDept | async" [value]="option.deparment_name">
+                            <span> {{option.deparment_name}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-2">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Role</mat-label>
+                    <input type="text" placeholder="Search Role" [formControl]="roleControl" matInput
+                        [matAutocomplete]="auto3">
+
+                    <button *ngIf="userSearchObj.role" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.role='';roleControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+
+                    <mat-autocomplete #auto3="matAutocomplete"
+                        (optionSelected)="getUserDetails($event.option.value,'role')">
+                        <mat-option *ngFor="let option of filteredRoles | async" [value]="option.role">
+                            <span> {{option.role}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-2">
+
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Sub Role</mat-label>
+                    <input type="text" placeholder="Search Sub Role" [formControl]="subRoleControl" matInput
+                        [matAutocomplete]="auto4">
+
+                    <button *ngIf="userSearchObj.subRole" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.subRole='';subRoleControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+
+                    <mat-autocomplete #auto4="matAutocomplete"
+                        (optionSelected)="getUserDetails($event.option.value,'sub_role')">
+                        <mat-option *ngFor="let option of filteredSubRoles | async" [value]="option.sub_role">
+                            <span> {{option.sub_role}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </mat-card-content>
+</mat-card>
+
+
+<mat-card class="p-0 m-t-20">
+    <mat-card-content>
+        <div class="row p-10">
+            <div class="col-12 col-md-3 float-right text-left">
+                All Users<br />
+                <p>{{totalRecords}} Found</p>
+            </div>
+            <div class="col-12 col-md-9 float-right text-right">
+
+                <!-- <div class="example-button-row">
+                    <button mat-raised-button color="primary" class="m-r-20" (click)="addUserProjects()"
+                        *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_PROJECTS'])">Add User
+                        Projects</button>
+
+                    <button mat-raised-button color="secondary" class="m-r-20" (click)="addNewUser()"
+                        *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_ROLE'])">Add User Project
+                        Role</button>
+
+                    <button mat-icon-button value="Refresh" matTooltip="Refresh" (click)="getUserRoleDetails()"
+                        class="custom-icon-button">
+                        <span class="material-icons">
+                            refresh
+                        </span>
+                    </button>
+                </div> -->
+
+                <!-- <button mat-icon-button value="Add"
+                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_PROJECTS'])"
+                    matTooltip="Add User Projects" (click)="addUserProjects()" class="custom-icon-button m-r-10">
+                    <span class="material-icons">
+                        add
+                    </span>
+                </button> -->
+                <button mat-icon-button value="Add"
+                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_ROLE'])"
+                    matTooltip="Add User Project Role" (click)="addNewUser()" class="custom-icon-button m-r-10">
+                    <span class="material-icons">
+                        add
+                    </span>
+                </button>
+                <button mat-icon-button value="Refresh" matTooltip="Refresh" (click)="getUserRoleDetails()"
+                    class="custom-icon-button">
+                    <span class="material-icons">
+                        refresh
+                    </span>
+                </button>
+            </div>
+        </div>
+        <ng-container>
+            <div class="row p-t-10">
+                <div class="col-12 col-md-12">
+                    <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar>
+                    <div class="table-responsive mat-table-wrapper">
+                        <div class="example-table-container">
+                            <table mat-table [dataSource]="dataSource">
+                                <ng-container matColumnDef="sno">
+                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                        {{i+1}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="email">
+                                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.email}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="project">
+                                    <th mat-header-cell *matHeaderCellDef>Project</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.project_name}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="dept">
+                                    <th mat-header-cell *matHeaderCellDef>Dept</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.dept_name }}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="role">
+                                    <th mat-header-cell *matHeaderCellDef>Role</th>
+                                    <td mat-cell *matCellDef="let row">{{row.role_name}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="sub_role">
+                                    <th mat-header-cell *matHeaderCellDef> Sub Role</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.sub_role_name }}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="created_date">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        Created
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.created_by}} <br />
+                                        {{row.created_date | date}}
+                                    </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        Action
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <button mat-icon-button (click)="deleteFileConfirm(row,deleteFileModal)"
+                                            aria-label="Example icon button with a vertical three dot icon">
+                                            <mat-icon style="color:red;">delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                            </table>
+                        </div>
+
+
+                        <ng-container *ngIf="tableData$.length > 0; then loadPlanData; else noRecords"></ng-container>
+
+                        <ng-template #loadPlanData>
+                            <mat-paginator *ngIf="tableData$.length > 0" [length]="totalRecords"
+                                [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 75, 100]"
+                                #paginator>
+                            </mat-paginator>
+                        </ng-template>
+
+                        <ng-template #noRecords>
+                            <div *ngIf="tableData$.length <= 0" class="text-center">
+                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                    Loading...
+                                </h4>
+                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                    No Data Found
+                                </h4>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+    </mat-card-content>
+</mat-card>
+
+
+
+<ng-template #deleteFileModal>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete user activity?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deleteFile()">Delete</button>
+    </div>
+</ng-template>

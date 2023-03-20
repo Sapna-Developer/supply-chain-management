@@ -1,0 +1,224 @@
+<!-- <div class="row" >
+        <div class="col-4">
+            <mat-form-field appearance="outline" [floatLabel]="'always'" class="w-full w-100"> -->
+                <!-- <mat-label>Search Projects</mat-label> -->
+                <!-- <input matInput type="text" [(ngModel)]="searchValue" placeholder="Search Projects"
+                  (input)="filterProjects()">
+                <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="searchValue='';filterProjects()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+        </div>
+</div> -->
+<div class="row ">
+    <div class="col-12 text-right">
+        <p class="mb-0 mt-0 version">Production version:2023.03.02</p>
+    </div>
+    <!-- <div class="col-md-12 col-12 d-none">
+        <div class="card card-shadow">
+            <div class="card-body ">
+                <div class="d-md-flex align-items-center">
+                    <div>
+                        <h4 class="card-title">All Projects</h4>
+                        <h5 class="card-subtitle text-danger">{{projects$.length}} records</h5>
+                    </div>
+                    <div class="p-l-40 w-40">
+                        <mat-form-field appearance="outline" [floatLabel]="'always'" class="w-full w-100">
+                            <mat-label>Search Projects</mat-label>
+                            <input matInput type="text" [(ngModel)]="searchValue" placeholder="Type"
+                                (input)="filterProjects()">
+                            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear"
+                                (click)="searchValue='';filterProjects()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <div class="ml-auto d-flex no-block align-items-center">
+                        <button type="button" class="btn btn-success btn-rounded m-r-20"><i
+                                class="mdi mdi-folder-plus"></i>
+                            Add Project</button>
+                        <button type="button" class="btn btn-primary btn-rounded"><i
+                                class="mdi mdi-account-multiple-plus"></i>
+                            Add User</button>
+                    </div>
+​
+                </div>
+            </div>
+        </div>
+​
+    </div> -->
+    <div class=" col-lg-3 col-xs-12 col-sm-6 col-xl-2 " *ngFor="let item of projects$">
+        <div class="card gd-white  card-shadow ">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="mr-2 ">
+                        <h1 class="mb-0 display-7 m-r-5">
+                            <img  class="bg-dark11" src="assets/greenko/icons/solar.svg"
+                                *ngIf="item.project_type && item.project_type.toLowerCase().includes('solar')"
+                                width="40"  />
+                            <img  class="bg-dark11" src="assets/greenko/icons/hydro.svg"
+                                *ngIf="item.project_type && item.project_type.toLowerCase().includes('hydro')"
+                                width="40"  />
+                            <img  class="bg-dark11" src="assets/greenko/icons/wind.svg"
+                                *ngIf="item.project_type && item.project_type.toLowerCase().includes('wind')" width="35"
+                                height="40"  />
+                            <i *ngIf="item.project_type && (!item.project_type.toLowerCase().includes('hydro') && !item.project_type.toLowerCase().includes('solar')  && !item.project_type.toLowerCase().includes('wind'))"
+                                class="cc XRP text-black"></i>
+                        </h1>
+                    </div>
+                    <div>
+                        <h6 class="font-14 text-black mb-1 op-7">{{item.proj_short_name}}</h6>
+                        <h6 class="text-black font-medium mb-0 font-12">
+                           <!-- <span class="label label-rounded label-outline-dark">{{item.project_type}}</span>-->
+                        </h6>
+                        <div class="favt" ngbDropdown
+                            *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_PROJECT_WBS','VIEW_PROJECT_DRAWINGS','VIEW_PROJECT_ISSUE_LOG','VIEW_DRAWING_EMAILS','VIEW_PMC_DRAWINGS','EXTERNAL_DRAWINGS'])">
+                            <a class="" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2">
+                                <!-- <i class="fas fa-eye font-24 float-right "></i> -->
+                                <i class="fas fa-ellipsis-v font-17 float-right"></i>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="navbarDropdown2"
+                                class="dropdown-menu dropdown-menu-right ">
+                                <a ngbDropdownItem href="javascript:void(0)"
+                                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_PROJECT_WBS'])"
+                                    (click)="$event.preventDefault()" [routerLink]="'/maindashboard/details'"
+                                    [queryParams]="{id:item.proj_id,start:item.plan_start_date,end:item.scd_end_date}">Project
+                                    WBS</a>
+                                <a ngbDropdownItem href="javascript:void(0)"
+                                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_PROJECT_DRAWINGS'])"
+                                    (click)="$event.preventDefault()" [routerLink]="'/maindashboard/folders'"
+                                    [queryParams]="{id:item.proj_id,start:item.plan_start_date,end:item.scd_end_date}">Drawings</a>
+                                <a ngbDropdownItem href="javascript:void(0)"
+                                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_PROJECT_ISSUE_LOG'])"
+                                    (click)="$event.preventDefault()" [routerLink]="'/issuelog'"
+                                    [queryParams]="{id:item.proj_id,start:item.plan_start_date,end:item.scd_end_date,name:item.proj_short_name}">Issue
+                                    Log</a>
+                                <a ngbDropdownItem href="javascript:void(0)"
+                                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_DRAWING_EMAILS'])"
+                                    (click)="$event.preventDefault()" [routerLink]="'/emails'"
+                                    [queryParams]="{id:item.proj_id,start:item.plan_start_date,end:item.scd_end_date,name:item.proj_short_name}">Default
+                                    Emails
+                                </a>
+                                <a ngbDropdownItem href="javascript:void(0)"
+                                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_PMC_DRAWINGS'])"
+                                    (click)="$event.preventDefault()" [routerLink]="'/maindashboard/pmc_folders'"
+                                    [queryParams]="{id:item.proj_id,start:item.plan_start_date,end:item.scd_end_date,name:item.proj_short_name}">PMC
+                                    Drawings
+                                </a>
+                                <a ngbDropdownItem href="javascript:void(0)"
+                                *ngIf="authService.checkUserPermission(['SUPER_ADMIN','EXTERNAL_DRAWINGS'])"
+                                (click)="$event.preventDefault()" [routerLink]="'/maindashboard/externalDrawings'"
+                                [queryParams]="{id:item.proj_id,start:item.plan_start_date,end:item.scd_end_date}">External</a>
+                                <!-- <a ngbDropdownItem href="javascript:void(0)"
+                                *ngIf="authService.checkUserPermission(['SUPER_ADMIN'])"
+                                (click)="$event.preventDefault()" [routerLink]="'/externalemails'"
+                                [queryParams]="{id:item.proj_id,start:item.plan_start_date,end:item.scd_end_date,name:item.proj_short_name}">External Default
+                                Emails
+                            </a> -->
+                            </div>
+                        </div>
+                        <!-- <div ngbDropdown>
+                            <i class="far fa-bell font-24 float-right favt" id="dropdownBasic1" ngbDropdownToggle></i>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button class="dropdown-item">Action - 1</button>
+                                <button class="dropdown-item">Another Action</button>
+                                <button class="dropdown-item">Something else is here</button>
+                            </div>
+                        </div> --> 
+                    </div>
+                    <div class=" ml-auto">
+                        <div class="crypto"><canvas width="58" height="30"
+                                style="display: inline-block; width: 58px; height: 30px; vertical-align: top;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 daysAlign ml-2 mt-2">
+                         <!-- <span class="font-14 d-block" *ngIf="!item.plan_start_date || !item.scd_end_date"> -->
+                             <!-- ---- -->
+                          <!-- </span> --> 
+                             <span class="font-medium"><i class="fas fa-hourglass-half"></i> Duration:&nbsp;</span>
+                         <span class="font-14 d-block" *ngIf="item.plan_start_date && item.scd_end_date"> 
+ 
+                             {{utils.getDateDiff(item.plan_start_date,item.scd_end_date)}}
+                             {{utils.getDateDiff(item.plan_start_date,item.scd_end_date) == 1 ? 'Day':'Days'}}
+ 
+                              <!-- {{(item.scd_end_date | amDifference: item.plan_start_date
+                             :'days' : true) == 0 ? 1 : (item.scd_end_date | amDifference: item.plan_start_date
+                             :'days' : true) | number:'1.0-0'}} {{(item.scd_end_date |
+                             amDifference: item.plan_start_date
+                              :'days' : true) == 1 ? 'Day':'Days'}}  -->
+ 
+                         </span>
+                       
+                     </div>
+                 </div>
+                <div class="row  color mt-3 text-white text-center p-1 " >
+                    <!-- <div class="col-1 ">
+                    </div> -->
+                    <div class="col-5 dateAlign ">
+                        <i class="material-icons  ">keyboard_arrow_right</i>&nbsp;
+                        <span class="font-12 d-block mt-1" *ngIf="item.plan_start_date!=='NaT'||item.plan_start_date!==null"> {{item.plan_start_date |
+                            date:'dd-MM-yyyy'}}</span>
+                        <span class="font-14 d-block" *ngIf="item.plan_start_date==='NaT'||item.plan_start_date===null">----</span>
+                    </div>
+                    <div class="col-2 text-center mt-1">
+                        <i class="far fa-calendar-alt"></i>
+                      <!--  <span class="font-medium"><i class="fas fa-arrow-alt-circle-down"></i> Start</span>-->
+                    </div>
+                    <div class="col-5 dateAlign ">
+                        <span class="font-12 d-block mt-1" *ngIf="item.scd_end_date!=='NaT'||item.scd_end_date!==null">{{item.scd_end_date | 
+                            date:'dd-MM-yyyy' }} </span>
+                        <span class="font-14 d-block" *ngIf="item.scd_end_date==='NaT'||item.scd_end_date===null">----</span>&nbsp;
+                       <!-- <span class="font-medium"><i class="fas fa-arrow-alt-circle-up"></i> End</span>-->
+                       <i class="material-icons ">keyboard_arrow_left</i>
+                       </div>
+                       </div>
+                       <!-- <div class="col-1">
+                        </div> -->                
+            </div>
+        </div>
+    </div>
+    <div *ngIf="projects$.length == 0">
+        <!-- <p style="text-align: center;">No Records Found</p> -->
+        <p style="text-align: center;">Loading Please Wait..</p>
+    </div>
+    <!-- <div class="col-sm-12 col-lg-4">
+        <div class="card gd-green card-shadow card-hover cursor" [routerLink]="'/projects/details'">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="mr-2">
+                        <h1 class="mb-0 display-7"><i class="mdi mdi-lightbulb-on-outline text-white"></i></h1>
+                    </div>
+                    <div>
+                        <h6 class="font-14 text-white mb-1 op-7">ADHAVAN</h6>
+                        <h6 class="text-white font-medium mb-0 font-12"><span
+                                class="label label-rounded label-outline-white">SOLAR</span>
+                        </h6>
+                        <i class="mdi mdi-heart font-24 float-right favt"></i>
+                    </div>
+                    <div class=" ml-auto">
+                        <div class="crypto"><canvas width="58" height="30"
+                                style="display: inline-block; width: 58px; height: 30px; vertical-align: top;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center text-white mt-4">
+                    <div class="col-4">
+                        <span class="font-14 d-block">01-JAN-2021</span>
+                        <span class="font-medium"><i class="fas fa-arrow-up"></i> Start</span>
+                    </div>
+                    <div class="col-4">
+                        <span class="font-14 d-block">28-FEB-2021</span>
+                        <span class="font-medium"><i class="fas fa-arrow-down"></i> End</span>
+                    </div>
+                    <div class="col-4">
+                        <span class="font-14 d-block">25 Days</span>
+                        <span class="font-medium"><i class="fas fa-arrow-right"></i> Left</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>

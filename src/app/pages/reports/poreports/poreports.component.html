@@ -1,0 +1,263 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">PO Reports</h4>
+        </div>
+    </div>
+</div> -->
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Purchace Order Tracker Date
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <form id="form">
+                            <div class="row">
+                                <div class="col-2">
+                                    <label>From Date<span class="mandetory">*</span></label>
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                    dateFormat="yyyy/mm/dd" [(ngModel)]="potdatefromdate" name="potdatefromdate">
+                                </div>
+                                <div class="col-2">
+                                    <label>To Date<span class="mandetory">*</span></label>
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                    dateFormat="yyyy/mm/dd" [(ngModel)]="potdatetodate" name="potdatetodate">
+                                </div>
+                                <div class="col-4">
+                                    <label>Company Name<span class="mandetory">*</span></label>
+                                    <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                                        <mat-select placeholder="Selected Company List" [(ngModel)]="potdatecompanyname" name="potdatecompanyname"
+                                            multiple>
+                                            <mat-option *ngFor="let item of companyData" [value]="item.name">{{
+                                                item.name }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        
+                            <div class="row justify-content-center mt-4">
+                                <div class="col-md-2">
+                                    <!-- <label>DOWNLOAD XL</label> -->
+                                    <button mat-raised-button class="float-right" type="button"
+                                        (click)="getpotdateData()" style="background-color: rgba(0, 0, 0, 0.12);">
+                                       VIEW
+                                    </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button mat-raised-button class="float-left" type="button"
+                                        (click)="clearpotDatedata()" style="background-color: rgba(0, 0, 0, 0.12);">
+                                        RESET
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row" *ngIf="potdateTable">
+                            <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelpotDate()"
+                            style="border: none;background-color: #86bc1b;">Export to Excel</button>
+                        </div>
+                        <div class="row mt-3"  *ngIf="potdateTable">
+                           
+                            <div class="col table-responsive" #TABLE #table class="tableclass">
+                                <table class="table table-bordered" id="potdate">
+                                   
+                                    <tr class="headerstyles">
+                                     <th>SNO</th>
+                                      <th>PO Status</th>
+                                      <th>PO Number</th>
+                                      <th>PO Date</th>
+                                      <th>PO Material Code</th>
+                                      <th>PO Quantity</th>
+                                      <th>PO Total Price</th>
+                                      <th>DMR GNR Status</th>
+                                      <th>DMR QC Status</th>
+                                      <th>DMR Number</th>
+                                      <th>DMR Line Item</th>
+                                      <th>DMR Date</th>
+                                      <th>DMR Material Code</th>
+                                      <th>DMR Received Quantity</th>
+                                      <th>DMR Total Price</th>
+                                      <th>QC Line Item</th>
+                                      <th>QC Number</th>
+                                      <th>QC Date</th>
+                                      <th>QC material Code</th>
+                                      <th>QC Quantity</th>
+                                      <th>GR Line Item</th>
+                                      <th>GR Number</th>
+                                      <th>GR Date</th>
+                                      <th>GR Material Code</th>
+                                      <th>GR Quantity</th>
+                                      <th>GR Total Price</th>
+                                    </tr>
+                                    <tr *ngFor="let item of potdateData;let i=index;">
+                                       <td>{{i+1}}</td>
+                                        <td>{{item.po_status}}</td>
+                                        <td>{{item.po_number}}</td>
+                                        <td>{{item.po_date | date: 'dd/MM/yyyy '}}</td>
+                                        <td>{{item.po_material_code}}</td>
+                                        <td>{{item.po_quantity}}</td>
+                                        <td>{{item.po_total_price}}</td>
+                                        <td>{{item.dmr_grn_status}}</td>
+                                        <td>{{item.dmr_qc_status}}</td>
+                                        <td>{{item.dmr_number}}</td>
+                                        <td>{{item.dmr_line_item}}</td>
+                                        <td>{{item.dmr_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.dmr_material_code}}</td>
+                                        <td>{{item.dmr_received_quantity}}</td>
+                                        <td>{{item.dmr_total_price}}</td>
+                                        <td>{{item.qc_line_item}}</td>
+                                        <td>{{item.qc_number}}</td>
+                                        <td>{{item.qc_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.qc_material_code}}</td>
+                                        <td>{{item.qc_quantity}}</td>
+                                        <td>{{item.gr_line_item}}</td>
+                                        <td>{{item.gr_number}}</td>
+                                        <td>{{item.gr_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.gr_material_code}}</td>
+                                        <td>{{item.gr_quantity}}</td>
+                                        <td>{{item.gr_total_price | number:'1.2-2'}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Purchace Order Tracker Number
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <form id="form">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label>Number<span class="mandetory">*</span></label>
+                                    <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                                        <mat-select placeholder="Selected Company List" [(ngModel)]="potnumPurchaseRequestData" name="potnumPurchaseRequestData"
+                                            multiple>
+                                            <mat-option *ngFor="let item of purchaseOrderData" [value]="item.number">{{
+                                                item.number }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                               
+                                <div class="col-4">
+                                    <label>Company Name<span class="mandetory">*</span></label>
+                                    <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                                        <mat-select placeholder="Selected Company List" [(ngModel)]="potnumcompanyname" name="potnumcompanyname"
+                                            >
+                                            <mat-option *ngFor="let item of companyData" [value]="item.name">{{
+                                                item.name }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-2">
+                                    <!-- <label>DOWNLOAD XL</label> -->
+                                    <button mat-raised-button class="float-right" type="button"
+                                        (click)="getpotnumData()" style="background-color: rgba(0, 0, 0, 0.12);">
+                                        VIEW
+                                    </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button mat-raised-button class="float-left" type="button"
+                                        (click)="clearpotnumdata()" style="background-color: rgba(0, 0, 0, 0.12);">
+                                        RESET
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row" *ngIf="potnumberTable">
+                            <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelpotNum()"
+                            style="border: none;background-color: #86bc1b;">Export to Excel</button>
+                        </div>
+                        <div class="row mt-3"  *ngIf="potnumberTable">
+                            <div class="row justify-content-center" #TABLE #table class="tableclass"> 
+                                <table class="table" id="potnum">
+                                  
+                                    <tr class="headerstyles">
+                                        <th>SNO</th>
+                                        <!-- <th>PR Status</th>
+                                      <th>PR Number</th>
+                                      <th>PR Line Item</th>
+                                      <th>PR Date</th>
+                                      <th>PR Material Code</th>
+                                      <th>PR Quantity</th>
+                                      <th>PR Total Price</th> -->
+                                      <th>PO Status</th>
+                                      <th>PO Number</th>
+                                      <th>PO Date</th>
+                                      <th>PO Material Code</th>
+                                      <th>PO Quantity</th>
+                                      <th>PO Total Price</th>
+                                      <th>DMR GNR Status</th>
+                                      <th>DMR QC Status</th>
+                                      <th>DMR Number</th>
+                                      <th>DMR Line Item</th>
+                                      <th>DMR Date</th>
+                                      <th>DMR Material Code</th>
+                                      <th>DMR Received Quantity</th>
+                                      <th>DMR Total Price</th>
+                                      <th>QC Line Item</th>
+                                      <th>QC Number</th>
+                                      <th>QC Date</th>
+                                      <th>QC material Code</th>
+                                      <th>QC Quantity</th>
+                                      <th>GR Line Item</th>
+                                      <th>GR Number</th>
+                                      <th>GR Date</th>
+                                      <th>GR Material Code</th>
+                                      <th>GR Quantity</th>
+                                      <th>GR Total Price</th>
+                                    </tr>
+                                    <tr *ngFor="let item of potnumnerData;let i=index;">
+                                        <!-- <td>{{item.pr_status}}</td>
+                                        <td>{{item.pr_number}}</td>
+                                        <td>{{item.pr_line_item}}</td>
+                                        <td>{{item.pr_date}}</td>
+                                        <td>{{item.pr_material_code}}</td>
+                                        <td>{{item.pr_quantity}}</td>
+                                        <td>{{item.pr_total_price}}</td> -->
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.po_status}}</td>
+                                        <td>{{item.po_number}}</td>
+                                        <td>{{item.po_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.po_material_code}}</td>
+                                        <td>{{item.po_quantity}}</td>
+                                        <td>{{item.po_total_price}}</td>
+                                        <td>{{item.dmr_grn_status}}</td>
+                                        <td>{{item.dmr_qc_status}}</td>
+                                        <td>{{item.dmr_number}}</td>
+                                        <td>{{item.dmr_line_item}}</td>
+                                        <td>{{item.dmr_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.dmr_material_code}}</td>
+                                        <td>{{item.dmr_received_quantity}}</td>
+                                        <td>{{item.dmr_total_price}}</td>
+                                        <td>{{item.qc_line_item}}</td>
+                                        <td>{{item.qc_number}}</td>
+                                        <td>{{item.qc_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.qc_material_code}}</td>
+                                        <td>{{item.qc_quantity}}</td>
+                                        <td>{{item.gr_line_item}}</td>
+                                        <td>{{item.gr_number}}</td>
+                                        <td>{{item.gr_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.gr_material_code}}</td>
+                                        <td>{{item.gr_quantity}}</td>
+                                        <td>{{item.gr_total_price | number:'1.2-2'}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+

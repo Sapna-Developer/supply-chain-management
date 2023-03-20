@@ -1,0 +1,316 @@
+<mat-card>
+  <div class="row">
+    <div class="col-6 ">
+      <button *ngIf="printstatus"
+        [print]="['demo', config]"
+        class="btn btn-info"
+        style="margin-right: 1%; margin-left: 1%"
+      >
+        Print
+      </button>
+      <button (click)="backtodmr()" class="btn btn-info">Back</button>
+    </div>
+  </div>
+
+    <div id="demo">
+      <div class="row justify-content-right">
+       
+        <table class="table border" >
+          <!-- <tr  class="text-right ">
+            <th class="border" colspan="1">      
+              <ngx-qrcode
+              [elementType]="elementType"
+              [errorCorrectionLevel]="correctionLevel"
+              [value]="data1"
+              alt="Demo QR Code"
+              cssClass="bshadow"></ngx-qrcode> 
+            </th>
+          </tr> -->
+          <tr class="border ">
+            <th style="vertical-align: top !important" class="border" colspan="8">Original for Buyer <br/>
+              Duplicate for Supplier
+              <!-- <span class="text-right">
+                <ngx-qrcode
+                [elementType]="elementType" [width]="80"  
+                [errorCorrectionLevel]="correctionLevel"
+                [value]="data1"
+                alt="Demo QR Code"
+                cssClass="bshadow"></ngx-qrcode> 
+              </span> -->
+            </th>
+            <th class="border text-center"  colspan="1">      
+              <ngx-qrcode *ngIf="data1"
+              [elementType]="elementType" [width]="80"  
+              [errorCorrectionLevel]="correctionLevel" 
+              [value]="data1"
+              alt="Demo QR Code"
+              cssClass="bshadow">
+            </ngx-qrcode> 
+            <ngx-qrcode *ngIf="document_no"
+            [elementType]="elementType" [width]="80"  
+            [errorCorrectionLevel]="correctionLevel" 
+            [value]="document_no"
+            alt="Demo QR Code"
+            cssClass="bshadow">
+          </ngx-qrcode> 
+            </th>
+          </tr>
+          <!-- <tr >
+            <th colspan="7" class=" border">Duplicate for Supplier</th>
+          </tr> -->
+          <tr class="text-center border" >
+            <th colspan="9" class="border">
+          <span style="font-size:20px;text-transform: uppercase;" *ngFor="let user of userData"> {{ user.company_name }}</span>
+            </th>
+          </tr>
+          <tr>
+            <th colspan="5" class="border" style="white-space: normal;">
+              Dispatch From: &nbsp;<span *ngFor="let user of userData">
+                {{ getAddress(user.company_name) }}
+              </span>
+              <!-- <p style="margin-left: 1%"><b>Supplier's Name: </b></p>
+              &nbsp;&nbsp;
+              <p *ngFor="let user of userData">{{ user.company_name }}</p> -->
+            </th>
+            <th colspan="1" class="border">GSTIN NO:</th>
+            <th colspan="3" class="border">
+              <span *ngFor="let user of userData">{{
+                getGst(user.company_name)
+              }}</span>
+            </th>
+          </tr>
+          <tr class="text-center border">
+            <th  colspan="9" class="border"><span style="font-size:20px">DELIVERY CHALLAN</span></th>
+          </tr>
+          <tr class="text-center border">
+            <th colspan="9" class="border">
+              (Issued under Rule 55 of Central Goods and Services Tax (CGST) Rules
+              2017)
+            </th>
+          </tr>
+          <tr>
+            <th colspan="5" class="border">
+              DC No. &nbsp;
+              <span *ngFor="let user of userData">{{ user.number }}</span>
+            </th>
+            <th class="border" colspan="1">Date:</th>
+            <th colspan="3" class="border">
+              <span *ngFor="let user of userData">{{
+                user.date | date: "dd-MM-yyyy"
+              }}</span>
+            </th>
+          </tr>
+          <tr>
+            <td colspan="4" class="border">
+              <p><b>To,</b></p>
+              <span *ngFor="let user of userData"  style="text-transform: uppercase;">
+                <b>{{ user.consignee_name }}</b>
+              </span><br/>
+              <span *ngFor="let user of userData">
+                <b>{{ user.consignee_address }}</b>
+              </span>
+            </td>
+            <th colspan="2" class="border">GSTIN NO:</th>
+            <th colspan="3 " class="border">
+              <span *ngFor="let user of userData"> {{ user.consignee_gst }}</span>
+            </th>
+          </tr>
+          <tr class="center text-center">
+            <th class="border" style="width: 20px;">SL No</th>
+            <th class="border" style="width: 20px;">HSN Code</th>
+            <th class="border" style="width: 20px;">Material Code</th>
+            <th class="border">Description of Goods</th>
+            <th class="border">UOM</th>
+            <th class="border">Quantity</th>
+            <th class="border">Unit Price</th> 
+            <th class="border">Basic Price</th>
+            <th class="border">Remarks</th>
+          </tr>
+          <tr *ngFor="let user of table">
+            <td class="border text-center" style="width: 20px;">
+              {{ user.line_item }}
+            </td>
+            <td class="border text-center" style="width: 20px;">
+              {{ user.hsn_code }}
+            </td>
+            <td class="border text-center" style="width: 20px;">
+              <span > {{ user.material_code }}</span>
+            </td>
+            <td class="border">
+              {{ user.description }}
+            </td>
+            <td class="border text-right">
+              {{ user.unit_of_measurement }}
+            </td>
+            <td class="border text-right">
+              {{ user.quantity }}
+            </td>
+            <td class="border text-center">
+              <span> {{ user.unit_price | number:'1.2-2'}}</span>
+            </td> <td class="border text-center">
+              <span> {{ user.basic_price | number:'1.2-2'}}</span>
+            </td>
+            <td class="text-left border" style="width: 140px;">
+              {{ user.remarks }}
+            </td>
+          </tr>
+          <tr class="border">
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border">Taxable Value</td>
+            <td class="border text-right">Rs.</td>
+            <td class="border text-right">
+              <span > {{ taxableValue | number:'1.2-2' }}</span>
+              <!-- <span
+                *ngFor="let user of userData"
+               
+              >
+                {{ user.basic_price }}</span
+              > -->
+            </td>
+            <td class="border" colspan="3"></td>
+          </tr>
+          <tr class="border">
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border">CGST</td>
+            <td class="border text-right">
+              <span *ngFor="let user of userData">{{ user.cgst}}</span>%
+            </td>
+            <td class="border text-right">
+              {{cGST | number:'1.2-2'}}
+            </td>
+            <td class="border" colspan="3"></td>
+          </tr>
+          <tr class="border">
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border">SGST</td>
+            <td class="border text-right">
+              <span *ngFor="let user of userData">{{ user.sgst }}</span>%
+            </td>
+            <td class="border text-right">
+              <span> {{ sGST | number:'1.2-2'}}</span>
+            </td>
+            <td class="border" colspan="3"></td>
+          </tr>
+          <tr class="border">
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border">IGST</td>
+            <td class="border text-right">
+              <span *ngFor="let user of userData">{{ user.igst }}</span>%
+            </td>
+            <td class="border text-right">
+              <span>{{ iGST | number:'1.2-2'}}</span>
+            </td>
+            <td class="border" colspan="3"></td>
+          </tr>
+          <tr>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border"></td>
+            <td class="border">TOTAL</td>
+            <td class="border text-right"></td>
+            <td class="border text-right">
+              <span> {{ totalValue | number:'1.2-2'}}</span>
+            </td>
+            <td class="border" colspan="3"></td>
+          </tr>
+          <tr class="text-left border">
+            <td colspan="9" class="border">
+              <b>DELIVERY ADDRESS:</b>
+              <!-- <span *ngFor="let user of userData">
+                {{ user.delivery_address }}</span
+              > -->
+            </td>
+          </tr>
+          <tr class="border">
+            <th colspan="9" class="border">
+              <p><b>To,</b></p>
+              <p *ngFor="let user of userData" style="text-transform: uppercase;">
+                <b>{{ user.consignee_name }}</b>
+              </p>
+              <p *ngFor="let user of userData">
+                <b>{{ user.consignee_address }}</b>
+              </p>
+            </th>
+          </tr>
+          <!-- <tr class="border">
+            <td colspan="8" class="border"></td>
+          </tr> -->
+          <tr *ngIf="!signStatus">
+            <th style="vertical-align: bottom !important" colspan="3" class="border paddingBot">
+              Received the above goods in good condition
+            </th>
+            <th colspan="3"  class="border" *ngFor="let item of SignData">
+              <img *ngIf="item.signature!==null" [src]="item.signature" class="sign-width" />
+              <p class="ml-1" *ngIf="item.signbtn===false&&item.signature===null">Need to be Signature</p>
+              <button type="button" class="btn btn-custom" *ngIf="item.signbtn===true&&item.signature===null"
+                (click)="getSignatureView(item,viewSignmodel)">Sign</button>
+              <p class="ml-1 ">{{item.updated_by}}</p>
+              <p class="ml-1 ">{{item.description}}</p>
+           </th>
+            <!-- <th  colspan="2"  class="border paddingTop">Prepared</th>
+            <th  class="border paddingTop" colspan="4">Authorized</th> -->
+          </tr>
+          <tr *ngIf="signStatus">
+            <th style="vertical-align: bottom !important" colspan="3" class="border paddingBot">
+              Received the above goods in good condition
+            </th>
+            <th  colspan="3"  class="border" *ngFor="let item of SignData">
+              <img [src]="item.signature" class="sign-width" />
+              <p class="ml-1 ">{{item.updated_by}}</p>
+              <p class="ml-1 ">{{item.description}}</p>
+            </th>
+          </tr>
+          <tr>
+            <th colspan="9" class="border text-center">Despatch Details</th>
+          </tr>
+          <tr>
+            <th colspan="4" class="border">Name of the Transporter</th>
+            <th colspan="5" class="border text-center">
+              <span *ngFor="let user of userData">{{
+                user.transporter_name
+              }}</span>
+            </th>
+          </tr>
+          <tr>
+            <th colspan="4" class="border">Vehicle No.</th>
+            <th colspan="5" class="border text-center">
+              <span *ngFor="let user of userData">
+                {{ user.vehicle_number }}</span
+              >
+            </th>
+          </tr>
+          <tr>
+            <th colspan="4" class="border">LR No.</th>
+            <th colspan="5" class="text-center border">
+              <span *ngFor="let user of userData">{{ user.lr_number }}</span>
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+</mat-card>
+<!-- model -->
+<ng-template #viewSignmodel>
+  <h1 mat-dialog-title>View Signature</h1>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-12 text-center">
+        <img [src]="Viewsign" class="sign-width" />
+      </div>
+    </div>
+  </div><br>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+    <button mat-button cdkFocusInitial (click)="SignatureFile()" class="matButton"
+      [disabled]="!Viewsign">Confirm</button>
+  </div>
+</ng-template>

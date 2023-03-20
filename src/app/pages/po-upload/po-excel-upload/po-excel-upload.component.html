@@ -1,0 +1,196 @@
+<!-- <div class="page-breadcrumb page-header">
+  <div class="row">
+    <div class="col-12 align-self-center">
+      <h4 class="page-title">{{ title }}</h4>
+    </div>
+  </div>
+</div> -->
+<mat-card>
+  <mat-card-content>
+    <form id="form">
+      <div class="row">
+        <div class="col-md-1">
+          <button type="button" mat-raised-button class="m-t-10 attachfile" color="secondary" (click)="clearData()">
+            Clear
+          </button>
+        </div>
+        <div class="col-md-1 ">
+          <button type="button" mat-raised-button class="m-t-10 attachfile" color="secondary"
+            (click)="uploadingselectedfiles()">
+            View
+          </button>
+        </div>
+        <div class="col-md-1">
+          <button type="button" mat-raised-button class="m-t-10 attachfile" color="secondary"
+            (click)="saveFinalTable()">
+            Save
+          </button>
+        </div>
+        <div class="col-md-1">
+          <button type="button" mat-raised-button class="m-t-10 attachfile" color="secondary"
+            (click)="autoFileUpload2.click()" [disabled]="!isAttachFileLength">
+            Attach File&nbsp;
+            <mat-icon style="cursor: pointer; font-size: 24px">file_upload</mat-icon>
+          </button>
+        </div>
+        <div class="col-md-8 downloadbtn">
+          <button mat-raised-button class="poexcelbtn m-2" (click)="exportExcelpoENum()">Download Template</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="file">
+            <input hidden class="form-control-file" name="file" type="file" multiple (change)="uploadpofiles($event)"
+              #autoFileUpload2 />
+
+            <ng-container *ngIf="fileUploadUrlspo.length > 0">
+             
+              <div *ngFor="let item of filenamearray1; let i = index">
+                <span><b>Selected File:</b></span>  {{ i + 1 }}.&nbsp;{{ item }}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="table">
+      <div class="table-responsive mat-table-wrapper">
+        <div class="example-table-container">
+          <table mat-table [dataSource]="dataSourcemaster">
+            <ng-container matColumnDef="sno">
+              <th mat-header-cell *matHeaderCellDef>SNO</th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                {{ i + 1 }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="company_name">
+              <th mat-header-cell *matHeaderCellDef style="width: 7%">
+                Company Name
+              </th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.company_name }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Date</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.date | date: "dd-MM-yyyy" }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="manual_purchase_order_number">
+              <th mat-header-cell *matHeaderCellDef>
+                Manual Purchase Order Number
+              </th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.manual_purchase_order_number }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="material_code">
+              <th mat-header-cell *matHeaderCellDef>Material Code</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.material_code }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="material_description">
+              <th mat-header-cell *matHeaderCellDef>Material description</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.material_description }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="uom">
+              <th mat-header-cell *matHeaderCellDef>Unit of Measurement</th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <span *ngIf="row.material_code !== ''">{{
+                  row.unit_of_measurement
+                  }}</span>
+                <select *ngIf="row.material_code === ''" class="dropdownstyles" [(ngModel)]="row.uom" name="uom{{ i }}">
+                  <option selected disabled>Select One</option>
+                  <option *ngFor="let item of unitDATA1" [ngValue]="item.code">
+                    {{ item.code }}
+                  </option>
+                </select>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="material_main_group">
+              <th mat-header-cell *matHeaderCellDef>Material Main Group</th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <span *ngIf="row.material_code !== ''">{{
+                  row.material_main_group
+                  }}</span>
+                <select *ngIf="row.material_code === ''" class="dropdownstyles" [(ngModel)]="row.maingroup"
+                  name="maingroup" (change)="selectedmaingroup(row, i + 1)">
+                  <option selected disabled>Select One</option>
+                  <option *ngFor="let item of maindata1" [ngValue]="item.description">
+                    {{ item.description }}
+                  </option>
+                </select>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="material_sub_group">
+              <th mat-header-cell *matHeaderCellDef>Material Sub Group</th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <span *ngIf="row.material_code !== ''">{{
+                  row.material_sub_group
+                  }}</span>
+                <div *ngIf="changedRow">
+                  <!-- <input
+                    *ngIf="row.material_code === ''"
+                    class="dropdownstyles"
+                    [(ngModel)]="row.subgroup"
+                    name="subgroup{{ i }}"
+                    [matAutocomplete]="auto4"
+                  />
+                  <mat-autocomplete
+                    autoActiveFirstOption
+                    #auto4="matAutocomplete"
+                    (optionSelected)="selectedmaingroup(row)"
+                  >
+                    <mat-option
+                      *ngFor="let item of subgroupdata[i + 1]"
+                      [value]="item.description"
+                    >
+                      {{ item.description }}</mat-option
+                    >
+                  </mat-autocomplete> -->
+                  <select *ngIf="row.material_code === ''" class="dropdownstyles" [(ngModel)]="row.subgroup"
+                    name="subgroup" (change)="selectedmaingroup(row, i + 1)">
+                    <option selected disabled>Select One</option>
+                    <option *ngFor="let item of subgroupdata[i + 1]" [ngValue]="item.description">
+                      {{ item.description }}
+                    </option>
+                  </select>
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef>Quantity</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.quantity }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="vendor_name">
+              <th mat-header-cell *matHeaderCellDef>Vendor Name</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.vendor_name }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Action</th>
+              <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.material_code !== ''"></span>
+                <button *ngIf="row.material_code === ''" mat-raised-button class="savebtn" type="button"
+                  (click)="onClick(row)" style="background-color: #8bd0e6">
+                  Create Material
+                </button>
+                <p *ngIf="row.material_code !== ''">Created</p>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

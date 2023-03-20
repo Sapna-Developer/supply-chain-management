@@ -1,0 +1,289 @@
+<mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms">
+    <mat-tab>
+        <ng-template mat-tab-label> User Companies </ng-template>
+        <ng-template matTabContent>
+            <mat-card>
+                <mat-card-content>
+                    <div class="row mb-2">
+                        <div class="col-0">
+                            <button mat-raised-button class="savebutton" 
+                                (click)="savefinaldata(finalsave)">
+                                Insert
+                            </button>
+                        </div>
+                        <div class="col-0" style="padding-left: 7px">
+                            <button mat-raised-button type="submit" (click)="clearCheckBox()" class="savebutton">
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <form #finalsave="ngForm" (ngSubmit)="savefinaldata(finalsave)">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label> User Name </label>
+                                <mat-form-field class="example-full-width" style="
+                      width: 100%;
+                      border: 1px solid rgba(0, 0, 0, 0.12);
+                      border-radius: 5px;
+                      height: 35px;
+                      " appearance="none">
+                                    <input type="text" placeholder="Search User " aria-label="Number"
+                                        style="border: none" class="inputdropdown" name="username"
+                                        [(ngModel)]="formdata.username" [formControl]="myControl" matInput
+                                        [matAutocomplete]="auto" (keyup)="filter($event.target.value)"/>
+                                    <button *ngIf="formdata.username" matSuffix mat-icon-button aria-label="Clear"
+                                        (click)="
+                                    formdata.username = '';
+                                    formdata.useremail='';
+                                    myControl.setValue(null);
+                                    getUserRoleDetails()
+                                    ">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="
+                                getUserDetails($event.option.value, 'user')
+                                ">
+                                        <mat-option *ngFor="let option of allUsers$"
+                                            [value]="option.username">
+                                            <span> {{ option.username }}</span> |
+                                            <small> {{ option.work_email }}</small>
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4">
+                                <label> User Email </label>
+                                <input type="text" class="inputstyles" name="useremail"
+                                    [(ngModel)]="formdata.useremail" />
+                            </div>
+                            <!-- <div class="col-md-4"> -->
+                                <!-- <label>Company Name</label>
+                                <mat-form-field class="selectC"  appearance="outline" style="font-size:12px; width:100%;">
+                                    <mat-select name="fromcompany"
+                                      placeholder="Selected Company List"
+                                      [(ngModel)]="formdata.companyname"
+                                      multiple
+                                    >
+                                      <mat-option
+                                        *ngFor="let item of companydata"
+                                        [value]="item.name"
+                                        >{{ item.name }}</mat-option
+                                      >
+                                    </mat-select>
+                                  </mat-form-field> -->
+                                <!-- <select class="dropdownstyles" name="fromcompany" [(ngModel)]="formdata.companyname">
+                                    <option selected disabled>Select One</option>
+                                    <option *ngFor="let item of companydata" [ngValue]="item.name">{{item.name}}
+                                    </option>
+                                </select> -->
+                            <!-- </div> -->
+                            <div class="col-md-4">
+                                 <label>Company Name</label>
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <!-- <mat-label>Company Name </mat-label> -->
+                                    <mat-chip-list #chipList> 
+                                        <mat-chip *ngFor="let menu of selectedMenus$" [selectable]="selectable" [removable]="removable"
+                                            (removed)="remove(menu)">
+                                            {{menu}}
+                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                        </mat-chip>
+                                        <input placeholder="Search Company Name..." name="menuControl" #menuInput [formControl]="menuControl"  [(ngModel)]="formdata.companyname"
+                                        (keyup)="getCompaniesData($event)"    [matAutocomplete]="auto1" [matChipInputFor]="chipList"  required>
+                                    </mat-chip-list>
+                                    <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selected($event)">
+                                        <mat-option *ngFor="let menu of companydata" [value]="menu.name">
+                                            {{menu.name}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                    </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                    <br />
+
+                    <ng-container>
+                        <div class="row p-t-10">
+                            <div class="col-12 col-md-12">
+                                <div class="table-responsive mat-table-wrapper">
+                                    <div class="example-table-container tabledivs">
+                                        <table>
+                                            <thead class="text-center headerclass">
+                                                <tr class="tablestyles">
+                                                    <th class="border text-center"
+                                                        style="width: 6px;">
+                                                        S.NO
+                                                    </th>
+                                                    <th class="border text-center" style="width: 10px">
+                                                        User Name
+                                                    </th>
+                                                    <th class="border text-center" style="width: 5px">
+                                                        Email
+                                                    </th>
+                                                    <th class="border text-center" style="width: 5px">
+                                                        Company Name
+                                                    </th>
+                                                    <th class="border text-center" style="width: 5px">
+                                                        Action
+
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr *ngFor="let item of tableData; index as i">
+                                                    <td class="border text-center" style="line-height: 50px">
+                                                        {{ i + 1 }}
+                                                    </td>
+                                                    <td class="border">
+                                                        {{item.user_name}}
+                                                        <!-- {{ userMenu[i] }} -->
+                                                    </td>
+                                                  <td class="border">
+                                                    {{item.user_email}}
+                                                  </td>
+                                                  <td class="border">
+                                                    {{item.company_name}}
+                                                  </td>
+                                                  <td class="border text-center">
+                                                    <i class="fa fa-trash trash" (click)="delCompanyData(item)"></i>
+                                                  </td>
+                                                   
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </mat-card-content>
+            </mat-card>
+        </ng-template>
+    </mat-tab>
+    <!-- <mat-tab>
+        <ng-template mat-tab-label> List </ng-template>
+        <ng-template matTabContent>
+            <ng-container>
+                <div class="row m-t-10">
+                    <div class="col-md-12 col-12">
+                        <div class="table table-responsive" mat-table-wrapper>
+                            <div class="example-table-container">
+                                <table mat-table [dataSource]="dataSourceList">
+                                    <ng-container matColumnDef="sno">
+                                        <th mat-header-cell *matHeaderCellDef style="width: 8%">
+                                            SNO
+                                        </th>
+                                        <td mat-cell *matCellDef="let row; let i = index">
+                                            {{
+                                            i +
+                                            1 +
+                                            purcreqpaginator.pageIndex * purcreqpaginator.pageSize
+                                            }}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="username">
+                                        <th mat-header-cell *matHeaderCellDef style="width: 24%">
+                                            User Name
+                                        </th>
+                                        <td mat-cell *matCellDef="let row">{{ row.user_name }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="usermail">
+                                        <th mat-header-cell *matHeaderCellDef>User Email</th>
+                                        <td mat-cell *matCellDef="let row">{{ row.user_email }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="module">
+                                        <th mat-header-cell *matHeaderCellDef style="width: 13%">
+                                            Module
+                                        </th>
+                                        <td mat-cell *matCellDef="let row">{{ row.module }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="menu">
+                                        <th mat-header-cell *matHeaderCellDef>Menu</th>
+                                        <td mat-cell *matCellDef="let row">{{ row.menu }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="action">
+                                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                                        <td mat-cell *matCellDef="let row" class="text-center">
+                                            {{ row.action }}
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsList; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsList"></tr>
+                                </table>
+                                <div *ngIf="reaData == true" class="text-center">
+                                    <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                        Loading...
+                                    </h4>
+                                    <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                        No Records Found
+                                    </h4>
+                                </div>
+                                <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                    [pageSizeOptions]="[5, 10, 25, 50, 75, 100]" #purcreqpaginator
+                                    (page)="onpageevent($event)">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-template>
+    </mat-tab> -->
+</mat-tab-group>
+<ng-template #addmenuDialog>
+    <div mat-dialog-title class="dialog-title">
+        <div class="row">
+            <div class="col-11">
+                <h2>Add Items</h2>
+            </div>
+            <div class="col-1">
+                <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon"
+                    (click)="closedialogdata()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <form #myaddform="ngForm" (ngSubmit)="binddatatotable(myaddform)">
+            <div class="row">
+                <div class="col-md-2">
+                    <label style="font-size: 17px">Menu</label>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="example-full-width matformfieldstyles" appearance="none">
+                        <input type="text" placeholder="Search Menu Number" aria-label="Number" matInput
+                            style="border: none" class="inputdropdown" name="menu" [(ngModel)]="dialogdata.menu"
+                            (keyup)="getMenuData($event)" [matAutocomplete]="auto4" />
+
+                        <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete"
+                            (optionSelected)="selectedmenuVALUE()">
+                            <mat-option *ngFor="let item of userMenu" [value]="item.menu">
+                                {{ item.menu }}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-2">
+                    <label style="font-size: 17px">Action</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" name="action" [(ngModel)]="dialogdata.action">
+                        <option>Add</option>
+                        <option>Delete</option>
+                        <option>Edit</option>
+                        <option>View</option>
+                    </select>
+                </div>
+                <br />
+                <div class="vertical-center">
+                    <button mat-raised-button class="savebutton" [disabled]="!dialogdata.action">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-dialog-content>
+</ng-template>

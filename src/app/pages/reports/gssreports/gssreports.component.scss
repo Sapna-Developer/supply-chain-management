@@ -1,0 +1,57 @@
+.dropdownstyles{
+    width:100%;
+    padding:5px;
+    margin:5px;
+    border-radius: 5px;
+    border:1px solid rgba(0,0,0,0.12);
+    height: 35px;
+}
+.inputstyles{
+    width:100%;
+    padding:10px;
+    margin:5px;
+    border-radius: 5px;
+    border:1px solid rgba(0,0,0,0.12);
+height: 35px;
+}
+.mandetory{
+    color:red;
+    font-size: 17px;
+  }
+.dropdownstyles:hover{
+    border:1px solid #000;
+}
+.inputstyles:hover{
+    border:1px solid #000;
+}
+label{
+    padding:10px;
+}
+table{
+    text-align: center;
+    // vertical-align:middle;
+}
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    color:white;
+    background-color: rgba(0, 0, 0);
+    // border: 5px solid orange
+    }
+    .tableclass{
+        max-height:60vh;
+        overflow-y: auto;
+        // overflow-x: hidden;
+      }
+      .headerstyles{
+        position: sticky;
+        top: -2px;
+        background: #e9ecef;
+      }
+::ng-deep .selectC .mat-form-field-appearance-outline .mat-form-field-flex {
+height: 38px !important;
+}
+::ng-deep .selectC .mat-form-field-infix {
+    padding: 0.5rem 0 !important;
+    }
+table tr th, table tr td {
+    border: 1px solid #e5dfdf !important;
+    }

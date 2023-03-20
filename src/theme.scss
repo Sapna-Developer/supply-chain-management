@@ -1,0 +1,41 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+
+// define a real custom palette (using http://mcg.mbitson.com)
+$bv-brand: (50: #f1f7e5,
+    100: #dceabf,
+    200: #c4dd95,
+    300: #abcf69,
+    400: #98c546,
+    // 500: #86bc1b,
+    500:#62beda,
+    600: #75AC12,
+    700: #619903,
+    800: #4c8500,
+    900: #226400,
+    A100: #c4e5bd,
+    A200: #9dd592,
+    A400: #51b941,
+    A700: #038c00,
+    contrast: (50: $black-87-opacity,
+        100: $black-87-opacity,
+        200: $black-87-opacity,
+        300: $black-87-opacity,
+        400: $black-87-opacity,
+        500: white,
+        600: white,
+        700: white,
+        800: white,
+        900: white,
+        A100: $black-87-opacity,
+        A200: $black-87-opacity,
+        A400: $black-87-opacity,
+        A700: white,
+    ));
+
+$my-app-primary: mat-palette($bv-brand);
+$my-app-accent: mat-palette($mat-pink, 500, 900, A100);
+$my-app-warn: mat-palette($mat-deep-orange);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+@include angular-material-theme($my-app-theme);

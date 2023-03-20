@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Create Ticket</h1>
+<form #ticketForm="ngForm">
+    <div mat-dialog-content>
+
+
+        <mat-form-field class="example-full-width w-100" appearance="outline" [floatLabel]="'always'"
+            [floatLabel]="'always'">
+            <mat-label>Severity</mat-label>
+            <mat-select name="shiftId" [(ngModel)]="ticketDetails.severity" name="severity" required>
+                <mat-option *ngFor="let shift of securityType$;" [value]="shift.value">
+                    {{shift.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width w-100" appearance="outline" [floatLabel]="'always'"
+            [floatLabel]="'always'">
+            <mat-label>Department</mat-label>
+            <mat-select name="shiftId" [(ngModel)]="ticketDetails.dept_code" name="dept_code" required>
+                <mat-option *ngFor="let shift of dept$;" [value]="shift.code">
+                    {{shift.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width w-100" appearance="outline" [floatLabel]="'always'"
+            [floatLabel]="'always'">
+            <mat-label>Subject</mat-label>
+            <input matInput placeholder="Enter Subject" required [(ngModel)]="ticketDetails.subject" name="subject">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width w-100" appearance="outline" [floatLabel]="'always'"
+            [floatLabel]="'always'">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Enter description" name="description" required rows="5"
+                [(ngModel)]="ticketDetails.description"> </textarea>
+        </mat-form-field>
+
+    </div>
+    <div mat-dialog-actions class="float-right text-right">
+        <button mat-button [mat-dialog-close]="true" class="m-r-20">Close</button>
+        <button mat-button cdkFocusInitial [disabled]="ticketForm.invalid" (click)="saveTicket()"
+            color="primary">SAVE</button>
+    </div>
+</form>

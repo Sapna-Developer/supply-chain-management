@@ -1,0 +1,446 @@
+<h1 mat-dialog-title class="w-full">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="/assets/greenko/new-logo.svg" width="150" alt="homepage" class="dark-logo">
+        </div>
+        <div class="col-md-8">
+            MATERIAL INSPECTION CUM GOODS RECEIPT NOTE
+        </div>
+        <div class="col-md-1">
+            <button mat-icon-button value="Close" cdkFocusInitial mat-dialog-close align="end" matTooltip="Close"
+                class="custom-icon-button float-right">
+                <span class="material-icons">
+                    close
+                </span>
+
+            </button>
+        </div>
+
+    </div>
+
+
+</h1>
+<div mat-dialog-content>
+    <div class="row border border-dashed p-10">
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="doc_ref_no" class="text-muted">Doc Ref No:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="doc_ref_no" [(ngModel)]="goodsObj.doc_ref_no" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="doc_date" class="text-muted">Date:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" type="date" name="doc_date" [(ngModel)]="goodsObj.doc_date" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="plant_code" class="text-muted">Plant Code :</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="plant_code" [(ngModel)]="goodsObj.plant_code" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="plant_name" class="text-muted">Plant Name:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="plant_name" [(ngModel)]="goodsObj.plant_name" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="grn_no" class="text-muted">GRN No:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="grn_no" [(ngModel)]="goodsObj.grn_no" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="grn_date" class="text-muted">Date:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" type="date" name="grn_date" [(ngModel)]="goodsObj.grn_date" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="gate_entry_no" class="text-muted">Gate Entry No:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="gate_entry_no" [(ngModel)]="goodsObj.gate_entry_no" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="gate_entry_date" class="text-muted">Gate Entry Date:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" type="date" name="gate_entry_date"
+                        [(ngModel)]="goodsObj.gate_entry_date" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 text-left col-12 ">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="supplier_name" class="text-muted">Supplier's Name:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    {{goodsObj.supplier_name}}
+                    <!-- <textarea class="form-control" rows="5" name="supplier_name"
+                        [(ngModel)]="goodsObj.supplier_name"> </textarea> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 text-left col-12">
+
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="po_no" class="text-muted">P.O.No:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="po_no" [(ngModel)]="goodsObj.po_no" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="po_date" class="text-muted">PO Date:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" type="date" name="po_date" [(ngModel)]="goodsObj.po_date" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="invoice_no" class="text-muted">Invoice No:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="invoice_no" [(ngModel)]="goodsObj.invoice_no" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="invoice_date" class="text-muted">Invoice Date:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" type="date" name="invoice_date" [(ngModel)]="goodsObj.invoice_date" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="dc_no" class="text-muted">DC No:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="dc_no" [(ngModel)]="goodsObj.dc_no" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="no_of_pkgs" class="text-muted">No of Packages:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="no_of_pkgs" [(ngModel)]="goodsObj.no_of_pkgs" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="dc_date" class="text-muted">DC Date: </label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" type="date" name="dc_date" [(ngModel)]="goodsObj.dc_date" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="transporter_name" class="text-muted">Transporter Name:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="transporter_name" [(ngModel)]="goodsObj.transporter_name" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="vehicle_no" class="text-muted">Vehicle No: </label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="vehicle_no" [(ngModel)]="goodsObj.vehicle_no" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="lr_no" class="text-muted">LR No & Date:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="lr_no" [(ngModel)]="goodsObj.lr_no" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 text-left col-12">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="eway_bill_no" class="text-muted">E-Waybill No: </label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input class="form-control" name="eway_bill_no" [(ngModel)]="goodsObj.eway_bill_no" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="table-responsive m-t-0" style="clear: both;">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>SNO#</th>
+                            <th>Item</th>
+                            <th>Description</th>
+                            <th>UOM</th>
+                            <th>Invoice / DC Qty</th>
+                            <th>Received Qty</th>
+                            <th>Accepted Qty</th>
+                            <th>Rejected Qty</th>
+                            <th>Shortage / Damage Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of items$;let i=index">
+                            <td>{{i+1}}</td>
+                            <td>
+                                {{item.item_name}}
+
+                            </td>
+                            <td>
+                                {{item.item_desc}}
+
+                            </td>
+                            <td>
+                                {{item.item_uom}}
+
+                            </td>
+                            <td>
+                                {{item.item_qty}}
+                            </td>
+                            <td class="text-right">
+                                <input class="form-control" name="received_qty" type="text"
+                                    [(ngModel)]="item.received_qty" />
+                            </td>
+                            <td class="text-right">
+                                <input class="form-control" name="accepted_qty" type="text"
+                                    [(ngModel)]="item.accepted_qty" />
+                            </td>
+
+                            <td class="text-right">
+                                <input class="form-control" name="rejected_qty" type="text"
+                                    [(ngModel)]="item.rejected_qty" />
+                            </td>
+
+                            <td class="text-right">
+                                <input class="form-control" name="damage_qty" type="text"
+                                    [(ngModel)]="item.damage_qty" />
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-6 text-left col-12 ">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="store_remarks" class="text-muted">Store Remarks:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <textarea class="form-control" rows="5" name="store_remarks"
+                        [(ngModel)]="goodsObj.store_remarks"> </textarea>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 text-left col-12 ">
+            <div class="form-group row">
+                <div class="col-12 col-md-3">
+                    <label for="inspection_remarks" class="text-muted">Inspection Remarks:</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <textarea class="form-control" rows="5" name="inspection_remarks"
+                        [(ngModel)]="goodsObj.inspection_remarks"> </textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 text-center col-12 m-t-30">
+            <ng-container *ngIf="goodsObj.prepared && goodsObj.prepared.name">
+                <p class="text-left"><span class="text-muted">Name :</span> {{goodsObj.prepared.name}}</p>
+                <p class="text-left"><span class="text-muted">Email :</span> {{goodsObj.prepared.email}}</p>
+                <img [src]="goodsObj.prepared.signature" class="sign-width" />
+            </ng-container>
+            <ng-container *ngIf="!goodsObj.prepared ||  !goodsObj.prepared.name">
+                <button mat-icon-button value="Sign" matTooltip="Sign" (click)="openSign('prepared_by',signDialog)">
+                    <span class="material-icons">
+                        edit
+                    </span>
+                </button>
+                <br />
+                <br />
+            </ng-container>
+
+            <p>
+                Prepared By
+                Signatory
+            </p>
+        </div>
+
+        <div class="col-md-4 text-center col-12 m-t-30">
+            <ng-container *ngIf="goodsObj.inspected && goodsObj.inspected.name">
+                <p class="text-left"><span class="text-muted">Name :</span> {{goodsObj.inspected.name}}</p>
+                <p class="text-left"><span class="text-muted">Email :</span> {{goodsObj.inspected.email}}</p>
+                <img [src]="goodsObj.inspected.signature" class="sign-width" />
+            </ng-container>
+            <ng-container *ngIf="!goodsObj.inspected || !goodsObj.inspected.name">
+                <button mat-icon-button value="Sign" matTooltip="Sign" (click)="openSign('inspected_by',signDialog)">
+                    <span class="material-icons">
+                        edit
+                    </span>
+                </button>
+                <br />
+                <br />
+            </ng-container>
+
+            <p>
+                Inspected By
+
+            </p>
+        </div>
+
+        <div class="col-md-4 text-center col-12 m-t-30">
+            <ng-container *ngIf="goodsObj.authorized && goodsObj.authorized.name">
+                <p class="text-left"><span class="text-muted">Name :</span> {{goodsObj.authorized.name}}</p>
+                <p class="text-left"><span class="text-muted">Email :</span> {{goodsObj.authorized.email}}</p>
+                <img [src]="goodsObj.authorized.signature" class="sign-width" />
+
+            </ng-container>
+            <ng-container *ngIf="!goodsObj.authorized || !goodsObj.authorized.name">
+                <button mat-icon-button value="Sign" matTooltip="Sign" (click)="openSign('authorized',signDialog)">
+                    <span class="material-icons">
+                        edit
+                    </span>
+                </button>
+                <br />
+                <br />
+            </ng-container>
+            <p>
+                Authorized
+            </p>
+        </div>
+
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button mat-raised-button color="primary" class="m-r-20" (click)="updateFile()">Update</button>
+    <button mat-raised-button cdkFocusInitial mat-dialog-close>Close</button>
+</div>
+
+
+
+<ng-template #signDialog>
+    <form class="example-form" #signForm="ngForm">
+        <h1 mat-dialog-title class="w-full">Sign Details
+            <button mat-icon-button mat-raised-button (click)="closeSign()" cdkFocusInitial align="end" value="Close"
+                matTooltip="Close" class="custom-icon-button float-right">
+                <span class="material-icons">
+                    close
+                </span>
+
+            </button>
+        </h1>
+        <div mat-dialog-content>
+
+            <mat-form-field class="example-full-width w-full" appearance="outline">
+                <mat-label>Full Name</mat-label>
+                <input matInput placeholder="Enter Full Name" [(ngModel)]="signDetails.name" required name="name">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width w-full" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Enter Your Email" [(ngModel)]="signDetails.email" required name="email">
+            </mat-form-field>
+
+            <mat-label>Sign *</mat-label>
+            <div class="border">
+
+                <signature-pad [options]="signaturePadOptions">
+                </signature-pad>
+            </div>
+
+
+
+
+        </div>
+        <div mat-dialog-actions align="end">
+            <button mat-button mat-raised-button color="primary" class="m-r-20" type="button"
+                [disabled]="signForm.invalid" (click)="saveSign()">Save</button>
+            <button mat-raised-button cdkFocusInitial (click)="closeSign()">Close</button>
+        </div>
+    </form>
+</ng-template>

@@ -1,0 +1,217 @@
+<!-- <div class="row">
+  <div class="col-6">
+    <div class="row1">
+      <div class="col-6 border">
+        <h6 style="padding-top: 9px; font-size: large">
+          <b>Bunk Request Slip</b>
+        </h6>
+      </div>
+    </div>
+  </div>
+</div> -->
+<mat-card>
+  <div class="print" style="margin-left: 53px">
+    <button
+      [print]="['demo', config]"
+      class="btn btn-info"
+      style="margin-right: 1%; margin-left: 1%"
+    >
+      Print
+    </button>
+    <button (click)="backtodmr()" class="btn btn-info">Back</button>
+  </div>
+  <div class="formbody" id="demo">
+    <div
+      class="container-fluid justify-content-center"
+      style="margin-top: -24px"
+    >
+      <div class="row">
+        <table class="table table-bordered">
+          <tr class="text-center">
+            <td colspan="6" class="border">
+              <div class="row justify-content-center text-center">
+                <div class="col">
+                  <h3><b>BUNK REQUEST SLIP</b></h3>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="text-center">
+            <td colspan="6" class="border">
+              <div class="row justify-content-center text-center">
+                <div class="col">
+                  <h5 *ngFor="let user of userData">
+                    <b>{{ user.vendor_name }}</b>
+                  </h5>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="1" class="border">
+              <div class="row">
+                <p>
+                  <span><b>DATE </b> </span>
+                </p>
+              </div>
+            </td>
+            <td colspan="1" class="border">
+              <div class="row">
+                <p>
+                  <span *ngFor="let user of userData">{{
+                    user.date | date: "dd-MM-yyyy"
+                  }}</span>
+                </p>
+              </div>
+            </td>
+            <td colspan="1" class="border">
+              <div class="row">
+                <p>
+                  <span><b>COMPANY NAME </b> </span>
+                </p>
+              </div>
+            </td>
+            <td colspan="3" class="border">
+              <div class="row">
+                <p>
+                  <span *ngFor="let user of userData">{{
+                    user.company_name
+                  }}</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6" class="border"></td>
+          </tr>
+          <tr>
+            <td colspan="1" class="border">
+              <div class="row">
+                <p>
+                  <span><b>REQUEST NO </b> </span>
+                </p>
+              </div>
+            </td>
+            <td colspan="1" class="border">
+              <div class="row">
+                <p>
+                  <span *ngFor="let user of userData">{{ user.number }}</span>
+                </p>
+              </div>
+            </td>
+            <td colspan="1" class="border">
+              <div class="row">
+                <p>
+                  <span><b>CONTRACTOR NAME </b> </span>
+                </p>
+              </div>
+            </td>
+            <td colspan="3" class="border">
+              <div class="row">
+                <p>
+                  <span *ngFor="let user of userData">{{
+                    user.contractor_name
+                  }}</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6" class="border"></td>
+          </tr>
+
+          <tr>
+            <td colspan="1" class="border">
+              <div class="row">
+                <p>
+                  <span><b>REQUEST TYPE </b> </span>
+                </p>
+              </div>
+            </td>
+            <td colspan="1" class="border">
+              <div class="row">
+                <p>
+                  <span *ngFor="let user of userData">{{
+                    user.request_type
+                  }}</span>
+                </p>
+              </div>
+            </td>
+            <td colspan="1" class="border">
+              <div class="row">
+                <p>
+                  <span><b>VEHICLE NUMBER </b> </span>
+                </p>
+              </div>
+            </td>
+            <td colspan="3" class="border">
+              <div class="row">
+                <p>
+                  <span *ngFor="let user of userData">{{
+                    user.vehicle_number
+                  }}</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6" class="border"></td>
+          </tr>
+          <tr class="center">
+            <th scope="col" class="border" style="width: 100px">SLNO.</th>
+            <th scope="col" class="border">MATERIAL DESCRIPTION</th>
+            <th scope="col" class="border">UOM</th>
+            <th scope="col" class="border">REQUEST QUANTITY</th>
+            <th scope="col" class="border">FILLED QUANTITY</th>
+            <!-- <th scope="col" class="border">REMARKS</th> -->
+          </tr>
+
+          <tr scope="row" *ngFor="let user of table; let i = index">
+            <td class="center border">{{ i + 1 }}</td>
+            <!-- <td class="border">{{ user.material_code }}</td> -->
+            <td class="border">{{ user.material_description }}</td>
+            <td class="center border">{{ user.unit_of_measurement }}</td>
+            <td class="right border">
+              {{ user.quantity.toFixed(2) }}
+            </td>
+            <td class="right border"></td>
+          </tr>
+
+          <!-- <td colspan="1" class="border"></td> -->
+        </table>
+        <!-- <div class="row-12 border" style="margin-top: 174px">
+          <div class="col-6 text-left">
+            <p>Prepared by Signature</p>
+          </div>
+        </div> -->
+      </div>
+      <div
+        class="border"
+        style="margin-top: -17px; margin-right: -10px; margin-left: -10px"
+      >
+        <div class="row" style="margin-top: 174px; padding-left: 18px">
+          <div class="col-8">
+            <p>
+              Prepared by Signature
+              <!-- <span *ngFor="let user of userData">{{
+                user.vehicle_number
+              }}</span> -->
+            </p>
+          </div>
+          <div class="col-4">Receiver Signature</div>
+        </div>
+        <div class="row" style="margin-top: 104px; padding-left: 18px">
+          <div class="col-8">
+            <p>
+              Security Signature
+              <!-- <span *ngFor="let user of userData">{{
+                user.vehicle_number
+              }}</span> -->
+            </p>
+          </div>
+          <div class="col-4">Filling Station Signature</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

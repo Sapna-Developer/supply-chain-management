@@ -1,0 +1,165 @@
+<div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Single Material Stock</h4>
+            <!-- <div class="d-flex align-items-center m-t-10">
+                <span class="m-r-20">Start Date : {{startDate | date}} </span>
+                <span>End Date : {{endDate | date}} </span>
+            </div> -->
+        </div>
+    </div>
+</div>
+<mat-card >
+    <mat-card-content>
+        <!-- <p>Total Price: {{getTotal()}}</p> -->
+        <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button "
+        (click)="addsms(smsmodel)" style="margin-left: 95%">
+        <span class="material-icons">
+            add
+        </span>
+    </button>
+    <div style="margin-top:8px;margin-left:2%" *ngIf="smsdata">
+        <div>
+            <h2 style="font-weight: 400;font-size: 18px;">Material:&nbsp; <span class="spanstyles">{{selectematcode}}</span></h2>
+            <h2 style="font-weight: 400;font-size: 18px;">Total Quantity:&nbsp; <span class="spanstyles">{{total}}</span></h2>
+            <h2 style="font-weight: 400;font-size: 18px;">Total Value: &nbsp; <span class="spanstyles">{{totalvalue | number:'1.2-2'}}</span></h2>
+        </div>
+        <table >
+            <thead>
+                <tr class="tablestyles">
+                    <th>Company Name</th>
+                    <th>Storage Location</th>
+                    <th>
+                        Valuation Type
+                    </th>
+                    <th>
+                    Quantity
+                 </th>
+                 <th>Value</th>
+                </tr>
+            </thead> 
+            <tbody>
+                <tr *ngFor="let item of smsdata" >
+                    <td style="width: 28%;">{{item.company_name}}</td>
+                   <td>{{item.storage_location}}</td> 
+                   <td>{{item.valuation_type}}</td>
+                   <td>{{item.quantity}}</td>
+                   <td>{{item.value | number:'1.2-2'}}</td>
+                </tr>
+            </tbody>
+         </table>
+  <!-- <mat-accordion cdkDropList >
+    <mat-expansion-panel *ngFor="let item of smsdata;let i=index" cdkDrag
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-weight:bold">{{item.company_name}}</mat-panel-title>
+       
+      </mat-expansion-panel-header>
+      
+      <ng-container >
+
+        <mat-accordion>
+          <mat-expansion-panel 
+            (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{item.storage_location }}</mat-panel-title>
+            
+            </mat-expansion-panel-header>
+           
+            <table>
+               <thead>
+                   <tr>
+                       <th>
+                           Valuation Type
+                       </th>
+                       <th>
+                       Quantity
+                    </th>
+                   </tr>
+               </thead> 
+               <tbody>
+                   <tr>
+                      <td>{{item.storage_location}}</td> 
+                      <td>{{item.quantity}}</td>
+                   </tr>
+               </tbody>
+            </table>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+      </ng-container>
+
+    </mat-expansion-panel>
+
+  </mat-accordion> -->
+        </div>
+
+
+
+    </mat-card-content>
+</mat-card>
+<ng-template #smsmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Single Material Stock</h2>
+        <button mat-icon-button aria-label="close dialog" class="closeicon"
+            (click)="closemodel()" style="border:none;background:none;margin-top: -9%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content style="overflow: initial;">
+        <form #goodsform="ngForm" (ngSubmit)="saveformdata(goodsform)">
+    <div class="row">
+        <div class="col-md-4">
+            <label style="margin-top: 7%;">Material Code/Description</label>
+        </div>
+        <div class="col-md-4">
+            <!-- <select class="dropdownstyles" name="dmrnumber" [(ngModel)]="model.dmrnumber" (change)="selecteddmr()">
+                <option selected disabled>Select One</option>
+               <option *ngFor="let item of dmrDATA" [ngValue]="item.number">{{item.number}}</option>
+              
+            </select> -->
+            <!-- <mat-form-field style="width:182%">
+                <mat-select placeholder="Select DMR" [(ngModel)]="selectematcode" [ngModelOptions]="{standalone: true}" multiple (selectionChange)="getselecteddata()">
+                    <mat-option *ngFor="let item of masterData" [value]="item.system_reference_1" >
+                        {{item.system_reference_1}}
+                    </mat-option>
+                </mat-select>
+              
+            </mat-form-field> -->
+            <mat-form-field class="example-full-width" style="width: 159%;
+            border: 1px solid;
+            border-radius: 5px;
+            height: 70%;" appearance="none">
+                            <input type="text" placeholder="Search Material Code/Name " aria-label="Number" matInput
+                                style="border:none;margin-top: -7px;" class="inputdropdown" name="selectematcode"
+                                [(ngModel)]="selectematcode" (keyup)="getmaterialDATA($event)"
+                                [matAutocomplete]="auto4" />
+
+                            <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete"
+                                (optionSelected)="selectedmastergroup()">
+
+                                <mat-option *ngFor="let item of masterData" [value]="item.system_reference_1">
+                                    {{item.system_reference_1}}</mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+           
+        </div>
+        <!-- <div class="col-md-2">
+            <label>Date</label>
+        </div>
+        <div class="col-md-4">
+            <input type="date" style="height:110%;text-transform: uppercase;" class="inputstyles" name="dateee"
+                            [(ngModel)]="model1.dateee" dateFormat="yyyy/mm/dd">
+        </div> -->
+      
+     </div><br>
+   
+    <button  class="savebutton" style="width: 13%;">Proceed</button>
+    </form>
+    </mat-dialog-content>
+
+</ng-template>

@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Ticket Details</h1>
+<div mat-dialog-content>
+    <h3> {{ticketObj.project}}</h3>
+
+
+    <mat-list>
+        <mat-list-item>
+            <p mat-line class="text-muted">Ticket ID</p>
+            <h3 mat-line>{{ticketObj.ticket_number}}</h3>
+        </mat-list-item>
+
+        <mat-list-item class="m-t-10">
+            <p mat-line class="text-muted">DEPT Code</p>
+            <h3 mat-line>{{ticketObj.dept_code}}</h3>
+        </mat-list-item>
+
+        <mat-list-item class="m-t-10">
+            <p mat-line class="text-muted">Severity</p>
+            <h3 mat-line>{{ticketObj.severity}}</h3>
+        </mat-list-item>
+
+        <mat-list-item class="m-t-10">
+            <p mat-line class="text-muted"> Subject</p>
+            <h3 mat-line>{{ticketObj.subject}}</h3>
+        </mat-list-item>
+
+        <mat-list-item class="m-t-10">
+            <p mat-line class="text-muted">Created Date</p>
+            <h3 mat-line>{{ticketObj.created_date | date}}</h3>
+        </mat-list-item>
+        <mat-list-item class="m-t-10">
+            <p mat-line class="text-muted">Created By</p>
+            <h3 mat-line>{{ticketObj.username }}</h3>
+        </mat-list-item>
+        <mat-list-item class="m-t-10">
+            <p mat-line class="text-muted">Description</p>
+            <!-- <p mat-line>{{ticketObj.description }}</p> -->
+            <p matLine> <span style="white-space: pre-wrap;" [innerHTML]="ticketObj.description"></span></p>
+        </mat-list-item>
+
+
+    </mat-list>
+
+
+</div>
+<div mat-dialog-actions class="float-right text-right">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>CLOSE</button>
+</div>

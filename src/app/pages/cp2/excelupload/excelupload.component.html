@@ -1,0 +1,352 @@
+<div class="page-breadcrumb page-header">
+    <div class="row">
+      <div class="col-12 align-self-center"> 
+        <h4 class="page-title">{{ title }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="excel-tab">
+    <mat-tab-group
+      [backgroundColor]="'primary'"
+      animationDuration="0ms"
+      #tabGroup
+      [(selectedIndex)]="demo1TabIndex">
+      <mat-tab>
+        <ng-template mat-tab-label>Excel Upload </ng-template>
+        <ng-template matTabContent>
+          <mat-card>
+            <mat-card-content>
+              <form id="form">
+                <div class="row">
+                  <div class="col-md-1">
+                    <button type="button" mat-raised-button class="m-t-10 attachfile" color="secondary" (click)="clearData()">
+                      Clear
+                    </button>
+                  </div>
+                  <div class="col-md-1 ">
+                    <button type="button" mat-raised-button class="m-t-10 attachfile" color="secondary"
+                      (click)="uploadingselectedfiles()">
+                      View
+                    </button>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" mat-raised-button class="m-t-10 attachfile" color="secondary"
+                      (click)="saveFinalTable()">
+                      Save
+                    </button>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" mat-raised-button class="m-t-10 attachfile" color="secondary"
+                      (click)="autoFileUpload2.click()" [disabled]="!isAttachFileLength">
+                      Attach File&nbsp;
+                      <mat-icon style="cursor: pointer; font-size: 24px">file_upload</mat-icon>
+                    </button>
+                  </div>
+                  <div class="col-md-8 downloadbtn">
+                    <button mat-raised-button class="poexcelbtn m-2" (click)="exportExcelpoENum()">Download Template</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="file">
+                      <input hidden class="form-control-file" name="file" type="file" multiple (change)="uploadpofiles($event)"
+                        #autoFileUpload2 />
+          
+                      <ng-container *ngIf="fileUploadUrlspo.length > 0">
+                       
+                        <div *ngFor="let item of filenamearray1; let i = index">
+                          <span><b>Selected File:</b></span>  {{ i + 1 }}.&nbsp;{{ item }}
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </form>
+          
+              <div class="table">
+                <div class="table-responsive mat-table-wrapper">
+                  <div class="example-table-container">
+                    <table mat-table [dataSource]="dataSourcemaster">
+                      <ng-container matColumnDef="sno">
+                        <th mat-header-cell *matHeaderCellDef>SNO</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                          {{ i + 1 }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="company_name">
+                        <th mat-header-cell *matHeaderCellDef style="width: 7%">
+                          Company Name
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.company_name }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef>Date</th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.date | date: "dd-MM-yyyy" }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="manual_purchase_order_number">
+                        <th mat-header-cell *matHeaderCellDef>
+                          Manual Purchase Order Number
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.manual_purchase_order_number }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="material_code">
+                        <th mat-header-cell *matHeaderCellDef>Material Code</th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.material_code }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="material_description">
+                        <th mat-header-cell *matHeaderCellDef>Material description</th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.material_description }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="uom">
+                        <th mat-header-cell *matHeaderCellDef>Unit of Measurement</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                          <span *ngIf="row.material_code !== ''">{{
+                            row.unit_of_measurement
+                            }}</span>
+                          <select *ngIf="row.material_code === ''" class="dropdownstyles" [(ngModel)]="row.uom" name="uom{{ i }}">
+                            <option selected disabled>Select One</option>
+                            <option *ngFor="let item of unitDATA1" [ngValue]="item.code">
+                              {{ item.code }}
+                            </option>
+                          </select>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="material_main_group">
+                        <th mat-header-cell *matHeaderCellDef>Material Main Group</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                          <span *ngIf="row.material_code !== ''">{{
+                            row.material_main_group
+                            }}</span>
+                          <select *ngIf="row.material_code === ''" class="dropdownstyles" [(ngModel)]="row.maingroup"
+                            name="maingroup" (change)="selectedmaingroup(row, i + 1)">
+                            <option selected disabled>Select One</option>
+                            <option *ngFor="let item of maindata1" [ngValue]="item.description">
+                              {{ item.description }}
+                            </option>
+                          </select>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="material_sub_group">
+                        <th mat-header-cell *matHeaderCellDef>Material Sub Group</th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                          <span *ngIf="row.material_code !== ''">{{
+                            row.material_sub_group
+                            }}</span>
+                          <div *ngIf="changedRow">
+                            <!-- <input
+                              *ngIf="row.material_code === ''"
+                              class="dropdownstyles"
+                              [(ngModel)]="row.subgroup"
+                              name="subgroup{{ i }}"
+                              [matAutocomplete]="auto4"
+                            />
+                            <mat-autocomplete
+                              autoActiveFirstOption
+                              #auto4="matAutocomplete"
+                              (optionSelected)="selectedmaingroup(row)"
+                            >
+                              <mat-option
+                                *ngFor="let item of subgroupdata[i + 1]"
+                                [value]="item.description"
+                              >
+                                {{ item.description }}</mat-option
+                              >
+                            </mat-autocomplete> -->
+                            <select *ngIf="row.material_code === ''" class="dropdownstyles" [(ngModel)]="row.subgroup"
+                              name="subgroup" (change)="selectedmaingroup(row, i + 1)">
+                              <option selected disabled>Select One</option>
+                              <option *ngFor="let item of subgroupdata[i + 1]" [ngValue]="item.description">
+                                {{ item.description }}
+                              </option>
+                            </select>
+                          </div>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.quantity }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="vendor_name">
+                        <th mat-header-cell *matHeaderCellDef>Vendor Name</th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.vendor_name }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let row">
+                          <span *ngIf="row.material_code !== ''"></span>
+                          <button *ngIf="row.material_code === ''" mat-raised-button class="savebtn" type="button"
+                            (click)="onClick(row)" style="background-color: #62bed7">
+                            Create Material
+                          </button>
+                          <p *ngIf="row.material_code !== ''">Created</p>
+                        </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label> List </ng-template>
+          <ng-template matTabContent>
+            <mat-card>
+              <mat-card-content>
+                <ng-container>
+                  <div class="row p-t-10">
+                    <div class="col-12 col-md-12">
+                      <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                      <div class="table-responsive mat-table-wrapper">
+                        <div class="example-table-container">
+                          <table mat-table [dataSource]="dataSourcemain">
+                            <ng-container matColumnDef="sno">
+                              <th mat-header-cell *matHeaderCellDef style="width: 6%">
+                                SNO#
+                              </th>
+                              <td mat-cell *matCellDef="let row; let i = index">
+                                {{
+                                i +
+                                1 +
+                                masterpaginator.pageIndex *
+                                masterpaginator.pageSize
+                                }}
+                              </td>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="PO_number">
+                              <th mat-header-cell *matHeaderCellDef>PO Number</th>
+                              <td mat-cell *matCellDef="let row">
+                                {{ row.number }}
+                              </td>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="Date">
+                              <th mat-header-cell *matHeaderCellDef>Date</th>
+                              <td mat-cell *matCellDef="let row">
+                                {{ row.date | date: "dd/MM/yyyy HH:mm" }}
+                              </td>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="company_Name">
+                              <th mat-header-cell *matHeaderCellDef>
+                                Company Name
+                              </th>
+                              <td mat-cell *matCellDef="let row">
+                                {{ row.company_name }}
+                              </td>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="vendor_name">
+                              <th mat-header-cell *matHeaderCellDef style="width: 24%">Vendor Name</th>
+                              <td mat-cell *matCellDef="let row">
+                                {{ row.vendor_name }}
+                              </td>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="action">
+                              <th mat-header-cell *matHeaderCellDef style="width: 19%">
+                                Action
+                              </th>
+                              <td mat-cell *matCellDef="let row" class="text-center">
+                                <!-- <button mat-icon-button style="margin-left:-11%"
+                                                                aria-label="Example icon button with a vertical three dot icon"
+                                                                (click)="editsaveddata(row);tabGroup.selectedIndex = 0">
+                                                                <mat-icon>edit</mat-icon>
+                                                            </button> -->
+                                <div class="mb-0">
+                                  <!-- <mat-icon style="border:none;background: none;cursor: pointer;"
+                                    (click)="editpodata(row,Editmodel)"
+                                    [ngClass]="row.dmr_status === 'COMPLETED' ? 'disabled' : 'enabled'">edit</mat-icon> -->
+                                  <mat-icon style="color: red; border: none; background: none;cursor: pointer;"
+                                    (click)="deleteItem(row, deleteItemModel)">delete</mat-icon>&nbsp;
+                                  <!-- <mat-icon (click)="printdmr(row)" style="cursor:pointer;"> local_printshop</mat-icon>
+                                  &nbsp; -->
+                                 
+                                  <!-- <mat-icon (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                    style="cursor:pointer;font-size:24px">file_upload</mat-icon> -->
+                                </div>
+                                <!-- </button> -->
+                                <!-- <button
+                                  class="savebutton"
+                                  style="
+                                    margin-left: 1%;
+                                    height: 21px;
+                                    padding-right:33px;
+                                    font-size: 93%;
+                                  "
+                                  aria-label="Example icon button with a vertical three dot icon"
+                                  (click)="printdmr(row)"
+                                >
+                                  Print
+                                </button>&nbsp;
+                                <i class="fa fa-paperclip" aria-hidden="true" (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                                            style="cursor:pointer;font-size:16px"></i> -->
+                              </td>
+                            </ng-container>
+    
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+                          </table>
+                        </div>
+                        <div *ngIf="reaData == true" class="text-center">
+                          <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                            Loading...
+                          </h4>
+                          <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                            No Records Found
+                          </h4>
+                        </div>
+                        <mat-paginator [length]="totalRecords" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                          #masterpaginator (page)="onpageevent($event)">
+                        </mat-paginator>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </mat-card-content>
+            </mat-card>
+            </ng-template>
+        </mat-tab>
+        </mat-tab-group>
+   </div>
+   <ng-template #deleteItemModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+      <p>Are you sure, you want to delete record?</p>
+      <div class="row">
+        <div class="col-md-2">
+          <label style="padding-top:5px;">Reason</label>
+        </div>
+        <div class="col-md-4">
+          <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+            [(ngModel)]="deletemodel.reason" style="width: 181%;">
+        </div>
+      </div>
+    </div><br>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+      <button mat-button cdkFocusInitial (click)="deleteFile()" class="matButton" [disabled]="!deletemodel.reason">
+        Delete
+      </button>
+    </div>
+  </ng-template>
+

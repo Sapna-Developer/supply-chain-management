@@ -1,0 +1,114 @@
+<mat-card class="p-0">
+    <mat-card-header>
+
+        <div class="row p-t-10 w-100">
+            <!-- <div class="col-md-4 col-12">
+                <p>{{tableData$.length}} Records</p>
+            </div> -->
+            <div class="col-md-3 col-12">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Indent Ref Number</mat-label>
+                    <input matInput placeholder="Search with ref no#">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-12">
+                <mat-form-field>
+                    <mat-label>Select Indent Stage</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let food of stages$" [value]="food.value">
+                            {{food.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 col-12">
+                <button mat-raised-button color="primary">Search</button>
+            </div>
+            <div class="col-md-3 col-12 text-right p-r-20">
+                <button mat-icon-button value="Refresh" matTooltip="Refresh" class="custom-icon-button">
+                    <span class="material-icons">
+                        refresh
+                    </span>
+                </button>
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <ng-container>
+
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar>
+                    <div class="table-responsive mat-table-wrapper">
+                        <div class="example-table-container">
+                            <table mat-table [dataSource]="tableData$">
+
+
+                                <ng-container matColumnDef="ref_no">
+                                    <th mat-header-cell *matHeaderCellDef>Ref No#</th>
+                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                        {{i+1}}
+
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="confirmation_id">
+                                    <th mat-header-cell *matHeaderCellDef>Confirmation ID</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.ticket_number}}
+
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="initiated_on">
+                                    <th mat-header-cell *matHeaderCellDef>Initiated On</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.subject}}
+                                    </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="comments">
+                                    <th mat-header-cell *matHeaderCellDef>Comments</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.description | slice:0:50 }}...
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+                                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                                    <td mat-cell *matCellDef="let row">{{row.ticket_status}}</td>
+                                </ng-container>
+
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                            </table>
+                        </div>
+
+
+                        <ng-container *ngIf="tableData$.length > 0; then loadPlanData; else noRecords"></ng-container>
+
+                        <ng-template #loadPlanData>
+                            <mat-paginator *ngIf="tableData$.length > 0" [length]="totalRecords"
+                                [pageSize]="recordsPerPage" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                                (page)="pageChanged($event)">
+                            </mat-paginator>
+                        </ng-template>
+
+                        <ng-template #noRecords>
+                            <div *ngIf="tableData$.length <= 0" class="text-center">
+                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                    Loading...
+                                </h4>
+                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                    No Data Found
+                                </h4>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </mat-card-content>
+</mat-card>

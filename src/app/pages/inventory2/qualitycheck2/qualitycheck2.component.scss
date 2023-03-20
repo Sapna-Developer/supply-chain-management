@@ -1,0 +1,253 @@
+.row {
+    margin-bottom: 10px;
+}
+
+.inputstyles {
+    width: 89%;
+    height: 58%;
+    border-radius: 5px;
+    // border-width: thin; 
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    height: 35px;
+}
+
+.closeicon {
+    float: right;
+    margin-top: -6%;
+}
+
+.dropdownstyles {
+    width: 100%;
+    padding: 7px;
+    // height: 110%;
+    border-radius: 5px;
+    background-color: #fff !important;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    height: 35px;
+
+}
+
+.savebutton {
+    // margin-left: 43%;
+    margin-top: 3%;
+    height: 40px;
+    // width: 11%;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    outline: none;
+    // border: 1px solid;
+    background-color: rgba(0, 0, 0, 0.12);
+    font-size: medium;
+}
+
+.searchfield {
+    padding: 0.375rem 0.75rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    outline: none;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    // -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+}
+
+label {
+    font-weight: 450;
+    padding-top: 5px;
+}
+
+.matButton {
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    overflow: visible;
+}
+
+.inputstyles:hover {
+    border: 2px solid #000;
+}
+
+.nguntouched:hover {
+    border: 2px solid #000;
+}
+
+.dropdownstyles:hover {
+    border: 2px solid #000;
+
+}
+
+.savebutton:hover {
+    background-color: whitesmoke;
+
+}
+
+.input1 {
+    height: 130%;
+    width: 89%;
+    border-radius: 5px;
+    border-width: thin;
+}
+
+.input2 {
+    height: 73%;
+    width: 107%;
+    border-radius: 5px;
+    border-width: thin;
+}
+
+.input1:hover {
+    width: 87%;
+    height: 130%;
+    border-radius: 5px;
+    border: 2px solid #000;
+}
+
+.input2:hover {
+    width: 107%;
+    height: 73%;
+    border-radius: 5px;
+    border: 2px solid #000;
+
+}
+
+.inputdropdown {
+    height: 102%;
+    border: none;
+    margin-bottom: 3%;
+    margin-top: -37%;
+    margin-left: 4%;
+}
+
+.inputstyles {
+    padding: 16px;
+    width: 100%;
+    //margin-top:5px;
+    border-radius: 5px;
+    // border:1px solid #b0b0b0;
+}
+
+.swal-wide {
+    width: 300px !important;
+}
+
+th {
+    font-weight: 500;
+}
+
+.tablestyles {
+    background: #e9ecef;
+    font-weight: 600;
+    height: 53px;
+}
+
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    color: white;
+    background-color: rgba(0, 0, 0);
+    // border: 5px solid rgb(11, 11, 11)
+}
+
+table,
+th,
+td {
+    border: 1px solid #e5dfdf;
+    text-align: center;
+}
+
+.closeicon {
+    float: right;
+    margin-top: -6%;
+}
+
+.attachfile {
+    // margin-top: 3%;
+    background-color: rgba(0, 0, 0, 0.12);
+    height: 38px;
+}
+
+.mandetory {
+    color: red;
+    font-size: 17px;
+}
+
+.dialogdata {
+    height: 20vh;
+    overflow-y: scroll;
+}
+
+.tablediv {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.activitylog {
+    font-size: 16px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+}
+
+.headerclass {
+    position: sticky;
+    top: -2px;
+    background: #e9ecef;
+}
+
+th.mat-header-cell {
+    text-align: center !important;
+}
+
+// th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
+//     padding-left: 0 !important;
+// }
+
+td.mat-cell {
+    padding: 5px !important;
+}
+
+table tr td:nth-child(3),
+table tr td:nth-child(9) {
+    white-space: nowrap;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}

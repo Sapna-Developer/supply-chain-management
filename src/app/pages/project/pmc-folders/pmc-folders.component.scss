@@ -1,0 +1,160 @@
+.inputstyles{
+    width: 71%;
+    height: 162%;
+    border-radius: 5px;
+    height: 207%;
+    border-width: thin;  
+}
+.inputstyles:hover{
+    border: 2px solid #000; 
+   
+ }
+ .card {
+    border-radius: 4px;
+}
+.h4Title{
+    margin-top: -16px;
+}
+.savebutton {
+    margin-left: 43%;
+    margin-top: 3%;
+    // margin-bottom: 10%;
+    height: 40px;
+    width: 10%;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-size: medium;
+}
+
+.sendbutton {
+    padding: 6px 13px;
+    border: none;
+    color: #fff;
+    margin-bottom: 15px;
+    margin-left: 20px;
+}
+.page-header {
+    background: #62beda;
+    // background: linear-gradient(to right, #96c93d, #00b09b);
+    padding-bottom: 30px !important;
+    color: white;
+    margin: -20px -20px 20px -20px;
+
+    .page-title {
+        font-size: 18px;
+    }
+
+    li {
+        color: #fff;
+    }
+}
+
+.create-ticket {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    background: #fff;
+    color: #000;
+}
+
+
+.wbs-images {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 99;
+}
+
+.folder-delete {
+    position: absolute;
+    right: 20px;
+    top: 30px;
+    z-index: 99;
+}
+
+.istyles {
+    padding: 5px;
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+    border-radius: 5px;
+    border: 1px solid #b0b0b0;
+
+}
+
+.istyles:hover {
+    border: 2px solid #000;
+}
+
+.mat-dialog-content {
+    overflow-y: hidden !important;
+}
+
+.border {
+    border: none;
+    border-bottom: 1px solid #adadad;
+}
+.table thead  th {
+    border-bottom: 2px solid #e9ecef;
+    vertical-align: middle;
+    text-align: center;
+}
+.table tbody tr td,.table tbody tr th{
+    vertical-align: middle;
+}
+.table tbody tr th{
+    white-space: unset;
+}
+.table th, .table td{
+    padding: 5px !important;
+}
+.matformfieldstyles {
+    font-size: 9px;
+    width: 100%;
+    // left: 5px;
+}
+
+.inputdropdown1 {
+    border: none;
+    font-size: 14px;
+    margin-top: -3px;
+
+}
+.tStatic{
+    max-height: 250px;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+.tSticky{
+    width: 100% !important;
+}
+.tStatic  .tSticky thead{
+position: sticky;
+z-index: 100;
+top: 0;
+}
+.tSticky thead tr th:nth-child(2){
+    width: 100%;
+   max-width: 200px;
+   min-width: 220px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    color: #4f5467 !important;
+    background-color: #e9ecef !important;
+    // text-align: justify;
+}
+.tSticky tbody tr td:nth-child(2){
+    text-align: left;
+    }
+.sendMail:disabled{
+    cursor: not-allowed;
+}
+.selectdrawing{
+    height: 14px;
+    cursor: pointer;
+    width: 14px;
+}

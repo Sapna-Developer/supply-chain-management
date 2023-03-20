@@ -1,0 +1,517 @@
+<div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Vendor Bunk Request</h4>
+        </div>
+    </div>
+</div>
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Vendor Bunk Request
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <form #myform="ngForm" (ngSubmit)="savefinaldata(myform)">
+                            <div class="row ml-1 mb-2">
+                                <div class="col-md-1">
+                                    <button mat-raised-button type="submit" class="btn savebutton"
+                                    style="background-color: rgba(0, 0, 0, 0.12);float: right;border: none;"
+                                    color="secondary">{{btnSaveUpdate}}</button>
+                                </div>
+                                <div class="col-md-1">
+                                    <button
+                                    type="button"
+                                    mat-raised-button
+                                    class="attachfile"
+                                    color="secondary"
+                                    (click)="autoFileUpload2.click()"
+                                  >
+                                    Attach File&nbsp;  <mat-icon 
+                                    style="cursor:pointer;font-size:24px">file_upload</mat-icon></button>
+                                    <div class="file">
+                                      <input hidden class="form-control-file" name="file" type="file" multiple
+                                      (change)="uploadvbrfiles($event)" #autoFileUpload2  >
+                                      <ng-container *ngIf=" fileUploadUrlsvbr.length > 0">
+                                        <div *ngFor="let item of filenamearray1;let i=index;">{{i+1}}.&nbsp;{{item}}</div>
+                                      <!-- <span style="margin-left:3px">Selected : {{fileurls.length}} files</span>   -->
+                                      </ng-container>         
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label>Company Name<span class="mandetory">*</span></label>
+                                    <mat-form-field class="dropdown" appearance="outline" class="matformfieldstyles" >
+                                        <input type="text" class="inputdropdown" placeholder="Search company Name"
+                                            aria-label="Number" matInput name="company_name"
+                                            [(ngModel)]="formdata.company_name" (keyup)="filterCompanydata($event)"
+                                            [matAutocomplete]="auto3" style=" font-size: 14px;
+                                            margin-top: -5px;margin-bottom: -1px;">
+                                        <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete"
+                                            (optionSelected)="getCompanyDetails()">
+                                            <mat-option *ngFor="let item of companyMasterData" [value]="item.name">
+                                                {{item.name}}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-2">
+                                    <label>Company Code<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" placeholder="Company Code"
+                                        [(ngModel)]="formdata.company_code" name="company_code">
+                                </div>
+                               
+                                <div class="col-3">
+                                    <label>Posting Date<span class="mandetory">*</span></label>
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                    dateFormat="yyyy/mm/dd" [(ngModel)]="formdata.posting_date" name="posting_date">
+                                </div>
+                                <div class="col-3" *ngIf="this.editdataa.number">
+                                    <label>Refference Number<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" placeholder="Refference Number"
+                                    [(ngModel)]="formdata.reference_number" name="reference_number">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                              
+                                <div class="col-4">
+                                    <label>Vendor Name<span class="mandetory">*</span></label>
+                                    <mat-form-field class="dropdown" appearance="outline" class="matformfieldstyles">
+                                        <input type="text" class="inputdropdown" placeholder="Search Vendor Name"
+                                            aria-label="Number" matInput name="vendor_name"
+                                            [(ngModel)]="formdata.vendor_name" (keyup)="filterVendorData($event)"
+                                            [matAutocomplete]="auto2" style=" font-size: 14px;
+                                            margin-top: -5px;margin-bottom: -1px;">
+                                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete"
+                                            (optionSelected)="getVendorDetails()">
+                                            <mat-option *ngFor="let item of vendormasterData" [value]="item.name">
+                                                {{item.name}}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                            
+                                <div class="col-2">
+                                    <label>Vendor Code<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" placeholder="Vendor Code"
+                                        [(ngModel)]="formdata.vendor_code" name="vendor_code">
+                                </div>
+                                <div class="col-3">
+                                    <label>Purchase Order Number<span class="mandetory">*</span></label>
+                                    <mat-form-field class="dropdown" appearance="outline" class="matformfieldstyles">
+                                        <input type="text" class="inputdropdown" placeholder="Search PO Number"
+                                            aria-label="Number" matInput name="purchase_order_number"
+                                            [(ngModel)]="formdata.purchase_order_number"
+                                            (keyup)="filterPurchaseOrderData($event)" [matAutocomplete]="auto4" style=" font-size: 14px;
+                                            margin-top: -5px;margin-bottom: -1px;">
+                                        <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete">
+                                            <mat-option *ngFor="let item of purchaseOrderData" [value]="item.number">
+                                                {{item.number}}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-3">
+                                    <label>Purchase Order Date<span class="mandetory">*</span></label>
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                        dateFormat="yyyy/mm/dd" [(ngModel)]="formdata.Purchase_Order_Date"
+                                        name="Purchase_Order_Date">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-4">
+                                    <label>Contractor Name<span class="mandetory">*</span></label>
+                                    <mat-form-field class="dropdown" appearance="outline" class="matformfieldstyles">
+                                        <input type="text" class="inputdropdown" placeholder="Search Contractor Name"
+                                            aria-label="Number" matInput [(ngModel)]="formdata.contractor_name" name="contractor_name" (keyup)="filtercontractordata($event)"
+                                            [matAutocomplete]="auto5" style=" font-size: 14px;
+                                            margin-top: -5px;margin-bottom: -1px;">
+                                        <mat-autocomplete autoActiveFirstOption #auto5="matAutocomplete"
+                                            (optionSelected)="selectedcontractor()">
+
+                                            <mat-option *ngFor="let item of contractorData"
+                                                [value]="item.name">
+                                                {{item.name}}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                    <!-- <input type="text" class="inputstyles" placeholder="Contractor Name"
+                                        [(ngModel)]="formdata.contractor_name" name="contractor_name"> -->
+                                </div>
+                            
+                                <div class="col-2">
+                                    <label>Vehicle Number<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" placeholder="Vehicle Number"
+                                        [(ngModel)]="formdata.vehicle_number" name="vehicle_number">
+                                </div>
+                                <div class="col-3">
+                                    <label>Receiver Name<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" placeholder="Receiver Name"
+                                        [(ngModel)]="formdata.receiver_name" name="receiver_name">
+                                </div>
+                                <div class="col-3">
+                                    <label>Contact Number<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" placeholder="Contact Number"
+                                        [(ngModel)]="formdata.contact_number" name="contact_number"
+                                        (keypress)="validateNumber($event)">
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-4">
+                                    <label>Department<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" placeholder="Department"
+                                        [(ngModel)]="formdata.department" name="department">
+                                </div>
+                                <div class="col-2">
+                                    <label>Request Type<span class="mandetory">*</span></label>
+                                    <select class="dropdownstyles" [(ngModel)]="formdata.request_type"
+                                        name="request_type">
+                                        <option selected disabled>Select One</option>
+                                        <option>Internal</option>
+                                        <option>External</option>
+                                    </select>
+                                </div>
+                               
+                            </div>
+                       
+
+
+                            <ng-container>
+                                <div class="row p-t-10">
+                                    <div class="col-12 col-md-12">
+                                        <div class="table-responsive mat-table-wrapper">
+                                            <table class="table table-bordered">
+                                                <thead class="bgClr">
+                                                    <tr>
+                                                        <!-- <th>Line Item</th> -->
+                                                        <th>Material Description</th>
+                                                        <th>Material Code</th>
+                                                        <th>Unit of Measurement</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <!-- <td>
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput placeholder="Enter text"
+                                                                    name="line_item" [(ngModel)]="tabledata.line_item"
+                                                                    (keypress)="validateNumber($event)" />
+                                                            </mat-form-field>
+                                                        </td> -->
+                                                        <td>
+                                                            <mat-form-field class="dropdown" style="width: 99%; border-radius: 5px;
+                                                            height: 42%;margin-left: 2%;">
+                                                                <input type="text" class="inputdropdown"
+                                                                    placeholder="Search Service Code/Name"
+                                                                    aria-label="Number" matInput name="mat_desc"
+                                                                    [(ngModel)]="tabledata.mat_desc"
+                                                                    (keyup)="filterMaterialData($event)"
+                                                                    [matAutocomplete]="auto">
+                                                                <mat-autocomplete autoActiveFirstOption
+                                                                    #auto="matAutocomplete"
+                                                                    (optionSelected)="getmaterialDetails()">
+                                                                    <mat-option *ngFor="let item of materialMasterData"
+                                                                        [value]="item.description">
+                                                                        {{item.description}}</mat-option>
+                                                                </mat-autocomplete>
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput placeholder="Enter text" name="mat_code"
+                                                                    [(ngModel)]="tabledata.mat_code" />
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput placeholder="Enter text" name="uom"
+                                                                    [(ngModel)]="tabledata.uom" />
+                                                            </mat-form-field>
+                                                        </td>
+                                                        <td>
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput placeholder="Enter text" name="quantity"
+                                                                    [(ngModel)]="tabledata.quantity"
+                                                                    (keypress)="validateNumber($event)" />
+                                                            </mat-form-field>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </form>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                List
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <ng-container>
+                            <div class="row m-t-10">
+                                <div class="col-md-12 col-12">
+                                    <div class="table table-responsive" mat-table-wrapper>
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourceList"  style="width:100%;overflow-x: scroll;">
+                                                <ng-container matColumnDef="sno" style="width:4%">
+                                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">{{(i+1) +
+                                                        (bunkreqpaginator.pageIndex *
+                                                        bunkreqpaginator.pageSize)}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="number">
+                                                    <th mat-header-cell *matHeaderCellDef>Number</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.number}}</td>
+                                                </ng-container>
+        
+                                                <ng-container matColumnDef="date">
+                                                    <th mat-header-cell *matHeaderCellDef>Date</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.date | date:'yyyy.mm-dd'}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="company_name">
+                                                    <th mat-header-cell *matHeaderCellDef>Company Name</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.company_name}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="company_code">
+                                                    <th mat-header-cell *matHeaderCellDef>Company Code</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.company_code}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="vendor_name">
+                                                    <th mat-header-cell *matHeaderCellDef>Vendor Name</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.vendor_name}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="vendor_code">
+                                                    <th mat-header-cell *matHeaderCellDef>Vendor Code</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.vendor_code}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="purchase_order_number">
+                                                    <th mat-header-cell *matHeaderCellDef>PO Number</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.purchase_order_number}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="purchase_order_date">
+                                                    <th mat-header-cell *matHeaderCellDef>PO Date</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.purchase_order_date}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="contractor_name">
+                                                    <th mat-header-cell *matHeaderCellDef>Contractor Name</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.contractor_name}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="vehicle_number">
+                                                    <th mat-header-cell *matHeaderCellDef>Vehicle Number</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.vehicle_number}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="receiver_name">
+                                                    <th mat-header-cell *matHeaderCellDef>Receiver Name</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.receiver_name}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="contact_number">
+                                                    <th mat-header-cell *matHeaderCellDef>Contact Number</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.contact_number}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="material_code">
+                                                    <th mat-header-cell *matHeaderCellDef>Material Code</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.material_code}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="material_description">
+                                                    <th mat-header-cell *matHeaderCellDef>Material Description</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.material_description}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="unit_of_measurement">
+                                                    <th mat-header-cell *matHeaderCellDef>UOM</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.unit_of_measurement}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
+                                                    <td mat-cell *matCellDef="let row" class="text-center">
+                                                        <div class="mb-0 ">
+                                                            <mat-icon style="border:none;background: none;cursor: pointer;"
+                                                                (click)="editvBunkReqdata(row,Editmodel)">edit</mat-icon>&nbsp;
+                                                            <mat-icon
+                                                                style="color: red;border:none;background: none;cursor: pointer;"
+                                                                (click)="deleteBunkReqData(deleteModel,row)">delete</mat-icon>
+                                                            &nbsp;
+                                                            <mat-icon (click)="printvbr(row)" style="cursor:pointer;"> local_printshop</mat-icon>&nbsp;          
+                                                            &nbsp;
+                                                            <mat-icon (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                                            style="cursor:pointer;font-size:24px">file_upload</mat-icon>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumnsList;sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsList"></tr>
+        
+                                            </table>
+                                            <div *ngIf="reaData==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                    [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #bunkreqpaginator
+                                    (page)="onpageevent($event)">
+                                </mat-paginator>
+                                </div>
+                            </div>
+                        </ng-container>
+                        </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Activity Log
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <!-- <h2 *ngIf="logdata" class="activitylog">Activity Log</h2> -->
+                        <div class="tablediv" *ngIf="logdata">
+                            <table>
+                                <thead style="background: #e9ecef" class="text-center headerclass">
+                                    <!-- <tr> -->
+                                    <th>SNO</th>
+                                    <th style="padding: 10px">User Name</th>
+                                    <th>Created Date</th>
+                                    <th>Reference Number</th>
+                                    <th>Description</th>
+                                    <th>Reason</th>
+                                    <th>Action</th>
+                                    <!-- </tr> -->
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr *ngFor="let item of logdata; let i = index">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ item.username }}</td>
+                                        <td style="white-space: nowrap;">{{ item.date_time | date: "dd-MM-yyyy HH:mm:ss"
+                                            }}</td>
+                                        <td>{{ item.reference_number }}</td>
+                                        <td>{{ item.description }}</td>
+                                        <td>{{ item.reason }}</td>
+                                        <td>
+                                            {{ item.action }}
+                                            <!-- <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                                                 aria-label="Example icon button with a vertical three dot icon"
+                                                  >
+                                                   <mat-icon>delete</mat-icon>
+                                                   </button> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
+<ng-template #deleteModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <h4>{{deleteNumber}}</h4>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" (click)="closeDialog()" style="background: transparent;">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteItem()" class="matButton">Delete</button>
+    </div>
+</ng-template>
+<ng-template #fileuploadmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Vendor Bunk Request: {{vbrnumber}}</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon"
+            (click)="closemodel()" style="border:none;background:none;margin-top: -9%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+   <div  mat-dialog-content class="row">
+    <div *ngIf="filedata">
+    <!-- <span *ngFor="let item of filedata"> -->
+   <!-- <span *ngFor="let item of filedata"> <a href="{{item.file_path}}">{{item.file_path}}</a></span> -->
+   <!-- <h4>View File:&nbsp;&nbsp; <i class="fas fa-eye text-cyan m-r-20 " 
+    style="cursor: pointer;" (click)="viewDoc(item)"></i></h4> -->
+    <table>
+        <thead style="background: #e9ecef;">
+            <!-- <tr> -->
+                <th>Cread By</th>
+                <th>Created Date</th>
+                <th>File Name</th>
+                <th>Action</th>
+            <!-- </tr> -->
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of filedata">
+                <td>{{item.created_by}}</td>
+                <td>{{item.created_date}}</td>
+                <td >{{item.file_name}} &nbsp;&nbsp;&nbsp;<i class="fas fa-eye text-cyan m-r-20 " 
+                    style="cursor: pointer;" title="View File" (click)="viewDoc(item)"></i></td>
+                    <td>
+                        <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                           aria-label="Example icon button with a vertical three dot icon"
+                            (click)="deleterowfile(deletefileModel,item)">
+                             <mat-icon>delete</mat-icon>
+                             </button>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <a style="cursor: pointer;" (click)="viewDoc(item)">{{item.file_name}}</a> -->
+  <!-- </span> -->
+  </div>
+   </div><br>
+  <button mat-raised-button type="button" (click)="autoFileUpload1.click()">Attach File</button>
+  <div class="file">
+  <input hidden class="form-control-file" name="file" type="file" multiple
+  (change)="uploadWbsFile($event);showContent(i);" #autoFileUpload1 />
+  <ng-container *ngIf="fileUploadUrls.length>0">
+    <div *ngFor="let item of filenamearray;let i=index;">{{i+1}}.&nbsp;{{item}}</div>
+
+  <!-- <span >{{createNewFile.fileName}}</span>   -->
+  </ng-container>         
+  </div>
+  </ng-template>
+  <ng-template #deletefileModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete file?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" >Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteexistingfile()" class="matButton">Delete</button>
+    </div>
+  </ng-template>
+  <ng-template #Editmodel>
+    <h1 mat-dialog-title></h1>
+    <div mat-dialog-content>
+<div class="row">
+    <div class="col-md-2">
+        <label style="padding-top:5px;">Reason</label>
+    </div>
+    <div class="col-md-4">
+        <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+  [(ngModel)]="editModel.reason" style="width: 181%;">  
+    </div>
+</div>
+</div><br>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close class="matButton" >Close</button>&nbsp;
+    <button mat-button cdkFocusInitial (click)="saveeditreason()" class="matButton"
+    [disabled]="!editModel.reason">Submit</button>
+</div>
+</ng-template>

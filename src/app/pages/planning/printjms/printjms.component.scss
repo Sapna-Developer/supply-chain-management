@@ -1,0 +1,31 @@
+.printjms{
+    background-color: #fff;
+}
+.logo img{
+    width:150px !important;
+}
+.paddng{
+    padding:2px;
+}
+.head h2{
+    text-decoration: underline;
+}
+table tr,th{
+    text-align: center;
+    vertical-align: middle;
+}
+.border tr,th,td{
+    border:1px solid #000
+}
+.Annexure h2{
+    text-decoration: underline;
+}
+@media print{
+    .Annexure{
+        page-break-before:always;;
+        display:block
+    }
+    .print{
+        display:none;
+    }
+}

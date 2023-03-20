@@ -1,0 +1,347 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">GSS Reports</h4>
+        </div>
+    </div>
+</div> -->
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Gate Inward List
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <form id="form">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>From Date<span class="mandetory">*</span></label>
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                    dateFormat="yyyy/mm/dd" [(ngModel)]="inwardfromdate" name="inwardfromdate">
+                                </div>
+                               
+                                <div class="col-md-2">
+                                    <label>To Date<span class="mandetory">*</span></label>
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                    dateFormat="yyyy/mm/dd" [(ngModel)]="inwardtodate" name="inwardtodate">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Company Name<span class="mandetory">*</span></label>
+                                    <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                                        <mat-select placeholder="Selected Company List" [(ngModel)]="inwardcompanyname" name="inwardcompanyname"
+                                            multiple>
+                                            <mat-option *ngFor="let item of companyData" [value]="item.company_name">{{
+                                                item.company_name }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            <!-- </div>
+                        
+                            <div class="row justify-content-center"> -->
+                                <div class="col-md-1 mt-5 ">
+                                    <!-- <label>DOWNLOAD XL</label> -->
+                                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <button mat-raised-button class="downloadbtn float-right" type="button"
+                                        (click)="getInwardReport()" style="background-color: rgba(0, 0, 0, 0.12);">
+                                        VIEW
+                                    </button>
+                                </div>
+                                <div class="col-md-1 ">
+                                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <button mat-raised-button class="downloadbtn" type="button"
+                                        (click)="clearForminward()" style="background-color: rgba(0, 0, 0, 0.12);">
+                                        RESET
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row" *ngIf="inwardReportTable">
+                            <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelinward()"
+                            style="border: none;background-color: #62beda;">Export to Excel</button>
+                        </div>
+                        <div class="row mt-3"  *ngIf="inwardReportTable">
+                            <div class="col table-responsive" #TABLE #table class="tableclass">
+                                <table class="table table-bordered" id="inwardData">
+                                  
+                                    <tr class="headerstyles">
+                                        <th>Gate Entry Number</th>
+                                        <th>Gate Entry Date</th>
+                                        <th>Gate Entry Time</th>
+                                        <th>Company Name</th>
+                                        <th>Document Type</th>
+                                        <th>Document Number</th>
+                                        <th>Document Date</th>
+                                        <th>Gate ID</th>
+                                        <th>Guard Name</th>
+                                        <th>Carrier Name</th>
+                                        <th>Vehicle Number</th>
+                                        <th>Carrier Contact Number</th>
+                                        <th>Vendor Name</th>
+                                        <th>Remarks</th>
+                                        <th>Line Item</th>
+                                        <th>Material Description</th>
+                                        <th>UOM</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                    <tr *ngFor="let item of gateInwardData">
+                                        <td>{{item.Number}}</td>
+                                        <td>{{item.Date}}</td>
+                                        <td>{{item.Time}}</td>
+                                        <td>{{item.Company_Name}}</td>
+                                        <td>{{item.Document_Type}}</td>
+                                        <td>{{item.Document_Number}}</td>
+                                        <td>{{item.Document_Date}}</td>
+                                        <td>{{item.Gate_Id}}</td>
+                                        <td>{{item.Guard_Name}}</td>
+                                        <td>{{item.Carrier_Name}}</td>
+                                        <td>{{item.Vehicle_Number}}</td>
+                                        <td>{{item.Carrier_Contact_Number}}</td>
+                                        <td>{{item.Vendor_Name}}</td>
+                                        <td>{{item.Remarks}}</td>
+                                        <td>{{item.Line_Item}}</td>
+                                        <td>{{item.Material_Description}}</td>
+                                        <td>{{item.Unit_Of_Measurment}}</td>
+                                        <td>{{item.Quantity}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>Gate Outward GI</ng-template>
+            <mat-card>
+              <mat-card-content>
+                <form id="goGIform">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label>From Date<span class="mandetory">*</span></label>
+                      <input type="date" style="text-transform: uppercase;" class="inputstyles" name="fromdate"
+                        dateFormat="yyyy/mm/dd" [(ngModel)]="gateoutwardGI.fromdate" />
+                    </div>
+                    <div class="col-md-2">
+                      <label>To Date<span class="mandetory">*</span></label>
+                      <input type="date" style="text-transform: uppercase;" class="inputstyles" name="todate"
+                        dateFormat="yyyy/mm/dd" [(ngModel)]="gateoutwardGI.todate" />
+                    </div>
+                    <div class="col-md-3" >
+                      <label>Select Company<span class="mandetory">*</span></label>
+                      <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                        <mat-select 
+                          placeholder="Selected Company List" name="companyname"
+                          [(ngModel)]="gateoutwardGI.companyname"
+                          multiple
+                        >
+                          <mat-option
+                            *ngFor="let item of companyData"
+                            [value]="item.company_name"
+                            >{{ item.company_name }}</mat-option
+                          >
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+               
+                  <!-- </div>
+                  <div class="row justify-content-center"> -->
+                    <div class="col-md-1 mt-5">
+                      <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                      <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getGOGI()"
+                        style="background-color: rgba(0, 0, 0, 0.12) ">
+                        VIEW
+                      </button>
+                    </div>
+                    <div class="col-md-1">
+                      <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                      <button mat-raised-button class="downloadbtn float-left" type="button" (click)="GOgiclearForm()"
+                        style="background-color: rgba(0, 0, 0, 0.12)">
+                        RESET
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <div class="row" >
+                  <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelGOGI()" *ngIf="gateoutwardGIReports.length>0"
+                    style="border: none;background-color: #62beda;">Export to Excel</button>
+                </div>
+                <div #TABLEgateoutwardGI class="row justify-content-center" class="tableclass"
+                  *ngIf="gateoutwardGIReports.length>0">
+                  <div>
+                    <table #table class="table">
+                      <tr class="center" class="headerstyles">
+                        <th scope="col" class="border">Sno</th>
+                        <th scope="col" class="border" *ngFor="let header of getHeadersGI()">{{header}}</th>
+                      </tr>
+      
+      
+      
+                      <tr *ngFor="let user of gateoutwardGIReports;let i=index;">
+                        <td class="border">{{ i+1 }}</td>
+                        <td class="border" style="white-space: nowrap;" *ngFor="let key of getHeadersGI()">{{user[key]}}</td>
+                      </tr>
+      
+      
+                    </table>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </mat-tab>
+        <!-- OutGatePass RGP -->
+      <mat-tab>
+        <ng-template mat-tab-label>Gate Outward RGP</ng-template>
+        <mat-card>
+          <mat-card-content>
+            <form id="gorgpform">
+              <div class="row">
+                <div class="col-md-2">
+                  <label>From Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="fromdate"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="gateoutwardRGP.fromdate" />
+                </div>
+                <div class="col-md-2">
+                  <label>To Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="todate"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="gateoutwardRGP.todate" />
+                </div>
+                <div class="col-md-3" >
+                  <label>Select Company<span class="mandetory">*</span></label>
+                  <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                    <mat-select 
+                      placeholder="Selected Company List" name="companyname"
+                      [(ngModel)]="gateoutwardRGP.companyname"
+                      multiple
+                    >
+                      <mat-option
+                        *ngFor="let item of companyData"
+                        [value]="item.company_name"
+                        >{{ item.company_name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+           
+              <!-- </div>
+              <div class="row justify-content-center"> -->
+                <div class="col-md-1 mt-5">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getGOrgp()"
+                    style="background-color: rgba(0, 0, 0, 0.12) ">
+                    VIEW
+                  </button>
+                </div>
+                <div class="col-md-1">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-left" type="button" (click)="GOrgpclearForm()"
+                    style="background-color: rgba(0, 0, 0, 0.12)">
+                    RESET
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="row" >
+              <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelGOrgp()" *ngIf="gateoutwardRGPReports.length>0"
+                style="border: none;background-color: #62beda;">Export to Excel</button>
+            </div>
+            <div #TABLEgateoutwardRGP class="row justify-content-center" class="tableclass"
+              *ngIf="gateoutwardRGPReports.length>0">
+              <div>
+                <table #table class="table">
+                  <tr class="center" class="headerstyles">
+                    <th scope="col" class="border">Sno</th>
+                    <th scope="col" class="border" *ngFor="let header of getHeadersRGP()">{{header}}</th>
+                  </tr>
+  
+  
+  
+                  <tr *ngFor="let user of gateoutwardRGPReports;let i=index;">
+                    <td class="border">{{ i+1 }}</td>
+                    <td class="border" style="white-space: nowrap;" *ngFor="let key of getHeadersRGP()">{{user[key]}}</td>
+                  </tr>
+  
+  
+                </table>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+       <!-- OutGatePass NRGP -->
+       <mat-tab>
+        <ng-template mat-tab-label>Gate Outward NRGP</ng-template>
+        <mat-card>
+          <mat-card-content>
+            <form id="gonrgpform">
+              <div class="row">
+                <div class="col-md-2">
+                  <label>From Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="fromdate"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="gateoutwardNRGP.fromdate" />
+                </div>
+                <div class="col-md-2">
+                  <label>To Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="dateee"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="gateoutwardNRGP.todate" />
+                </div>
+                <div class="col-md-3" >
+                  <label>Select Company<span class="mandetory">*</span></label>
+                  <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                    <mat-select 
+                      placeholder="Selected Company List" name="companyname"
+                      [(ngModel)]="gateoutwardNRGP.companyname"
+                      multiple
+                    >
+                      <mat-option
+                        *ngFor="let item of companyData"
+                        [value]="item.company_name"
+                        >{{ item.company_name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+           
+              <!-- </div>
+              <div class="row justify-content-center"> -->
+                <div class="col-md-1 mt-5">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getGOnrgp()"
+                    style="background-color: rgba(0, 0, 0, 0.12) ">
+                    VIEW
+                  </button>
+                </div>
+                <div class="col-md-1">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-left" type="button" (click)="GOnrgpclearForm()"
+                    style="background-color: rgba(0, 0, 0, 0.12)">
+                    RESET
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelGOnrgp()"  *ngIf="gateoutwardNRGPReports.length>0"
+                style="border: none;background-color: #62beda;">Export to Excel</button>
+            </div>
+            <div #TABLEgateoutwardNRGP class="row justify-content-center" class="tableclass"
+            *ngIf="gateoutwardNRGPReports.length>0">
+            <div>
+              <table #table class="table">
+                <tr class="center" class="headerstyles">
+                  <th scope="col" class="border">Sno</th>
+                  <th scope="col" class="border" *ngFor="let header of getHeadersNRGP()">{{header}}</th>
+                </tr>
+                <tr *ngFor="let user of gateoutwardNRGPReports;let i=index;">
+                  <td class="border">{{ i+1 }}</td>
+                  <td class="border" style="white-space: nowrap;" *ngFor="let key of getHeadersNRGP()">{{user[key]}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+</div>

@@ -1,0 +1,13 @@
+input {
+    text-align: center;
+  }
+  ::-webkit-input-placeholder {
+    text-align: center;
+  }
+  :-moz-placeholder {
+    text-align: center;
+  }
+  :host::ng-deep.mat-form-field-wrapper{
+    padding-bottom: 0!important;
+  } 
+  

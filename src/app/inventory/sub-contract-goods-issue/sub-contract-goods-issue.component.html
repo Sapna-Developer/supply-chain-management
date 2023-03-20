@@ -1,0 +1,561 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Sub Contract Goods Issue</h4> -->
+            <!-- <div class="d-flex align-items-center m-t-10">
+                  <span class="m-r-20">Start Date : {{startDate | date}} </span>
+                  <span>End Date : {{endDate | date}} </span>
+              </div> -->
+        <!-- </div>
+    </div>
+</div> -->
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>Sub Contract Goods Issue</ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <form #myform="ngForm" (ngSubmit)="saveFinalData(myform)">
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <button mat-raised-button type="submit" class="m-t-10" class="savebutton"
+                                        style="background-color: rgba(0, 0, 0, 0.12)" color="secondary">
+                                        {{ btn }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <label>Vendor Name<span class="mandetory">*</span></label>
+                                    <input type="text" name="vendor_name" [(ngModel)]="scgidata.vendor_name"
+                                    placeholder="Enter Vendor Name" class="inputstyles">
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Date<span class="mandetory">*</span></label>
+                                    <input type="date" style="text-transform: uppercase" class="inputstyles" name="date"
+                                    [(ngModel)]="scgidata.date" dateFormat="yyyy/mm/dd" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Order Number<span class="mandetory">*</span></label>
+                                    <mat-form-field appearance="outline" class="matformfieldstyles">
+                                        <input type="text" class="inputdropdown1" placeholder="Enter Tax Description"
+                                            aria-label="Number" matInput name="order_number"
+                                            [(ngModel)]="scgidata.order_number" [matAutocomplete]="auto1"
+                                            (keyup)="filterOrderNumber($event)" />
+                                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                                            (optionSelected)="getServiceDetails()">
+                                            <mat-option *ngFor="let item of JOlistData" [value]="item.number">
+                                                {{ item.number }}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Vehicle Number<span class="mandetory">*</span></label>
+                                    <input type="text" name="vehicle_number" [(ngModel)]="scgidata.vehicle_number"
+                                    placeholder="Enter Vehicle Number" class="inputstyles">
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <label>Boq ID<span class="mandetory">*</span></label>
+                                    <mat-form-field appearance="outline" class="matformfieldstyles">
+                                        <input type="text" class="inputdropdown1" placeholder="Search BOQ ID"
+                                            aria-label="Number" matInput name="boq_id" [(ngModel)]="scgidata.boq_id"
+                                            [matAutocomplete]="auto4" (keyup)="filterBoqId($event)" />
+                                        <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete"
+                                            (optionSelected)="getBoqIdDetails()">
+                                            <mat-option *ngFor="let item of joBOQlistData" [value]="item.boq_id">
+                                                {{ item.boq_id }}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Service Code<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" name="service_code"
+                                    [(ngModel)]="scgidata.service_code" placeholder="Enter Service Code">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Service Description<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" name="service_description"
+                                    [(ngModel)]="scgidata.service_description"
+                                    placeholder="Enter Service Desctription">
+                                </div>  
+                                <div class="col-md-3">
+                                    <label>Receiver Name<span class="mandetory">*</span></label>
+                                    <input type="text" name="receiver_name" [(ngModel)]="scgidata.receiver_name"
+                                    placeholder="Enter Receiver Name" class="inputstyles">
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <label>Company Name<span class="mandetory">*</span></label>
+                                    <select class="dropdownstyles" name="company_name"
+                                    [(ngModel)]="scgidata.company_name">
+                                    <option selected disabled>Select One</option>
+                                    <option *ngFor="let item of companyData" [ngValue]="item.company_name">
+                                        {{ item.company_name }}
+                                    </option>
+                                </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Number<span class="mandetory">*</span></label>
+                                    <select class="dropdownstyles" name="number" [(ngModel)]="scgidata.number">
+                                        <option selected disabled>Select One</option>
+                                        <option *ngFor="let item of SCGIListData" [ngValue]="item.number">
+                                            {{ item.number }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Comments<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" name="comments"
+                                    [(ngModel)]="scgidata.comments">
+                                </div>
+                            </div>                 
+                        </form>
+                        <!-- <div class="row p-10">
+                            <div class="col-12 float-right text-right">
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button"
+                                    (click)="addScgiModel(scgimodel)">
+                                    <span class="material-icons"> add </span>
+                                </button>
+                            </div>
+                        </div> -->
+                        <div class="row mt-2">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Material Code </th>
+                                            <th>Material Description</th>
+                                            <th>UOM</th>
+                                            <th>Quantity</th>
+                                            <th>Unit Price</th>
+                                            <th>Item Remarks</th>
+                                            <th>Batch Number</th>
+                                            <th>Storage Location</th>
+                                            <th>Valuation Type</th>
+
+                                            <!-- <th>Action</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="scgidata.boq_id">
+                                        <tr>
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput placeholder="Enter text" name="matcode"
+                                                        [(ngModel)]="tabledata.matcode" value="" readonly />
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput placeholder="Enter text" name="matdesc"
+                                                        [(ngModel)]="tabledata.matdesc" value="" readonly />
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput placeholder="Enter text" value="" name="uom"
+                                                        [(ngModel)]="tabledata.uom" readonly />
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput placeholder="Enter text" value="" name="quantity"
+                                                        [(ngModel)]="tabledata.quantity" readonly />
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput placeholder="Enter text" name="unitPrice"
+                                                        [(ngModel)]="tabledata.unitPrice" value=""
+                                                        (keypress)="keyPressNumbers($event)" />
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput placeholder="Enter text" value="" name="itemRemarks"
+                                                        [(ngModel)]="tabledata.itemRemarks" />
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput placeholder="Enter text" value="" name="batchNumber"
+                                                        [(ngModel)]="tabledata.batchNumber"
+                                                        (keypress)="keyPressNumbers($event)" />
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput placeholder="Enter text" value=""
+                                                        name="storageLocation"
+                                                        [(ngModel)]="tabledata.storageLocation" />
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput placeholder="Enter text" value=""
+                                                        name="valuationType" [(ngModel)]="tabledata.valuationType" />
+                                                </mat-form-field>
+                                            </td>
+                                            <!-- <td>
+                                                <button mat-icon-button style="color: red; border: none"
+                                                    aria-label="Example icon button with a vertical three dot icon"
+                                                    (click)="deleterow(i)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- <div class="row p-t-10">
+                            <div class="col-12 col-md-12">
+                                <div class="table-responsive mat-table-wrapper">
+                                    <div class="example-table-container">
+                                        <table mat-table [dataSource]="dataSource">
+                                            <ng-container matColumnDef="lineItem">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                                                    SNO
+                                                </th>
+                                                <td mat-cell *matCellDef="let row; let i = index">
+                                                    {{ i + 1 }}
+                                                </td>
+                                            </ng-container>
+                                          
+
+                                            <ng-container matColumnDef="mat_code">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                                                    Material Code
+                                                </th>
+                                                <td mat-cell *matCellDef="let row">
+                                                    {{ row.material_code }}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="mat_description">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                                                    Material Description
+                                                </th>
+                                                <td mat-cell *matCellDef="let row">
+                                                    {{ row.material_description }}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="mat_uom">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 4%">
+                                                    UOM
+                                                </th>
+                                                <td mat-cell *matCellDef="let row">
+                                                    {{ row.unit_of_measurement }}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="mat_quantity">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 6%">
+                                                    Quantity
+                                                </th>
+                                                <td mat-cell *matCellDef="let row">
+                                                    {{ row.quantity }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="item_remarks">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                                                    Item Remarks
+                                                </th>
+                                                <td mat-cell *matCellDef="let row">
+                                                    {{ row.item_remarks }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="batch_number">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                                                    Batch Number
+                                                </th>
+                                                <td mat-cell *matCellDef="let row">
+                                                    {{ row.batch_number }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="storage_location">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                                                    Storage Location
+                                                </th>
+                                                <td mat-cell *matCellDef="let row">
+                                                    {{ row.storage_location }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="valuation_type">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                                                    Valuation Type
+                                                </th>
+                                                <td mat-cell *matCellDef="let row">
+                                                    {{ row.valuation_type }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef style="width: 10%">
+                                                    Action
+                                                </th>
+                                                <td mat-cell *matCellDef="let row; let i = index">
+                                                    <button mat-icon-button
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        (click)="editdata(row, i, scgieditmodel)">
+                                                        <mat-icon>edit</mat-icon>
+                                                    </button>
+
+                                                    <button mat-icon-button style="color: red; border: none"
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        (click)="deleterow(i)">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+
+        <!-- //////////////////////////LIST///////////////////////// -->
+        <mat-tab>
+            <ng-template mat-tab-label> List </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <ng-container>
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourceList">
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef style="width: 6%">
+                                                        SNO
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i = index">
+                                                        {{
+                                                        i +
+                                                        1 +
+                                                        subContractGoodsIssuepaginator.pageIndex *
+                                                        subContractGoodsIssuepaginator.pageSize
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="Number">
+                                                    <th mat-header-cell *matHeaderCellDef>Number</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{ row.number }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="Date">
+                                                    <th mat-header-cell *matHeaderCellDef>Date</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{ row.date | date: "dd/MM/yyyy" }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="company_name">
+                                                    <th mat-header-cell *matHeaderCellDef style="width: 24%">
+                                                        Company Name
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{ row.company_name }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="service_code">
+                                                    <th mat-header-cell *matHeaderCellDef>Service Code</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{ row.service_code }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="service_description">
+                                                    <th mat-header-cell *matHeaderCellDef>Service Description</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{ row.service_description }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="is_active">
+                                                    <th mat-header-cell *matHeaderCellDef>Is Active</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{ row.is_active }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef style="width: 13%">
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row; let i = index">
+                                                        <mat-icon style="cursor: pointer"
+                                                            (click)="editSCGIData(row,Editmodel)">edit</mat-icon>
+                                                        <mat-icon style="cursor: pointer;color:red"
+                                                            (click)="deleteSCGIdata(row, deletedata)">delete</mat-icon>
+                                                        <mat-icon style="cursor: pointer">
+                                                            local_printshop</mat-icon>
+                                                        <mat-icon style="cursor: pointer">file_upload</mat-icon>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsList; sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsList"></tr>
+                                            </table>
+                                        </div>
+                                        <div *ngIf="reaData == true" class="text-center">
+                                            <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                Loading...
+                                            </h4>
+                                            <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                No Records Found
+                                            </h4>
+                                        </div>
+                                        <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                            [pageSizeOptions]="[5, 10, 25, 50, 75, 100]" #subContractGoodsIssuepaginator
+                                            (page)="onpageevent($event)">
+                                        </mat-paginator>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Activity Log
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <!-- <h2 *ngIf="logdata" class="activitylog">Activity Log</h2> -->
+                        <div class="tablediv" *ngIf="logdata">
+                            <table>
+                                <thead style="background: #e9ecef" class="text-center headerclass">
+                                    <!-- <tr> -->
+                                    <th>SNO</th>
+                                    <th style="padding: 10px">User Name</th>
+                                    <th>Created Date</th>
+                                    <th>Reference Number</th>
+                                    <th>Description</th>
+                                    <th>Reason</th>
+                                    <th>Action</th>
+                                    <!-- </tr> -->
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr *ngFor="let item of logdata; let i = index">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ item.username }}</td>
+                                        <td style="white-space: nowrap;">{{ item.date_time | date: "dd-MM-yyyy HH:mm:ss"
+                                            }}</td>
+                                        <td>{{ item.reference_number }}</td>
+                                        <td>{{ item.description }}</td>
+                                        <td>{{ item.reason }}</td>
+                                        <td>
+                                            {{ item.action }}
+                                            <!-- <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                                                 aria-label="Example icon button with a vertical three dot icon"
+                                                  >
+                                                   <mat-icon>delete</mat-icon>
+                                                   </button> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
+<ng-template #Editmodel>
+    <h1 mat-dialog-title></h1>
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="padding-top:5px;">Reason</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                    [(ngModel)]="editModel.reason" style="width: 181%;">
+            </div>
+        </div>
+    </div><br>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="saveeditreason()" class="matButton"
+            [disabled]="!editModel.reason">Submit</button>
+    </div>
+</ng-template>
+
+<ng-template #deletedata>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="padding-top: 5px;;">Reason</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                    [(ngModel)]="deletemodel.reason" style="width: 181%;">
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" style="background: transparent;">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteItem()" class="matButton"
+            [disabled]="!deletemodel.reason">Delete</button>
+    </div>
+</ng-template>
+<!-- <ng-template #scgimodel>
+    <div mat-dialog-title class="dialog-title">
+        <div class="row">
+            <div class="col-10">
+                <h2>Add Items</h2>
+            </div>
+            <div class="col-2">
+                <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon"
+                    (click)="closemodel()" style="border: none; background: none">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <mat-dialog-content style="overflow: initial">
+        <form #myaddform="ngForm" (ngSubmit)="saveaddeddata(myaddform)">
+            <div class="row">
+                <div class="col-4">
+                    <label>Number<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-8">
+                    <input type="text" class="inputstyles" name="BOQID"
+                    [(ngModel)]="dialogdata.BOQID" placeholder="Enter BOQ ID">
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-default btnCenter">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-dialog-content>
+</ng-template> -->

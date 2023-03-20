@@ -1,0 +1,172 @@
+<mat-card>
+    <div class="print ">
+      <!-- <button onclick="getPrint()">Print</button> -->
+      <button [print]="['demo', config]" class="btn btn-info" style="margin-right:1%;margin-left:1%">
+        Print
+      </button>
+      <button (click)="backtomodelinvoices()" class="btn btn-info">
+        Back
+      </button>
+      </div>
+        <div class="formbody" id="demo">
+          <div class="row justify-content-center">
+            <table class="table" style="width: 98%">
+              <tr class="border text-center">
+                <!-- <th class="border"></th> -->
+                <th colspan="12">{{contractorname}}</th>
+              </tr>
+              <tr>
+                <td colspan="6" class="border">
+                  <b>Pan No:&nbsp;{{contractorpan}} </b>
+                </td>
+                <td colspan="6" class="border text-right">
+                  <p><b>Phone:&nbsp;{{contractornumber}} </b></p>
+                </td>
+              </tr>
+      
+              <tr class="border text-center">
+                <th colspan="12">INVOICE</th>
+              </tr>
+              <tr>
+                <td colspan="6" class="border">From:- D.No:3-27 ,Kara Agraharam</td>
+                <td colspan="3" class="border text-right">
+                  <p>Service Invoice No:-</p>
+                </td>
+                <td colspan="3" class="border">
+                  <p *ngFor="let user of userData">{{ user.number }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" class="border">Baba Nagar</td>
+                <td colspan="3" class="border text-right">
+                  <p>Date:-</p>
+                </td>
+                <td colspan="3" class="border">
+                  <p *ngFor="let user of userData">
+                    {{ user.invoice_date | date: "dd-MM-yyyy" }}
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" class="border">Krishna District</td>
+                <td colspan="3" class="border text-right">
+                  <p>Work Order No:-</p>
+                </td>
+                <td colspan="3" class="border">
+                  <p *ngFor="let user of userData">{{ user.work_order_number }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" class="border">Andhra Pradesh - 521002</td>
+                <td colspan="3" class="border text-right">
+                  <p>Date:-</p>
+                </td>
+                <td colspan="3" class="border">
+                  <p *ngFor="let user of userData">{{ user.work_order_date }}</p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" class="border"><b>Office Address</b></td>
+                <td colspan="6" class="border">
+                  <b>Site Address</b>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" class="border"><b>To,</b></td>
+                <td colspan="6" class="border">
+                  <b>To,</b>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="12" class="border">GSTR-37AAFCV6066P1Z1</td>
+              </tr>
+              <tr>
+                <td colspan="12" class="border">
+                  <p><b>Name of the Project: </b>AIC VMR Machilipatnam</p>
+                </td>
+              </tr>
+      
+              <tr class="center text-center">
+                <th colspan="2" class="border">S.No.</th>
+                <th colspan="4" class="border">Particulars</th>
+                <th colspan="1" class="border">UOM</th>
+                <th colspan="1" class="border">Qty</th>
+                <th colspan="1" class="border">Per Trip Rate</th>
+                <th colspan="3" class="border">Amount in (Rs.)</th>
+              </tr>
+              <tr *ngFor="let user of table">
+                <td colspan="2" class="border text-center">
+                  {{ user.line_item }}
+                </td>
+                <td colspan="4" class="border text-center">
+                  {{ user.description }}
+                </td>
+                <td colspan="1" class="border text-center">
+                  {{ user.unit_of_measurment }}
+                </td>
+                <td colspan="1" class="border">
+                  {{ user.quantity }}
+                </td>
+                <td colspan="1" class="border text-center">
+                  {{ user.unit_price }}
+                </td>
+                <td colspan="3" class="border text-center">
+                  {{ user.basic_price }}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="9" class="border text-right"><b>Grand Total</b></td>
+                <td colspan="3" class="border text-center">
+                  <b>{{ total }}</b>
+                </td>
+              </tr>
+              <br />
+              <tr>
+                <td colspan="12">
+                  <p>
+                    <b>Amount in words: {{ outputWords }} only.</b>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="12">
+                  <p>
+                    <b
+                      >Note :- At present our turn-over not cross the limit of Tax
+                      Exemption of Rupees Twenty Lakhs as per GST Law, Hence there is
+                      no experiment of Registration by us Under GST</b
+                    >
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="12">
+                  <p>
+                    <b>Bank Details:</b>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="12">
+                  <p>Bank Name: </p>
+                  <p>Branch: </p>
+                  <p>A/C No:</p>
+                  <p>IFSC:</p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="12 ">
+                  <p class="text-right"></p>
+                </td>
+              </tr>
+              <br />
+              <tr>
+                <td colspan="12 ">
+                  <p class="text-right"><b>Authorized Signature</b></p>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      
+</mat-card>

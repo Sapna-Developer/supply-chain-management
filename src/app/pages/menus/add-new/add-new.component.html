@@ -1,0 +1,82 @@
+<form #addNewUserForm="ngForm" (ngSubmit)="addNewUser()">
+    <h1 mat-dialog-title>Add User Roles</h1>
+    <div mat-dialog-content>
+
+
+
+
+
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Department</mat-label>
+            <input type="text" placeholder="Search Department" required name="dept" [(ngModel)]="addUserObj.dept"
+                [formControl]="deptControl" matInput [matAutocomplete]="auto2">
+            <mat-autocomplete #auto2="matAutocomplete">
+                <mat-option *ngFor="let option of filteredDept | async" [value]="option.deparment_name">
+                    <span> {{option.deparment_name}}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Role</mat-label>
+            <input type="text" placeholder="Search Role" [formControl]="roleControl" required name="role"
+                [(ngModel)]="addUserObj.role" matInput [matAutocomplete]="auto3">
+            <mat-autocomplete #auto3="matAutocomplete">
+                <mat-option *ngFor="let option of filteredRoles | async" [value]="option.role">
+                    <span> {{option.role}}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Sub Role</mat-label>
+            <input type="text" placeholder="Search Sub Role" required name="subRole" [(ngModel)]="addUserObj.subRole"
+                [formControl]="subRoleControl" matInput [matAutocomplete]="auto4">
+            <mat-autocomplete #auto4="matAutocomplete">
+                <mat-option *ngFor="let option of filteredSubRoles | async" [value]="option.sub_role">
+                    <span> {{option.sub_role}}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Menu *</mat-label>
+
+
+            <mat-chip-list #chipList> 
+                <mat-chip *ngFor="let menu of selectedMenus$" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(menu)">
+                    {{menu}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Search Menu..." name="menuControl" #menuInput [formControl]="menuControl"
+                    [matAutocomplete]="auto1" [matChipInputFor]="chipList" required>
+            </mat-chip-list>
+            <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let menu of filteredProjects | async" [value]="menu.menu_name">
+                    {{menu.menu_name}}
+                </mat-option>
+            </mat-autocomplete>
+
+            <!-- <input type="text" placeholder="Search Menu" required name="project" [(ngModel)]="addUserObj.project"
+                [formControl]="projectControl" matInput [matAutocomplete]="auto1">
+            <mat-autocomplete #auto1="matAutocomplete" >
+                <mat-option *ngFor="let option of filteredProjects | async" [value]="option.menu_name">
+                    <span> {{option.menu_name}}</span>
+                </mat-option>
+            </mat-autocomplete> -->
+        </mat-form-field>
+
+
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close type="button">No Thanks</button>
+        <button mat-button type="submit" color="primary" cdkFocusInitial
+            [disabled]=" selectedMenus$.length == 0 || !addUserObj.dept || !addUserObj.role || !addUserObj.subRole">Save</button>
+    </div>
+
+</form>

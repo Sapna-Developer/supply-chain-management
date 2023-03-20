@@ -1,0 +1,830 @@
+<mat-card>
+    <div class="print ">
+      <!-- <button onclick="getPrint()">Print</button> -->
+      <button [print]="['demo', config]" class="btn btn-info" style="margin-right:1%;margin-left:1%">
+        Print
+      </button>
+      <button (click)="backtoqsdservices()" class="btn btn-info">
+        Back
+      </button>
+      </div>
+    <div class="formbody" id="demo">
+      <div class="row justify-content-center">
+        <table class="table border" style="width: 98%">
+          <tr class="border text-center">
+            <!-- <th class="border"></th> -->
+            <th colspan="12">QSD CHECKLIST</th>
+          </tr>
+          <tr>
+            <td colspan="3" class="border">
+              <b>Client </b>
+            </td>
+            <td colspan="9" class="border">
+              <p *ngFor="let user of userData">{{ user.company_name }}</p>
+            </td>
+          </tr>
+  
+          <tr>
+            <td colspan="3" class="border">
+              <b>Project</b>
+            </td>
+            <td colspan="9" class="border">
+              <p>Machilipatnam</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="border">
+              <b>Supplier/Contractor</b>
+            </td>
+            <td colspan="9" class="border">
+              <p *ngFor="let user of userData">{{ user.contractor_name }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="border">
+              <b><p>Nature of Work</p></b>
+            </td>
+            <td colspan="9" class="border">
+              <p *ngFor="let user of userData">
+                {{ user.description_of_work }}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="border">
+              <b><p>Order No & Date</p></b>
+            </td>
+            <td colspan="9" class="border">
+              <spann *ngFor="let user of userData">{{
+                user.work_order_number
+              }}</spann>
+              &
+              <spann *ngFor="let user of userData">{{
+                user.work_order_date | date: "dd-MM-yyyy"
+              }}</spann>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="border">
+              <b><p>Invoice / Bill No and Date</p></b>
+            </td>
+            <td colspan="9" class="border">
+              <spann *ngFor="let user of userData">{{
+                user.invoice_number
+              }}</spann>
+              /
+              <spann *ngFor="let user of userData">{{
+                user.invoice_date | date: "dd-MM-yyyy"
+              }}</spann>
+              ;
+              <spann *ngFor="let user of userData">{{
+                user.ra_bill_number
+              }}</spann>
+              /
+              <spann *ngFor="let user of userData">{{
+                user.ra_bill_date | date: "dd-MM-yyyy"
+              }}</spann>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="border">
+              <b> <p>GST No</p></b>
+            </td>
+            <td colspan="9" class="border">
+              <p *ngFor="let user of userData">{{ user.gst_number }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="border">
+              <b><p>Bill(Hard/Scan) Copy</p></b>
+            </td>
+            <td colspan="9" class="border">
+              <p *ngFor="let user of userData">{{ user.bill_copy }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="border">
+              <b><p>Bill Value in Rs(Net Value)</p></b>
+            </td>
+            <td colspan="9" class="border">
+              <p *ngFor="let user of userData">{{ user.total_value }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="border">
+              <b><p>Recd by Site QSD on</p></b>
+            </td>
+            <td colspan="2" class="border">
+              <p *ngFor="let user of userData">
+                {{ user.site_document_received_date | date: "dd-MM-yyyy" }}
+              </p>
+            </td>
+            <td colspan="2" class="border">
+              <b><p>Recd by HO QSD on</p></b>
+            </td>
+            <td colspan="5" class="border">
+              <p *ngFor="let user of userData">
+                {{ user.ho_document_received_date | date: "dd-MM-yyyy" }}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="12" class="border"></td>
+          </tr>
+          <tr class="center text-center">
+            <th colspan="3" class="border">Details</th>
+            <th colspan="3" class="border">
+              Availability
+              <p>(Yes/No/NA)</p>
+            </th>
+            <th colspan="3" class="border">Reference No</th>
+            <th colspan="3" class="border">Remarks</th>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Site Certification</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">
+                {{ user.is_site_certification }}
+              </p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Invoice</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_invoice }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Bill Abstract</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_bill_abstract }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Bill JMS</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">
+                {{ user.is_jms_logsheets_reports }}
+              </p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Log Sheets</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">
+                {{ user.is_jms_logsheets_reports }}
+              </p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Ammendments if any</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_amendments }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Packing Lists</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_packing_list }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Test Reports</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_test_reports }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">MRN</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_mrn }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Frieght</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_freight }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Concrete Reconciliation</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_reconcillation }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Debit Notes</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_debit_note }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Statutory Compliance</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">
+                {{ user.is_statutory_compliance }}
+              </p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+  
+          <tr>
+            <th colspan="3" class="border">Bank Details</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">{{ user.is_bank_details }}</p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Work Completion Certificate (WCR)</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">
+                {{ user.is_work_completion_certificate }}
+              </p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Asbuilt Drgs & Sketches)</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">
+                {{ user.is_asbuilt_drgs_and_sketches }}
+              </p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">Photographs</th>
+            <td colspan="3" class="border text-center">
+              <p *ngFor="let user of userData">
+                {{ user.is_photographs }}
+              </p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">></th>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3" class="border">></th>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+            <td colspan="3" class="border text-center">
+              <p></p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="12" class="border">
+              *: Duly certified documents has to be acompaneid along with bill for
+              certification as mandate wherever applicalble
+            </td>
+          </tr>
+          <tr>
+            <th colspan="12" class="border pb-5 pt-0 mb-0">Notes:</th>
+          </tr>
+          <tr>
+            <td colspan="12" class="border"></td>
+          </tr>
+          <tr>
+            <th colspan="5" class="border text-center pt-5 pb-0 mb-0">
+              <p>Site QSD</p>
+            </th>
+            <th colspan="7" class="border text-center pt-5 pb-0 mb-0">
+              <p>HO QSD</p>
+            </th>
+          </tr>
+        </table>
+      </div>
+      <div class="formbody justify-content-center page-break">
+        <div class="row border">
+          <div class="col-1">
+            <img
+              src="https://testgeps.greenko.net/ui/assets/greenko/newlogo_greeenko_eps.svg"
+              width="100px"
+              height="65px"
+            />
+          </div>
+          <div class="col-11 text-right">
+            <p><b>GREENKO INTEGRATED MANAGEMENT SYSTEM</b></p>
+            <hr width="98%" />
+            <p><b>TOP SHEET</b></p>
+          </div>
+        </div>
+        <div class="row border justify-content-center">
+          <p *ngFor="let user of UserData">
+            <b
+              ><u>{{ user.company_name }}</u></b
+            >
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p>
+              <b>PROJECT NAME<span>:-</span></b>
+            </p>
+            <p>
+              <b>DESCRIPTION OF WORK<span>:-</span></b>
+            </p>
+          </div>
+          <div class="col-6 border">
+            <p *ngFor="let user of UserData">{{ user.company_name }}</p>
+            <p *ngFor="let user of UserData">{{ user.description_of_work }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p>
+              <b>CONTRACTOR NAME<span>:-</span></b>
+            </p>
+            <p>
+              <b>PAN NO<span>:-</span></b>
+            </p>
+            <p>
+              <b>GST IN<span>:-</span></b>
+            </p>
+          </div>
+          <div class="col-6 border">
+            <p *ngFor="let user of UserData">{{ user.contractor_name }}</p>
+            <p *ngFor="let user of UserData">{{ user.pan_number }}</p>
+            <p *ngFor="let user of UserData">{{ user.gst_number }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p>
+              <b>WORK ORDER NO<span>:-</span></b>
+            </p>
+            <p>
+              <b>WORK ORDER DATE<span>:-</span></b>
+            </p>
+            <p>
+              <b>WORK ORDER VALUE (Rs.)<span>:-</span></b>
+            </p>
+          </div>
+          <div class="col-6 border">
+            <p *ngFor="let user of UserData">{{ user.work_order_number }}</p>
+            <p *ngFor="let user of UserData">{{ user.work_order_date | date:'dd-MM-yyyy' }}</p>
+            <p *ngFor="let user of UserData">{{ user.work_order_value }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p>
+              <b>AMENDMENT NO<span>:-</span></b>
+            </p>
+            <p>
+              <b>AMENDMENT DATE<span>:-</span></b>
+            </p>
+            <p>
+              <b>AMENDMENT VALUE (Rs.)<span>:-</span></b>
+            </p>
+          </div>
+          <div class="col-6 border">
+            <p *ngFor="let user of UserData">{{ user.amendment_number }}</p>
+            <p *ngFor="let user of UserData">{{ user.amendment_date | date:'dd-MM-yyyy' }}</p>
+            <p *ngFor="let user of UserData">{{ user.amendment_value }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p>
+              <b>CUMM ORDER VALUE (Rs.)<span>:-</span></b>
+            </p>
+          </div>
+          <div class="col-6 border">
+            <p *ngFor="let user of UserData">
+              {{ user.cummulative_order_value }}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p>
+              <b>CONTRACTOR INVOICE NO<span>:-</span></b>
+            </p>
+            <p>
+              <b>CONTRACTOR INVOICE RECEIVED DATE<span>:-</span></b>
+            </p>
+            <p>
+              <b>RA BILL NO<span>:-</span></b>
+            </p>
+            <p>
+              <b>RA BILL DATE<span>:-</span></b>
+            </p>
+          </div>
+          <div class="col-6 border">
+            <p *ngFor="let user of UserData">{{ user.invoice_number }}</p>
+            <p *ngFor="let user of UserData">{{ user.invoice_date | date:'dd-MM-yyyy' }}</p>
+            <p *ngFor="let user of UserData">{{ user.ra_bill_number }}</p>
+            <p *ngFor="let user of UserData">{{ user.ra_bill_date }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p>
+              <b>ORDER DURATION<span>:-</span></b>
+            </p>
+            <p>
+              <b>START DATE<span>:-</span></b>
+            </p>
+            <p>
+              <b>COMPLETION DATE<span>:-</span></b>
+            </p>
+          </div>
+          <div class="col-6 border">
+            <p *ngFor="let user of UserData">{{ user.order_duration }}</p>
+            <p *ngFor="let user of UserData">{{ user.start_date | date:'dd-MM-yyyy' }}</p>
+            <p *ngFor="let user of UserData">{{ user.completion_date | date:'dd-MM-yyyy' }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p>
+              <b>PREVIOUS INFORMATION LOCATION<span>:-</span></b>
+            </p>
+          </div>
+          <div class="col-6 border">
+            <p *ngFor="let user of UserData">
+              {{ user.previous_information_location }}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 border">
+            <p>
+              <b><u>OBSERVATIONS</u>:-</b>
+              <spann *ngFor="let user of UserData">{{ user.observations }}</spann>
+            </p>
+  
+            <!-- <br /> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p><b>WORK DESCRIPTION</b></p>
+          </div>
+          <div class="col-2 border text-center">
+            <p><b>UPTO PREVIOUS BILL (Rs.)</b></p>
+          </div>
+          <div class="col-2 border text-center">
+            <p><b>CURRENT BILL (Rs.)</b></p>
+          </div>
+          <div class="col-2 border text-center">
+            <p><b>CUMULATIVE BILL (Rs.)</b></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p>Supply of Inverters, Batteries for UPS Make:Exide</p>
+          </div>
+          <div class="col-2 border text-right">
+            <!-- <br /> -->
+            <p></p>
+            <p *ngFor="let user of PrevData">{{ user.abstract_value }}</p>
+            <p></p>
+          </div>
+          <div class="col-2 border text-right">
+            <!-- <br /> -->
+            <p></p>
+            <p *ngFor="let user of CurData">{{ user.abstract_value }}</p>
+            <p></p>
+          </div>
+          <div class="col-2 border text-right">
+            <!-- <br /> -->
+            <p></p>
+            <p>{{ CumAbs }}</p>
+            <p></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border text-center">
+            <p><b>ABSTRACT VALUE</b></p>
+          </div>
+          <div class="col-2 border text-right">
+            <p *ngFor="let user of PrevData">{{ user.abstract_value }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <p *ngFor="let user of CurData">{{ user.abstract_value }}</p>
+            <!-- <p *ngFor="let k of keys">{{ k }} : {{ data[k] }}</p> -->
+          </div>
+          <div class="col-2 border text-right">
+            <p>{{ CumAbs }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p><b>TAXES</b></p>
+            <!-- <br /> -->
+            <p>
+              ADD <span>{{ keys[1] }}</span>
+            </p>
+            <p>
+              ADD <span>{{ keys[2] }}</span>
+            </p>
+            <p>
+              ADD <span>{{ keys[3] }}</span>
+            </p>
+          </div>
+          <div class="col-2 border text-right">
+            <!-- <br /> -->
+            <!-- <br /> -->
+            <br />
+            <p *ngFor="let user of PrevData">{{ user.igst_5 || 0 }}</p>
+            <p *ngFor="let user of PrevData">{{ user.cgst_5 || 0 }}</p>
+            <p *ngFor="let user of PrevData">{{ user.sgst_5 || 0 }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <!-- <br /> -->
+            <!-- <br /> -->
+            <br />
+            <p *ngFor="let user of CurData">{{ user.igst_5 }}</p>
+            <p *ngFor="let user of CurData">{{ user.cgst_5 }}</p>
+            <p *ngFor="let user of CurData">{{ user.sgst_5 }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <!-- <br /> -->
+            <!-- <br /> -->
+            <br />
+            <p>{{ CumIgst || 0 }}</p>
+            <p>{{ CumCgst || 0 }}</p>
+            <p>{{ CumSgst || 0 }}</p>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-6 border text-center">
+            <p><b>GROSS BILL VALUE</b></p>
+          </div>
+          <div class="col-2 border text-right">
+            <p>{{ GrossBill ||0 }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <p>{{ grossBill ||0 }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <p>{{ CumGross || 0 }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p><b>STATUTORY DEDUCTIONS</b></p>
+            <p>TDS</p>
+            <p>LABOUR CESS</p>
+            <p>Environment CESS</p>
+          </div>
+          <div class="col-2 border text-right">
+            <br />
+            <p *ngFor="let user of PrevData">{{ user.tds_amount | number:'1.2-2' }}</p>
+            <p *ngFor="let user of PrevData">{{ user.labour_cess_amount | number:'1.2-2' }}</p>
+            <p *ngFor="let user of PrevData">
+              {{ user.environment_cess_amount | number:'1.2-2' }}
+            </p>
+          </div>
+          <div class="col-2 border text-right">
+            <br />
+            <p *ngFor="let user of CurData">{{ user.tds_amount | number:'1.2-2' }}</p>
+            <p *ngFor="let user of CurData">{{ user.labour_cess_amount | number:'1.2-2' }}</p>
+            <p *ngFor="let user of CurData">{{ user.environment_cess_amount | number:'1.2-2' }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <br />
+            <p>{{ CumTds | number:'1.2-2' }}</p>
+            <p>{{ CumLB | number:'1.2-2' }}</p>
+            <p>{{ CumEC | number:'1.2-2' }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border text-center">
+            <p><b>SUB TOTAL</b></p>
+          </div>
+          <div class="col-2 border text-right">{{ subTot1 | number:'1.2-2' }}</div>
+          <div class="col-2 border text-right">
+            <p>{{ subTotal1 | number:'1.2-2' }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <p>{{ CumSub1 | number:'1.2-2' }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p><b>OTHER DEDUCTIONS</b></p>
+            <p>MOBILISATION & MACHINERY ADVANCE RECOVERY</p>
+            <p>RETENTION MONEY</p>
+            <p>ROYALITY</p>
+          </div>
+  
+          <div class="col-2 border text-right">
+            <br />
+            <p>
+              {{ MM }}
+            </p>
+            <p *ngFor="let user of PrevData">{{ user.retention_money }}</p>
+            <p *ngFor="let user of PrevData">{{ user.debit_value_royalty }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <br />
+            <p>
+              {{ mm }}
+            </p>
+            <p *ngFor="let user of CurData">{{ user.retention_money }}</p>
+            <p *ngFor="let user of CurData">{{ user.debit_value_royalty }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <br />
+            <p>{{ CumMm }}</p>
+            <p>{{ CumRm }}</p>
+            <p>{{ CumR }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border text-center">
+            <p><b>SUB TOTAL</b></p>
+          </div>
+          <div class="col-2 border text-right">{{ subTot2 | number:'1.2-2' }}</div>
+          <div class="col-2 border text-right">
+            <p>{{ subTotal2 | number:'1.2-2' }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <p>{{ CumSub2 | number:'1.2-2' }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border">
+            <p><b>MATERIAL RECOVERY</b></p>
+          </div>
+          <div class="col-2 border text-right">
+            <br />
+            <p *ngFor="let user of PrevData">
+              {{ user.diesel_recovery }}
+            </p>
+          </div>
+          <div class="col-2 border text-right">
+            <br />
+            <p *ngFor="let user of CurData">
+              {{ user.diesel_recovery }}
+            </p>
+            <!-- <p *ngFor="let user of CurData">{{ user.retention_money }}</p>
+            <p *ngFor="let user of CurData">{{ user.debit_value_royalty }}</p> -->
+          </div>
+          <div class="col-2 border text-right">
+            <br />
+            <p>{{ CumMR }}</p>
+            <!-- <p>-</p>
+            <p>-</p> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border text-center">
+            <p><b>SUB TOTAL</b></p>
+          </div>
+          <div class="col-2 border text-right">{{ subTot3 }}</div>
+          <div class="col-2 border text-right">
+            <p>{{ subTotal3 }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <p>{{ CumSub3 }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 border text-center">
+            <p><b>NET PAYABLE</b></p>
+          </div>
+          <div class="col-2 border text-right">{{ (NetPay || 0) | number:'1.2-2' }}</div>
+          <div class="col-2 border text-right">
+            <p>{{ (netPay || 0) | number:'1.2-2' }}</p>
+          </div>
+          <div class="col-2 border text-right">
+            <p>{{ (CumNetpay || 0) | number:'1.2-2' }}</p>
+          </div>
+        </div>
+        <div class="row border">
+          <div class="col-6">
+            <p><b>PREPARED BY</b></p>
+            <p><b>NAME: </b></p>
+            <p><b>SIGNATURE:</b></p>
+          </div>
+          <div class="col-3">
+            <p><b>RECOMMENDED BY</b></p>
+            <p><b>NAME:</b></p>
+            <p><b>SIGNATURE:</b></p>
+          </div>
+          <div class="col-3 float-right">
+            <p><b>APPROVED BY</b></p>
+            <p><b>NAME:</b></p>
+            <p><b>SIGNATURE:</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  

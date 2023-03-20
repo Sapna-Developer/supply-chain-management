@@ -1,0 +1,253 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">GSS Reports</h4>
+        </div>
+    </div>
+</div> -->
+<div class="inventory-reportsTab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms">
+        <!--  Gate Inward Report -->
+        <mat-tab>
+            <ng-template mat-tab-label> Gate Inward Report </ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class=" col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                [(ngModel)]="gateinwardreportfromdate"   />
+                                    
+                            </div>
+
+                            <div class=" col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                [(ngModel)]="gateinwardreporttodate"   />
+                                   <!-- [(ngModel)]="bunkreqtodate"  -->
+                            </div>
+                            <div class="col-md-1  mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getgateinwardreport()"
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                            </div>
+                            <div class="col-md-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="gateinwardreportclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" *ngIf="gateIwardReportData">
+                        <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelinward()"
+                        style="border: none;background-color:#62beda;">Export to Excel</button>
+                    </div>
+                      <div #TABLEGIR class="row justify-content-center" class="tableclass" *ngIf="gateIwardReportData">
+                        <div >
+                          <table #table class="table" >
+                            <tr class="center" class="headerstyles" >
+                              <th scope="col" class="border">Sno</th>
+                              <th *ngFor="let header of getHeaders()">{{header}}</th>
+                            </tr>
+                            <tr *ngFor="let item of gateIwardReportData;let i=index;">
+                              <td class="border">{{ i+1 }}</td>
+                              <td *ngFor="let key of getHeaders()">{{item[key]}}</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <!-- Gate Outward - GI Report -->
+        <mat-tab>
+            <ng-template mat-tab-label> Gate Outward - GI Report </ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                [(ngModel)]="gateoutwardreportfromdate"   />
+                                    
+                            </div>
+
+                            <div class="col-2 col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                [(ngModel)]="gateoutwarreporttodate"   />
+                                   <!-- [(ngModel)]="bunkreqtodate"  -->
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getgateoutwardreport()"
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="gateoutwardreportclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" *ngIf="gateoutwardReportData">
+                        <button mat-raised-button class="btn btn-success m-3" (click)="exportExceloutward()"
+                        style="border: none;background-color: #62beda;">Export to Excel</button>
+                    </div>
+                      <div #TABLEGOR class="row justify-content-center" class="tableclass" *ngIf="gateoutwardReportData">
+                        <div >
+                          <table #table class="table" >
+                            <tr class="center" class="headerstyles" >
+                              <th scope="col" class="border">Sno</th>
+                              <th *ngFor="let header of getHeaders1()">{{header}}</th>
+                            </tr>
+                            <tr *ngFor="let item of gateoutwardReportData;let i=index;">
+                              <td class="border">{{ i+1 }}</td>
+                              <td *ngFor="let key of getHeaders1()">{{item[key]}}</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <!--  Gate Outward - NRGP Report -->
+        <mat-tab>
+            <ng-template mat-tab-label>  Gate Outward - NRGP Report</ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                [(ngModel)]="gateoutwardnrgpreportfromdate"   />
+                                    
+                            </div>
+
+                            <div class="col-2 col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                [(ngModel)]="gateoutwardnrgpreporttodate"   />
+                                   <!-- [(ngModel)]="bunkreqtodate"  -->
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getgateoutwardnrgpreport()"
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="gateoutwardnrgpreportclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" *ngIf="gateoutwardnrgpReportData">
+                        <button mat-raised-button class="btn btn-success m-3" (click)="exportExceloutwardnrgp()"
+                        style="border: none;background-color: #62beda;">Export to Excel</button>
+                    </div>
+                      <div #TABLENRGP class="row justify-content-center" class="tableclass" *ngIf="gateoutwardnrgpReportData">
+                        <div >
+                          <table #table class="table" >
+                            <tr class="center" class="headerstyles" >
+                              <th scope="col" class="border">Sno</th>
+                              <th *ngFor="let header of getHeaders2()">{{header}}</th>
+                            </tr>
+                            <tr *ngFor="let item of gateoutwardnrgpReportData;let i=index;">
+                              <td class="border">{{ i+1 }}</td>
+                              <td *ngFor="let key of getHeaders2()">{{item[key]}}</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+         <!--  Gate Outward - RGP Report -->
+         <mat-tab>
+            <ng-template mat-tab-label>  Gate Outward - RGP Report</ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                [(ngModel)]="gateoutwardrgpreportfromdate"   />
+                                    
+                            </div>
+
+                            <div class="col-2 col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                [(ngModel)]="gateoutwardrgpreporttodate"   />
+                                   <!-- [(ngModel)]="bunkreqtodate"  -->
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getgateoutwardrgpreport()"
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="gateoutwardrgpreportclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" *ngIf="gateoutwardrgpReportData">
+                        <button mat-raised-button class="btn btn-success m-3" (click)="exportExceloutwardrgp()"
+                        style="border: none;background-color: #62beda;">Export to Excel</button>
+                    </div>
+                      <div #TABLERGP class="row justify-content-center" class="tableclass" *ngIf="gateoutwardrgpReportData">
+                        <div >
+                          <table #table class="table" >
+                            <tr class="center" class="headerstyles" >
+                              <th scope="col" class="border">Sno</th>
+                              <th *ngFor="let header of getHeaders3()">{{header}}</th>
+                            </tr>
+                            <tr *ngFor="let item of gateoutwardrgpReportData;let i=index;">
+                              <td class="border">{{ i+1 }}</td>
+                              <td *ngFor="let key of getHeaders3()">{{item[key]}}</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <!-- test -->
+        <mat-tab>
+            <ng-template mat-tab-label>  Gate Outward - RGP Report</ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <button mat-raised-button class="downloadbtn" type="button" (click)="getSlide()"
+                    style="background-color: rgba(0, 0, 0, 0.12)" > VIEW</button>
+    <!-- <p id="test">{{testData}}</p> -->
+                    <div class="Test" [innerHTML]="testData">
+
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+    </div>

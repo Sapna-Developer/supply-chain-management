@@ -1,0 +1,58 @@
+<mat-card>
+    <div class="print">
+      <button
+        [print]="['demo', config]"
+        class="btn btn-info"
+        style="margin-right: 1%; margin-left: 1%"
+      >
+        Print
+      </button>
+      <button (click)="backtojms()" class="btn btn-info">Back</button>
+    </div>
+    <div class="woprintdata p-3" id="demo">
+        <div class="row pl-3 table-responsive mt-2">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h3 style="    border: 1px solid #000;
+                    border-bottom: none;"><b><u>Joint Measurement Sheet</u></b></h3>
+                </div>
+            </div>
+            <div *ngFor="let key of result; let index=index">
+                <table class="table border">
+                    <caption style="caption-side:top;color:#000;font-weight:bold;border-left:1px solid #000; 
+                    border-right:1px solid #000; border-top:1px solid #000;margin-top: -16px;" class="pl-1">
+                        {{key[0].boq_item_description}}
+                    </caption>
+                    <tr>
+                        <th>Sl.No</th>
+                        <th>Description</th>
+                        <th>UOM</th>
+                        <th colspan="3">No's</th>
+                        <th>Length</th>
+                        <th>Width</th>
+                        <th>Height</th>
+                        <th>Quantity</th>
+                        <th>Remarks</th>
+                    </tr>
+                    <tr *ngFor="let value of key; let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{value.description}}</td>
+                        <td>{{value.unit_of_measurment}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{value.length}}</td>
+                        <td>{{value.width}}</td>
+                        <td>{{value.height}}</td>
+                        <td>{{value.quantity}}</td>
+                        <td>{{value.item_remarks}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="9" class="text-right"><b>{{key[0].boq_item_description}}</b></td>
+                        <td colspan="2" class="text-left" style="padding-left:37px">{{locationsSum(index)}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</mat-card>

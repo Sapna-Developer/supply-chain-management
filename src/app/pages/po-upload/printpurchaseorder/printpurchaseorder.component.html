@@ -1,0 +1,993 @@
+<mat-card>
+  <div class=" print" style=" margin-left: 19px">  
+    <button  *ngIf="printstatus===true"
+      [print]="['demo', config]"
+      class="btn btn-info"
+      style="margin-right: 1%; margin-left: 2%"
+    >
+      Print
+    </button>
+    <button (click)="backtodmr()" class="btn btn-info">Back</button>
+  </div>
+  <!-- <form action="#" (ngSubmit)="getUserFormData()" class="savebutton">
+    <input
+      type="text"
+      name="key"
+      id="key"
+      [(ngModel)]="key"
+      placeholder="Enter Code"
+    />
+    <input type="hidden" name="field" id="field" value="number" />
+    <input type="hidden" name="command" id="command" value="mat" />
+    <br /><br />
+    <button>Submit</button>
+  </form> -->
+  <!-- <button
+    [print]="['demo', config]"
+    class="btn btn-info"
+    style="margin-right:1%;margin-left:2%"
+  >
+    Print
+  </button> -->
+  <div class="div" id="demo">
+    <div class="formbody ">
+      <div class="container justify-content-center tabblesize">
+        <div class="row justify-content-center">
+          <div class="col-6">
+            <p *ngFor="let data of address" class="font1">
+              <b>{{ data.name }}</b>
+            </p>
+          
+          </div>
+          <div class="col-6 text-right">
+            <img
+              src="https://testgeps.greenko.net/ui/assets/greenko/newlogo_greeenko_eps.svg"
+              width="190.08px"
+              height="57.6px"
+            />
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <p class="font2" *ngFor="let data of address">
+              <b>{{ data.address_1 }}</b>
+            </p>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row justify-content-center tabblesize">
+         <div class="col-12 text-center">
+          <p class="font3" style="margin-bottom: 30px">
+            <u><b>Purchase Order</b></u>
+          </p>
+         </div>
+
+        
+        </div>
+        
+        <!-- <div class="row justify-content-center">
+          <div class="col">
+            <p *ngFor="let data of vendorAdrs">Kind Attention: {{data.contact_number}}</p>
+          </div>
+        </div> -->
+
+        <div class="row justify-content-center line-height font4">
+          <table class="table table-bordered tabblesize">
+            <tr> 
+              <td rowspan="5" colspan="2" class="border">
+                <div class="row">
+                  <div class="col-4"><b>To: </b></div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-8" *ngFor="let user of userData">
+                    {{ user.vendor_name }}
+                  </div>
+                </div>
+                &nbsp;&nbsp;
+                <div class="row">
+                  <div class="col-4"><b>Email:</b></div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-8" *ngFor="let user of userData">
+                    {{ user.mail }}
+                  </div>
+                </div>
+              </td>
+              
+              <td class="border" colspan="3">
+                <div class="row justify-content-center">
+                  <div class="col-4">P.O NO</div>
+                  <div class="col-8" *ngFor="let user of userData">
+                    {{ user.number }}
+                  </div>
+                </div>
+              </td>
+              <td class="border text-center" rowspan="5">
+                <ngx-qrcode *ngIf="data1" [elementType]="elementType" [width]="150" [errorCorrectionLevel]="correctionLevel"
+                [value]="value2" alt="Demo QR Code" cssClass="bshadow">
+            </ngx-qrcode>
+            <ngx-qrcode *ngIf="document_no" [elementType]="elementType" [width]="150" [errorCorrectionLevel]="correctionLevel"
+            [value]="value" alt="Demo QR Code" cssClass="bshadow">
+          </ngx-qrcode>
+              </td>
+            </tr>
+            <tr>
+              <td class="border" colspan="3">
+                <div class="row justify-content-center">
+                  <div class="col-4">DATE</div>
+                  <div class="col-8" *ngFor="let user of userData">
+                    {{ user.date | date: "dd-MM-yyyy" }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="border" colspan="3">
+                <div class="row justify-content-center">
+                  <div class="col-4">P.R No.</div>
+                  <div class="col-8" *ngFor="let user of userData">
+                    {{ user.pr_number }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="border" colspan="3">
+                <div class="row justify-content-center">
+                  <div class="col-4">DATE:</div>
+                  <div class="col-8" *ngFor="let user of userData">
+                    {{ user.pr_date | date: "dd-MM-yyyy" }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" class="border">
+                <div class="row justify-content-center">
+                  <div class="col-4">Your REF:</div>
+                  <div class="col-8" *ngFor="let user of userData">
+                    {{ user.vendor_reference }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="center">
+              <th class="border" style="width: 90px">S.NO</th>
+              <!-- <th scope="col" class="border">HSN</th> -->
+              <th class="border">DESCRIPTION</th>
+              <th class="border">UOM</th>
+              <th class="border">QTY</th>
+              <th class="border">
+                UNIT PRICE
+                <!-- <p>(Rs.)</p> -->
+              </th>
+              <th class="border">
+                AMOUNT (Rs.)
+                <!-- <p>(INR)</p> -->
+              </th>
+            </tr>
+
+            <tr scope="row" *ngFor="let user of table; let i = index">
+              <td class="center border">{{ i + 1 }}</td>
+              <td class="center border">{{ user.material_description }}&nbsp;&nbsp;&nbsp;{{user.item_remarks}}</td>
+              <td class="center border paragraph">
+                {{ user.unit_of_measurment }}
+              </td>
+              <!-- <td class="right border">{{ user.quantity.toFixed(2) }}</td> -->
+              <td class="right border">{{ user.quantity | number: "1.2-2"}}</td>
+              <td class="border right">{{ user.unit_price | number: "1.2-2" }}</td>
+              <!-- <td class="border right">{{ user.unit_price.toFixed(2) }}</td> -->
+              <td class="border right">
+                <!-- {{ user.basic_price.toFixed(2) }} -->
+                {{ user.basic_price | number: "1.2-2" }}
+              </td>
+              <!-- <td class="center border">{{ user.unit_of_measurment }}</td>
+              <td class="center border">{{ user.quantity }}</td>
+              <td class="right border">{{ user.unit_price }}</td>
+              <td class="right border">{{ user.basic_price }}</td> -->
+            </tr>
+
+            <tr class="text-center">
+              <td colspan="5" class="border">
+                <div class="row justify-content-center text-center">
+                  <div class="col right"><b>Total Basic Price</b></div>
+                </div>
+              </td>
+              <td colspan="1" class="border">
+                <div class="row justify-content-center text-center">
+                  <div class="col text-left"><b>&#x20b9;</b></div>
+                  <div class="col right">
+                    {{ total| number: "1.2-2" }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="text-center">
+              <td colspan="5" class="border">
+                <div class="row justify-content-center float-right">
+                  <div class="col right">
+                    <b>GST%</b>
+                  </div>
+                  <div class="col">
+                    <span *ngFor="let user of userData"
+                      >{{ user.tax_percent }} </span
+                    >%
+                  </div>
+                </div>
+              </td>
+              <td colspan="1" class="border">
+                <div class="row justify-content-center text-center">
+                  <div class="col text-left"><b>&#x20b9;</b></div>
+                  <div class="col right">{{ totalTax }}</div>
+                </div>
+              </td>
+            </tr>
+            <tr class="text-center">
+              <td colspan="5" class="border">
+                <div class="row justify-content-center text-center">
+                  <div class="col right"><b>Grand Total Price</b></div>
+                </div>
+              </td>
+              <td colspan="1" class="border">
+                <div class="row justify-content-center text-center">
+                  <div class="col text-left"><b>&#x20b9;</b></div>
+                  <div class="col right">
+                    <b>{{ grandTotal | number: "1.0-0" }}.00</b>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="7" class="border">
+                <div class="row">
+                  <div class="col"><b>(In words)</b></div>
+                </div>
+                <div class="row">
+                  <div class="col float-left">
+                    {{ outputWords | titlecase }} Rupees
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>Price Basis</b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div class="row justify-content-center">
+                  <div class="col" *ngFor="let user of userData">
+                    {{ user.price_basis }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>Freight & Insurance </b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div class="row justify-content-center">
+                  <div class="col">
+                    <span *ngFor="let user of userData"
+                      >{{ user.freight }} </span
+                    >&
+                    <span *ngFor="let user of userData">
+                      {{ user.transist_insurance }}</span
+                    >
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>Packing & forwarding</b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div class="row justify-content-center">
+                  <div class="col" *ngFor="let user of userData">
+                    {{ user.packing_forwarding }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>GST (IGST or SGST and CGST)</b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div
+                  class="row justify-content-center text-center"
+                  *ngFor="let user of userData"
+                >
+                  {{ user.gst_terms }}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>TCS</b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div
+                  class="row justify-content-center text-center"
+                  *ngFor="let user of userData"
+                >
+                  {{ user.tcs }}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row">
+                  <!-- <p><b>Delivery</b></p> -->
+                  <div class="col"><b>Delivery</b></div>
+                </div>
+                <div class="row" style="padding-top: 7px">
+                  <div class="col" *ngFor="let user of userData">
+                    {{ user.delivery_time }}
+                  </div>
+                </div>
+              </td>
+              <td colspan="2" class="border">
+                <div class="row">
+                  <!-- <p><b>Delivery</b></p> -->
+                  <div class="col"><b>Billing Address:</b></div>
+                </div>
+                <div class="row" style="padding-top: 7px">
+                  <div class="col" *ngFor="let user of userData">
+                    {{ user.billing_address }}
+                  </div>
+                </div>
+              </td>
+              <td colspan="2" class="border">
+                <div class="row">
+                  <!-- <p><b>Delivery</b></p> -->
+                  <div class="col"><b>Delivery Address:</b></div>
+                </div>
+                <div class="row" style="padding-top: 7px">
+                  <div class="col" *ngFor="let user of userData">
+                    {{ user.shipping_address }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>Warranty</b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div class="row justify-content-center">
+                  <div class="col" *ngFor="let user of userData">
+                    {{ user.warranty }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col">
+                    <b>Payment Terms</b>
+                  </div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div class="row justify-content-center">
+                  <div class="col" *ngFor="let user of userData">
+                    {{ user.payment_terms }}
+                  </div>
+                </div>
+                <!-- <div
+                  class="row"
+                  style="margin-left: 7px"
+                  *ngFor="let user of userData"
+                >
+                  {{ user.payment_terms }}
+                </div> -->
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>Liquidated damages</b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div class="row justify-content-center">
+                  <div class="col" *ngFor="let user of userData">
+                    {{ user.liquidated_damages }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>Mode of Payment</b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div class="row justify-content-center">
+                  <div class="col" *ngFor="let user of userData">
+                    {{ user.mode_of_payment }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>Risk and Cost</b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>All Terms and Conditions</b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6" class="border">
+                <div class="row justify-content-center">
+                  <div class="col">
+                    <b>Note:</b> This order is being placed on you based upon
+                    the mutually agreed terms and conditions. You are advised to
+                    send your acceptance for this order within one (1) working
+                    day. Please refer this Order number in all Invoices/
+                    communication pertaining to this order.
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col"><b>Enclosures: Annexure I </b></div>
+                </div>
+              </td>
+              <td colspan="4" class="border">
+                <div
+                  class="row justify-content-center text-center"
+                  *ngFor="let data of address"
+                >
+                  <b> For {{ data.name }}</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="border" colspan="2">
+                <div class="row justify-content-center">
+                  <div class="col"><b>Buyer GST Details:</b></div>
+                </div>
+              </td>
+              <td rowspan="3" colspan="4" class="border">
+                <div class="row justify-content-center text-center"></div>
+              </td>
+            </tr>
+            <tr>
+              <td class="border" colspan="2">
+                <div class="row justify-content-center">
+                  <div class="col">37AAICG2654F1ZL</div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col">
+                    <b><u>Supplier GSTIN Details:</u></b>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center">
+                  <div class="col">
+                    <b><u></u></b>
+                  </div>
+                </div>
+              </td>
+              <td colspan="5" class="border">
+                <div class="row padding1  align-items-center  mt-1" *ngIf="signStatus ">
+                <div class="col"   *ngFor="let item of SignData">
+                  <img [src]="item.signature" class="sign-width" />
+                  <p class="ml-1 ">{{item.updated_by}}</p>
+                  <p class="ml-1 ">{{item.description}}</p>
+                </div>
+              </div>
+              <div class="row padding1  align-items-center   mt-1" *ngIf="!signStatus "
+                 >
+              <div class="col"  *ngFor="let item of SignData" >
+                <img *ngIf="item.signature!==null" [src]="item.signature" class="sign-width" />
+                <p class="ml-1" *ngIf="item.signbtn===false&&item.signature===null">Need to be Signature</p>
+                <span>
+                    <button type="button" class="btn btn-custom mr-3" *ngIf="item.signbtn===true&&item.signature===null"
+                      (click)="getSignatureView(item,viewSignmodel)">Sign</button>
+                    <button type="button" class="btn btn-custom" *ngIf="item.signbtn===true&&item.signature===null"
+                    (click)="deleteItem(row,deleteitemofList)">Cancel</button>
+                </span>
+                <p class="ml-1 ">{{item.updated_by}}</p>
+                <p class="ml-1 " >{{item.description}}</p>
+              </div>
+            </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6" class="border">
+                <div class="row justify-content-center">
+                  <div class="col">
+                    Original to Supplier; Copy to Accounts, Plant and File
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- grid  -->
+    <div class="form-body printMe">
+      <div class="container justify-content-center">
+        <div class="row justify-content-center tablesize">
+          <p class="font5">
+            <u><b>Annexure -I :General Terms and Conditions</b></u>
+          </p>
+          <table class="table table-bordered font6">
+            <tr scope="row" class="page-break">
+              <td class="border text-justify" style="width: 36%">
+                <p>
+                  <b><u>A. General:</u></b>
+                </p>
+                <p>
+                  1. We do not accept any responsibility for any order unless
+                  issued on our official signed purchase order form.
+                </p>
+                <p>
+                  2. Buyer may terminate or cancel work under this order in
+                  whole or in part at any time by written or telegraphic notice.
+                  Termination shall be without prejudice to any claims which one
+                  party may have against the other for work performed and
+                  materials supplied up to date of cancellation.
+                </p>
+                <p>
+                  3. The supplier guarantees that the sale or use of the
+                  products supplied by him will not infringe any Indian or
+                  foreign patent, design or trade mark and undertaken to
+                  indemnify and keep us indemnified against any actions,
+                  judgments, decrees, costs, claims, demands and expenses
+                  resulting from any actual or alleged infringement. The
+                  supplier further undertakes at his own expense to defend or
+                  assist in the defence of any suit or action which may be
+                  brought on us in this connection.
+                </p>
+                <p>
+                  4. Should the supplier quote or offer better terms to any
+                  other party for any material of similar specification and
+                  quantity, we shall have the option to purchase on the same
+                  terms. The benefit of such reductions is to be with
+                  retrospective effect of the lower price whichever is earlier.
+                </p>
+                <p>
+                  5. Goods rejected for any reason in terms of this contract
+                  will remain at our premises at supplier’s risk and cost. The
+                  supplier will have to remove the rejected material if supplied
+                  locally, within three days of our limitation and / or receipt
+                  of the rejection memo, and for goods supplied from outstation,
+                  we would give notice for removal disposal by the supplier with
+                  in seven days. Rejected goods bearing our trademark or emblems
+                  etc. will no be returned to the supplier and will be destroyed
+                  at supplier’s cost at our end to avoid misuse. No cost shall
+                  be provided in this regard.
+                </p>
+                <p>
+                  6. Any terms and conditions rescinding, adding to or altering
+                  the terms of this purchase order subsequently shall always be
+                  in writing by amendment order. All such additions, alterations
+                  or deletions as per amendment order shall be deemed to be
+                  incorporated herein and made part of this purchase order.
+                </p>
+                <p>
+                  7. In the event of any breach of this contract on the part of
+                  the supplier, the supplier agrees to compensate us in such a
+                  manner, as may be determined by us
+                </p>
+                <p>
+                  8. The seller is forbidden to offer any commission, brokerage
+                  or any other gratification to any of the employees, at any
+                  level.
+                </p>
+                <p>
+                  9.The enclosed copy of this order must be duly signed by the
+                  vendor and returned to us with 7 days, failing which this
+                  order will be deemed to have been accepted.
+                </p>
+                <p>
+                  10.Purchase orders sent by fax to suppliers will be deemed to
+                  have been accepted in too, unless objection if any are
+                  received by us by return fax within 48 hours of our
+                  transmission.
+                </p>
+                <p>
+                  <b><u>B.i) Laws & Regulations:</u></b>
+                </p>
+                <p>
+                  Seller warrants that all commodities delivered pursuant to
+                  this order will have produced, sold and delivered to Buyer in
+                  compliance with all applicable Central, State Municipal etc.,
+                  laws and regulations.
+                </p>
+                <p>
+                  <b><u>B.ii) GST Compliance:</u></b>
+                </p>
+                <p>
+                  1. Supplier shall submit all the relevant info like online
+                  credit details etc., in GSTN portal reimbursement of tax to
+                  him or Buyer shall have the right of recovery of GST amount in
+                  case of mismatch of GST Credit with Return filled by the
+                  Supplier.
+                </p>
+                <p>
+                  2. Supplier shall issue a valid GST invoice in order to avail
+                  GST Credit irrespective of Supplier whether local or from
+                  outside the State with details such as GSTIN, HSN Code of the
+                  item, Taxable value/amount, place of delivery, place of supply
+                  etc.,
+                </p>
+                <p>
+                  <b><u>C. Jurisdiction:</u></b>
+                </p>
+                <p>
+                  In the event of any dispute arising out of the order/contract
+                  only the courts in Hyderabad will have jurisdiction.
+                </p>
+                <p>
+                  <b><u>D. Patents :</u></b>
+                </p>
+                <p>
+                  Seller will exonerate indemnity and hold harmless the buyer
+                  from and against any and all liability damage. cost or expense
+                  which may accrue to or be sustained by Buyer on account of any
+                  claim, suit or action make or threatened to be brought
+                  against. Buyer or its customer for actual or alleged
+                  infringement of any patent, by reason of the manufacture of
+                  goods covered by this order by seller
+                </p>
+              </td>
+              <td class="border text-justify" style="width: 35%">
+                <p>
+                  the resale thereof by Buyer or use of said goods or any part
+                  thereof for a purpose known to Seller, and Seller at Buyer’s
+                  request will defend at Seller’s expense, any such claim, suit
+                  or action.
+                </p>
+                <p>
+                  <b><u>E. Warranties:</u></b>
+                </p>
+                <p>
+                  The Seller warrants supplies when delivered hereunder to be
+                  free from all defect of material or workmanship to confirm
+                  strictly to the specifications, drawings or samples specified
+                  or furnished and to be fit for the use and purposes intended
+                  free from all patent and latent defects the breach whereof
+                  shall give the Buyer without prejudice to his other rights and
+                  remedies and right to reject the supplies and treat the
+                  contracts as repudiated. All warranties shall survive any
+                  intermediate or final inspections deliver, acceptance, or
+                  payment by purchase and shall continue in effect through a
+                  period of one year beginning with the date of delivery of
+                  supplies to Buyer.
+                </p>
+                <p>
+                  <b><u>F. Waivers:</u></b>
+                </p>
+                <p>
+                  Any failure by Buyer to enforce or require strict performance
+                  by Seller or any terms or conditions of this order shall not
+                  constitute a waiver there of Buyer and Buyer may at any time
+                  avail himself of the remedies. Buyer may have for any breach
+                  of the terms hereof.
+                </p>
+                <p>
+                  <b><u>G. Force Majeure Conditions:</u></b>
+                </p>
+                <p>
+                  We reserve the right to cancel this purchase order or any part
+                  thereof due to fire, strikes, lockout and force majeure or
+                  from any other cause or causes beyond our control or from any
+                  cause or causes due to acts or demands of the government or as
+                  a consequence of war or outbreak of hostilities.
+                </p>
+                <p>
+                  <b><u>H. Quality Standards:</u></b>
+                </p>
+                <p>
+                  1. The goods supplied must confirm to our standard
+                  specifications or samples as the case may be.
+                </p>
+                <p>
+                  2. If the goods supplied against this order do not confirm to
+                  the standard, specifications or samples approved by us the
+                  same shall be liable to be rejected at the suppliers cost and
+                  risk. Our decision on the question whether the goods supplied
+                  confirm to the standards, specifications or samples approved
+                  either directly by us or any third party inspecting agency.
+                </p>
+                <p>
+                  3. The Buyer may at any time by written order, make changes in
+                  the drawings, designs or specifications applicable to the
+                  supplies covered by this purchase order with.
+                </p>
+                <p>
+                  4.All items manufactured by the supplier according to our
+                  furnished blueprints, drawings, designs, manufacturing data, ,
+                  specifications or information shall not be utilized by the
+                  supplier or anyone on his behalf for sale, manufacture or for
+                  any other purpose save as agreed by us in writing.
+                </p>
+                <p>
+                  <b><u>I. Transit Insurance:</u></b>
+                </p>
+                <p>
+                  The goods are to be insured for transit risk at vendor’s
+                  expense unless otherwise authorized by us.
+                </p>
+                <p>
+                  <b><u>J. Packing :</u></b>
+                </p>
+                <p>
+                  1. All articles shall be suitably packed or otherwise prepared
+                  for dispatch by consolidation package, so as to secure the
+                  lowest transportation rates and to meet carrier’s
+                  requirements. No charges will be allowed for packing, carting
+                  or cartage unless stated in the order. Each packing must be
+                  marked to show quantity, contents name of supplier, any other
+                  markings as required which are mandatory. Packing list to be
+                  sent along with invoice.
+                </p>
+                <p>
+                  2. Unless otherwise agreed, all materials ordered are to be
+                  supplied F.O.R. destination as specified in the purchase
+                  order, and no charges for packing, boxing or crating will be
+                  accepted unless authorized in the purchase order.
+                </p>
+                <p>
+                  <b><u>K. Delivery :</u></b>
+                </p>
+                <p>
+                  1. Delivery time is the essence of the contract and the buyer
+                  may reject the goods and services not delivered or furnished
+                  on dates herein informed. Delivery must be effected within the
+                  time stated. We reserve to ourselves the right to purchase the
+                  goods in the open market and charge the supplier with any loss
+                  incurred as a result thereof or to cancel the order.
+                </p>
+                <p>
+                  2. Unless otherwise agreed to in writing the weights and
+                  measurements at our delivery point will be taken as correct
+                  and final.
+                </p>
+              </td>
+              <td class="border text-justify" style="width: 36%">
+                <p>
+                  Whenever applicable, we have right to have re-weighment either
+                  as per weigh bridge / external weight bridge. Tolerance limit
+                  of acceptance of shall be strictly as required
+                </p>
+                <p>
+                  3. The buyer shall have the option to cancel or to reject the
+                  goods in case of short delivery. Part deliveries will be
+                  accepted only if so specified.
+                </p>
+                <p>
+                  4. Goods delivered in excess of the quantities ordered will
+                  not be accepted unless the same as amended subject to
+                  acceptance by the Buyer.
+                </p>
+                <p>
+                  <b><u>L. Documents:</u></b>
+                </p>
+                <p>
+                  All the documents and correspondence covering the supply of
+                  goods should indicate our order no. and date. The delivery
+                  challan and bill should be submitted in TRIPLICATE, failing
+                  which the deliveries are likely to be refused and payment
+                  delayed. Separate DC’s are to be made for each partial supply
+                  covered by a single invoice. The bill should give reference of
+                  the order as well as the delivery challan(s), packing list
+                  etc.,
+                </p>
+                <p>
+                  <b><u>M. Payment Advance:</u></b>
+                </p>
+                <p>
+                  Payment made for supplies received as per this purchase order
+                  prior to inspection shall not constitute as acceptance
+                  thereof. In the event of rejection such advance has to be
+                  refunded together with interest unless authorized by us for
+                  adjustment against future supplies.
+                </p>
+                <p>
+                  <b
+                    ><u
+                      >N. Quality, safety, environment & social accountability:
+                    </u></b
+                  >
+                </p>
+                <p>
+                  It is assumed that the delivered products have been
+                  manufactured within an effective and demonstrable quality
+                  system, preferably one conforming to the requirements of the
+                  ISO 9001/14001 standards. While delivering the items or
+                  performing the service the supplier shall follow the safe work
+                  procedures required to control safety and health hazards.
+                  Supplier shall not utilize child, slave, or any other form of
+                  forced or involuntary labour, or engage in abusive employment
+                  or corrupt business practices, in the supply of delivery items
+                  to or the performance of services for Greenko. Supplier shall
+                  follow all the requirements of SA 8000 in the supply of
+                  delivery of items to or the performance of services for
+                  Greenko. Greenko shall be entitled to inspect whenever
+                  required, the production process and verify the above
+                  mentioned management systems being followed, on short notice
+                  to the Supplier at Supplier’s site.
+                </p>
+                <p>
+                  <b><u>O. Hazardous Material:</u></b>
+                </p>
+                <p>
+                  1. The safety codes and safety requirements to be followed in
+                  transportation of hazardous materials like flammable products
+                  including Kerosene, Petrol, LPG, etc., as laid down in Central
+                  Motor Vehicles Rules. The MSDS shall be available with the
+                  driver. Every package containing dangerous or hazardous goods
+                  shall display the distinct class labels appropriate to the
+                  type of dangerous or hazardous goods. The vehicle is equipped
+                  with necessary First-aid, Safety equipment and antidotes as
+                  may be necessary. It is the responsibility of the driver to
+                  keep all information provided to him in writing i.e., in the
+                  form TREMCARD (Transport Emergency Card). This is to be kept
+                  in the driver's cabin and is available at all times while
+                  hazardous material related to it is being transported.
+                </p>
+                <p>
+                  <b><u>P. Group order acceptance conditions:</u></b>
+                </p>
+                <p>
+                  The conditions of any other Order from any of our group
+                  companies shall be superseded by the terms of this order in
+                  case of a conflict unless specifically agreed by us.
+                </p>
+                <br />
+                <br />
+                <br />
+                <div class="row justify-content-center">
+                  <div class="col text-center" style="margin: 20px">
+                    <p><b>(Authorised Signatory)</b></p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>
+<!-- model -->
+<ng-template #viewSignmodel>
+  <h1 mat-dialog-title>View Signature</h1>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-12 text-center">
+        <img [src]="Viewsign" class="sign-width" />
+      </div>
+    </div>
+  </div><br>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+    <button mat-button cdkFocusInitial (click)="SignatureFile()" class="matButton"
+      [disabled]="!Viewsign">Confirm</button>
+  </div>
+</ng-template>
+
+<!-- Cancel -->
+<ng-template #deleteitemofList>
+  <h1 mat-dialog-title>Delete Activity</h1>
+  <div mat-dialog-content>
+      <p>Are you sure, you want to delete record?</p>
+      <div class="row">
+          <div class="col-md-12">
+              <label style="padding-top: 5px">Reason</label>
+              <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                  [(ngModel)]="deletemodel.reason" style="width: 100%" />
+          </div>
+      </div>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+          Close</button>&nbsp;
+      <button  mat-button cdkFocusInitial (click)="deleteFile()" class="matButton" [disabled]="!deletemodel.reason">
+          Delete
+      </button>
+  </div>
+</ng-template>
+<ng-template #deletedocsigned>
+  <span class="d-flex justify-content-between">
+      <h1 mat-dialog-title>Document Signed Already</h1>
+      <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+          <mat-icon class="close-icon">close</mat-icon>
+      </button>
+  </span>
+  <div mat-dialog-content>
+      <p>Still want to delete ? </p>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-button cdkFocusInitial class="matButton" (click)="deleteSeleted(deletedocsigneddata)" >
+          Yes
+      </button>&nbsp;
+      <button mat-button mat-dialog-close class="matButton"  style="background: transparent">
+          No</button>
+  </div>
+</ng-template>
+
+<ng-template #deletedocsigneddata>
+  <span class="d-flex justify-content-between">
+      <h1 mat-dialog-title>&nbsp;</h1>
+      <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+          <mat-icon class="close-icon">close</mat-icon>
+      </button>
+  </span>
+  <div mat-dialog-content>
+     <p><b>Document Number :</b> {{deleteNumber}}</p>
+     <div class="row">
+      <div class="col-md-12">
+          <label style="padding-top: 5px">Reason</label>
+          <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+              [(ngModel)]="deletemodel.reason" style="width: 100%" />
+      </div>
+      <div class="col-md-12">
+          <label style="padding-top: 5px">Password</label>
+          <input type="text" placeholder="Enter Password" class="inputstyles" name="pwd"
+              [(ngModel)]="deletemodel.pwd" style="width: 100%" />
+      </div>
+  </div>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-button cdkFocusInitial class="matButton" (click)="deleteFile()"  [disabled]="!deletemodel.reason">
+          Confirm
+      </button>
+      <!-- <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+          No</button> -->
+  </div>
+</ng-template>

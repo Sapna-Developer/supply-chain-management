@@ -1,0 +1,33 @@
+<div class="card m-b-0 model">
+    <div class="card-body row" style="z-index: 99;">
+        <div class="col-8 col-md-10">
+            <h4 class="card-title">Total PDF's : {{taskObj.length}}</h4>
+        </div>
+
+
+        <div class="col-4 col-md-2" *ngIf="pdfFiles$.length != 1">
+            <i class="fas fa-arrow-circle-left m-r-20 font-24 cursor" (click)="goNext(1)" *ngIf="currentIndex !=0"></i>
+            <i class="fas fa-arrow-circle-right font-24 cursor" (click)="goNext(2)"
+                *ngIf="(currentIndex+1) < pdfFiles$.length"></i>
+        </div>
+
+        <i class="fas fa-window-close font-24 close-icon" (click)="closeModel()"></i>
+    </div>
+
+    <div class="card-body text-center">
+
+
+
+        <div class="pdf-container" *ngIf="showPdf">
+            <pdf-viewer [src]="currentPdfUrl" [fit-to-page]="true" [original-size]="false">
+            </pdf-viewer>
+        </div>
+
+        <!-- <ngx-extended-pdf-viewer [src]="currentPdfUrl" useBrowserLocale="true" height="80vh">
+            </ngx-extended-pdf-viewer> -->
+
+
+
+
+    </div>
+</div>

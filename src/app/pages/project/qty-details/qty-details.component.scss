@@ -1,0 +1,57 @@
+.close-icon {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    top: 20px;
+}
+table thead th{
+    vertical-align: top;
+}
+.align-items-center {
+    h5 {
+        margin-bottom: 10px;
+    }
+
+    span {
+        font-size: 16px;
+        ;
+    }
+}
+
+.add-qty {
+    position: absolute;
+    right: 30px;
+
+}
+.tSticky{
+    position: relative;
+}
+.tSticky .tableSticky thead{
+    position: sticky;
+    top: -1px;
+    z-index: 999999999999;
+}
+.tSticky .tableSticky tr th{
+    white-space: unset;
+    text-align: center;
+    vertical-align: middle;
+}
+.faIconBtn{
+    display: flex;
+}
+.btn{
+    background-color:  rgba(0, 0, 0, 0.12);
+    color: black;
+    border: none;
+ }
+ .add-qty {
+     position: absolute;
+     right: 25px!important;
+     margin-top: -17px;
+     font-size: 11px;
+ }
+//  #toast-container > .toast-success {
+//     background-image: none;
+//     background-color: #78c8e1;
+//     color: black;
+//   }

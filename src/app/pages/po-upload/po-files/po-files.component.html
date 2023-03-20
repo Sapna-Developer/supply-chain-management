@@ -1,0 +1,88 @@
+<div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">{{title}}</h4>
+        </div>
+    </div>
+</div>
+
+<mat-card class="p-0">
+    <mat-card-content>
+        <div class="row p-10">
+            <div class="col-12 col-md-2 float-right text-left">
+                {{title}} Files<br />
+                <p>{{totalRecords}} Found</p>
+            </div>
+            <div class="col-12 col-md-2 form-group">
+                <input class="form-control" placeholder="Search GEPS No" [(ngModel)]="gepsNoValue" type="search"
+                    name="searchGepsNoValue" (ngModelChange)="this.searchGepsNo.next($event)">
+            </div>
+            <div class="col-12 col-md-2 form-group">
+                <input class="form-control" placeholder="Search Vendor Name" [(ngModel)]="vendorNameValue" type="search"
+                    name="searchVendorNameValue" (ngModelChange)="this.searchVendorNameValue.next($event)">
+            </div>
+
+            <div class="col-12 col-md-2 form-group">
+                <input class="form-control" placeholder="Search Order No" [(ngModel)]="orderNoValue" type="search"
+                    name="searchOrderNo" (ngModelChange)="this.searchOrderNo.next($event)">
+            </div>
+
+            <!-- <div class="col-12 col-md-2 form-group">
+                <input class="form-control" placeholder="Search Mobile Number" [(ngModel)]="vendorMobileValue"
+                    type="search" name="searchVendorMobileNumber"
+                    (ngModelChange)="this.searchVendorMobileNumber.next($event)">
+            </div>
+
+            <div class="col-12 col-md-2 form-group">
+                <input class="form-control" placeholder="Search Email" [(ngModel)]="vendorEmailValue" type="search"
+                    name="searchVendorEmail" (ngModelChange)="this.searchVendorEmail.next($event)">
+            </div> -->
+            <div class="col-12 col-md-4 float-right text-right">
+                <button mat-icon-button value="Upload" matTooltip="Upload" class="custom-icon-button m-r-10"
+                    (click)="autoFileUpload.click()"
+                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_PO_UPLOAD','ADD_WO_UPLOAD'])">
+                    <span class="material-icons">
+                        upload
+                    </span>
+                </button>
+                <div class="file" hidden>
+                    <input class="form-control-file" name="file" multiple
+                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                        type="file" (change)="uploadFile($event,emailDetailsDialog)" #autoFileUpload />
+                    <span class="file-custom"></span>
+                </div>
+                <button mat-icon-button value="Refresh" matTooltip="Refresh" (click)="getPODetails()"
+                    class="custom-icon-button">
+                    <span class="material-icons">
+                        refresh
+                    </span>
+                </button>
+            </div>
+
+        </div>
+
+        <app-table-data [tableData$]="tableData$" (passEntry)="searchParams($event)" [uploadType]="uploadType">
+        </app-table-data>
+
+    </mat-card-content>
+</mat-card>
+
+
+<ng-template #emailDetailsDialog>
+    <h1 mat-dialog-title class="w-full">{{uploadType | uppercase }} Details - {{poFileData.geps_no}}
+        <button mat-icon-button mat-raised-button cdkFocusInitial (click)="cancelFile()" align="end" value="Close"
+            matTooltip="Close" class="custom-icon-button float-right">
+            <span class="material-icons">
+                close
+            </span>
+
+        </button>
+    </h1>
+    <div mat-dialog-content>
+        <app-po-details [type]="'temp'" [poFileData]="poFileData" [uploadType]="uploadType"></app-po-details>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-raised-button color="primary" class="m-r-20" (click)="updateFile()">Upload</button>
+        <button mat-button mat-raised-button cdkFocusInitial (click)="cancelFile()">Close</button>
+    </div>
+</ng-template>

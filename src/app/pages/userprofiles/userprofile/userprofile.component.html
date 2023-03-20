@@ -1,0 +1,53 @@
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label> User Signature </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-4 mb-2">
+                                <button type="button" class="btn btn-secondary mr-3" (click)="clear()" *ngIf="img">Clear</button>
+                                <button type="button" class="btn btn-secondary mr-3" (click)="draw()">Draw</button>
+                                <!-- <button type="button" class="btn btn-secondary mr-3"
+                                    (click)="uploadimage()">Upload</button>
+                                <input type="file" hidden name="files" accept="image/*"
+                                    (change)="onFileChanged($event)"> -->
+                                <button type="button" class="btn btn-secondary mr-3" (click)="fileInput.click()">
+                                    <span>Attach File</span>
+                                    <input #fileInput type="file" (change)="onFileChanged($event)"
+                                        style="display: none" />
+                                </button>
+                               
+                                <!-- <input #Image type="file" (change)="handleFileInput($event.target.files)"/> -->
+                                <button type="button" class="btn btn-secondary" (click)="saveSign()">Save</button>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-12" *ngIf="img">
+                              <h6  style="font-size: 18px;font-weight: 500;">Uploaded File:  <span  style="font-size: 16px;font-weight: 400;"> {{fileName}}</span></h6>
+                            </div>
+                            <div class="col-5 box border" *ngIf="drawSignature">
+                                <div class="view_Signature">
+                                    <h1>Draw Your Signature</h1>
+                                    <div class="d-flex">
+                                        <button type="button" class="btn btn-secondary mr-3" (click)="clear()" *ngIf="!img">Clear</button>
+                                    </div>
+                                </div>
+                                <hr>
+                                <signature-pad [options]="clro">
+                                </signature-pad>
+                            </div>
+                            <div class="col-6">
+                                <h1>View Signature</h1>
+                                <img [src]="Viewsign" class="sign-width" />
+                                <!-- <img  *ngIf="imageUrl1" [src]="imageUrl1" class="sign-width"> -->
+                            </div>
+                        </div>
+                        
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>

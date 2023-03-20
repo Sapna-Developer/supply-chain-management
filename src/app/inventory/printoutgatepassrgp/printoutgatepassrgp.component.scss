@@ -1,0 +1,40 @@
+.border{
+    border:1px solid black !important;
+  }
+  th,td{
+    border: none;
+    padding: 12px;
+    font-size: 17px;
+  }
+  .side{
+    border-left: 1px solid black;
+  }
+  .top{
+    border-top: 1px solid black;
+  }
+  .right{
+    border-right: 1px solid black;
+  }
+  .bottom{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .thead {
+    display: table-header-group;
+  }
+  .tbody {
+    display: table-row-group;
+  }
+  .tfoot {
+    display: table-footer-group;
+  }
+  @media print {
+    #spacer {height: 2em;} /* height of footer + a little extra */
+    #footer {
+      position: fixed;
+      bottom: 0;
+      width: 36%;
+    } 
+  }
+  

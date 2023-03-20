@@ -1,0 +1,338 @@
+<mat-card>
+    <div class="print ">
+      <!-- <button onclick="getPrint()">Print</button> -->
+      <button [print]="['demo', config]" class="btn btn-info" style="margin-right:1%;margin-left:1%">
+        Print
+      </button>
+      <button (click)="backtositesheet()" class="btn btn-info">
+        Back
+      </button>
+
+
+  
+    <div class="formbody" id="demo">
+      <div class="row justify-content-center">
+        <table class="table border" style="width: 100%">
+          <tr class="center text-right">
+            <!-- <th class="border"></th> -->
+            <th colspan="12" class="border">SITE RECOMMENDATION SHEET</th>
+          </tr>
+          <tr class="center">
+            <th colspan="6" class="border">PROJECT NAME:</th>
+            <td colspan="6" class="border" >
+                <span *ngFor="let user of userData">{{user.company_name}}</span></td>
+          </tr>
+  
+          <tr class="center">
+            <th colspan="6" class="border">DESCRIPTION OF WORK :</th>
+            <td colspan="6" class="border">
+              <span *ngFor="let user of userData">
+                {{ user.contractor_name }}</span
+              >
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">NAME OF THE CONTRACTOR :</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">
+                {{ user.description_of_work }}</span
+              >
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">PAN NO :</th>
+            <td class="border" colspan="6">HJCPK6571A</td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">GST NO :</th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">WORK ORDER No. / DATE :</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">
+                {{ user.work_order_number }}</span
+              >/<span *ngFor="let user of userData">
+                {{ user.date | date: "dd-MM-yyyy" }}</span
+              >
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">CUMMULATIVE WORK ORDER VALUE :</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">
+                {{ user.cummulative_work_order_value }}</span
+              >
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">VENDOR INVOICE NO. :</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">
+                {{ user.invoice_number }}</span
+              >
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">RA BILL NO. :</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">
+                {{ user.ra_bill_number }}</span
+              >
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">RA BILL DATE. :</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">
+                {{ user.ra_bill_from_date | date: "dd-MM-yyyy" }}</span
+              >-
+              <span *ngFor="let user of userData">
+                {{ user.ra_bill_to_date | date: "dd-MM-yyyy" }}</span
+              >
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">DOCUMENTS</th>
+            <td class="border" colspan="6">REFERENCE / REMARKS</td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">Drawings</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData"> {{ user.is_drawings }}</span>
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+  
+          <tr class="center">
+            <th class="border" colspan="6">QA/QC</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData"> {{ user.is_qa_qc }}</span>
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">Stores</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">{{ user.is_stores }}</span>
+            </td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">Debit's</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">{{ user.is_debits }}</span>
+            </td>
+          </tr>
+  
+          <tr class="center">
+            <th class="border" colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">Royalty</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">{{ user.is_royality }}</span>
+            </td>
+          </tr>
+  
+          <tr class="center">
+            <th class="border" colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6">Other Documents(If any)</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">{{
+                user.is_other_documents
+              }}</span>
+            </td>
+          </tr>
+  
+          <tr class="center">
+            <th class="border" colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th class="border" colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center text-center">
+            <th class="border text-right" colspan="6">TOTAL GROSS VALUE (Rs.)</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">{{ user.total_value }}</span>
+            </td>
+          </tr>
+  
+          <tr class="center">
+            <th class="border" colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center text-center">
+            <th class="border text-right" colspan="6">NET PAYABLE (Rs.)</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">{{ user.net_payable }}</span>
+            </td>
+          </tr>
+  
+          <tr class="center" rowspan="1" columnspan="2">
+            <td colspan="6">QUANTITY SURVEYOR</td>
+            <td colspan="6">PLANNING:</td>
+          </tr>
+  
+          <tr class="center">
+            <td colspan="6">NAME:</td>
+            <td colspan="6">NAME:</td>
+          </tr>
+          <tr class="center">
+            <td colspan="6">SIGNATURE:</td>
+            <td colspan="6">SIGNATURE:</td>
+          </tr>
+          <tr class="center">
+            <td colspan="6"></td>
+            <td colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <td colspan="6">STORES</td>
+            <td colspan="6">QA/QC:</td>
+          </tr>
+          <tr class="center">
+            <td colspan="6">NAME:</td>
+            <td colspan="6">NAME:</td>
+          </tr>
+          <tr class="center">
+            <td colspan="6">SIGNATURE:</td>
+            <td colspan="6">SIGNATURE:</td>
+          </tr>
+          <tr class="center">
+            <td colspan="6"></td>
+            <td colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <td colspan="6">CONSTRUCTION MANAGER</td>
+            <td colspan="6">PROJECT HEAD</td>
+          </tr>
+          <tr class="center">
+            <td colspan="6">NAME:</td>
+            <td colspan="6">NAME:</td>
+          </tr>
+          <tr class="center">
+            <td colspan="6">SIGNATURE:</td>
+            <td colspan="6">SIGNATURE:</td>
+          </tr>
+          <tr class="center border text-center">
+            <th colspan="12">PAYMENT DETAILS</th>
+          </tr>
+          <tr class="center">
+            <th colspan="6"></th>
+            <td class="border" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <td class="center text-right" colspan="6">RA1 Bill Value</td>
+            <th class="border text-center" colspan="6">
+                <span *ngFor="let user of userData">{{user.ra_bill_value | number:'1.2-2'}}</span></th>
+          </tr>
+  
+          <tr class="center">
+            <td class="center text-right" colspan="6">
+              Add Labour Cess 1% of work done value
+            </td>
+            <th class="border text-right" colspan="6">-</th>
+          </tr>
+          <tr class="center">
+            <td class="center text-right" colspan="6">Add IGST 18%</td>
+            <th class="border text-right" colspan="6">-</th>
+          </tr>
+          <tr class="center">
+            <th colspan="6"></th>
+            <td class="border-left" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th colspan="6"></th>
+            <td class="border-left" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th colspan="6"></th>
+            <td class="border-left" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th colspan="6"></th>
+            <td class="border-left" colspan="6"></td>
+          </tr>
+          <tr class="center text-center">
+            <th class="border text-right" colspan="6">TOTAL GROSS VALUE (Rs.)</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">{{ user.total_value }}</span>
+            </td>
+          </tr>
+          <tr class="center">
+            <th colspan="6"></th>
+            <td class="border-left" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <td colspan="6">Deduct :</td>
+            <td class="border-left" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <td class="center text-right" colspan="6">TDS (1.5%)</td>
+            <td class="border-left text-center" colspan="6">
+                <span *ngFor="let user of userData">{{user.tds_value | number:'1.2-2'}}</span></td>
+          </tr>
+          <tr class="center">
+            <th colspan="6"></th>
+            <td class="border-left" colspan="6"></td>
+          </tr>
+          <tr class="center">
+            <th colspan="6"></th>
+            <td class="border-left" colspan="6"></td>
+          </tr>
+  
+          <tr class="center">
+            <td class="center text-right" colspan="6">Debit value (Approx.)</td>
+            <!-- <td class="border-left text-center" colspan="6">
+              <span *ngFor="let user of userData">{{user.tds_value | number:'1.2-2'}}</span></td> -->
+            <th class="border-left" colspan="6"></th>
+          </tr>
+          <tr class="center">
+            <td class="center text-right" colspan="6">Royalty</td>
+            <td class="border-left text-center" colspan="6">
+              <span *ngFor="let user of userData">{{user.debit_value_royalty | number:'1.2-2'}}</span></td>
+            <!-- <th class="border-left" colspan="6"></th> -->
+          </tr>
+          <tr class="center">
+            <td class="center text-right" colspan="6">Diesel recovery</td>
+            <td class="border-left text-center" colspan="6">
+              <span *ngFor="let user of userData">{{user.diesel_recovery | number:'1.2-2'}}</span></td>
+            <!-- <th class="border-left" colspan="6"></th> -->
+          </tr>
+          <tr class="center">
+            <th colspan="6"></th>
+            <td class="border-left" colspan="6"></td>
+          </tr>
+          <tr class="center text-center">
+            <th class="border text-right" colspan="6">NET PAYABLE (Rs.)</th>
+            <td class="border" colspan="6">
+              <span *ngFor="let user of userData">{{ (user.ra_bill_value) - (user.tds_value) | number:'1.2-2'}}</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+  
+      <!-- <button onclick="window.print()" class="noPrint">Print</button> -->
+    </div>
+    </div>
+  </mat-card>
+  

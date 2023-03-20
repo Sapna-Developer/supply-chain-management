@@ -1,0 +1,170 @@
+
+<mat-card>
+    <mat-card-content>
+            <div class="row mb-2" >
+                <div class="col-12 align-self-center bg-wave" >
+                   <div class="d-flex justify-content-start">
+                    <img class="p-1" src="assets/greenko/Dashboard-Icon.png">
+                    <span class="ml-3 mt-2">
+                        <h1 class="page-title mb-0"><b>Dashboard</b></h1>
+                        <h4 class="page-title mb-0"><b style="font-weight: 500;font-size: 18px;">Greenko Asset Management</b> </h4>
+                    </span>
+                   </div>
+                </div>
+                <!-- <div class="col-6">
+                    <img src="assets/greenko/wave-bg.png">
+                </div> -->
+            </div>
+        <div class="row ">
+            <div class="col-md-6">
+                <div class="table table-responsive" mat-table-wrapper>
+                    <div class="example-table-container">
+                        <div class="d-flex justify-content-start bg-git mb-2">
+                            <img src="assets/greenko/goods-icon.png"><h3 class="ml-3 h3-title"><b>Goods In Transit</b></h3>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                                <mat-form-field>
+                                    <mat-label>Enter a date range</mat-label>
+                                    <mat-date-range-input [rangePicker]="picker1"  (keyup)="getRGPData()">
+                                        <input matStartDate  placeholder="Start date">
+                                        <input matEndDate  placeholder="End date">
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #picker1></mat-date-range-picker>
+                                  </mat-form-field>
+                                  <button mat-icon-button value="Refresh" matTooltip="Refresh"  (click)="getData()"
+                                  class="custom-icon-button">
+                                  <span class="material-icons">
+                                      refresh 
+                                  </span>
+                              </button>
+                           
+                        </div>
+                        <div class="example-container">
+                            <table mat-table [dataSource]="dataSourceList">
+                                <ng-container matColumnDef="sno">
+                                    <th mat-header-cell *matHeaderCellDef style="width: 8%">
+                                        SNO
+                                    </th>
+                                    <td mat-cell *matCellDef="let row; let i = index">
+                                        {{
+                                        i +
+                                        1 +
+                                        purcreqpaginator.pageIndex * purcreqpaginator.pageSize
+                                        }}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="date">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        Date
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">{{ row.date | date: "dd/MM/yyyy" }}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="From_Company">
+                                    <th mat-header-cell *matHeaderCellDef>From Company</th>
+                                    <td mat-cell *matCellDef="let row">{{ row.concern_name }}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="To_Company">
+                                    <th mat-header-cell *matHeaderCellDef>To Company</th>
+                                    <td mat-cell *matCellDef="let row">{{ row.company_name }}</td>
+                                </ng-container>
+            
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsList; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsList"></tr>
+                            </table>
+                            <div *ngIf="reaData == true" class="text-center">
+                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                    Loading...
+                                </h4>
+                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                    No Records Found
+                                </h4>
+                            </div>
+                        </div>
+                        <mat-paginator [length]="totalRecords" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                            #purcreqpaginator (page)="onpageevent($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="table table-responsive" mat-table-wrapper>
+                    <div class="example-table-container">
+                        <div  class="d-flex justify-content-start bg-git mb-2">
+                            <img src="assets/greenko/tracking-icon.png"> <h3 class="ml-3 h3-title"><b>RGP</b></h3>
+                        </div>
+                       <div class="d-flex justify-content-between">
+                            <mat-form-field>
+                                <mat-label>Enter a date range</mat-label>
+                                <mat-date-range-input [rangePicker]="picker" (keyup)="getRGPData()">
+                                  <input matStartDate matInput placeholder="Start date" [(ngModel)]="startDate"/>
+                                  <input matEndDate matInput placeholder="End date"  [(ngModel)]="endDate">
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                              </mat-form-field>
+                              <button mat-icon-button value="Refresh" matTooltip="Refresh"  (click)="getRGPData()"
+                              class="custom-icon-button ml-3">
+                              <span class="material-icons">
+                                  refresh
+                              </span>
+                          </button>
+                       
+                       </div>
+                       <div class="example-container">
+                           <table mat-table [dataSource]="dataSourceList1">
+                               <ng-container matColumnDef="sno">
+                                   <th mat-header-cell *matHeaderCellDef style="width: 8%">
+                                       SNO
+                                   </th>
+                                   <td mat-cell *matCellDef="let row; let i = index">
+                                       {{
+                                       i +
+                                       1 +
+                                       purcreqpaginator.pageIndex * purcreqpaginator.pageSize
+                                       }}
+                                   </td>
+                               </ng-container>
+                               <ng-container matColumnDef="Company_Name">
+                                   <th mat-header-cell *matHeaderCellDef>
+                                      Company Name
+                                   </th>
+                                   <td mat-cell *matCellDef="let row">{{ row.company_name }}</td>
+                               </ng-container>
+                               <ng-container matColumnDef="Open">
+                                   <th mat-header-cell *matHeaderCellDef>Open</th>
+                                   <td mat-cell *matCellDef="let row">{{ row.open }}</td>
+                               </ng-container>
+                               <ng-container matColumnDef="Closed">
+                                   <th mat-header-cell *matHeaderCellDef>Closed</th>
+                                   <td mat-cell *matCellDef="let row">{{ row.close }}</td>
+                               </ng-container>
+                               <ng-container matColumnDef="Total">
+                                   <th mat-header-cell *matHeaderCellDef>Total</th>
+                                   <td mat-cell *matCellDef="let row">{{getTotal(row)}}</td>
+                               </ng-container>
+                               <tr mat-header-row *matHeaderRowDef="displayedColumnsList1; sticky: true"></tr>
+                               <tr mat-row *matRowDef="let row; columns: displayedColumnsList1"></tr>
+                           </table>
+                           <div *ngIf="reaData1 == true" class="text-center">
+                               <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                   Loading...
+                               </h4>
+                               <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                   No Records Found
+                               </h4>
+                           </div>
+                        </div>
+                        <mat-paginator [length]="totalRecords1" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                            #purcreqpaginator (page)="onpageevent1($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-6 text-right">
+                <p class="mb-0 mt-0 version">version 2023.02.02</p>
+            </div> -->
+        </div>
+    </mat-card-content>
+</mat-card>
+<p class="version">Production version:2023.03.02</p>

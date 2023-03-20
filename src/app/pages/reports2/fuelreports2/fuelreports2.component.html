@@ -1,0 +1,330 @@
+<div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Fuel Reports</h4>
+        </div>
+    </div>
+</div>
+<div class="inventory-reportsTab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms">
+        <!-- Bunk Request -->
+        <mat-tab>
+            <ng-template mat-tab-label> Bunk Request </ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                    />
+                                    <!-- [(ngModel)]="bunkreqfromdate" -->
+                            </div>
+
+                            <div class="col-2 col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                   />
+                                   <!-- [(ngModel)]="bunkreqtodate"  -->
+                            </div>
+                            <div class="col-4 col-md-4">
+                                <label>Vendor Name<span class="mandetory">*</span></label>
+                                <input type="text" class="dropdownstyles" placeholder="Search Vendor Name"
+                                    aria-label="Number" matInput name="VendorName" [(ngModel)]="bunkreqvendor_name"
+                                    (keyup)="filterVendorData($event)" [matAutocomplete]="auto1" />
+                                <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                                    (optionSelected)="getVendorCode()">
+                                    <mat-option *ngFor="let user of VendorData" [value]="user.name">{{ user.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn" type="button" 
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                                <!-- (click)="getbunkreq()" -->
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="bunkreqclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <!-- Bunk Request end -->
+        <!-- Bunk Confirmation -->
+        <mat-tab>
+            <ng-template mat-tab-label> Bunk Confirmation </ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                  />
+                                  <!-- [(ngModel)]="bunkcfrmfromdate"  -->
+                            </div>
+
+                            <div class="col-2 col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                    />
+                                    <!-- [(ngModel)]="bunkcfrmtodate" -->
+                            </div>
+                            <div class="col-4 col-md-4">
+                                <label>Vendor Name<span class="mandetory">*</span></label>
+                                <input type="text" class="dropdownstyles" placeholder="Search Vendor Name"
+                                    aria-label="Number" matInput name="VendorName" [(ngModel)]="bunkcfrmvendor_name"
+                                    (keyup)="filterVendorData($event)" [matAutocomplete]="auto2" />
+                                <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete"
+                                    (optionSelected)="getVendorCodeBC()">
+                                    <mat-option *ngFor="let user of VendorData" [value]="user.name">{{ user.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn" type="button" 
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                                <!-- (click)="getbunkcfrm()" -->
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="bunkcfrmclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <!-- Bunk Confirmation end -->
+        <!-- Fuel Receipt -->
+        <mat-tab>
+            <ng-template mat-tab-label> Fuel Receipt </ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                    />
+                                    <!-- [(ngModel)]="fuelreceiptfromdate" -->
+                            </div>
+
+                            <div class="col-2 col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                    />
+                                    <!-- [(ngModel)]="fuelreceipttodate" -->
+                            </div>
+                            <div class="col-4 col-md-4">
+                                <label>Vendor Name<span class="mandetory">*</span></label>
+                                <input type="text" class="dropdownstyles" placeholder="Search Vendor Name"
+                                    aria-label="Number" matInput name="VendorName" [(ngModel)]="fuelreceiptvendor_name"
+                                    (keyup)="filterVendorData($event)" [matAutocomplete]="auto3" />
+                                <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete"
+                                    (optionSelected)="getVendorCodeFReceipt()">
+                                    <mat-option *ngFor="let user of VendorData" [value]="user.name">{{ user.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn" type="button" 
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                                <!-- (click)="getfuelreceit()" -->
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="fuelreceiptclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <!-- Fuel Receipt end -->
+        <!-- Fuel Request -->
+        <mat-tab>
+            <ng-template mat-tab-label> Fuel Request </ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                     />
+                                     <!-- [(ngModel)]="fuelreqfromdate" -->
+                            </div>
+
+                            <div class="col-2 col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                    />
+                                    <!-- [(ngModel)]="fuelreqtodate" -->
+                            </div>
+                            <div class="col-4 col-md-4">
+                                <label>Contractor Name<span class="mandetory">*</span></label>
+                                <input type="text" class="dropdownstyles" placeholder="Search Contractor Name"
+                                    aria-label="Number" matInput name="ContractorName"
+                                    (keyup)="filterContractorData($event)" [(ngModel)]="fuelreqcontractor_name"
+                                    [matAutocomplete]="auto" />
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                                    (optionSelected)="getContactorCodefuelreq()">
+                                    <mat-option *ngFor="let item of contractorData" [value]="item.name">
+                                        {{ item.name }}</mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn" type="button" 
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                                <!-- (click)="getfuelreq()" -->
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="fuelreqclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <!-- Fuel Request end -->
+        <!-- Fuel Issue -->
+        <mat-tab>
+            <ng-template mat-tab-label> Fuel Issue </ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                  />
+                                  <!-- [(ngModel)]="fuelissuefromdate" -->
+                            </div>
+
+                            <div class="col-2 col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                    />
+                                    <!-- [(ngModel)]="fuelissuetodate" -->
+                            </div>
+                            <div class="col-4 col-md-4">
+                                <label>Contractor Name<span class="mandetory">*</span></label>
+                                <input type="text" class="dropdownstyles" placeholder="Search Contractor Name"
+                                    aria-label="Number" matInput name="ContractorName"
+                                    (keyup)="filterContractorData($event)" [(ngModel)]="ficontractor_name"
+                                    [matAutocomplete]="auto7" />
+                                <mat-autocomplete autoActiveFirstOption #auto7="matAutocomplete"
+                                    (optionSelected)="getContactorCodeFI()">
+                                    <mat-option *ngFor="let item of contractorData" [value]="item.name">
+                                        {{ item.name }}</mat-option>
+                                </mat-autocomplete>
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn" type="button" 
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                                <!-- (click)="getfuelissue()" -->
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="fuelissueclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <!-- Fuel Issue end -->
+        <!-- Fuel Statement -->
+        <mat-tab>
+            <ng-template mat-tab-label> Fuel Statement </ng-template>
+            <mat-card>
+                <mat-card-content>
+                    <form id="form">
+                        <div class="row">
+                            <div class="col-2 col-md-2">
+                                <label>From Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                    />
+                                    <!-- [(ngModel)]="fuelissuefromdate" -->
+                            </div>
+
+                            <div class="col-2 col-md-2">
+                                <label>To Date<span class="mandetory">*</span></label>
+                                <input type="date" class="inputstyles" name="dateee" dateFormat="yyyy/mm/dd"
+                                    />
+                                    <!-- [(ngModel)]="fuelissuetodate" -->
+                            </div>
+                            <div class="col-4 col-md-4">
+                                <label>Material Name<span class="mandetory">*</span></label>
+                                <mat-form-field class="example-full-width dropdown matAC"
+                                    style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.12);border-radius: 5px;height: 38px;"
+                                    appearance="none">
+                                    <input type="text" placeholder="Search Material Code/Name " aria-label="Number"
+                                        matInput style="border: none;" class="inputdropdown" name="selectematcode"
+                                        [(ngModel)]="fuelStmtselectematcode" (keyup)="getmaterialDATA($event)"
+                                        [matAutocomplete]="auto6" />
+                                    <mat-autocomplete autoActiveFirstOption #auto6="matAutocomplete"
+                                        (optionSelected)="selected()">
+                                        <mat-option *ngFor="let item of masterData" [value]="item.system_reference_1">
+                                            {{ item.system_reference_1 }}</mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="downloadbtn" type="button" 
+                                    style="background-color: rgba(0, 0, 0, 0.12)">
+                                    VIEW
+                                </button>
+                                <!-- (click)="getfuelissue()" -->
+                            </div>
+                            <div class="col-md-1 col-1 mt-1">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;</label><br />
+                                <button mat-raised-button class="savebtn float-left" type="button"
+                                    (click)="fuelissueclearForm()" style="background-color: rgba(0, 0, 0, 0.12)">
+                                    RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <!-- Fuel Statement end -->
+    </mat-tab-group>
+</div>

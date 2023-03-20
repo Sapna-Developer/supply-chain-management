@@ -1,0 +1,408 @@
+<div class="card" style="width:119%;margin-bottom:0px">
+    <div class="card-body">
+        <!-- {{taskObj?.structure | json}} -->
+        <h4 class="card-title">{{taskObj.task_name}}</h4>
+        <div class="mb-3">
+            <span>{{getstructure(taskObj?.structure)}}</span>
+            <!-- <span *ngFor="let structures of taskObj?.structure?.reverse();let i=index">
+                {{structures}} <span *ngIf="taskObj?.structure.length!=i+1">></span>
+            </span> -->
+        </div>
+        <i class="fas fa-window-close font-24 close-icon" (click)="closeModel()"></i>
+
+        <div class="card-body border border-cyan">
+            <div class="d-md-flex align-items-center">
+                <div class="m-r-20">
+                    <h5 class="m-b-10 font-14 text-muted">Start Date</h5><span>{{taskObj.target_start_date |
+                        date}}</span>
+                    <span *ngIf="!taskObj.target_start_date">----</span>
+                </div>
+                <div class="m-r-20">
+                    <h5 class="m-b-10 font-14 text-muted">End Date</h5><span>{{taskObj.target_end_date | date}}</span>
+                    <span *ngIf="!taskObj.target_end_date">----</span>
+                </div>
+                <div class="m-r-20">
+                    <h5 class="m-b-10 font-14 text-muted">Duration</h5><span
+                        *ngIf="taskObj.target_start_date && taskObj.target_end_date">
+                        {{utils.getDateDiff(taskObj.target_start_date,taskObj.target_end_date)}}
+                        {{utils.getDateDiff(taskObj.target_start_date,taskObj.target_end_date) == 1 ? 'Day':'Days'}}
+                    </span>
+                    <span *ngIf="!taskObj.target_start_date && !taskObj.target_end_date">----</span>
+                </div>
+                <div class="m-r-20">
+                    <h5 class="m-b-10 font-14 text-muted">UOM</h5><span *ngIf="taskObj.uom">{{taskObj.uom}}</span>
+                    <span *ngIf="!taskObj.uom">----</span>
+                </div>
+                <div class="m-r-20">
+                    <h5 class="m-b-10 font-14 text-muted">Quantity</h5><span>{{taskObj.quantity}}</span> <span
+                        *ngIf="!taskObj.quantity">----</span>
+                </div>
+               
+                <div class="m-r-20">
+                    <h5 class="m-b-10 font-14 text-muted ">Actual Quantity</h5><span
+                        *ngIf="taskObj.act_quantity">
+                        {{getActQty(taskObj.act_quantity)| number:'1.2-2'}}
+                       
+                    </span>
+                    <span *ngIf="!taskObj.act_quantity">----</span>
+                </div>
+                <div class="m-r-20">
+                    <h5 class="m-b-10 font-14 text-muted">Balance Qty</h5><span
+                        *ngIf="taskObj.act_quantity">
+                        {{taskObj.quantity-getActQty(taskObj.act_quantity) | number:'1.2-2'}}
+                       
+                    </span>
+                    <span *ngIf="!taskObj.act_quantity">----</span>
+                </div>
+                <div class="m-r-20" *ngIf="taskObj.qc_enable===true">
+                    <h5 class="m-b-10 font-14 text-muted">Balance Qty To Be Accepted</h5><span
+                        *ngIf="taskObj.act_quantity">
+                        {{getbalanceaccQty(taskObj.act_quantity) | number:'1.2-2'}}
+                       
+                    </span>
+                    <span *ngIf="!taskObj.act_quantity">----</span>
+                </div>
+                <div class="m-r-20">
+                    <h5 class="m-b-10 font-14 text-info">CPR</h5><span class="text-info">{{taskObj.CPR}}</span>
+                    <span *ngIf="!taskObj.CPR">----</span>
+                </div>
+                <div class="m-r-20" style="margin-right:8%">
+                    <h5 class="m-b-10 font-14 text-info">RPR</h5><span class="text-info"> {{taskObj.RPR}}</span>
+                    <span *ngIf="!taskObj.RPR">----</span>
+                </div>
+
+                <!-- <div class="m-r-20">
+                    <h5 class="m-b-10 font-14 text-muted">Planned Qty</h5><span>{{taskObj.quantity}}</span> <span
+                        *ngIf="!taskObj.quantity">----</span>
+                </div> -->
+                <!-- {{taskObj?.quantity | number : '1.2-2'}} , {{taskObj?.actual_qty | number : '1.2-2'}} -->
+                <button type="button" class="btn  add-qty" (click)="addNewQty()"
+                    *ngIf="taskObj.dependent_tasks.add_actual_qty && authService.checkUserPermission(['ADD_ACTUAL_QTY','SUPER_ADMIN'])">Add
+                    Qty</button>
+
+            </div>
+        </div>
+
+
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade active show">
+                <div class="table-responsive tSticky" style="max-height: 300px;overflow: auto;">
+                    <table class="table v-middle table-bordered tableSticky text-center">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Actual Qty Date</th>
+                                <th>Actual Qty</th>
+                                <th>Actual Qty Comments</th>
+                                <th>Actual Qty Images</th>
+                                <th *ngIf="taskObj.qc_enable===true">Accepted Date</th>
+                                <th *ngIf="taskObj.qc_enable===true">Accepted Qty</th>
+                               <th *ngIf="taskObj.qc_enable===true">Accepted Comments </th>
+                               <th *ngIf="taskObj.qc_enable===true">Balance&nbsp;Qty&nbsp;to be accepted</th>
+                               
+                               <th *ngIf="taskObj.qc_enable===true">Accepted Images</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of taskObj.act_quantity;let i=index;">
+                                <td>
+                                    <span *ngIf="!item.actual_quantity_date"> ---- </span>
+                                    {{item.actual_quantity_date | date}}
+                                </td>
+                                <td class="text-right">
+                                    {{item.actual_quantity | number:'1.2-2'}}
+                                   
+                                    <!-- <div class="input-group mb-3" *ngIf="!item.actual_quantity">
+                                        <input class="form-control" [(ngModel)]="item.actual_qty"
+                                            placeholder="Enter qty" type="text" mask="0*">
+                                        <div class="input-group-append cursor" (click)="updateActualQty(item)">
+                                            <span class="input-group-text  bg-success text-white">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                        </div>
+                                    </div> -->
+
+                                    <input class="form-control" *ngIf="!item.actual_quantity" type="text" mask="0*.00"
+                                        [dropSpecialCharacters]="false" autofocus [(ngModel)]="item.actual_qty"
+                                        placeholder="Enter qty">
+                                      
+
+                                    <!-- (focusout)="updateActualQty(item)" -->
+                                </td>
+                                <td>
+                                    <span *ngIf="item.actual_quantity" > {{item.actual_qty_comments}}</span>
+
+                                    <textarea class="form-control" *ngIf="!item.actual_quantity" rows="2"
+                                        [(ngModel)]="item.actual_qty_comments" placeholder="Enter Comments"></textarea>
+                                </td>
+                                <td class="p-0">
+
+                                    <i *ngIf="item.img_cnt > 0" (click)="openTaskImages(item,taskObj.task_name)"
+                                        class="fas fa-images font-18 m-r-20 m-l-20 text-primary cursor"></i>
+                                    <div>
+
+                                        <button mat-icon-button value="Add Images" *ngIf="!item.actual_quantity"
+                                            matTooltip="Add Images" class=" m-l-10" (click)="autoFileUpload.click()">
+                                            <span class="material-icons">
+                                                image
+                                            </span>
+
+                                        </button>
+
+                                    </div>
+
+                                    <div class="file" hidden>
+                                        <input class="form-control-file" name="file" multiple
+                                            accept="image/x-png,image/jpeg" type="file" (change)="uploadFile($event)"
+                                            #autoFileUpload />
+                                        <span class="file-custom"></span>
+                                    </div>
+
+                                    <!-- <i class="fas fa-camera font-18 cursor" *ngIf="!item.actual_quantity"
+                                        (click)="autoFileUpload.click()"></i> -->
+                                    <br />
+                                    <ng-container *ngIf="!item.actual_quantity && fileUploadUrls.length > 0">
+                                        <span>Selected : {{fileUploadUrls.length}}</span>
+                                        <!-- <span *ngFor="let file of fileUploadUrls;let i=index">
+                                            File {{i+1}}
+                                        </span> -->
+                                    </ng-container>
+
+
+                                </td>
+                                <td *ngIf="taskObj.qc_enable===true"><span *ngIf="!item.accepted_quantity_date"> ---- </span>
+                                  <p *ngFor="let data of item.accepted_quantity_date">{{data | date:'MMM d, y, h:mm a'}}</p>  </td>
+                                <td *ngIf="taskObj.qc_enable===true" class="text-right"><span *ngIf="item.accepted_quantity && item.actual_quantity">
+                                    <p *ngFor="let data of item.accepted_quantity">{{data }}</p>
+                                </span>
+                    
+
+                                    <!-- <div class="input-group mb-3"
+                                        *ngIf="!item.accepted_quantity && item.actual_quantity">
+                                        <input class="form-control" [(ngModel)]="item.accepted_qty"
+                                            placeholder="Enter qty" type="text" mask="0*">
+                                        <div class="input-group-append cursor " (click)="updateAcceptedQty(item)">
+                                            <span class="input-group-text cursor  bg-success text-white">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                        </div>
+                                    </div> -->
+
+                                    <input class="form-control"
+                                        *ngIf="item.accepted_quantity=='' && item.actual_quantity && authService.checkUserPermission(['ADD_ACCEPTED_QTY','SUPER_ADMIN'])"
+                                        type="text" mask="0*.00" [(ngModel)]="item.accepted_qty"
+                                        [dropSpecialCharacters]="false" placeholder="Enter qty">
+
+                                    <!-- (focusout)="updateAcceptedQty(item)" -->
+                                </td>
+                               
+                                <td *ngIf="taskObj.qc_enable===true">
+                                    <span *ngIf="item.accepted_quantity && item.actual_quantity">
+                                        <p *ngFor="let data of item.accepted_qty_comments">{{data }}</p> 
+                                    </span>
+                                    <!-- {{item.accepted_qty_comments}} -->
+                                    <textarea rows="2" class="form-control"
+                                        *ngIf="item.accepted_quantity=='' && item.actual_quantity &&  authService.checkUserPermission(['ADD_ACCEPTED_QTY','SUPER_ADMIN'])"
+                                        [(ngModel)]="item.acceptedquantitycomments"
+                                        placeholder="Enter comments"></textarea>
+                                </td>
+                                <td *ngIf="taskObj.qc_enable===true"><span *ngIf="item.accepted_quantity && item.actual_quantity">
+                                   <span>{{getbalanceqty(item.accepted_quantity,item.actual_quantity)}} </span>
+                              
+                                </span>
+                                </td>
+                              
+                                <td class="p-0" *ngIf="taskObj.qc_enable===true">
+<div *ngFor="let image of item.acc_image_count;let i=index;">
+    <i *ngIf="image!==0" (click)="openTaskImages1(i,item.accepted_qty_id,taskObj.task_name)"
+    class="fas fa-images font-18 m-r-20 m-l-20 text-primary cursor"></i>
+<p *ngIf="image===0">--</p>
+</div>
+                                    
+                                    <div>
+
+                                        <button mat-icon-button value="Add Images" *ngIf="item.accepted_quantity=='' && item.actual_quantity"
+                                            matTooltip="Add Images" class=" m-l-10" (click)="autoFileUpload1.click();">
+                                            <span class="material-icons">
+                                                image
+                                            </span>
+
+                                        </button>
+
+                                    </div>
+
+                                    <div class="file" hidden>
+                                        <input class="form-control-file" name="file" multiple
+                                            accept="image/x-png,image/jpeg" type="file" (change)="uploadFile1($event);showContent(i);"
+                                            #autoFileUpload1 />
+                                        <span class="file-custom"></span>
+                                    </div>
+
+                                    <!-- <i class="fas fa-camera font-18 cursor" *ngIf="!item.actual_quantity"
+                                        (click)="autoFileUpload.click()"></i> -->
+                                    <br />
+                                    <ng-container *ngIf="selectedIndex == i">
+                                        <span >Selected : {{fileUploadUrls1.length}}</span>
+                                        <!-- <span *ngFor="let file of fileUploadUrls;let i=index">
+                                            File {{i+1}}
+                                        </span> -->
+                                    </ng-container>
+
+
+                                </td>
+                                <td>
+                                    <span>
+                                        <button type="button" class="btn btn-sm btn-success" *ngIf="!item.actual_quantity"
+                                        [disabled]="!item.actual_qty || !item.actual_qty_comments || item.actual_qty == 0 &&  authService.checkUserPermission(['ADD_ACTUAL_QTY','SUPER_ADMIN'])"
+                                        (click)="updateActualQty(item)">Save</button>
+
+                                    <button type="button" class="btn btn-sm btn-success"
+                                        [disabled]="!item.accepted_qty || !item.acceptedquantitycomments || item.accepted_qty == 0"
+                                        *ngIf="taskObj.qc_enable===true&&item.accepted_quantity=='' && item.actual_quantity && authService.checkUserPermission(['ADD_ACCEPTED_QTY','SUPER_ADMIN'])"
+                                        (click)="updateAcceptedQty(item)">Save</button>
+                                    <!-- *ngIf="!item.actual_quantity && authService.checkUserPermission(['CREATE_PROJECT_ISSUE_LOG','SUPER_ADMIN'])" -->
+
+                                    <button mat-icon-button value="Add Issue Log" matTooltip="Add Issue Log"
+                                        (click)="createIssueLog()">
+                                        <span class="material-icons">
+                                            note_add
+                                        </span>
+
+                                    </button>
+
+                                    <button mat-icon-button
+                                        *ngIf="item.id && authService.checkUserPermission(['DELETE_ACTUAL_QUNATITY','SUPER_ADMIN'])"
+                                        (click)="deleteFileConfirm(item,deleteFileModal,i)"
+                                        aria-label="Example icon button with a vertical three dot icon">
+                                        <mat-icon>delete</mat-icon>
+
+                                    </button>
+                                    <button mat-icon-button matTooltip="Add Accepted Qty"
+                                    *ngIf="item.id&&taskObj.qc_enable===true"
+                                    (click)="addRow(item,i,acceptedqtymodel)"
+                                    aria-label="Example icon button with a vertical three dot icon">
+                                    <mat-icon>add</mat-icon>
+
+                                </button>
+
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #acceptedqtymodel>
+    <mat-icon style="margin-left: 97%;margin-top: -5%;cursor: pointer;" class="closebutton" (click)="closemodel()">clear</mat-icon>
+    <mat-dialog-content>
+    <table class="table v-middle table-bordered text-center">
+        <thead class="bg-light">
+            <tr>
+                <th>Actual Qty Date</th>
+                <th>Actual Qty</th>
+                <th>Actual Qty Comments</th>
+                <th>Actual Qty Images</th>
+                <th style="width:25%">Accepted Qty Date</th>
+                <th>Accepted Qty</th>
+                <th>Accepted Qty Comments </th>
+                <th>Accepted Qty Images</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <p>{{actualqtydate | date}}</p>
+               
+            </td>
+            <td class="text-right">
+                <p>{{actualquantity | number:'1.2-2'}}</p>
+            </td>
+          <td>
+              <p>{{actualqtycomments}}</p>
+          </td>
+          <td>
+              <p>--</p>
+          </td>
+          <td>
+
+          </td>
+          <td>
+               <input class="form-control"  type="text" mask="0*.00"   *ngIf="authService.checkUserPermission(['ADD_ACCEPTED_QTY','SUPER_ADMIN'])"
+             [dropSpecialCharacters]="false" autofocus [(ngModel)]="accepted_qty1"
+                 placeholder="Enter qty">
+          </td>
+          <td>
+            <textarea class="form-control"
+            *ngIf="authService.checkUserPermission(['ADD_ACCEPTED_QTY','SUPER_ADMIN'])"
+            rows="2" [(ngModel)]="acceptedqtycomments1"
+            placeholder="Enter comments"></textarea>
+            <!-- <input class="form-control"  type="text" mask="0*.00"
+          [dropSpecialCharacters]="false" autofocus 
+              placeholder="Enter qty"> -->
+       </td>
+       <td class="p-0">
+
+        <!-- <i  (click)="openTaskImages(item)"
+            class="fas fa-images font-18 m-r-20 m-l-20 text-primary cursor"></i> -->
+        <div>
+
+            <button mat-icon-button value="Add Images" 
+                matTooltip="Add Images" class=" m-l-10" (click)="autoFileUpload1.click()">
+                <span class="material-icons">
+                    image
+                </span>
+
+            </button>
+
+        </div>
+
+        <div class="file" hidden>
+            <input class="form-control-file" name="file" multiple
+                accept="image/x-png,image/jpeg" type="file" (change)="uploadFile1($event)"
+                #autoFileUpload1 />
+            <span class="file-custom"></span>
+        </div>
+
+        <!-- <i class="fas fa-camera font-18 cursor" *ngIf="!item.actual_quantity"
+            (click)="autoFileUpload.click()"></i> -->
+        <br />
+        <ng-container *ngIf=" fileurls.length > 0">
+            <span>Selected : {{fileurls.length}}</span>
+            <!-- <span *ngFor="let file of fileUploadUrls;let i=index">
+                File {{i+1}}
+            </span> -->
+        </ng-container>
+
+
+    </td>
+       <td>
+        <button type="button" class="btn btn-sm btn-success"
+        [disabled]="!acceptedqtycomments1 || !accepted_qty1 "
+        *ngIf="authService.checkUserPermission(['ADD_ACCEPTED_QTY','SUPER_ADMIN'])"
+        (click)="updateAcceptedQty1()">Save</button>
+       </td>
+            
+        </tr>
+        </tbody>
+    </table>
+</mat-dialog-content>
+    <!-- <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete user activity?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deleteFile()">Delete</button>
+    </div> -->
+</ng-template>
+<ng-template #deleteFileModal>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete user activity?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deleteFile()">Delete</button>
+    </div>
+</ng-template>

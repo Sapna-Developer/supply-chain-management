@@ -1,0 +1,156 @@
+
+  <mat-card>
+    <button [print]="['demo', config]" class="btn btn-info" style="margin-right:1%;margin-left:2%">
+        Print
+      </button>
+ 
+      <button (click)="backtodmr()" class="btn btn-info">
+          Back
+        </button>
+  <div class="container-fluid printableArea" id="demo">
+
+    <div class="goodsissuereceipt background">
+      <!-- <div class="row justify-content-center">
+        <div class="col-6 logo">
+          <img src="https://testgeps.greenko.net/ui/assets/greenko/newlogo_greeenko_eps.svg" width="200px" />
+        </div>
+        <div class="col-6 float-right text-right">
+          <h3><b>GREENKO INTEGRATED MANAGEMENT SYSTEM</b></h3>
+          <h4><b>MATERIAL REQUISITION CUM STORES ISSUE VOUCHER</b></h4>
+        </div>
+      </div> -->
+      <div class="row justify-content-center text-center">
+        <div class="col">
+          <h3><b>Goods Issue Request</b></h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <p><b>Request No:</b></p>
+        </div>
+        <div class="col-4">
+          <p>
+            <span *ngFor="let user of userData">{{ user.number }} </span>/
+            <span *ngFor="let user of userData">{{
+              user.date | date: "dd-MM-yyyy"
+            }}</span>
+          </p>
+        </div>
+        <div class="col-2">
+          <p><b>Work Order No:</b></p>
+        </div>
+        <div class="col-4">
+          <p  *ngFor="let user of userData">{{ user.work_order_number }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <p><b>Cost Centre:</b></p>
+        </div>
+        <div class="col-4">
+          <p *ngFor="let user of userData"></p>
+        </div>
+        <div class="col-2">
+          <p><b>Indenting Dept:</b></p>
+        </div>
+        <div class="col-4">
+          <p *ngFor="let user of userData"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <p><b>Purpose:</b></p>
+        </div>
+        <div class="col-4">
+          <p *ngFor="let user of userData">{{ user.purpose  }}</p>
+        </div>
+        <div class="col-2">
+          <p ><b>Contractor Name:</b></p>
+        </div>
+        <div class="col-4">
+          <p *ngFor="let user of userData">{{ user.contractor_name }} </p>
+        </div>
+      </div>
+      <div class="table table-responsive row m-1">
+        <table class="table table-bordered">
+          <thead class="alignment">
+            <tr>
+              <th rowspan="2">S.No</th>
+              <th rowspan="2">Description of material</th>
+              <th rowspan="2">UOM</th>
+              <th colspan="1">Quantity</th>
+              <!-- <th rowspan="2">Value (Rs.)</th> -->
+            </tr>
+            <tr>
+              <th scope="col">Requisitioned</th>
+              <!-- <th scope="col">Issued</th> -->
+            </tr>
+          </thead>
+          <tr class="text-center" *ngFor="let user of table">
+            <td>{{ user.line_item }}</td>
+            <td class="text-center">
+              {{ user.material_code }}-{{ user.material_description }}
+            </td>
+            <td>{{ user.unit_of_measurment }}</td>
+            <!-- <td>{{ user.request_quantity }}</td> -->
+            <td>{{ user.quantity }}</td>   
+            <!-- <td class="text-right">{{ user.total_value | currency: "INR":"" }}</td> -->
+          </tr>
+          <!-- <tr class="text-right">
+            <td colspan="5">TOTAL</td>
+            <td>
+              <b>{{ total | number: "2.0-0" }}.00</b>
+            </td>
+          </tr> -->
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <p>Signature:</p>
+        </div>
+      </div>
+      <!-- <br /> -->
+      <div class="row">
+        <div class="col-6">
+          <p>(Indented by)</p>
+        </div>
+        <div class="col-6">
+          <p>(Approved by)</p>
+        </div>
+        <!-- <div class="col-3">
+          <p>(Issued by Stores)</p>
+        </div>
+        <div class="col-3">
+          <p>(Received by)</p>
+        </div> -->
+      </div>
+      <!-- <br /> -->
+      <div class="row">
+        <div class="col-6">
+          <p><b>Name:</b>&nbsp;<span class="nameCreated" *ngFor="let user of userData">{{user.created_by}}</span></p>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-6">
+          <p><b>Designation:</b></p>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="col-12 text-center">
+          <p>FINANCE/STORES/INDENTER</p>
+        </div>
+      </div>
+      <!-- <div class="row text-center"> -->
+        <!-- <div class="col-12 print ">
+          <button [print]="['demo', config]" class="btn btn-info">
+            Print
+          </button>
+        </div> -->
+      <!-- </div> -->
+    </div>
+  </div>
+</mat-card>
+  
+  
+  
+  

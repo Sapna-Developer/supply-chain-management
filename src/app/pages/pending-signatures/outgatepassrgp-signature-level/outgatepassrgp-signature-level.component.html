@@ -1,0 +1,194 @@
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>Pending</ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                         <div class="row">
+                            <div class="col-12 text-right">
+                                <input type="search" class="inputstyles" placeholder="Search Document Number"  [(ngModel)]="searchDatapnd" (keyup)="searchpnd()">
+                            </div>
+                        </div>
+                        <table mat-table [dataSource]="dataSourcemain">
+                            <ng-container matColumnDef="sno">
+                                <th mat-header-cell *matHeaderCellDef style="width: 6%">
+                                    SNO
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i = index" class="text-center">
+                                    {{i + 1 }}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Document_No">
+                                <th mat-header-cell *matHeaderCellDef>Document No</th>
+                                <td mat-cell *matCellDef="let row"  class="text-left">
+                                    {{ row.document_number }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="company_name">
+                                <th mat-header-cell *matHeaderCellDef>Company Name</th>
+                                <td mat-cell *matCellDef="let row"  class="text-left">
+                                    {{ row.company_name}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Concern_name">
+                                <th mat-header-cell *matHeaderCellDef>Concern Name</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.concern_name }}
+                                </td>
+                            </ng-container>
+                            <ng-container  matColumnDef="Description">
+                                <th mat-header-cell *matHeaderCellDef>Description</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.description }}
+                                </td>
+                            </ng-container>
+                            <ng-container  matColumnDef="Level">
+                                <th mat-header-cell *matHeaderCellDef>Position</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.level }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="View">
+                                <th mat-header-cell *matHeaderCellDef style="width: 14%">
+                                    View
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <button type="button" class="btn btn-custom" (click)="printdmr(row)">View</button>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="signature">
+                                <th mat-header-cell *matHeaderCellDef style="width: 14%">
+                                    Signature
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <!-- {{ row.to_company_name }} -->
+                                   <button type="button" class="btn btn-custom" (click)="getSignature(row,viewSignmodel)">Sign</button>
+                                    
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                        </table>
+                        <div *ngIf="reaData==true" class="text-center">
+                            <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                Loading...
+                            </h4>
+                            <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                No Records Found
+                            </h4>
+                        </div>
+                            <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #masterpaginator
+                                (page)="onpageevent($event)">
+                            </mat-paginator>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label> Completed</ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <input type="search" class="inputstyles" placeholder="Search Document Number"  [(ngModel)]="searchDatacmp" (keyup)="searchcmp()">
+                            </div>
+                        </div>
+                        <table mat-table [dataSource]="dataSourcemain1">
+                            <ng-container matColumnDef="sno">
+                                <th mat-header-cell *matHeaderCellDef style="width: 6%">
+                                    SNO
+                                </th>
+                                <td mat-cell *matCellDef="let row; let i = index" class="text-center">
+                                    {{i + 1 }}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Document_No">
+                                <th mat-header-cell *matHeaderCellDef>Document No</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.document_number }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="company_name">
+                                <th mat-header-cell *matHeaderCellDef>Company Name</th>
+                                <td mat-cell *matCellDef="let row"  class="text-left">
+                                    {{ row.company_name}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Concern_name">
+                                <th mat-header-cell *matHeaderCellDef>Concern Name</th>
+                                <td mat-cell *matCellDef="let row"  class="text-left">
+                                    {{ row.concern_name}}
+                                </td>
+                            </ng-container>
+                            <ng-container  matColumnDef="Description">
+                                <th mat-header-cell *matHeaderCellDef>Description</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.description }}
+                                </td>
+                            </ng-container>
+                            <ng-container  matColumnDef="Level">
+                                <th mat-header-cell *matHeaderCellDef>Position</th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.level }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="View">
+                                <th mat-header-cell *matHeaderCellDef style="width: 14%">
+                                    View
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <button type="button" class="btn btn-custom" (click)="printdmr(row)">View</button>
+                                </td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="signature">
+                                <th mat-header-cell *matHeaderCellDef style="width: 14%">
+                                    Signature
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{ row.to_company_name }}
+                                </td>
+                            </ng-container> -->
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+                        </table>
+                        <div *ngIf="reaData1==true" class="text-center">
+                            <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                Loading...
+                            </h4>
+                            <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                No Records Found
+                            </h4>
+                        </div>
+                            <mat-paginator [length]="totalRecords1" [pageSize]="10"
+                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #masterpaginator
+                                (page)="onpageevent1($event)">
+                            </mat-paginator>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
+<!-- model -->
+<ng-template #viewSignmodel>
+    <h1 mat-dialog-title>View Signature</h1>
+    <div mat-dialog-content>
+        <div class="row">
+          <div class="col-12 text-center">
+            <img [src]="Viewsign" class="sign-width" />
+          </div>
+        </div>
+    </div><br>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="SignatureFile()" class="matButton"
+        [disabled]="!Viewsign">Confirm</button>
+    </div>
+</ng-template>

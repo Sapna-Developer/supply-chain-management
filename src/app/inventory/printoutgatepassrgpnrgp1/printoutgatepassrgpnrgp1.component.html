@@ -1,0 +1,331 @@
+<mat-card>
+    <div class=" print" style=" margin-left: 19px">
+        <button *ngIf="printstatus" [print]="['demo', config]" class="btn btn-info">
+            Print
+        </button>&nbsp;&nbsp;
+        <button (click)="backtooutgatepass()" class="btn btn-info">
+            Back
+        </button>
+    </div>
+    <div class=" container-fluid  formbody" id="demo">
+        <div class="row mt-3">
+            <div class="col-3">
+                <img src="https://testgeps.greenko.net/ui/assets/greenko/newlogo_greeenko_eps.svg"
+                    style="width: 150px" />
+            </div>
+            <!-- <div class="col-9 text-right">
+                <h4 style="font-size: 20px;font-weight: 400;"><b>GREENKO INTEGRATED MANAGEMENT SYSTEMS </b></h4>
+            </div> -->
+            <div class="col-7 text-center">
+              
+                <!-- <h2 class="mb-0"><b>GREENKO INTEGRATED MANAGEMENT SYSTEMS</b></h2> -->
+                  <h2 class="mb-0" *ngFor="let user of userData"><b>{{ user.company_name }}</b></h2>
+                  <!-- <h2 class="mb-0"><i>Hyderabad</i></h2> -->
+                  <h2 class="mb-0 companyAddr" *ngFor="let user of userData"><i>{{user.company_address}}</i></h2>
+                  <h4 class="text-center mb-0" style="font-weight: 600;">
+                    NON - RETURNABLE GATEPASS
+                </h4>
+            </div>
+            <div class="col-2 text-right">
+                <ngx-qrcode *ngIf="data1"
+                [elementType]="elementType" [width]="100"  
+                [errorCorrectionLevel]="correctionLevel" 
+                [value]="value2"
+                alt="Demo QR Code"
+                cssClass="bshadow">
+              </ngx-qrcode> 
+              <ngx-qrcode *ngIf="document_no"
+              [elementType]="elementType" [width]="100"  
+              [errorCorrectionLevel]="correctionLevel" 
+              [value]="value"
+              alt="Demo QR Code"
+              cssClass="bshadow">
+            </ngx-qrcode> 
+            <ngx-qrcode *ngIf="document_no1"
+            [elementType]="elementType" [width]="100"  
+            [errorCorrectionLevel]="correctionLevel" 
+            [value]="value1"
+            alt="Demo QR Code"
+            cssClass="bshadow">
+          </ngx-qrcode> 
+            </div>
+        </div>
+        <!-- <div class="row text-center head">
+           
+        </div> -->
+        <div class="row text-center">
+            <div class="col-12">
+                <!-- <h2 *ngFor="let user of userData">{{ user.company_name }}</h2> -->
+                <h4>
+                    <i *ngFor="let user of userData">
+                        &nbsp;&nbsp;{{ getaddress(user.receiver_name) }}
+                    </i>
+                </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <p class="ptext">
+                    <i>S.No /Date : </i><b><span *ngFor="let user of userData">{{ user.number }} : {{ user.date | date: "dd-MM-yyyy"}}</span></b>
+                </p>
+            </div>
+            <div class="col-4 text-right">
+                <p class="ptext">
+                    <i>NRGP Type : </i><b><span *ngFor="let user of userData">{{ user.Transfer_type }}</span>
+                    </b> </p>
+            </div>
+            <!-- <div class="col-4 text-right">
+                <p class="ptext">
+                    <i>Date : </i>
+                  <b>  <span *ngFor="let user of userData">{{
+                        user.date | date: "dd-MM-yyyy"
+                        }}</span></b>
+                </p>
+            </div> -->
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p class="ptext">
+                    <i>To : </i><span>Security</span>
+                    <!-- <span *ngFor="let user of userData">{{
+                        user.to_company_name
+                        }}</span> -->
+                </p>
+                <p class="ptext">
+                    <i>Consignee: </i><span *ngFor="let user of userData">{{ user.consignee_name }}</span>
+                </p>
+                <p class="ptext">
+                    <i>Consignee Address: </i><span *ngFor="let user of userData">{{ user.consignee_address }}</span>
+                </p>
+                <!-- <p class="ptext">
+                    <i>M/s. </i><span *ngFor="let user of userData">{{ user.receiver_name }}</span>
+                </p> -->
+               
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p class="ptext">
+                    The following materials are Reiected / Excess Supplied / Others &
+                    returned as per reasons mentioned below :<br />
+                    Ref : Our P.O. No :
+                     <b><span *ngFor="let user of userData">{{
+                            user.work_order_number
+                            }}</span></b>
+                    Dt. ______________ and Your INV / DC No ___________ Dt.
+                    <span *ngFor="let user of userData">{{
+                        user.date | date: "dd-MM-yyyy"
+                        }}</span>
+                </p>
+                <!-- <hr class="pline"> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 table-responsive">
+                <table class="border">
+                    <tr class="border text-center">
+                        <th class="border">S.No</th>
+                        <th class="border">Item Code</th>
+                        <th class="border">Item Description</th>
+                        <th class="border">UOM</th>
+                        <th class="border">Quantity</th>
+                        <th class="border">Reasons for Rejection</th>
+                    </tr>
+                    <tr scope="row" class="border text-center"  *ngFor="let user of table" style="padding-bottom: 5%">
+                        <td class="border">
+                            <span>{{ user.line_item }}</span>
+                        </td>
+                        <td class="border">
+                            <span>{{
+                                user.material_code
+                                }}</span>
+                        </td>
+                        <td class="border">
+                            <span>{{
+                                user.material_description
+                                }}</span>
+                        </td>
+                        <td class="border">
+                            <span>{{
+                                user.unit_of_measurment
+                                }}</span>
+                        </td>
+                        <td class="border">
+                            <span>{{ user.quantity }}</span>
+                        </td>
+                        <td class="border"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-8">
+                <p class="ptext">
+                    Through Vehicle Number :
+                    <span *ngFor="let user of userData">{{ user.vehicle_number }}</span>
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="ptext">Packing No. :</p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <p class="ptext">
+                    Prepared By :
+                    <span *ngFor="let user of userData">{{ user.created_by }}</span>
+                </p>
+            </div>
+        </div>
+        <!-- <div class="row mt-3" style=" margin-bottom: 5%;">
+            <div class="col-4">
+                <p class="ptext">Stores Incharge</p>
+            </div>
+            <div class="col-4 text-center">
+                <p class="ptext">Authorised By</p>
+            </div>
+            <div class="col-4 text-right">
+                <p class="ptext">Received By</p>
+            </div>
+        </div> -->
+        <div class="row padding1  align-items-center  justify-content-between mt-5" *ngIf="signStatus"
+        style="margin-bottom: 5%;">
+        <div class="col" *ngFor="let item of SignData">
+          <img [src]="item.signature" class="sign-width" />
+          <p class="ml-1 ">{{item.updated_by}}</p>
+          <p class="ml-1 ">{{item.description}}</p>
+        </div>
+        <div class="col">
+            <p class="ml-1">&nbsp;</p>
+            <!-- <p class="ml-1 "><b>{{item.updated_by}}</b></p> -->
+            <p class="ml-1 ">Receieved by</p>
+          </div>
+      </div>
+      <div class="row padding1  align-items-center  justify-content-between mt-5" *ngIf="!signStatus"
+        style=" margin-bottom: 5%;">
+      <div class="col" *ngFor="let item of SignData">
+        <img *ngIf="item.signature!==null" [src]="item.signature" class="sign-width" />
+        <p class="ml-1" *ngIf="item.signbtn===false&&item.signature===null">Need to be Signature</p>
+        <span>
+            <button type="button" class="btn btn-custom mr-3" *ngIf="item.signbtn===true&&item.signature===null"
+          (click)="getSignatureView(item,viewSignmodel)">Sign</button>
+          <button type="button" class="btn btn-custom" *ngIf="item.signbtn===true&&item.signature===null"
+          (click)="deleteItem(row,deleteitemofList)">Cancel</button>
+        </span>
+        <p class="ml-1 ">{{item.updated_by}}</p>
+        <p class="ml-1 ">{{item.description}}</p>
+      </div>
+      <div class="col" >
+        <p class="ml-1">&nbsp;</p>
+        <!-- <p class="ml-1 "><b>{{item.updated_by}}</b></p> -->
+        <p class="ml-1 ">Receieved by</p>
+      </div>
+      </div>
+        <div class="row mt-2 footerTable">
+            <div class="col-3">
+                F-CO-SM-01-10
+            </div>
+            <div class="col-3">
+                Issue No:01
+            </div>
+            <div class="col-3">
+                Revision No:00
+            </div>
+            <div class="col-3">
+                <span> Date:20.01.2017</span><!-- *ngFor="let user of userData">{{
+                user.date | date: "dd-MM-yyyy"
+                }}</span> -->
+            </div>
+
+        </div>
+    </div>
+</mat-card>
+<!-- model -->
+<ng-template #viewSignmodel>
+    <h1 mat-dialog-title>View Signature</h1>
+    <div mat-dialog-content>
+      <div class="row">
+        <div class="col-12 text-center">
+          <img [src]="Viewsign" class="sign-width" />
+        </div>
+      </div>
+    </div><br>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+      <button mat-button cdkFocusInitial (click)="SignatureFile()" class="matButton"
+        [disabled]="!Viewsign">Confirm</button>
+    </div>
+  </ng-template>
+
+  
+  <!-- Cancel -->
+  <ng-template #deleteitemofList>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+        <div class="row">
+            <div class="col-md-12">
+                <label style="padding-top: 5px">Reason</label>
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                    [(ngModel)]="deletemodel.reason" style="width: 100%" />
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+            Close</button>&nbsp;
+        <button  mat-button cdkFocusInitial (click)="deleteFile()" class="matButton" [disabled]="!deletemodel.reason">
+            Delete
+        </button>
+    </div>
+</ng-template>
+<ng-template #deletedocsigned>
+    <span class="d-flex justify-content-between">
+        <h1 mat-dialog-title>Document Signed Already</h1>
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon">close</mat-icon>
+        </button>
+    </span>
+    <div mat-dialog-content>
+        <p>Still want to delete ? </p>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial class="matButton" (click)="deleteSeleted(deletedocsigneddata)" >
+            Yes
+        </button>&nbsp;
+        <button mat-button mat-dialog-close class="matButton"  style="background: transparent">
+            No</button>
+    </div>
+</ng-template>
+
+<ng-template #deletedocsigneddata>
+    <span class="d-flex justify-content-between">
+        <h1 mat-dialog-title>&nbsp;</h1>
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon">close</mat-icon>
+        </button>
+    </span>
+    <div mat-dialog-content>
+       <p><b>Document Number :</b> {{deleteNumber}}</p>
+       <div class="row">
+        <div class="col-md-12">
+            <label style="padding-top: 5px">Reason</label>
+            <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                [(ngModel)]="deletemodel.reason" style="width: 100%" />
+        </div>
+        <div class="col-md-12">
+            <label style="padding-top: 5px">Password</label>
+            <input type="text" placeholder="Enter Password" class="inputstyles" name="pwd"
+                [(ngModel)]="deletemodel.pwd" style="width: 100%" />
+        </div>
+    </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial class="matButton" (click)="deleteFile()"  [disabled]="!deletemodel.reason">
+            Confirm
+        </button>
+        <!-- <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+            No</button> -->
+    </div>
+</ng-template>
+

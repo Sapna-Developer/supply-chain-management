@@ -1,0 +1,49 @@
+mat-tree {
+    background: transparent !important;
+}
+
+.card {
+    border-radius: 4px;
+}
+
+.card-body {
+    padding: 5px;
+}
+
+.page-header {
+    background: #62beda;
+    // background: linear-gradient(to right, #96c93d, #00b09b);
+    padding-bottom: 30px !important;
+    color: white;
+    margin: -20px -20px 20px -20px;
+
+    .page-title {
+        font-size: 18px;
+    }
+
+    li {
+        color: #fff;
+    }
+}
+
+.create-ticket {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    background: #fff;
+    color: #000;
+}
+
+
+.wbs-images {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 99;
+}
+.mat-progress-bar-buffer {
+    background-color: azure !important;
+}
+.mat-progress-bar-fill::after {
+    background-color: #62BEDA !important;
+}

@@ -1,0 +1,1334 @@
+<div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Test</h4>
+        </div>
+    </div>
+</div>
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" #tabGroup [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Test
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row">
+                            <span class="col-md-0 ml-2">
+                                <button mat-raised-button type="submit" (click)="clearpage1()"
+                                    class="savebutton">Clear</button>
+                            </span>
+                            <button mat-raised-button type="submit" class="savebutton" (click)="copydmr(copydmrmodel)"
+                                style="margin-top:0%;left:1%;">Copy DMR
+                            </button>
+                            <button mat-raised-button class="savebutton" color="secondary" style="left:2%;"
+                                [disabled]="saveddataarray.length==0" (click)="savefinaldata()">{{btn}}</button>
+                            <button mat-raised-button class="savebutton" style="left:3%;" color="secondary"
+                                (click)="openpurchaseordermodel(pomodel)">Select Purchase Order</button>
+                        </div><br>
+
+                        <form #myform="ngForm" *ngIf="mainInputs">
+                            <div class="row">
+                                <div class="col">
+                                    <label>Company Name<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Date<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Purchase Order Number<span class="mandetory">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <select class="dropdownstyles" name="companyname" [(ngModel)]="model1.companyname">
+                                        <option selected disabled>Select One</option>
+                                        <option *ngFor="let item of companyData" [ngValue]="item.name">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                        name="dateee" [(ngModel)]="model1.dateee" dateFormat="yyyy/mm/dd">
+                                </div>
+                                <div class="col">
+                                    <input type="text" placeholder="Enter Purchase Order No" class="inputstyles"
+                                        name="ponumber" [(ngModel)]="model1.ponumber">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Purchase Order Date<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Gate Entry Number<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Gate Entry Date<span class="mandetory">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                        name="podate" [(ngModel)]="model1.podate">
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="example-full-width " appearance="none"
+                                        class="matformfieldstyles">
+                                        <input type="text" placeholder="Search Gate Entry Number " aria-label="Number"
+                                            matInput style="border:none" class="inputdropdown" name="genumber"
+                                            [(ngModel)]="model1.genumber" (keyup)="getGEN($event)"
+                                            [matAutocomplete]="auto1" />
+                                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                                            (optionSelected)='getselectedvalue()'>
+
+                                            <mat-option *ngFor="let item of GENDATA" [value]="item.number" multiple>
+                                                {{item.number}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                        name="gedate" [(ngModel)]="model1.gedate">
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: -27px;">
+                                <div class="col">
+                                    <label>Invoice Number<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Invoice Date<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>DC Number<span class="mandetory">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" placeholder="Enter Invoice No" class="inputstyles"
+                                        name="invoicenumber" [(ngModel)]="model1.invoicenumber">
+                                </div>
+                                <div class="col">
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                        name="invdate" [(ngModel)]="model1.invdate">
+                                </div>
+                                <div class="col">
+                                    <input type="text" placeholder="Enter DC No" class="inputstyles" name="dcnumber"
+                                        [(ngModel)]="model1.dcnumber">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>DC Date<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Vendor Name<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Packing Details<span class="mandetory">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                        name="dcdate" [(ngModel)]="model1.dcdate">
+                                </div>
+                                <div class="col">
+                                    <select class="dropdownstyles" name="vendorname" [(ngModel)]="model1.vendorname">
+                                        <option selected disabled>Select One</option>
+                                        <option *ngFor="let item of vendorData" [ngValue]="item.name">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <input type="text" placeholder="Enter Packing Details" class="inputstyles"
+                                        name="packdetails" [(ngModel)]="model1.packdetails">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Transporter Name<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Vehicle Number<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>LR Number<span class="mandetory">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="example-full-width " appearance="none"
+                                        class="matformfieldstyles">
+                                        <input type="text" placeholder="Search Transporter Name " aria-label="Number"
+                                            matInput style="border:none" class="inputdropdown" name="trsname"
+                                            [(ngModel)]="model1.trsname" (keyup)="gettransportDATA1($event)"
+                                            [matAutocomplete]="auto" />
+                                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+
+                                            <mat-option *ngFor="let item of transporterName"
+                                                [value]="item.transporter_name" multiple>{{item.transporter_name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="example-full-width matformfield" appearance="none"
+                                        class="matformfieldstyles">
+                                        <input type="text" placeholder="Search Vehicle Number " aria-label="Number"
+                                            matInput style="border:none" class="inputdropdown" name="vnumber"
+                                            [(ngModel)]="model1.vnumber" (keyup)="getvehiclenumDATA1($event)"
+                                            [matAutocomplete]="auto1" />
+
+                                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+
+                                            <mat-option *ngFor="let item of vehicleNum" [value]="item.vehicle_number">
+                                                {{item.vehicle_number}}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="inputstyles" name="irnumber"
+                                        [(ngModel)]="model1.irnumber">
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:-27px">
+                                <div class="col">
+                                    <label>LR Date<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Basic Freight<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Freight Tax Description<span class="mandetory">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="date" style="text-transform: uppercase;" class="inputstyles"
+                                        name="irdate" [(ngModel)]="model1.irdate">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="inputstyles" name="basicfreight"
+                                        [(ngModel)]="model1.basicfreight" (keypress)="keyPressNumbers($event)"
+                                        (keyup)="selectedbasicfreight($event)">
+                                </div>
+                                <div class="col">
+                                    <select class="dropdownstyles" name="frtaxdescription"
+                                        [(ngModel)]="model1.frtaxdescription" (change)="selectedfreighttax()">
+                                        <option selected disabled>Select One</option>
+
+                                        <option *ngFor="let item of taxData" [ngValue]="item.code">{{item.code}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Freight Tax Percentage<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Freight Tax Value<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Total Freight<span class="mandetory">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="inputstyles" name="frtaxpercentage"
+                                        [(ngModel)]="model1.frtaxpercentage" (keypress)="keyPressNumbers($event)">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="inputstyles" name="frtaxvalue"
+                                        [(ngModel)]="model1.frtaxvalue">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="inputstyles" name="totalfreight"
+                                        [(ngModel)]="model1.totalfreight" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Other Charges Description<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Other Charges Value<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Other Tax Description<span class="mandetory">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="inputstyles" name="othercharges"
+                                        [(ngModel)]="model1.othercharges">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="inputstyles" name="otherchargesval"
+                                        [(ngModel)]="model1.otherchargesval" (keypress)="keyPressNumbers($event)">
+                                </div>
+                                <div class="col">
+                                    <select class="dropdownstyles" name="othertaxdescription"
+                                        [(ngModel)]="model1.othertaxdescription" (change)="selectedTAXDESC()">
+                                        <option selected disabled>Select One</option>
+                                        <option *ngFor="let item of taxData" [ngValue]="item.code">{{item.code}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Other Tax Percentage<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Other Tax Value<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Quality Check<span class="mandetory">*</span></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="inputstyles" name="othertaxper"
+                                        [(ngModel)]="model1.othertaxper" (keypress)="keyPressNumbers($event)">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="inputstyles" name="othertaxvalue"
+                                        [(ngModel)]="model1.othertaxvalue" (keypress)="keyPressNumbers($event)">
+                                </div>
+                                <div class="col">
+                                    <select class="dropdownstyles" name="qualitycheck"
+                                        [(ngModel)]="model1.qualitycheck">
+                                        <option selected disabled>Select One</option>
+                                        <option [ngValue]="true">True</option>
+                                        <option [ngValue]="false">False</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Comments<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col">
+                                    <label>Way Bill No<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col m-2">
+                                    <button type="button" mat-raised-button class="m-t-10 attachfile" color="secondary"
+                                        (click)="autoFileUpload2.click()">
+                                        Attach File&nbsp; <mat-icon style="cursor:pointer;font-size:24px">file_upload
+                                        </mat-icon></button>
+                                    <div class="file">
+                                        <input hidden class="form-control-file" name="file" type="file" multiple
+                                            (change)="uploaddmrfiles($event)" #autoFileUpload2>
+                                        <ng-container *ngIf=" fileUploadUrlsdmr.length > 0">
+                                            <div *ngFor="let item of filenamearray;let i=index;">{{i+1}}.&nbsp;{{item}}
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:-18px;">
+                                <div class="col-4">
+                                    <input type="text" placeholder="Enter Comments" class="inputstyles" name="comments"
+                                        [(ngModel)]="model1.comments">
+                                </div>
+                                <div class="col-4">
+                                    <input class="inputstyles" type="text" placeholder="Enter Way Bill No"
+                                        name="waybillno" [(ngModel)]="model1.waybillno">
+                                </div>
+                            </div>
+                        </form>
+                        <br>
+                        <div class="row p-10">
+                            <div class="col-12">
+                                <button class="btn addItems" (click)="addmaterialreceipt()">Add Items
+                                </button>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="addItemsData">
+                            <form #myaddform="ngForm" (ngSubmit)="saveaddeddata(myaddform)">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label>Material Code/Name<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label>Storage Location<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label>Unit Of Measurement<span class="mandetory">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <mat-form-field class="example-full-width" appearance="none"
+                                            class="matformfieldstyles">
+                                            <input type="text" placeholder="Search Material Code/Name "
+                                                aria-label="Number" matInput style="border:none" class="inputdropdown"
+                                                name="matcode" [(ngModel)]="model.matcode"
+                                                (keyup)="getmaterialDATA($event)" [matAutocomplete]="auto4" />
+
+                                            <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete"
+                                                (optionSelected)="selectedmastergroup()">
+
+                                                <mat-option *ngFor="let item of masterData"
+                                                    [value]="item.system_reference_1">
+                                                    {{item.system_reference_1}}</mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field class="example-full-width" appearance="none"
+                                            class="matformfieldstyles">
+                                            <input type="text" placeholder="Search Storage Location "
+                                                aria-label="Number" matInput style="border:none" class="inputdropdown"
+                                                name="storagelocation" [(ngModel)]="model.storagelocation"
+                                                (keyup)="getstorageDATA($event)" [matAutocomplete]="auto5" />
+
+                                            <mat-autocomplete autoActiveFirstOption #auto5="matAutocomplete">
+
+                                                <mat-option *ngFor="let item of storageData"
+                                                    [value]="item.storage_location">
+                                                    {{item.storage_location}}</mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="inputstyles" name="uom" [(ngModel)]="model.uom">
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: -27px">
+                                    <div class="col">
+                                        <label>Invoice Quantity<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col">
+                                        <label>Received Quantity<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col">
+                                        <label>Shortage Quantity<span class="mandetory">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="inputstyles" name="invqty" [(ngModel)]="model.invqty"
+                                            (keypress)="keyPressNumbers($event)" (keyup)="Invoicevalue($event)">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="inputstyles" name="recqty" [(ngModel)]="model.recqty"
+                                            (keypress)="keyPressNumbers($event)" (keyup)="Receivevalue($event)">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="inputstyles" name="shrtqty"
+                                            [(ngModel)]="model.shrtqty" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Excess Quantity<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col">
+                                        <label>Unit Price<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col">
+                                        <label>Discount Percentage<span class="mandetory">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="inputstyles" name="excsqty"
+                                            [(ngModel)]="model.excsqty" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="inputstyles" name="unitprice"
+                                            [(ngModel)]="model.unitprice" (keypress)="keyPressNumbers($event)"
+                                            (keyup)="selectedunitprice($event)">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="inputstyles" name="dispercentage"
+                                            [(ngModel)]="model.dispercentage" (keypress)="keyPressNumbers($event)"
+                                            (keyup)="selecteddiscountprice($event)">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Discount Value<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col">
+                                        <label>Basic Price<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col">
+                                        <label>Tax Description<span class="mandetory">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="inputstyles" name="disvalue"
+                                            [(ngModel)]="model.disvalue" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="inputstyles" name="basicprice"
+                                            [(ngModel)]="model.basicprice" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <select class="dropdownstyles" name="taxdescription"
+                                            [(ngModel)]="model.taxdescription" (change)="selectedtax()">
+                                            <option selected disabled>Select One</option>
+                                            <option *ngFor="let item of taxData" [ngValue]="item.code">{{item.code}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label>Tax Percentage<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label>Tax Value<span class="mandetory">*</span></label>
+                                    </div>
+                                    <div class="col-4">
+                                        <label>Valuation Type<span class="mandetory">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input type="text" class="inputstyles" name="taxpercentage"
+                                            [(ngModel)]="model.taxpercentage" (keypress)="keyPressNumbers($event)"
+                                            (keyup)="selectedtaxpercent($event)">
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" class="inputstyles" name="taxvalue"
+                                            [(ngModel)]="model.taxvalue" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <select class="dropdownstyles" name="valution_type"
+                                            [(ngModel)]="model.valutiontype">
+                                            <option selected disabled>Select One</option>
+                                            <option *ngFor="let valution of valutiondata" [ngValue]="valution.code">
+                                                {{valution.code}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-12">
+                                        <button  class="btn addItems m-2" [disabled]="!model.matcode || !model.taxdescription || !model.taxdescription ||
+                                        !model.basicprice|| !model.unitprice || !model.recqty || !model.invqty || !model.uom
+                                        || !model.storagelocation || !model.valutiontype">Add</button>
+                                        <button class="btn addItems m-2">Edit</button>
+                                        <button class="btn addItems m-2">Delete</button>
+                                        <button class="btn addItems m-2">Update</button>
+                                        <button class="btn addItems m-2" (click)="backTomainInputs()">Back</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </ng-container>
+                        <ng-container>
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container" style="overflow-x:acroll;width:138%">
+                                            <table mat-table [dataSource]="dataSource">
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%">SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        {{i+1}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="material_code" class="text-center">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%">Material Code
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.material_code}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="material_description">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%">Material
+                                                        Description
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{ row.material_description}}
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <ng-container matColumnDef="unit_of_measurement">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:3%">UOM
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.uom ||row.unit_of_measurment}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="storage_location">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">Storage
+                                                        Location</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.storagelocation || row.storage_location }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="valution_type">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%">Valuation
+                                                        Type</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.valutiontype || row.valution_type }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="invoice_quantity">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">Invoice
+                                                        Quantity
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.invqty|| row.invoice_quantity }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="received_quantity">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%">Received
+                                                        Quantity</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.recqty || row.received_quantity }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="shortage_quantity">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%"> Shortage
+                                                        Quantity</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <p> {{row.shrtqty || row.shortage_quantity||0}}</p>
+                                                        <!-- <p *ngIf=" row.shrtqty==0">0</p> -->
+
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="excess_quantity">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%"> Excess
+                                                        Quantity
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <p> {{row.excsqty || row.excess_quantity ||0}}</p>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="unit_price">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                                        Unit Price
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.unitprice || row.unit_price }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="discount_percent">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%">
+                                                        Discount %
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.dispercentage || row.discount_percent ||0}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="discount_value">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%">
+                                                        Discount Value
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{(row.disvalue || row.discount_value||0) | number:'1.2-2' }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="basic_price">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:3%">
+                                                        Basic Price
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{(row.basicprice || row.basic_price) | number:'1.2-2' }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="tax_description">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:6%">
+                                                        Tax Description
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{ row.taxdescription|| row.tax_description }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="tax_percent">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                                        Tax Percentage
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{ row.taxpercentage || row.tax_percent}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="tax_value">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                                        Tax Value
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{(row.taxvalue || row.tax_value) | number:'1.2-2' }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="freight_split">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                                        Freight Split
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{(((row.basicprice ||row.basic_price)/SUM)*model1.totalfreight
+                                                        || row.freight_split) | number:'1.2-2' }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="other_charges_split">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                                        Other Charges Split
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{(((row.basicprice||row.basic_price)/SUM)*model1.otherchargesval
+                                                        ||row.other_charges_split) | number:'1.2-2'
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="other_tax_split">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                                        Other Tax Split
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{(((row.basicprice||row.basic_price)/SUM)*model1.othertaxvalue
+                                                        || row.other_tax_split) | number:'1.2-2' }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="total_price">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                                        Total Price
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <p *ngIf="model1.totalfreight && model1.otherchargesval && 
+                                                            model1.othertaxvalue">
+                                                            {{(+(row.basicprice||row.basic_price)+(row.taxvalue||row.tax_value)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*model1.totalfreight)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*model1.otherchargesval)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*model1.othertaxvalue))
+                                                            | number:'1.2-2'}}</p>
+                                                        <p *ngIf="model1.totalfreight && !model1.otherchargesval && 
+                                                            !model1.othertaxvalue">
+                                                            {{(+(row.basicprice||row.basic_price)+
+                                                            (row.taxvalue||row.tax_value)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*
+                                                            model1.totalfreight)) | number:'1.2-2'}}</p>
+                                                        <p *ngIf="!model1.totalfreight && model1.otherchargesval && 
+                                                            !model1.othertaxvalue">
+                                                            {{(+(row.basicprice||row.basic_price)+
+                                                            (row.taxvalue||row.tax_value)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*
+                                                            model1.otherchargesval))
+                                                            | number:'1.2-2'}}</p>
+                                                        <p *ngIf="!model1.totalfreight && !model1.otherchargesval && 
+                                                            model1.othertaxvalue">
+                                                            {{(+(row.basicprice||row.basic_price)+
+                                                            (row.taxvalue||row.tax_value)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*
+                                                            model1.othertaxvalue))
+                                                            | number:'1.2-2'}}</p>
+                                                        <p *ngIf="model1.totalfreight && model1.otherchargesval && 
+                                                            !model1.othertaxvalue">
+                                                            {{(+(row.basicprice||row.basic_price)+
+                                                            (row.taxvalue||row.tax_value)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*
+                                                            model1.totalfreight)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*model1.otherchargesval))
+                                                            | number:'1.2-2'}}</p>
+                                                        <p *ngIf="!model1.totalfreight && model1.otherchargesval && 
+                                                            model1.othertaxvalue">
+                                                            {{(+(row.basicprice||row.basic_price)+
+                                                            (row.taxvalue||row.tax_value)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*
+                                                            model1.otherchargesval)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*model1.othertaxvalue))
+                                                            | number:'1.2-2'}}</p>
+                                                        <p *ngIf="model1.totalfreight && !model1.otherchargesval && 
+                                                            model1.othertaxvalue">
+                                                            {{(+(row.basicprice||row.basic_price)+
+                                                            (row.taxvalue||row.tax_value)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*
+                                                            model1.totalfreight)+
+                                                            (((row.basicprice||row.basic_price)/SUM)*model1.othertaxvalue))
+                                                            | number:'1.2-2'}}</p>
+                                                        <p *ngIf="!model1.totalfreight && !model1.otherchargesval && 
+                                                            !model1.othertaxvalue">
+                                                            {{(+(row.basicprice||row.basic_price)+
+                                                            (row.taxvalue||row.tax_value))
+                                                            | number:'1.2-2' }}</p>
+                                                    </td>
+
+                                                </ng-container>
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:8%">
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        <button mat-icon-button
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="editdata(row,i,matreceipteditmodel)">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+
+                                                        <button mat-icon-button style="color: red;border:none"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deleterow(i)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <h2 *ngIf="logdata" class="activitylog">Activity Log</h2>
+                            <div class="tablediv" *ngIf="logdata">
+                                <table>
+                                    <thead style="background: #e9ecef;" class="text-center headerclass">
+                                        <!-- <tr> -->
+                                        <th>SNO</th>
+                                        <th style="padding:10px;">User Name</th>
+                                        <th>Created Date</th>
+                                        <th>Reference Number</th>
+                                        <th>Description</th>
+                                        <th>Reason</th>
+                                        <th>Action</th>
+                                        <!-- </tr> -->
+                                    </thead>
+                                    <tbody class="text-center">
+                                        <tr *ngFor="let item of logdata;let i=index;">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.username}}</td>
+                                            <td>{{item.date_time | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                            <td>{{item.reference_number}} </td>
+                                            <td>{{item.description}}</td>
+                                            <td>{{item.reason}} </td>
+                                            <td>{{item.action}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </ng-container>
+
+
+                    </mat-card-content>
+                </mat-card>
+
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                List
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <ng-container>
+
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourcemain">
+
+
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:6%">SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        {{(i+1) + (masterpaginator.pageIndex *
+                                                        masterpaginator.pageSize)}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="DMRNumber">
+                                                    <th mat-header-cell *matHeaderCellDef>DMR Number
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.number}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="Date">
+                                                    <th mat-header-cell *matHeaderCellDef>Date
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.date | date: 'dd/MM/yyyy'}}
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <ng-container matColumnDef="ProjectName">
+                                                    <th mat-header-cell *matHeaderCellDef>Project Name
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.company_name }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="VendorName">
+                                                    <th mat-header-cell *matHeaderCellDef>Vendor Name</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.vendor_name}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="InvoiceNumber">
+                                                    <th mat-header-cell *matHeaderCellDef>Invoice Number
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.invoice_number}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:10%">
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;" class="text-center">
+                                                        <div class="mb-0">
+                                                            <mat-icon
+                                                                style="border:none;background: none;cursor: pointer;"
+                                                                (click)="editsaveddata(row,Editmodel)"
+                                                                [ngClass]="row.quality_check_status === 'COMPLETED' ? 'disabled' : 'enabled'">
+                                                                edit</mat-icon>
+                                                            <mat-icon
+                                                                style="color: red;border:none;background: none;cursor: pointer;"
+                                                                (click)="deleteItem(row,deleteItemModel)">delete
+                                                            </mat-icon>
+                                                            <!-- </button> -->
+                                                            <mat-icon (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                                                style="cursor:pointer;font-size:24px">file_upload
+                                                            </mat-icon>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns1;sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+                                            </table>
+                                        </div>
+                                        <div *ngIf="reaData==true" class="text-center">
+                                            <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                Loading...
+                                            </h4>
+                                            <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                No Records Found
+                                            </h4>
+                                        </div>
+                                        <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                            [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #masterpaginator
+                                            (page)="onpageevent($event)">
+                                        </mat-paginator>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
+
+
+<!-- <ng-template #matreceiptmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" (click)="closemodel()"
+            style="border:none;background:none">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content style="overflow: initial;">
+     
+    </mat-dialog-content>
+</ng-template> -->
+<ng-template #matreceipteditmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Edit Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" (click)="closemodel()"
+            style="border:none;background:none">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content style="overflow: initial;">
+        <form #myaddeditform="ngForm" (ngSubmit)="saveaddededitdata(myaddeditform)">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Material Code/Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" name="matcode" [(ngModel)]="model2.matcode"  (change)="selectedmastereditgroup()">
+                    <option selected disabled>Select One</option>
+                    <option *ngFor="let item of masterData" [ngValue]="item.system_reference_1">{{item.system_reference_1}}</option>
+                </select> -->
+                    <mat-form-field class="example-full-width" appearance="none" class="matformfieldstyles">
+                        <input type="text" placeholder="Search Material Code/Name " aria-label="Number" matInput
+                            style="border:none" class="inputdropdown" name="matcode" [(ngModel)]="model2.matcode"
+                            (keyup)="getmaterialDATA1($event)" [matAutocomplete]="auto6" />
+
+                        <mat-autocomplete autoActiveFirstOption #auto6="matAutocomplete"
+                            (optionSelected)="selectedmastereditgroup()">
+
+                            <mat-option *ngFor="let item of masterData" [value]="item.system_reference_1">
+                                {{item.system_reference_1}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <label>Storage Location<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" name="storagelocation" [(ngModel)]="model2.storagelocation">
+                    <option selected disabled>Select One</option>
+                   
+                    <option *ngFor="let item of storageData" [ngValue]="item.storage_location">{{item.storage_location}}</option>
+                </select> -->
+                    <mat-form-field class="example-full-width" appearance="none" class="matformfieldstyles">
+                        <input type="text" placeholder="Search Storage Location " aria-label="Number" matInput
+                            style="border:none" class="inputdropdown" name="storagelocation"
+                            [(ngModel)]="model2.storagelocation" (keyup)="getstorageDATA1($event)"
+                            [matAutocomplete]="auto7" />
+
+                        <mat-autocomplete autoActiveFirstOption #auto7="matAutocomplete">
+
+                            <mat-option *ngFor="let item of storageData" [value]="item.storage_location">
+                                {{item.storage_location}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Unit Of Measurement<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="uom" [(ngModel)]="model2.uom">
+                    <!-- <select class="dropdownstyles" name="uom" [(ngModel)]="model.uom">
+                        <option selected disabled>Select One</option>
+                        <option>hello</option>
+                       
+                    </select> -->
+                </div>
+                <div class="col-md-2">
+                    <label>Invoice Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="invqty" [(ngModel)]="model2.invqty"
+                        (keypress)="keyPressNumbers($event)" (keyup)="Invoiceeditvalue($event)">
+                </div>
+            </div><br>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Received Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="recqty" [(ngModel)]="model2.recqty"
+                        (keypress)="keyPressNumbers($event)" (keyup)="Receivevalueedit($event)">
+                </div>
+                <div class="col-md-2">
+                    <label>Shortage Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="shrtqty" [(ngModel)]="model2.shrtqty" readonly>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Excess Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="excsqty" [(ngModel)]="model2.excsqty" readonly>
+                </div>
+                <div class="col-md-2">
+                    <label>Unit Price<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="unitprice" [(ngModel)]="model2.unitprice"
+                        (keypress)="keyPressNumbers($event)" (keyup)="selectedunitpriceedit($event)">
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Discount Percentage<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="dispercentage" [(ngModel)]="model2.dispercentage"
+                        (keypress)="keyPressNumbers($event)" (keyup)="selecteddiscountpriceedit($event)">
+                </div>
+                <div class="col-md-2">
+                    <label>Discount Value<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="disvalue" [(ngModel)]="model2.disvalue" readonly>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Basic Price<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="basicprice" [(ngModel)]="model2.basicprice" readonly>
+                </div>
+                <div class="col-md-2">
+                    <label>Tax Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" name="taxdescription" [(ngModel)]="model2.taxdescription"
+                        (change)="selectedtaxedit()">
+                        <option selected disabled>Select One</option>
+                        <option *ngFor="let item of taxData" [ngValue]="item.code">{{item.code}}</option>
+                    </select>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Tax Percentage<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="taxpercentage" [(ngModel)]="model2.taxpercentage"
+                        (keypress)="keyPressNumbers($event)" (keyup)="selectedtaxeditpercent($event)" readonly>
+                </div>
+                <div class="col-md-2">
+                    <label>Tax Value<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" name="taxvalue" [(ngModel)]="model2.taxvalue" readonly>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Valuation Type<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" name="valution_type" [(ngModel)]="model2.valutiontype">
+                        <option selected disabled>Select One</option>
+                        <option *ngFor="let valution of valutiondata" [ngValue]="valution.code">{{valution.code}}
+                        </option>
+                    </select>
+                </div>
+            </div><br>
+            <!-- <div class="row">
+                <div class="col-md-2">
+                    <label>Freight Split</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text"  class="inputstyles" name="freightsplit" [(ngModel)]="model.freightsplit">
+                </div>
+                <div class="col-md-2">
+                    <label>Other Charges Split</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text"  class="inputstyles" name="otherchargessplit" [(ngModel)]="model.otherchargessplit">
+                </div>
+            </div><br> -->
+            <!-- <div class="row">
+                <div class="col-md-2">
+                    <label>Other Tax Split</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text"  class="inputstyles" name="othertaxsplit" [(ngModel)]="model.othertaxsplit">
+                </div>
+                <div class="col-md-2">
+                    <label>Total Price</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text"   class="inputstyles" name="totalprice" [(ngModel)]="model.totalprice"  >
+                </div>
+            </div><br> -->
+            <button mat-raised-button class="savebutton" style="width:8%;font-weight: 500;margin-left: 43%;
+            margin-top: 3%;">Update</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+
+<ng-template #deleteItemModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="padding-top:5px;">Reason</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                    [(ngModel)]="deletemodel.reason" style="width: 181%;">
+            </div>
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteFile()" class="matButton"
+            [disabled]="!deletemodel.reason">Delete</button>
+    </div>
+</ng-template>
+<ng-template #copydmrmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Copy DMR</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" (click)="closemodel()"
+            style="border:none;background:none;margin-top: -10%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <form #mydmrform="ngForm" (ngSubmit)="submitdmrno(mydmrform)">
+        <div class="row">
+            <div class="col-md-4 mt-2">
+                <label>Search DMR Number<span class="mandetory">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <!-- <input type="text" style="width:165%" class="inputstyles" name="copieddmr"
+            [(ngModel)]="copieddmr"> -->
+                <mat-form-field class="example-full-width" appearance="outline" style="font-size:12px;width:253px">
+                    <input type="text" placeholder="Search DMR " aria-label="Number" matInput
+                        style="border:none;margin-bottom: 1%;" class="inputdropdown" name="copieddmr"
+                        [(ngModel)]="copieddmr" (keyup)="getdmrDATA($event)" [matAutocomplete]="auto4" />
+
+                    <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete">
+
+                        <mat-option *ngFor="let item of DMRDATA" [value]="item.number">
+                            {{item.number}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <button mat-raised-button class="savebutton" style="font-weight: 500;margin-left: 43%;
+            margin-top: 3%;" [disabled]="!copieddmr">Submit</button>
+    </form>
+</ng-template>
+<ng-template #pomodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Select Purchase Order</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" (click)="closemodel()"
+            style="border:none;background:none;margin-top: -10%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <form #mypoform="ngForm" (ngSubmit)="submitpono(mypoform)">
+        <div class="row">
+            <div class="col-md-4 mt-2">
+                <label>Select PO Number<span class="mandetory">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <!-- <input type="text" style="width:165%" class="inputstyles" name="copieddmr"
+            [(ngModel)]="copieddmr"> -->
+                <mat-form-field class="example-full-width" appearance="outline" style="font-size:12px;width:253px">
+                    <input type="text" placeholder="Search PO Number " aria-label="Number" matInput
+                        style="border:none;margin-bottom: 1%;" class="inputdropdown" name="ponumber"
+                        [(ngModel)]="ponumber" (keyup)="getpurchaseorderDATA($event)" [matAutocomplete]="auto4" />
+
+                    <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete">
+
+                        <mat-option *ngFor="let item of PODATA" [value]="item.number">
+                            {{item.number}}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <!-- <select class="dropdownstyles" name="ponumber" [(ngModel)]="ponumber" >
+                            <option selected disabled>Select One</option>
+                            <option *ngFor="let item of PODATA" [ngValue]="item.number">{{item.number}}
+                            </option>
+                        </select> -->
+
+            </div>
+        </div>
+
+        <button mat-raised-button class="savebutton" style="width:15%;font-weight: 500;margin-left: 43%;
+            margin-top: 3%;" [disabled]="!ponumber">Submit</button>
+    </form>
+</ng-template>
+<ng-template #fileuploadmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Daily Material Receipt: {{dmrnumber}}</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" (click)="closemodel()"
+            style="border:none;background:none;margin-top: -9%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div mat-dialog-content class="row">
+        <div *ngIf="filedata">
+            <!-- <span *ngFor="let item of filedata"> -->
+            <!-- <span *ngFor="let item of filedata"> <a href="{{item.file_path}}">{{item.file_path}}</a></span> -->
+            <!-- <h4>View File:&nbsp;&nbsp; <i class="fas fa-eye text-cyan m-r-20 " 
+            style="cursor: pointer;" (click)="viewDoc(item)"></i></h4> -->
+            <table>
+                <thead style="background: #e9ecef;">
+                    <!-- <tr> -->
+                    <th>Cread By</th>
+                    <th>Created Date</th>
+                    <th>File Name</th>
+                    <th>Action</th>
+                    <!-- </tr> -->
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of filedata">
+                        <td>{{item.created_by}}</td>
+                        <td>{{item.created_date}}</td>
+                        <td>{{item.file_name}} &nbsp;&nbsp;&nbsp;<i class="fas fa-eye text-cyan m-r-20 "
+                                style="cursor: pointer;" title="View File" (click)="viewDoc(item)"></i></td>
+                        <td>
+                            <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                                aria-label="Example icon button with a vertical three dot icon"
+                                (click)="deleterowfile(deletefileModel,item)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <a style="cursor: pointer;" (click)="viewDoc(item)">{{item.file_name}}</a> -->
+            <!-- </span> -->
+        </div>
+    </div><br>
+    <button mat-raised-button type="button" (click)="autoFileUpload1.click()">Attach File</button>
+    <div class="file">
+        <input hidden class="form-control-file" name="file" type="file" (change)="uploadWbsFile($event);showContent(i);"
+            #autoFileUpload1 multiple />
+        <ng-container *ngIf="fileUploadUrls.length>0">
+            <span>Selected: {{fileUploadUrls.length}} files</span>
+        </ng-container>
+    </div>
+</ng-template>
+<ng-template #deletefileModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete file?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteexistingfile()" class="matButton">Delete</button>
+    </div>
+</ng-template>
+<ng-template #Editmodel>
+    <h1 mat-dialog-title></h1>
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="padding-top:5px;">Reason</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                    [(ngModel)]="editModel.reason" style="width: 181%;">
+            </div>
+        </div>
+    </div><br>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="saveeditreason()" class="matButton"
+            [disabled]="!editModel.reason">Submit</button>
+    </div>
+</ng-template>

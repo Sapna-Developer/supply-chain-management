@@ -1,0 +1,170 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Services</h4>
+        </div>
+    </div>
+</div> -->
+<div class="Tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Service Master
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <form #myform="ngForm" (ngSubmit)="savefinaldata(myform)">
+                            <div class="row mb-2">
+                                <div class="col-md-1">
+                                    <button mat-raised-button class="savebutton">Save</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Name<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles"placeholder="Enter your Name " [(ngModel)]="naame" name="naame">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>HSN/SAC Code<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles"placeholder="Enter your HSN/SAC Code " [(ngModel)]="hsn_sac_code"
+                                        name="hsn_sac_code">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Description<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles"placeholder="Enter your Description " [(ngModel)]="description" name="description">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>UOM<span class="mandetory">*</span></label>
+                                    <mat-form-field class="dropdown" appearance="none" style="width: 100%;
+                                    border: 1px solid rgba(0, 0,0,0.12);border-radius: 5px;height: 35px;">
+                                        <input type="text" class="inputdropdown"  placeholder="Search Unit Of Measurement" aria-label="Number"
+                                            matInput [(ngModel)]="uom" name="uom" (keyup)="getUOM($event)"
+                                            [matAutocomplete]="auto2" style="font-size: 14px;" />
+
+                                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete"
+                                            (optionSelected)="selectedUOM()">
+                                            <mat-option *ngFor="let item of UOMDATA" [value]="item.code">
+                                                {{ item.code }}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                    <!-- <input type="text" class="inputstyles" [(ngModel)]="uom" name="uom"> -->
+                                </div>
+                            </div>
+                           
+                            <div class="row" >
+                                <div class="col-md-3">
+                                    <label>Classification<span class="mandetory">*</span></label>
+                                    <mat-form-field class="dropdown" appearance="none" style="width: 100%;
+                                    border: 1px solid rgba(0, 0,0,0.12);border-radius: 5px;height: 35px;">
+                                        <input type="text"  class="inputdropdown" placeholder="Search Classification" aria-label="Number"
+                                            matInput [(ngModel)]="classification" name="classification"
+                                            (keyup)="getmaingroupDATA($event)" [matAutocomplete]="auto1"
+                                            style="font-size: 14px; " />
+
+                                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                                            (optionSelected)="selected()">
+                                            <mat-option *ngFor="let item of maingroupdata" [value]="item.description">
+                                                {{ item.description }}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                    <!-- <input type="text" class="inputstyles" [(ngModel)]="classification" name="classification"> -->
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                List
+            </ng-template>
+            <ng-template matTabContent>
+                <ng-container>
+                    <mat-card>
+                        <mat-card-content>
+                            <div class="row m-t-10">
+                                <div class="col-md-12 col-12">
+                                    <div class="table table-responsive" mat-table-wrapper>
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourceList">
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">{{(i+1) +
+                                                        (servicemasterpaginator.pageIndex *
+                                                        servicemasterpaginator.pageSize)}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="code">
+                                                    <th mat-header-cell *matHeaderCellDef>Code</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.code}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="name">
+                                                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.description}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="classification">
+                                                    <th mat-header-cell *matHeaderCellDef>Classification</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.classification}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="uom">
+                                                    <th mat-header-cell *matHeaderCellDef>Unit of Measurement</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.unit_of_measurment}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="hsnsacCode">
+                                                    <th mat-header-cell *matHeaderCellDef>HSN/SAC Code</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.hsn_sac_code}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <button mat-icon-button style="color: red;border:none;background: none;"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deleteservicemaster(row, deletedata)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                        <!-- <button class="savebutton" style="margin-left: 1%;
+                                                        height: 21px;
+                                                        width: 33%;
+                                                        font-size: 93%;"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="printpurchasereq(row)">Print
+                                                        </button> -->
+                                                    </td>
+                                                </ng-container>
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumnsList;sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsList"></tr>
+                                            </table>
+                                            <div *ngIf="reaData==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #servicemasterpaginator
+                                                (page)="onpageevent($event)">
+                                            </mat-paginator>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </ng-container>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<ng-template #deletedata>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete record?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" style="background: transparent;">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteItem()" class="matButton">Delete</button>
+    </div>
+</ng-template>

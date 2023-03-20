@@ -1,0 +1,128 @@
+<div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">{{projectName}}</h4>
+            <div class="d-flex align-items-center">
+                <span class="m-r-20">Start Date : {{startDate | date}} </span>
+                <span>End Date : {{endDate | date}} </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<mat-card class="p-0">
+    <mat-card-content>
+        <div class="row p-10">
+            <div class="col-12 col-md-10 float-right text-left">
+                All Emails<br />
+                <p>{{totalRecords}} Found</p>
+            </div>
+            <div class="col-12 col-md-2 float-right text-right">
+                <button mat-icon-button value="Add" matTooltip="Add"
+                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','CREATE_DRAWING_EMAILS'])"
+                    (click)="addNewEmails('')" class="custom-icon-button m-r-10">
+                    <span class="material-icons">
+                        add
+                    </span>
+                </button>
+
+                <button mat-icon-button value="Refresh" matTooltip="Refresh" (click)="getDataObj()"
+                    class="custom-icon-button">
+                    <span class="material-icons">
+                        refresh
+                    </span>
+                </button>
+            </div>
+
+        </div>
+
+        <ng-container>
+
+            <div class="row p-t-10">
+                <div class="col-12 col-md-12">
+                    <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar>
+                    <div class="table-responsive mat-table-wrapper">
+                        <div class="example-table-container">
+                            <table mat-table [dataSource]="tableData$">
+
+
+                                <ng-container matColumnDef="sno">
+                                    <th mat-header-cell *matHeaderCellDef>SNO#</th>
+                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                        {{i+1}}
+
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="emails">
+                                    <th mat-header-cell *matHeaderCellDef>Emails</th>
+                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                        {{row.mail_ids}}
+                                    </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="created_date">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        Updated By / Date
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+
+                                        {{row.created_by}}
+                                        <br />
+                                        {{row.created_date | date:'medium'}}
+                                    </td>
+                                </ng-container>
+
+
+
+
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action</th>
+                                    <td mat-cell *matCellDef="let row ">
+
+
+
+                                        <mat-icon
+                                            *ngIf="authService.checkUserPermission(['SUPER_ADMIN','CREATE_DRAWING_EMAILS'])"
+                                            aria-hidden="false" value="View" matTooltip="View" class="cursor"
+                                            (click)="addNewEmails(row.mail_ids)" aria-label="Example home icon">
+                                            edit
+                                        </mat-icon>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                            </table>
+                        </div>
+
+
+                        <ng-container *ngIf="tableData$.length > 0; then loadPlanData; else noRecords"></ng-container>
+
+                        <ng-template #loadPlanData>
+                            <!-- <mat-paginator *ngIf="tableData$.length > 0" [length]="totalRecords"
+                                    [pageSize]="recordsPerPage" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                                    (page)="pageChanged($event)">
+                                </mat-paginator> -->
+                        </ng-template>
+
+                        <ng-template #noRecords>
+                            <div *ngIf="tableData$.length <= 0" class="text-center">
+                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                    Loading...
+                                </h4>
+                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                    No Data Found
+                                </h4>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+    </mat-card-content>
+</mat-card>

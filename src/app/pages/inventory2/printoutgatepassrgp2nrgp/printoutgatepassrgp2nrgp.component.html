@@ -1,0 +1,152 @@
+<mat-card>
+    <div class=" print" style=" margin-left: 19px">
+        <button [print]="['demo', config]" class="btn btn-info">
+            Print
+        </button>&nbsp;&nbsp;
+        <button (click)="backtooutgatepass()" class="btn btn-info">
+            Back
+        </button>
+    </div>
+    <div class="formbody styleprint" id="demo">
+        <div class="row mt-3">
+            <div class="col-3">
+                <img src="https://testgeps.greenko.net/ui/assets/greenko/newlogo_greeenko_eps.svg"
+                    style="width: 150px" />
+            </div>
+            <div class="col-9 text-right">
+                <h2><b>GREENKO INTEGRATED MANAGEMENT SYSTEMS</b></h2>
+            </div>
+        </div>
+        <div class="row text-center head">
+            <div class="col-12">
+                <h4 class="text-center mb-0" style="color: #888;">
+                    NON - RETURNABLE GATEPASS
+                </h4>
+                <h2 class="mb-0"><b>GREENKO INTEGRATED MANAGEMENT SYSTEMS</b></h2>
+                <h2 class="mb-0"><i>Hyderabad</i></h2>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-12">
+                <h2 *ngFor="let user of userData">{{ user.company_name }}</h2>
+                <h4>
+                    <i *ngFor="let user of userData">
+                        &nbsp;&nbsp;{{ getaddress(user.receiver_name) }}
+                    </i>
+                </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <p class="ptext">
+                    <i>S.No : </i><span *ngFor="let user of userData">{{ user.number }}</span>
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="ptext">
+                    <i>Date : </i>
+                    <span *ngFor="let user of userData">{{
+                        user.date | date: "dd-MM-yyyy"
+                        }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p class="ptext">
+                    <i>To : </i><span *ngFor="let user of userData">{{
+                        user.to_company_name
+                        }}</span>
+                </p>
+                <p class="ptext">
+                    <i>M/s. </i><span *ngFor="let user of userData">{{ user.receiver_name }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p class="ptext">
+                    The following materials are Reiected / Excess Supplied / Others &
+                    returned as perreasons mentioned below :<br />
+                    Ref : Our P.O. No :
+                    <b><span *ngFor="let user of userData">{{
+                            user.work_order_number
+                            }}</span></b>
+                    Dt. ______________ and Your INV / DC No ___________ Dt.
+                    <span *ngFor="let user of userData">{{
+                        user.date | date: "dd-MM-yyyy"
+                        }}</span>
+                </p>
+                <hr class="pline">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="border">
+                    <tr class="border text-center">
+                        <th class="border p-2">S.No</th>
+                        <th class="border p-2">Item Code</th>
+                        <th class="border p-2">Item Description</th>
+                        <th class="border p-2">UOM</th>
+                        <th class="border p-2">Quantity</th>
+                        <th class="border p-2">Reasons for Rejection</th>
+                    </tr>
+                    <tr class="border text-center">
+                        <td class="border" style="padding-bottom: 15%">
+                            <span *ngFor="let user of userData">{{ user.line_item }}</span>
+                        </td>
+                        <td class="border" style="padding-bottom: 15%">
+                            <span *ngFor="let user of userData">{{
+                                user.material_code
+                                }}</span>
+                        </td>
+                        <td class="border" style="padding-bottom: 15%">
+                            <span *ngFor="let user of userData">{{
+                                user.material_description
+                                }}</span>
+                        </td>
+                        <td class="border" style="padding-bottom: 15%">
+                            <span *ngFor="let user of userData">{{
+                                user.unit_of_measurment
+                                }}</span>
+                        </td>
+                        <td class="border" style="padding-bottom: 15%">
+                            <span *ngFor="let user of userData">{{ user.quantity }}</span>
+                        </td>
+                        <td class="border" style="padding-bottom: 15%"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-8">
+                <p class="ptext">
+                    Through Vehicle Number :
+                    <span *ngFor="let user of userData">{{ user.vehicle_number }}</span>
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="ptext">Packing No. :</p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <p class="ptext">
+                    Prepared By :
+                    <span *ngFor="let user of userData">{{ user.created_by }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-4">
+                <p class="ptext">Stores Incharge</p>
+            </div>
+            <div class="col-4 text-center">
+                <p class="ptext">Authorised By</p>
+            </div>
+            <div class="col-4 text-right">
+                <p class="ptext">Received By</p>
+            </div>
+        </div>
+    </div>
+</mat-card>

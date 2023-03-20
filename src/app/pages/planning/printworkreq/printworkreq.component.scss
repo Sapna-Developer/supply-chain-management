@@ -1,0 +1,85 @@
+.formbody{
+    margin:4px;
+    padding:7px;
+  }
+  table{
+    border:1px solid black !important;
+  }
+  .border{
+    border:1px solid black !important;
+  }
+  
+ table tr th,table tr td{
+    border: 1px solid black !important;
+  
+      padding: 5px;
+     font-size: 15px;
+  }
+  .border-left{
+    border-left: 1px solid black !important;
+    
+  }
+  .margin{
+      margin-top: -16px;
+  }
+  // .border-style{
+  //   border-bottom: 1px solid black;
+  //   border-left: 1px solid black;
+  // }
+  // .border-style-right{
+  //   border-right: 1px solid black;
+  //   border-bottom: 1px solid black;
+  //   border-left: 1px solid black;
+  // }
+  @media print
+  {
+    .page-break  { display:block; page-break-before:always; }
+  
+  }
+
+  
+//signature
+.sign-width {
+  width: 150px;
+  height: 50px;
+}
+.col-4:first-child{
+  text-align: center;
+}
+.col-4{
+  text-align: center;
+}
+.col-4:last-child,.col-md-4:nth-child(3){
+  text-align: center;
+  // border-right: 1px solid black;
+  // border-bottom: 1px solid black;
+  // border-left: 1px solid black;
+}
+.btn-custom{
+  background-color: #888;
+  padding: 5px 10px;
+  width: 80px;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.companyAddr{
+  // text-align: justify;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+  .inputstyles {
+  padding: 5px;
+  margin: 5px 0px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  height: 35px;
+  width: 100%;
+  }
+  .inputstyles:placeholder-shown {
+      color: #da2424;
+  }
+  .inputstyles:hover {
+      border: 2px solid black
+  }

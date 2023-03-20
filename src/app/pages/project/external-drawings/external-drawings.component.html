@@ -1,0 +1,532 @@
+<div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title h4Title">{{projectObj?.data?.title}}</h4>
+            <div class="d-flex align-items-center">
+                <span class="m-r-20">Start Date : {{startDate | date}} </span>
+                <span>End Date : {{endDate | date}} </span>
+            </div>
+            <!-- <button class="create-ticket" mat-flat-button (click)="createFolder(createNewFolderModal)">Create a
+                Folder</button> -->
+        </div>
+    </div>
+</div>
+
+<div>
+    <button *ngIf="searchbutton" type="submit" class=" btn btn-success " (click)="searchfolders()" 
+    style="background: rgba(0, 0, 0, 0.12);color: black;">Search<i class="fa fa-search" style="margin-left:8px;" aria-hidden="true"></i></button>
+    <!-- <button *ngIf="hideButton" (click)="addtabledata(addtabledatamodel)" class="sendbutton" style="background: #62beda">
+        Send Mail
+    </button> -->
+    <button *ngIf="backbutton" type="submit" class=" btn btn-success " (click)="backtofolders()"
+    style="background:  rgba(0, 0, 0, 0.12);color: black;">Back To Folders</button>
+    <button *ngIf="backbutton" type="submit" class=" btn btn-success" (click)="exportexcel()"
+    style="background:  rgba(0, 0, 0, 0.12);color: black;margin-left:1%;" ><i class="far fa-file-excel"></i>&nbsp;Excel</button>
+    <button *ngIf="backbutton" type="submit" class=" btn btn-success" (click)="downloadpdf()"
+    style="background:  rgba(0, 0, 0, 0.12);color: black;margin-left:1%;" ><i class="far fa-file-excel"></i>&nbsp;Pdf</button>
+    <button *ngIf="authService.checkUserPermission(['TRANSMITTAL','SUPER_ADMIN'])"  (click)="addtabledata(addtabledatamodel)" class="sendbutton sendMail" [disabled]="selectedArray.length===0" style="background: rgba(0, 0, 0, 0.12);color: black;">
+        Send Mail
+    </button>
+  </div><br>
+    <mat-card style="height:88px" *ngIf="searchFolders">
+      <mat-card-content>
+          <div class="row">
+  
+  
+              <div class="col-12 col-md-4">
+                  <input type="text" placeholder="Search Drawing Name" 
+                  class="inputstyles" [(ngModel)]="searchdrawing" (keyup)="searchbyname()">  
+              </div>
+              <div class="col-12 col-md-4">
+                  <input type="text" placeholder="Search Drawing Id" 
+                  class="inputstyles" [(ngModel)]="searchId" (keyup)="searchbyID()" style="margin-left: -25%;">   
+              </div>
+              <div class="col-12 col-md-4">
+                  <input type="text" placeholder="Search Version" 
+                  class="inputstyles" [(ngModel)]="searchversion" (keyup)="searchbyversion()" style="margin-left: -49%;">  
+                
+              </div>
+             
+          </div>
+  
+      </mat-card-content>
+  </mat-card>
+  <div *ngIf="FOLDERS">
+<div class="page-breadcrumb m-b-15">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <!-- <h4 class="page-title">{{pageInfo?.title}}</h4> -->
+            <div class="d-flex align-items-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <ng-template ngFor let-url [ngForOf]="folderInnerDetails" let-last="last" let-i="index">
+                            <li class="breadcrumb-item font-18 text-capitalize" *ngIf="!last"
+                                (click)="backToFolder(url,i)">
+                                <a href='javascript:void(0)'>{{url.folder_name}}</a>
+                            </li>
+                            <li class="breadcrumb-item active font-18 text-capitalize" (click)="backToFolder(url,i)"
+                                *ngIf="last">
+                                {{url.folder_name}}
+
+                            </li>
+                        </ng-template>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-2 text-center">
+        <i class="fas fa-plus-circle display-6 cursor text-success"
+            *ngIf="authService.checkUserPermission(['ADD_EXTERNAL_DRAWING_FOLDER','SUPER_ADMIN'])"
+            (click)="createFolder(createNewFolderModal)"></i>
+        <i class="fas fa-upload display-6 cursor m-l-20 text-danger"
+            *ngIf="folderInnerDetails.length > 1 && authService.checkUserPermission(['UPLOAD_EXTERNAL_DRAWINGS','SUPER_ADMIN'])"
+            (click)="addNewFiles(createFileInFolder)"></i>
+
+        <!-- <div class="card" (click)="createFolder(createNewFolderModal)">
+            <div class="card-body" style="padding: 8px;">
+                <div class="text-center">
+                    <div class="m-r-10">
+                        <span class="text-orange display-5">
+                            <img src="assets/greenko/plus.png" width="50" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+
+    </div>
+    <!-- <div class="col-12 col-md-1 cursor">
+        <div class="card" *ngIf="folderInnerDetails.length > 1">
+            <div class="card-body" style="padding: 8px;" (click)="autoFileUpload1.click()">
+                <div class="text-center">
+                    <div class="m-r-10"><span class="text-orange display-5">
+                            <img src="assets/greenko/file.png" width="50" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="file" hidden>
+                <input class="form-control-file" name="file" multiple accept="application/pdf" type="file"
+                    (change)="uploadWbsFile($event)" #autoFileUpload1 />
+                <span class="file-custom"></span>
+            </div>
+
+        </div>
+    </div> -->
+    <div class="col-12 col-md-2 cursor" *ngIf="folders$.length == 0">
+        <p>No Folders Found</p>
+    </div>
+    <div class="col-12 col-md-3 col-xl-2 cursor" *ngFor="let folder of folders$">
+        <div class="card">
+            <div class="card-body" style="padding: 8px;">
+                <div class="d-flex align-items-center ">
+                    <div class="m-r-10 " (click)="getFolders(folder)"><span class="text-orange display-5">
+                            <!-- <i class="mdi mdi-wallet"></i> -->
+                            <img src="assets/greenko/folder.png" width="50" />
+                        </span></div>
+                    <div (click)="getFolders(folder)">
+                        <h3 class="font-medium m-b-0 text-capitalize">{{folder.folder_name}}</h3>
+                        <span>{{folder.created_date | date}}</span>
+                    </div>
+
+                </div>
+                <div class="float-right folder-delete"
+                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','DELETE_EXTERNAL_DRAWINGS_FOLDER'])">
+                    <i class="fas fa-trash-alt text-danger" (click)="deleteConfirm(folder,deleteFolderModal)"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<div class="row m-t-20" *ngIf="pdfFiles$.length > 0">
+    <div class="col-12 col-md-12 cursor text-left">
+        <div class="card">
+            <br />
+            <div class="card-body" style="padding: 0px">
+                <div class="table-responsive">
+                    <table class="table text-center">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" *ngIf="authService.checkUserPermission(['TRANSMITTAL','SUPER_ADMIN'])">select</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Drawing No</th>
+                                <th scope="col">Drawing Type</th>
+                                <!-- <th scope="col">Emails</th> -->
+                                <th scope="col">Version</th>
+                                <th scope="col">Created By</th>
+                                <th scope="col">Created On</th>
+                                <th scope="col">Comments</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let file of pdfFiles$">
+                                <th *ngIf="authService.checkUserPermission(['TRANSMITTAL','SUPER_ADMIN'])">
+                                    <input class="selectdrawing" type="checkbox" [(ngModel)]="file.checked" (change)="selectedFile(file)"/>
+                                    <!-- <mat-checkbox [checked]="isXyzChecked" (change)="selectedFile(file, $event)"> </mat-checkbox>  -->
+                                </th>
+                                <th>{{ file.name }}</th>
+                                <td>{{ file.drawing_no }}</td>
+                                <td>{{ file.drawing_type }}</td>
+                                <!-- <td>{{file.notification_mail_ids}}</td> -->
+                                <td>
+                                    {{ file.version }}
+                                </td>
+                                <td>{{ file.created_by }}</td>
+                                <td>{{ file.created_date | date }}</td>
+                                <td>{{ file.comments }}</td>
+                                <td style="white-space: nowrap;">
+                                    <i class="fas fa-eye text-cyan mr-2" *ngIf="
+                        authService.checkUserPermission([
+                          'SUPER_ADMIN',
+                          'DOWNLOAD_EXTERNAL_DRAWINGS'
+                        ])
+                      " (click)="viewDoc(file)"></i>
+                                    <i class="fas fa-trash-alt text-danger" *ngIf="
+                        authService.checkUserPermission([
+                          'SUPER_ADMIN',
+                          'DELETE_EXTERNAL_DRAWINGS'
+                        ])
+                      " (click)="deleteFileConfirm(file, deleteFileModal)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- <img src="assets/greenko/pdf.png" width="50" />
+          <br />
+          <span>{{file.created_date | date}}</span> -->
+    </div>
+</div>
+
+
+
+
+<div style="display: none;">
+<table class="table" id="mytable" #mytable>
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">SNO</th>
+            <th scope="col">Name</th>
+            <th scope="col">Drawing No</th>
+            <th scope="col">Drawing Type</th>
+            <!-- <th scope="col">Emails</th> -->
+            <th scope="col">Version</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Created On</th>
+            <th scope="col">Comments</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let file of pdfFiles$;let i=index">
+            <td>{{i+1}}</td>
+            <td scope="row">{{file.name}}</td>
+            <td>{{file.drawing_no}}</td>
+            <td>{{file.drawing_type}}</td>
+            <!-- <td>{{file.notification_mail_ids}}</td> -->
+            <td>
+                {{file.version}}
+            </td>
+            <td>{{file.created_by }} </td>
+            <td>{{file.created_date | date}} </td>
+            <td>{{file.comments}}</td>
+            <!-- <td>
+
+
+                <i class="fas fa-eye text-cyan m-r-20 "
+                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','DOWNLOAD_PMC_DRAWINGS'])"
+                    (click)="viewDoc(file)"></i>
+                <i class="fas fa-trash-alt text-danger "
+                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','DELETE_PMC_DRAWINGS'])"
+                    (click)="deleteFileConfirm(file,deleteFileModal)"></i>
+            </td> -->
+        </tr>
+
+    </tbody>
+</table>
+</div>
+<ng-template #createFileInFolder>
+    <h1 mat-dialog-title>Add File</h1>
+    <form #addNewFileFrom="ngForm">
+
+
+        <div mat-dialog-content>
+
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="w-full w-100">
+                        <mat-label>Name</mat-label>
+                        <input matInput [(ngModel)]="createNewFile.name" required name="name">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="w-full w-100">
+                        <mat-label>Version</mat-label>
+                        <mat-select [(ngModel)]="createNewFile.version" required name="version">
+                            <mat-option *ngFor="let ver of versions$" [value]="ver.version">
+                                {{ver.version}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="w-full w-100">
+                        <mat-label>Drawing No</mat-label>
+                        <input matInput [(ngModel)]="createNewFile.drawing_no" required name="drawing_no">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="w-full w-100">
+                        <mat-label>Drawing Type</mat-label>
+                        <mat-select [(ngModel)]="createNewFile.drawing_type" name="drawing_type">
+                            <mat-option *ngFor="let version of drawing$" [value]="version.drawing_type">
+                                {{version.drawing_type}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                    <button mat-raised-button type="button" (click)="autoFileUpload1.click()">Choose File</button>
+                    <div class="file">
+                        <input hidden class="form-control-file" name="file" accept="application/pdf" type="file"
+                            (change)="uploadWbsFile($event)" #autoFileUpload1 />
+                        <span class="file-custom">{{createNewFile.fileName}}</span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="w-full w-100">
+                        <mat-label>Comments</mat-label>
+                        <textarea matInput rows="2" [(ngModel)]="createNewFile.comments" name="comments"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-12 m-t-10">
+                    <mat-form-field class="example-chip-list w-full">
+                        <mat-label>Email Notifications</mat-label>
+                        <mat-chip-list #chipList>
+                            <mat-chip *ngFor="let fruit of selectedUsers" [selectable]="selectable"
+                                [removable]="removable" (removed)="remove(fruit)">
+                                {{fruit}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="Enter email..." [formControl]="fruitCtrl" [matAutocomplete]="auto"
+                                [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                                {{fruit}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+        <div mat-dialog-actions class="w-full text-right">
+            <button mat-button mat-dialog-close class="float-right">No Thanks</button>
+            <button mat-button class="float-right" [disabled]="addNewFileFrom.invalid || !createNewFile.fileName||selectedUsers.length===0"
+                (click)="saveFolderFile()" cdkFocusInitial>Save</button>
+        </div>
+    </form>
+</ng-template>
+
+
+
+<ng-template #createNewFolderModal>
+    <h1 mat-dialog-title>Folder Name</h1>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Enter Folder Name</mat-label>
+            <input matInput [(ngModel)]="folderName" name="folderName">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>No Thanks</button>
+        <button mat-button [disabled]="!folderName" (click)="saveFolder()" cdkFocusInitial>Save</button>
+    </div>
+</ng-template>
+
+
+<ng-template #deleteFolderModal>
+    <h1 mat-dialog-title>{{deleteFolderObj.folder_name}}</h1>
+    <div mat-dialog-content>Are you sure, you want to delete folder?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deleteFolder()">Delete</button>
+    </div>
+</ng-template>
+
+
+
+<ng-template #deleteFileModal>
+    <h1 mat-dialog-title>Delete File</h1>
+    <div mat-dialog-content>Are you sure, you want to delete File?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deleteFile()">Delete</button>
+    </div>
+</ng-template>
+
+<ng-template #deleteFileModal>
+    <h1 mat-dialog-title>Delete File</h1>
+    <div mat-dialog-content>Are you sure, you want to delete File?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deleteFile()">Delete</button>
+    </div>
+</ng-template>
+<ng-template #addtabledatamodel>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h1>Notify</h1>
+            </div>
+            <div class="col-6">
+                <mat-icon class="float-right" mat-dialog-close>close</mat-icon>
+            </div>
+        </div>
+        <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
+            <div class="row">
+                <label>Transmittal Number</label>
+                <input type="text" class="istyles" name="transmittal_number" [(ngModel)]="maildata.transmittal_number"
+                    placeholder="Enter Transmittal Number" />
+            </div>
+            <div class="row">
+                <label>Mail Subject</label>
+                <input type="text" class="istyles" name="mail_subject" [(ngModel)]="maildata.mail_subject"
+                    placeholder="Enter Subject" />
+            </div>
+            <div class="row">
+                <label>Mail Body</label>
+                <textarea  type="text" class="istyles" name="mail_body" [(ngModel)]="maildata.mail_body"
+                    placeholder="Enter Body" ></textarea>
+            </div>
+            <div class="row">
+                <label>E-Mail Id</label>
+                <mat-form-field appearance="outline" class="matformfieldstyles" >
+                
+                    <input type="text" class="inputdropdown1" placeholder="Search User"
+                        aria-label="Number" matInput name="mail_ids"
+                        [(ngModel)]="maildata.mail_id" [matAutocomplete]="auto1" (keyup)="filterUserDetails($event)"/>
+                    <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)='focusUpdate()'>
+                        <mat-option *ngFor="let item of userdataList" (onSelectionChange)="onSelFunc(maildata.mail_id,item.work_email)" [value]="item.work_email">
+                            {{ item.work_email }}</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <br>
+            <div class="table-responsive tStatic" *ngIf="selectedArray.length>0">
+                <table class="table table-bordered tSticky" id="mytable" #mytable>
+                    <thead class="thead-light">
+                        <tr class="text-center">
+                            <th>SNO</th>
+                            <th>Name</th>
+                            <th>Drawing No</th>
+                            <th>Drawing Type</th>
+                            <th>Revision</th>
+                            <th>Media</th>
+                            <th>Approval Type</th>
+                            <th>Quantity</th>
+                            <th>Sheet</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let file of selectedArray; let i = index">
+                            <td class="text-center">{{ i + 1 }}</td>
+                            <td>{{ file.name }}</td>
+                            <td class="text-center">{{ file.drawing_no }}</td>
+                            <td class="text-center">{{ file.drawing_type }}</td>
+                            <td class="text-center">{{file.version}}</td>
+                            <td class="text-center">{{mediaValue}}
+                                <!-- <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Enter text" value="mediaValue" name="mediaValue{{i}}"
+                                        [(ngModel)]="mediaValue" readonly />
+                                </mat-form-field> -->
+                            </td>
+                            <td class="text-center">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Enter text" value="mediaValue"
+                                        name="approval_type{{ i }}" [(ngModel)]="selectedArray[i].approval_type" />
+                                </mat-form-field>
+                            </td>
+                            <td class="text-center">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Enter Number" value="" name="quantity{{ i }}"
+                                        [(ngModel)]="selectedArray[i].quantity" (keypress)="keyPressNumbers($event)" />
+                                </mat-form-field>
+                            </td>
+
+                            <td style="white-space: nowrap;" class="text-center">{{i+1}} of {{selectedArray.length}}
+                                <!-- <mat-form-field class="example-full-width">
+                                    {{i+1}} of
+                                    <input matInput placeholder="Enter text" value="selectedArray.length" name="selectedArray.length"
+                                        [(ngModel)]="selectedArray.length" readonly/>
+                                </mat-form-field> -->
+                            </td>
+                            <td class="text-center">
+                                <mat-form-field class="dropdown" style="width: 99%; border-radius: 5px;
+                                height: 42%;margin-left: 2%;">
+                                    <mat-select  placeholder="Select Category" name="status{{ i }}" [(ngModel)]="selectedArray[i].status">
+                                      <mat-option value="civil">Civil</mat-option>
+                                      <mat-option value="mechanical">Mechanical</mat-option>
+                                      <mat-option value="electrical">Electrical</mat-option>
+                                      <mat-option value="e&m">E&M</mat-option>
+                                      <mat-option value="h&m">H&M</mat-option>
+                                      <mat-option value="infra">Infra</mat-option>
+                                      <mat-option value="general">General</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                <!-- <mat-form-field class="dropdown" style="width: 99%; border-radius: 5px;
+                                height: 42%;margin-left: 2%;">
+                                    <input type="text" class="inputdropdown" placeholder="Search Department"
+                                        aria-label="Number" matInput name="status{{ i }}"
+                                        [(ngModel)]="selectedArray[i].status" (keyup)="filterDepartmentData($event)"
+                                        [matAutocomplete]="auto">
+                                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                        <mat-option *ngFor="let item of departmentsList" [value]="item.deparment_name">
+                                            {{item.deparment_name}}</mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field> -->
+                            </td>
+                            <td class="text-center"><i class="fas fa-trash-alt  text-danger" (click)="deleteitem(file)"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <div class="row">
+                <label>Note</label>
+                <textarea  type="text" class="istyles" name="note" [(ngModel)]="maildata.note"
+                    placeholder="Enter Note" ></textarea>
+            </div>
+            <br>
+            <div class="row">
+                <label>Signature</label>
+                <textarea  type="text" class="istyles" name="signature" [(ngModel)]="maildata.signature"
+                    placeholder="Enter Signature" ></textarea>
+            </div>
+            <br/>
+            <div class="row">
+                <button mat-raised-button type="submit" class="m-t-10" class="savebutton"
+                    style="background-color: rgba(0, 0, 0, 0.12)" color="secondary"
+                    [disabled]="!maildata.mail_subject || !maildata.mail_id">
+                    Send
+                </button>
+            </div>
+            <br>
+        </form>
+    </div>
+</ng-template>

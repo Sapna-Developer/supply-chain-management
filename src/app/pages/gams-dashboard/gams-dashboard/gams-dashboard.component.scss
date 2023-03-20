@@ -1,0 +1,35 @@
+.version{
+    font-size: 8px;
+    float: right;
+  }
+  h3{
+    margin-bottom: 0px !important;
+  }
+  .h3-title{
+    margin-top: 6px;
+  }
+  .bg-git{
+    background-color: #0066cc;
+    color: #fff;
+    padding: 5px 10px;
+    vertical-align: middle;
+  }
+  .bg-wave{
+    background: url('../../../../assets/greenko/wave-bg.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: cover;
+    width: 100%;
+  }
+  .version{
+    font-size: 8px;
+  }
+
+  .example-container {
+    height: 290px;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }

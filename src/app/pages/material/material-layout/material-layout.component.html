@@ -1,0 +1,2233 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Material Projects</h4> -->
+<!-- <div class="d-flex align-items-center m-t-10">
+                <span class="m-r-20">Start Date : {{startDate | date}} </span>
+                <span>End Date : {{endDate | date}} </span>
+            </div> -->
+<!-- </div>
+    </div>
+</div> -->
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Materials Menu</h4> -->
+            <!-- <div class="d-flex align-items-center m-t-10">
+                <span class="m-r-20">Start Date : {{startDate | date}} </span>
+                <span>End Date : {{endDate | date}} </span>
+            </div> -->
+        <!-- </div>
+    </div>
+</div> -->
+
+<!-- <div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                INDENTS
+            </ng-template>
+            <ng-template matTabContent>
+                <app-indents></app-indents>
+            </ng-template>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                STOCK SEARCH
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        Content
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                CONSIGNMENTS
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        Content
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                CONTRACTOR ISSUANCES
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        Content
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                INVENTORY ISSUANCES
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        Content
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                INVENTORY RETURNS
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        Content
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                INVENTORY TRANSFERS
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        Content
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                INVENTORY RECEIPTS
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        Content
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div> -->
+
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Material Master
+            </ng-template>
+            <ng-template matTabContent>
+
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row p-10">
+                            <div class="col-6">
+                                <input type="search" class="searchfield"  placeholder="Search By Name/Code" [(ngModel)]="searchmasterData" (input)="searchmasterdata()">
+                            </div>
+                            <div class="col-6  float-right text-right">
+
+                                <!-- <div class="example-button-row">
+                                    <button mat-raised-button color="primary" class="m-r-20" (click)="addUserProjects()"
+                                        *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_PROJECTS'])">Add User
+                                        Projects</button>
+                
+                                    <button mat-raised-button color="secondary" class="m-r-20" (click)="addNewUser()"
+                                        *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_ROLE'])">Add User Project
+                                        Role</button>
+                
+                                    <button mat-icon-button value="Refresh" matTooltip="Refresh" (click)="getUserRoleDetails()"
+                                        class="custom-icon-button">
+                                        <span class="material-icons">
+                                            refresh
+                                        </span>
+                                    </button>
+                                </div> -->
+
+                                <!-- <button mat-icon-button value="Add"
+                                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_PROJECTS'])"
+                                    matTooltip="Add User Projects" (click)="addUserProjects()" class="custom-icon-button m-r-10">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                </button> -->
+                                <!-- *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_ROLE'])" -->
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button "
+                                    (click)="addMaterialmaster(materialmastermodel)">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                </button>
+
+
+                            </div>
+
+                        </div>
+
+                        <ng-container>
+
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourcemaster">
+
+
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:7%">SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        {{(i+1) + (masterpaginator.pageIndex * masterpaginator.pageSize)}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="material_code">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:11%">Material
+                                                        Code</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.code}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="material_name">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:12%">Material
+                                                        Name</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.name}}
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <ng-container matColumnDef="long_description">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:12%">Long
+                                                        Description</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.description }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="class">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%">Class</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.class_code}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="criticality">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:7%">Criticality
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.criticality_code}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="uom1">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:6%"> UOM 1</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.uom_1 }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="uom2">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:6%"> UOM 2</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.uom_2 }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="uomratio">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:5%"> UOM Ratio
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.uom_ratio }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="category">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:8%">
+                                                        Category
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.category_code}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="maingroup">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:6%">
+                                                        Main Group
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.main_group_code}}
+
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="subgroup">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                                        Sub Group
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.sub_group_code}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="sap_code">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                                        SAP Code
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.sap_code}}
+                                                    </td>
+                                                </ng-container>
+                                                
+                                                <!-- <ng-container matColumnDef="ActiveStatus">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Active Status
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.is_active}}
+                                                    </td>
+                                                </ng-container> -->
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:11%">
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <button mat-icon-button
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="editmaterialmasterdata(row,matereditmodel)">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+
+                                                        <button mat-icon-button style="color: red;"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deletemasterdata(row,deletemastermodel)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                                            </table>
+                                        </div>
+
+
+                                        <!-- <ng-container
+                                            *ngIf="masterDATA.length > 0; then loadmasterData; else nomasterRecords">
+                                        </ng-container> -->
+
+                                        <!-- <ng-template #loadmasterData> -->
+                                            <div *ngIf="masterDATA==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalmasterRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #masterpaginator
+                                                (page)="onpageevent($event)">
+                                            </mat-paginator>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </mat-card-content>
+                </mat-card>
+                <!-- <app-indents></app-indents> -->
+            </ng-template>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Main Group
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row p-10">
+                            <div class="col-6">
+                                <input type="search" class="searchfield"  placeholder="Search By Main Group" [(ngModel)]="searchmainData" (input)="searchmaindata()">
+                            </div>
+                            <div class="col-6  float-right text-right">
+
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button "
+                                    (click)="addmaingroupmodel(maingroupmodel)">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <ng-container>
+
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourcemain">
+
+
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:20%">SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        {{(i+1) + (paginatormain.pageIndex * paginatormain.pageSize)}}
+
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="maingroup">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:30%">Main Group</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.description}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="code">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:20%">Code</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.code}}
+
+                                                    </td>
+                                                </ng-container>
+                                                <!-- <ng-container matColumnDef="active">
+                                                    <th mat-header-cell *matHeaderCellDef style="width:26%">Active
+                                                        Status</th>
+                                                    <td mat-cell *matCellDef="let row" style="width:26%">
+                                                        {{row.is_active}}
+
+                                                    </td>
+                                                </ng-container> -->
+
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <button mat-icon-button
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="editmaindata(row,maingroupeditmodel)">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+                                                        <button mat-icon-button style="color: red;"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="Deletemaindata(row,deletemainmodel)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsmaingroup;sticky: true"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsmaingroup">
+                                                </tr>
+                                            </table>
+                                        </div>
+
+
+                                        <!-- <ng-container
+                                            *ngIf="maindata.length > 0; then loadmainData; else nomainRecords">
+                                        </ng-container>
+
+                                        <ng-template #loadmainData> -->
+                                            <div *ngIf="maindata==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalmainRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #paginatormain (page)="onmainpageevent($event)">
+                                            </mat-paginator>
+                                        <!-- </ng-template> -->
+
+                                        <!-- <ng-template #nomainRecords>
+                                            <div *ngIf="maindata.length <= 0" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingmainRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingmainRecords">
+                                                    No Data Found
+                                                </h4>
+                                            </div>
+                                        </ng-template> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Sub Group
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row p-10">
+                            <div class="col-6">
+                                <input type="search" class="searchfield"  placeholder="Search By Sub Group" [(ngModel)]="searchsubData" (input)="searchsubdata()">
+                            </div>
+                            <div class="col-6  float-right text-right">
+
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button "
+                                    (click)="addsubgroupmodel(subgroupmodel)">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <ng-container>
+
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourcesub">
+
+
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        {{(i+1) + (paginatorsubgrp.pageIndex * paginatorsubgrp.pageSize)}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="maingroup">
+                                                    <th mat-header-cell *matHeaderCellDef>Main Group</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.main_group_description}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="subgroup">
+                                                    <th mat-header-cell *matHeaderCellDef>Sub Group</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.description}}
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <ng-container matColumnDef="code">
+                                                    <th mat-header-cell *matHeaderCellDef>Code</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.code }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- <ng-container matColumnDef="activestatus">
+                                                    <th mat-header-cell *matHeaderCellDef>Active Status</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.is_active }}
+                                                    </td>
+                                                </ng-container> -->
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <button mat-icon-button
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="editsubgrpdata(row,subgrpeditmodel)">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+                                                        <button mat-icon-button style="color:red"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deletesubgrpdata(row,deletesubmodel)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnssubgroup;sticky: true"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnssubgroup">
+                                                </tr>
+                                            </table>
+                                        </div>
+
+
+                                        <!-- <ng-container *ngIf="subdata.length > 0; then loadsubData; else nosubRecords">
+                                        </ng-container>
+
+                                        <ng-template #loadsubData> -->
+                                            <div *ngIf="subdata==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalsubRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #paginatorsubgrp (page)="onsubpageevent($event)">
+                                            </mat-paginator>
+                                        <!-- </ng-template> -->
+
+                                        <!-- <ng-template #nosubRecords>
+                                            <div *ngIf="subdata.length <= 0" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingsubRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingsubRecords">
+                                                    No Data Found
+                                                </h4>
+                                            </div>
+                                        </ng-template> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Unit Of Measurements
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row p-10">
+                            <div class="col-6">
+                                <input type="search" class="searchfield"  placeholder="Search By Description" [(ngModel)]="searchunitData" (input)="searchunitdata()">
+                            </div>
+                            <div class="col-6  float-right text-right">
+
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button "
+                                    (click)="addunitmeasurementmodel(unitgroupmodel)">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <ng-container>
+
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourceunit">
+
+
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        {{(i+1) + (paginatorunit.pageIndex * paginatorunit.pageSize)}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="description_measurements">
+                                                    <th mat-header-cell *matHeaderCellDef class="text-center">Description Of Measurements
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.description}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="unitcode">
+                                                    <th mat-header-cell *matHeaderCellDef class="text-center">Unit Code</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.code}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="length">
+                                                    <th mat-header-cell *matHeaderCellDef class="text-center">Length</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.length}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="width">
+                                                    <th mat-header-cell *matHeaderCellDef class="text-center">Width</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.width}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="height">
+                                                    <th mat-header-cell *matHeaderCellDef class="text-center">Height</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.height}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef class="text-center">
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <button mat-icon-button
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="editunitdata(row,unitdataeditmodel)">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+                                                        <button mat-icon-button style="color: red;"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deleteunitdata(row,deleteunitmodel)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row 
+                                                    *matHeaderRowDef="displayedColumnsunitgroup;sticky: true"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsunitgroup">
+                                                </tr>
+                                            </table>
+                                        </div>
+
+
+                                        <!-- <ng-container
+                                            *ngIf="unitDATA.length > 0; then loadunitData; else nounitRecords">
+                                        </ng-container>
+
+                                        <ng-template #loadunitData> -->
+                                            <div *ngIf="unitDATA==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalunitRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #paginatorunit (page)="onunitpageevent($event)">
+                                            </mat-paginator>
+                                        <!-- </ng-template> -->
+
+                                        <!-- <ng-template #nounitRecords>
+                                            <div *ngIf="unitDATA.length <= 0" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingunitRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingunitRecords">
+                                                    No Data Found
+                                                </h4>
+                                            </div>
+                                        </ng-template> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Category
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row p-10">
+                            <div class="col-6">
+                                <input type="search" class="searchfield"  placeholder="Search By Description" [(ngModel)]="searchcatData" (input)="searchcatdata()">
+                            </div>
+                            <div class="col-6  float-right text-right">
+
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button "
+                                    (click)="addcategorymodel(categorymodel)">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <ng-container>
+
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourcecategory">
+
+
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        {{(i+1) + (paginatorcat.pageIndex * paginatorcat.pageSize)}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="categorycode">
+                                                    <th mat-header-cell *matHeaderCellDef>Code</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.code}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="description">
+                                                    <th mat-header-cell *matHeaderCellDef>Description</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.description}}
+                                                    </td>
+                                                </ng-container>
+                                                <!-- <ng-container matColumnDef="activestatus">
+                                                    <th mat-header-cell *matHeaderCellDef>Active Status</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.is_active}}
+                                                    </td>
+                                                </ng-container> -->
+
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <button mat-icon-button
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="editcategorydata(row,categoryeditmodel)">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+                                                        <button mat-icon-button style="color: red;"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deletecategory(row,deletecatModal)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnscategory;sticky: true"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnscategory">
+                                                </tr>
+                                            </table>
+                                        </div>
+
+
+                                        <!-- <ng-container
+                                            *ngIf="categoryDATA.length > 0; then loadcategoryData; else nocatRecords">
+                                        </ng-container>
+
+                                        <ng-template #loadcategoryData> -->
+                                            <div *ngIf="categoryDATA==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalcategoryRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #paginatorcat (page)="oncatpageevent($event)">
+                                            </mat-paginator>
+                                        <!-- </ng-template> -->
+
+                                        <!-- <ng-template #nocatRecords>
+                                            <div *ngIf="categoryDATA.length <= 0" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingcatRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingcatRecords">
+                                                    No Data Found
+                                                </h4>
+                                            </div>
+                                        </ng-template> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Valuation Type
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row p-10">
+                            <div class="col-6">
+                                <input type="search" class="searchfield"  placeholder="Search By Description" [(ngModel)]="searchvalueData" (input)="searchvaluedata()">
+                            </div>
+                            <div class="col-6  float-right text-right">
+
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button "
+                                    (click)="addvalutionmodel(valutionmodel)">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <ng-container>
+
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourcevalution">
+
+
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        {{(i+1) + (paginatorvalue.pageIndex * paginatorvalue.pageSize)}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="description">
+                                                    <th mat-header-cell *matHeaderCellDef>Description</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.description}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="valution_code">
+                                                    <th mat-header-cell *matHeaderCellDef>Valution Code</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.code}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- <ng-container matColumnDef="ActiveStatus">
+                                                    <th mat-header-cell *matHeaderCellDef>Active Status</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.is_active}}
+                                                    </td>
+                                                </ng-container> -->
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <button mat-icon-button
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="editvalution(row,valutioneditmodel)">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+                                                        <button mat-icon-button style="color:red"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deletevalutiondata(row,deletevalmodel)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsvalution;sticky: true"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsvalution">
+                                                </tr>
+                                            </table>
+                                        </div>
+
+
+                                        <!-- <ng-container
+                                            *ngIf="valutionDATA.length > 0; then loadvaluData; else novalueRecords">
+                                        </ng-container>
+
+                                        <ng-template #loadvaluData> -->
+                                            <div *ngIf="valutionDATA==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalvalutionRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #paginatorvalue (page)="onvaluepageevent($event)">
+                                            </mat-paginator>
+                                        <!-- </ng-template> -->
+
+                                        <!-- <ng-template #novalueRecords>
+                                            <div *ngIf="valutionDATA.length <= 0" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingvalRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingvalRecords">
+                                                    No Data Found
+                                                </h4>
+                                            </div>
+                                        </ng-template> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Material Criticality
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row p-10">
+                            <div class="col-6">
+                                <input type="search" class="searchfield"  placeholder="Search By Description" [(ngModel)]="searchCRITData" (input)="searchcritdata()">
+                            </div>
+                            <div class="col-6  float-right text-right">
+
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button "
+                                    (click)="addmaterialcriticalitymodel(materialcriticalitymodel)">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <ng-container>
+
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourcecritical">
+
+
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                        {{(i+1) + (paginatorcrit.pageIndex * paginatorcrit.pageSize)}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="description">
+                                                    <th mat-header-cell *matHeaderCellDef>Description</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.description}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="code">
+                                                    <th mat-header-cell *matHeaderCellDef>Code</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.code}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- <ng-container matColumnDef="ActiveStatus">
+                                                    <th mat-header-cell *matHeaderCellDef>Active Status</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.is_active}}
+                                                    </td>
+                                                </ng-container> -->
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <button mat-icon-button
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="editcriticaldata(row,criticaleditmodel)">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+                                                        <button mat-icon-button style="color:red"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deletecriticaldata(row,deletecriticalModal)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnscriticality;sticky: true"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnscriticality">
+                                                </tr>
+                                            </table>
+                                        </div>
+
+
+                                        <!-- <ng-container
+                                            *ngIf="criticalDATA.length > 0; then loadcritData; else nocritRecords">
+                                        </ng-container>
+
+                                        <ng-template #loadcritData> -->
+                                            <div *ngIf="criticalDATA==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalcriticalRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #paginatorcrit (page)="oncritpageevent($event)">
+                                            </mat-paginator>
+                                        <!-- </ng-template> -->
+
+                                        <!-- <ng-template #nocritRecords>
+                                            <div *ngIf="criticalDATA.length <= 0" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingcritRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingcritRecords">
+                                                    No Data Found
+                                                </h4>
+                                            </div>
+                                        </ng-template> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Material Class
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row p-10">
+                            <div class="col-6">
+                                <input type="search" class="searchfield"  placeholder="Search By Description" [(ngModel)]="searchclassData" (input)="searchclassdata()">
+                            </div>
+                            <div class="col-6  float-right text-right">
+
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button "
+                                    (click)="addclassmodel(classmodel)">
+                                    <span class="material-icons">
+                                        add
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <ng-container>
+
+                            <div class="row p-t-10">
+                                <div class="col-12 col-md-12">
+                                    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                                    <div class="table-responsive mat-table-wrapper">
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourceclass">
+
+
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                                       {{(i+1) + (paginatorclass.pageIndex * paginatorclass.pageSize)}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="description">
+                                                    <th mat-header-cell *matHeaderCellDef>Description</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.description}}
+
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="class_code">
+                                                    <th mat-header-cell *matHeaderCellDef>Class Code</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.code}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- <ng-container matColumnDef="ActiveStatus">
+                                                    <th mat-header-cell *matHeaderCellDef>Active Status</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        {{row.is_active}}
+                                                    </td>
+                                                </ng-container> -->
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        Action
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <button mat-icon-button
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="editclass(row,classeditmodel)">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+                                                        <button mat-icon-button style="color:red"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deleteclassdata(row,delteclassmodel)">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsclass;sticky: true"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsclass">
+                                                </tr>
+                                            </table>
+                                        </div>
+
+
+                                        <!-- <ng-container
+                                            *ngIf="classDATA.length > 0; then loadclassData; else noclassRecords">
+                                        </ng-container>
+
+                                        <ng-template #loadclassData> -->
+                                            <div *ngIf="classDATA==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalclassRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #paginatorclass (page)="onclasspageevent($event)">
+                                            </mat-paginator>
+                                        <!-- </ng-template> -->
+
+                                        <!-- <ng-template #noclassRecords>
+                                            <div *ngIf="classDATA.length <= 0" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingclassRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingclassRecords">
+                                                    No Data Found
+                                                </h4>
+                                            </div>
+                                        </ng-template> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <!-- <mat-tab>
+            <ng-template mat-tab-label>
+                INVENTORY TRANSFERS
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        Content
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                INVENTORY RECEIPTS
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        Content
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab> -->
+    </mat-tab-group>
+</div>
+<ng-template #materialmastermodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" style="margin-top:-8%">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #myform="ngForm" (ngSubmit)="savematerialdata(myform)">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Material Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" style="width:89%" placeholder="Enter Material Name" class="inputstyles" name="materialname"
+                        [(ngModel)]="materialname">
+                </div>
+
+                <!-- </div> -->
+                <div class="col-md-2">
+                    <label>Long Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <textarea rows="2" style="width:88%;height:88%;border-radius: 5px;"  class="nguntouched" name="description"
+                        [(ngModel)]="description"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Class<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" name="classtype" [(ngModel)]="classtype" >
+                        <option >Select One</option>
+                        <option *ngFor="let item of classDATA1" [ngValue]="item">{{item.code}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>Category<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" [(ngModel)]="category" name="category">
+                        <option>Select One</option>
+                        <option *ngFor="let item of categoryDATA1" [ngValue]="item">{{item.code}}</option>
+                    </select>
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>UOM 1<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" [(ngModel)]="uom" name="uom">
+                        <option>Select One</option>
+                        <option *ngFor="let item of unitDATA1" [ngValue]="item">{{item.code}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>UOM 2<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" [(ngModel)]="uom1" name="uom1">
+                        <option>Select One</option>
+                        <option *ngFor="let item of unitDATA1" [ngValue]="item">{{item.code}}</option>
+                    </select>
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Main Group<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" [(ngModel)]="maingroup" name="maingroup"
+                        (change)="selectedmaingroup()">
+                        <option>Select One</option>
+                        <option *ngFor="let item of maindata1" [ngValue]="item">{{item.description}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>Sub Group<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" [(ngModel)]="subgroup" name="subgroup" (change)="selectedmaingroup()">
+                        <option>Select One</option>
+                        <option *ngFor="let item of selectedmaingroupdata" [ngValue]="item">{{item.description}}
+                        </option>
+                    </select>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Criticality<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles" [(ngModel)]="criticality_code" name="criticality_code">
+                        <option>Select One</option>
+                        <option *ngFor="let item of criticalDATA1" [ngValue]="item">{{item.code}}</option>
+                    </select>
+                    <!-- <input type="text" placeholder="Enter Criticality" class="inputstyles" name="criticality_code" [(ngModel)]="criticality_code"> -->
+                </div>
+                <div class="col-md-2">
+                    <label>UOM Ratio<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" [(ngModel)]="subgroup" name="subgroup">
+            <option >Select One</option>
+            <option *ngFor="let item of selectedmaingroupdata" [ngValue]="item">{{item.description}}</option>
+        </select> -->
+                    <input type="text" style="width:89%" 
+                     placeholder="Enter UOM Ratio" class="inputstyles"
+                        name="uom_ratio" [(ngModel)]="uom_ratio" (keypress)="keyPressNumbers($event)" >
+                </div>
+            </div><br>
+            <div class="row">
+
+                <div class="col-md-2">
+                    <label>HSN/SAC Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" [(ngModel)]="subgroup" name="subgroup">
+                <option >Select One</option>
+                <option *ngFor="let item of selectedmaingroupdata" [ngValue]="item">{{item.description}}</option>
+            </select> -->
+                    <input type="text" style="width:89%"
+                     placeholder="Enter HSN SAC Code" class="inputstyles" name="HSN_sac_code"
+                        [(ngModel)]="HSN_sac_code">
+                </div>
+                <div class="col-md-2">
+                    <label>SAP Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" style="width:89%"
+                     placeholder="Enter SAP Code" class="inputstyles" name="sap_code"
+                        [(ngModel)]="sap_code">
+                </div>
+            </div>
+
+
+
+
+            <button mat-raised-button type="submit" class="savebutton" [disabled]="!HSN_sac_code||!uom_ratio||
+            !criticality_code||!subgroup||!maingroup||!uom1||!uom||!category||!classtype||!description||!materialname">Save</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #matereditmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Edit Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" style="margin-top:-8%">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form [formGroup]="mymasterForm">
+            <!-- <form #myeditform="ngForm" (ngSubmit)="updatematerialdata(myeditform)"> -->
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Material Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" style="width:89%" name="materialeditname" class="form-control inputstyles"
+                        formControlName="materialeditname">
+                </div>
+
+                <!-- </div> -->
+                <div class="col-md-2">
+                    <label>Long Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <textarea rows="2" style="width:88%;height:88%;border-radius: 5px;" name="descriptionedit" class="form-control nguntouched"
+                        formControlName="descriptionedit"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Class<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select  class="form-control dropdownstyles" formControlName="classtypeedit">
+                        <option [ngValue]="null">Select One</option>
+                        <option *ngFor="let item of classDATA1" [ngValue]="item.code">{{item.code}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>Category<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select name="categoryedit" class="form-control dropdownstyles"
+                        formControlName="categoryedit">
+                        <option >Select One</option>
+                        <option *ngFor="let item of categoryDATA1" [ngValue]="item.code">{{item.code}}
+                        </option>
+                    </select>
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>UOM 1<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select name="uomedit" class="form-control dropdownstyles" formControlName="uomedit">
+                        <option >Select One</option>
+                        <option *ngFor="let item of unitDATA1" [ngValue]="item.code">{{item.code}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>UOM 2<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select name="uom1edit" class="form-control dropdownstyles" formControlName="uom1edit">
+                        <option >Select One</option>
+                        <option *ngFor="let item of unitDATA1" [ngValue]="item.code">{{item.code}}</option>
+                    </select>
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Main Group<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" [(ngModel)]="maingroup" name="maingroup" (change)="selectedmaingroup()">
+            <option >Select One</option>
+            <option *ngFor="let item of maindata" [ngValue]="item">{{item.description}}</option>
+        </select> -->
+                    <input type="text" style="width:89%" 
+                     readonly name="maingroupedit"
+                        class="inputstyles" formControlName="maingroupedit">
+                </div>
+                <div class="col-md-2">
+                    <label>Sub Group<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" [(ngModel)]="subgroup" name="subgroup">
+            <option >Select One</option>
+            <option *ngFor="let item of selectedmaingroupdata" [ngValue]="item">{{item.description}}</option>
+        </select> -->
+                    <input type="text" style="width:89%"
+                      readonly name="subgroupedit"
+                        class="inputstyles" formControlName="subgroupedit">
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Criticality<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select name="criticality_codeedit" class="form-control dropdownstyles"
+                        formControlName="criticality_codeedit">
+                        <option >Select One</option>
+                        <option *ngFor="let item of criticalDATA1" [ngValue]="item.code">{{item.code}}
+                        </option>
+                    </select>
+                    <!-- <input type="text" placeholder="Enter Criticality" class="inputstyles" name="criticality_code" [(ngModel)]="criticality_code"> -->
+                </div>
+                <div class="col-md-2">
+                    <label>UOM Ratio<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" [(ngModel)]="subgroup" name="subgroup">
+            <option >Select One</option>
+            <option *ngFor="let item of selectedmaingroupdata" [ngValue]="item">{{item.description}}</option>
+        </select> -->
+                    <input type="text" style="width:89%"
+                     name="uom_ratioedit" class="form-control inputstyles"
+                        formControlName="uom_ratioedit"  (keypress)="keyPressNumbers($event)">
+                </div>
+            </div><br>
+            <div class="row">
+
+                <div class="col-md-2">
+                    <label>HSN/SAC Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" [(ngModel)]="subgroup" name="subgroup">
+                <option >Select One</option>
+                <option *ngFor="let item of selectedmaingroupdata" [ngValue]="item">{{item.description}}</option>
+            </select> -->
+                    <input type="text" style="width:89%"
+                     name="HSN_sac_codeedit" class="form-control inputstyles"
+                        formControlName="HSN_sac_codeedit">
+                </div>
+                <div class="col-md-2">
+                    <label>SAP Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" style="width:89%"
+                     name="sap_codeedit" class="form-control inputstyles"
+                        formControlName="sap_codeedit">
+                </div>
+            </div>
+
+
+
+
+            <button mat-raised-button type="submit" class="savebutton" (click)="updatematerialdata()">Update</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+
+<ng-template #maingroupmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #mymainform="ngForm" (ngSubmit)="savemaingropupdata(mymainform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Main Group Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" placeholder="Enter MainGroup Name" name="maingroupname"
+                        [(ngModel)]="maingroupname">
+                </div>
+
+            </div>
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%"
+            [disabled]="!maingroupname">Save</button>
+            <!-- <button type="submit" class="savebutton" style="margin-top: 9%;">Update</button>    -->
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #maingroupeditmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Edit Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #mymaineditform="ngForm" (ngSubmit)="updatemaingropupdata(mymaineditform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Main Group Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" name="maingroupeditname" [(ngModel)]="maingroupeditname">
+                </div>
+
+            </div>
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%">Update</button>
+            <!-- <button type="submit" class="savebutton" style="margin-top: 9%;">Update</button>    -->
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #subgroupmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #mysubform="ngForm" (ngSubmit)="savesubgropupdata(mysubform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Main Group Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1"
+                        (change)="selected()">
+
+                        <option value="default" >Select One</option>
+                        <option *ngFor="let data of materialData" [ngValue]="data">
+                            {{data.description}}
+                        </option>
+                    </select>
+                    <!-- <input type="text" class="input1" placeholder="Enter MainGroup Name"  name="maingroupname1" [(ngModel)]="maingroupname1"> -->
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Sub Group Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" placeholder="Enter SubGroup Name" name="subgroupname"
+                        [(ngModel)]="subgroupname">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%"
+            [disabled]="!subgroupname||!maingroupname1">Save</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #subgrpeditmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Edit Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #mysubeditform="ngForm" (ngSubmit)="updatesubgropupdata(mysubeditform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Main Group Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <!-- <select class="dropdownstyles" name="maingroupeditname1" [(ngModel)]="maingroupeditname1" >
+                   
+                    <option value="default" >Select One</option>
+                    <option *ngFor="let data1 of materialData" [ngValue]="data1">
+                        {{data1.description}}
+                    </option>
+                </select> -->
+                    <input type="text" class="input1" readonly name="maingroupeditname1"
+                        [(ngModel)]="maingroupeditname1">
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Sub Group Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" name="subgroupeditname" [(ngModel)]="subgroupeditname">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%">Update</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #unitgroupmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" style="margin-top:-7%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #myunitform="ngForm" (ngSubmit)="saveunitmeasurementdata(myunitform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-2">
+                    <label>Description Of Measurements<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="inputstyles1" placeholder="Enter Description" name="unitdescription"
+                        [(ngModel)]="unitdescription">
+                </div>
+                <div class="col-md-2">
+                    <label>Unit Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles1" placeholder="Enter Unit Code" name="unitcode"
+                        [(ngModel)]="unitcode">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Length<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                      <select class="dropdownstyles1" name="length" [(ngModel)]="length">
+                    <option >Select One</option>
+                    <option [ngValue]="true">True</option>
+                    <option [ngValue]="false">False</option>
+                </select>
+                </div>
+                <div class="col-md-2">
+                    <label>Width<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles1" name="width" [(ngModel)]="width">
+                        <option >Select One</option>
+                        <option [ngValue]="true">True</option>
+                        <option [ngValue]="false">False</option>
+                    </select>
+                </div>  
+
+            </div><br>
+
+<div class="row">
+    <div class="col-md-2">
+        <label>Height<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-4">
+        <select class="dropdownstyles1" name="height" [(ngModel)]="height">
+            <option >Select One</option>
+            <option [ngValue]="true">True</option>
+            <option [ngValue]="false">False</option>
+        </select>
+    </div>
+</div>
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%"
+            [disabled]="!unitcode||!unitdescription">Save</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #unitdataeditmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Edit Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" style="margin-top:-7%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #myuniteditform="ngForm" (ngSubmit)="updateunitmeasurementdata(myuniteditform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-2">
+                    <label>Description Of Measurements<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="inputstyles1" name="uniteditdescription" [(ngModel)]="uniteditdescription">
+                </div>
+                <div class="col-md-2">
+                    <label>Unit Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles1" readonly name="uniteditcode"
+                        [(ngModel)]="uniteditcode">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Length<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                      <select class="dropdownstyles1" name="lengthedit" [(ngModel)]="lengthedit">
+                    <option >Select One</option>
+                    <option [ngValue]=true>True</option>
+                    <option [ngValue]=false>False</option>
+                </select>
+                </div>
+                <div class="col-md-2">
+                    <label>Width<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <select class="dropdownstyles1" name="widthedit" [(ngModel)]="widthedit">
+                        <option >Select One</option>
+                        <option [ngValue]=true>True</option>
+                        <option [ngValue]=false>False</option>
+                    </select>
+                </div>  
+
+            </div><br>
+
+<div class="row">
+    <div class="col-md-2">
+        <label>Height<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-4">
+        <select class="dropdownstyles1" name="heightedit" [(ngModel)]="heightedit">
+            <option >Select One</option>
+            <option [ngValue]=true>True</option>
+            <option [ngValue]=false>False</option>
+        </select>
+    </div>
+</div>
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%">Update</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+
+<ng-template #categorymodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #mycategoryform="ngForm" (ngSubmit)="savecategorydata(mycategoryform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="input1" placeholder="Enter Code" name="category1" [(ngModel)]="category1">
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" placeholder="Enter Description" name="categorydescription"
+                        [(ngModel)]="categorydescription">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%"
+            [disabled]="!categorydescription||!category1">Save</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #categoryeditmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Edit Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #mycategoryeditform="ngForm" (ngSubmit)="updatecategorydata(mycategoryeditform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="input1" readonly name="categoryedit1" [(ngModel)]="categoryedit1">
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" name="categoryeditdescription"
+                        [(ngModel)]="categoryeditdescription">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%">Update</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+
+<ng-template #valutionmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #myvalutionform="ngForm" (ngSubmit)="savevalutiondata(myvalutionform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="input1" placeholder="Enter Description" name="valutiondescription"
+                        [(ngModel)]="valutiondescription">
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Valution Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" placeholder="Enter Code" name="valutioncode"
+                        [(ngModel)]="valutioncode">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%"
+            [disabled]="!valutioncode||!valutiondescription">Save</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #valutioneditmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Edit Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #myvalutioneditform="ngForm" (ngSubmit)="updatevalutiondata(myvalutioneditform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="input1" name="valutioneditdescription"
+                        [(ngModel)]="valutioneditdescription">
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Valution Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" readonly name="valutioneditcode" [(ngModel)]="valutioneditcode">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%">Update</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #materialcriticalitymodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #mycriticalityform="ngForm" (ngSubmit)="savecriticalitydata(mycriticalityform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="input1" placeholder="Enter Description" name="criticalitydescription"
+                        [(ngModel)]="criticalitydescription">
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" placeholder="Enter Code" name="criticalitycode"
+                        [(ngModel)]="criticalitycode">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%"
+            [disabled]="!criticalitycode||!criticalitydescription">Save</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #criticaleditmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Edit Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #mycriticalityeditform="ngForm" (ngSubmit)="updatecriticalitydata(mycriticalityeditform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="input1" name="criticalityeditdescription"
+                        [(ngModel)]="criticalityeditdescription">
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" readonly name="criticalityeditcode"
+                        [(ngModel)]="criticalityeditcode">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%">Update</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #classmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Add Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #myclassform="ngForm" (ngSubmit)="saveclassdata(myclassform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="input1" placeholder="Enter Description" name="classdescription"
+                        [(ngModel)]="classdescription">
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" placeholder="Enter Code" name="classcode" [(ngModel)]="classcode">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%" [disabled]="!classdescription||!classcode">Save</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #classeditmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Edit Items</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form #myclasseditform="ngForm" (ngSubmit)="updateclassdata(myclasseditform)">
+            <div class="row" style="margin-top: 2%;">
+                <div class="col-md-4">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <!-- <select class="dropdownstyles" name="maingroupname1" [(ngModel)]="maingroupname1">
+                    <option>123</option>
+                    <option>maingroup</option>
+                </select> -->
+                    <input type="text" class="input1" name="classeditdescription" [(ngModel)]="classeditdescription">
+                </div>
+
+            </div><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Code<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="input1" readonly name="classeditcode" [(ngModel)]="classeditcode">
+                </div>
+
+            </div>
+
+
+            <button mat-raised-button type="submit" class="savebutton" style="margin-top: 9%">Update</button>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+
+<ng-template #deletemastermodel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete record?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deletemasterFile()">Delete</button>
+    </div>
+</ng-template>
+<ng-template #deletemainmodel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete record?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deletemainFile()">Delete</button>
+    </div>
+</ng-template>
+<ng-template #deletesubmodel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete record?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deletesubFile()">Delete</button>
+    </div>
+</ng-template>
+<ng-template #deleteunitmodel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete record?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deleteunitFile()">Delete</button>
+    </div>
+</ng-template>
+<ng-template #deletecatModal>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete record?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deletecatFile()">Delete</button>
+    </div>
+</ng-template>
+<ng-template #deletevalmodel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete record?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deletevalFile()">Delete</button>
+    </div>
+</ng-template>
+<ng-template #deletecriticalModal>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete record?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deletecritFile()">Delete</button>
+    </div>
+</ng-template>
+<ng-template #delteclassmodel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete record?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deleteclassFile()">Delete</button>
+    </div>
+</ng-template>

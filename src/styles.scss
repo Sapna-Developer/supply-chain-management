@@ -1,0 +1,221 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
+
+// regular style toast
+@import '~ngx-toastr/toastr';
+
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
+@import 'photoviewer/dist/photoviewer.css';
+
+// bootstrap style toast
+// or import a bootstrap 4 alert styled design (SASS ONLY)
+// should be after your bootstrap imports, it uses bs4 variables, mixins, functions
+// @import '~ngx-toastr/toastr-bs4-alert';
+
+html,
+body {
+  height: 100%;
+  background: #f2f3f8;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+#main-wrapper {
+  background: #f2f3f8 !important;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.w-full {
+  width: 100%;
+}
+
+// .page-wrapper {
+//   margin-left: 0px !important;
+// }
+
+.page-wrapper>.container-fluid,
+.page-wrapper>.container-sm,
+.page-wrapper>.container-md,
+.page-wrapper>.container-lg,
+.page-wrapper>.container-xl {
+  padding: 20px;
+  min-height: calc(100vh - 50px) !important;
+}
+
+.mat-nested-tree-node li {
+  list-style: none !important;
+}
+
+.example-tree-invisible {
+  margin-bottom: 0px !important;
+}
+
+.card-shadow {
+  border-radius: 8px !important;
+  box-shadow: 1px 5px 24px 0 rgb(68 102 242 / 5%) !important;
+}
+
+.label-outline-white {
+  border: 1px solid white;
+}
+
+.customizer {
+  width: 380px !important;
+}
+
+table {
+  width: 100%;
+
+  .mat-header-row {
+    background: #e9ecef;
+    font-weight: 600;
+  }
+
+  .mat-cell {
+    color: #000000b0;
+  }
+}
+
+.modal-lg,
+.modal-xl {
+  max-width: 60% !important;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.customizer .service-panel-toggle {
+  top: 10% !important;
+}
+
+.mailbox .message-center {
+  height: auto !important;
+  max-height: 317px !important;
+}
+
+
+.mat-header-cell {
+  z-index: 10 !important;
+}
+
+.search-bar {
+  .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+  }
+
+}
+
+.mat-header-cell {
+  z-index: 10 !important;
+}
+
+.left-sidebar {
+  z-index: 20 !important;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 600px) {
+  .create-ticket {
+    position: absolute;
+    right: 20px !important;
+    top: -10px !important;
+    background: #fff;
+    color: #000;
+  }
+
+  .cdk-overlay-pane {
+    width: 100% !important;
+  }
+
+  .modal-lg {
+    width: 100% !important;
+    max-width: 90% !important;
+  }
+
+
+  .show-service-panel {
+    width: 280px !important;
+  }
+
+
+}
+
+@media only screen and (min-device-width: 601px) and (max-device-width: 900px) {
+
+  .modal-lg,
+  .modal-xl {
+    max-width: 93% !important;
+  }
+
+  .form-dialogs {
+    width: 90% !important;
+  }
+}
+
+
+
+
+.ng2-pdf-viewer-container {
+  overflow-x: auto;
+  width: 95% !important;
+  top: 10%;
+  right: 0%;
+  bottom: 10%;
+  left: 0%;
+  height: 90% !important;
+  // position: inherit !important;
+}
+
+.mat-list-base .mat-list-item.mat-2-line,
+.mat-list-base .mat-list-option.mat-2-line {
+  height: auto !important;
+}
+
+.material-tab {
+  mat-card {
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 0%), 0px 1px 3px 0px rgb(0 0 0 / 0%) !important;
+  }
+}
+
+.custom-icon-button {
+  border-radius: 5px !important;
+  border: 1px solid #707070 !important;
+}
+
+.page-header {
+  // background: #89c240;
+  background: #62beda;
+  // background: linear-gradient(to right, #96c93d, #00b09b);
+  padding-bottom: 30px !important;
+  color: white;
+  margin: -20px -20px 20px -20px;
+  height: 30px;
+  /* text-align: center; */
+  vertical-align: middle;
+  .page-title {
+    font-size: 18px;
+  }
+
+  li {
+    color: #fff;
+  }
+}
+
+
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 1200 !important;
+}

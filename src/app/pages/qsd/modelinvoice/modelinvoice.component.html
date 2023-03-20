@@ -1,0 +1,637 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Model Invoice</h4>
+        </div>
+    </div>
+</div> -->
+<div class="work-requestTab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Model Invoice
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <form #finalform="ngForm" (ngSubmit)="savefinaldata(finalform)">
+                            <div class="row">
+                                <div class="col-2">
+                                    <label>Date<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col-4">
+                                    <input type="date" style="text-transform: uppercase;"
+                                        class="inputstyles form-control" dateFormat="yyyy/mm/dd"
+                                        [(ngModel)]="formdata.date" name="date">
+                                </div>
+                                <div class="col-2">
+                                    <label>Contractor Name<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col-4">
+                                    <select class="dropdownstyles" [(ngModel)]="formdata.contractor" name="contractor">
+                                        <option selected disabled>Select One</option>
+                                        <option *ngFor="let item of contractorData" [ngValue]="item.name">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <label>Company Name<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col-4">
+                                    <select class="dropdownstyles" [(ngModel)]="formdata.companyname"
+                                        name="companyname">
+                                        <option selected disabled>Select One</option>
+                                        <option *ngFor="let item of companyData" [ngValue]="item.name">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-2">
+                                    <label>Invoice Date<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col-4">
+                                    <input type="date" style="text-transform: uppercase;"
+                                        class="inputstyles form-control" dateFormat="yyyy/mm/dd"
+                                        [(ngModel)]="formdata.invoicedate" name="date">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <label>WO Number<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col-4">
+                                    <select class="dropdownstyles" [(ngModel)]="formdata.wonumber" name="wonumber"
+                                        placeholder="Enter WO Number">
+                                        <option selected disabled>Select One</option>
+                                        <option *ngFor="let item of WOdata" [ngValue]="item.number">{{item.number}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-2">
+                                    <label>WO Date<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col-4">
+                                    <input type="date" class="inputstyles form-control" [(ngModel)]="formdata.wodate"
+                                        name="wodate" style="text-transform: uppercase;" dateFormat="yyyy/mm/dd">
+                                </div>
+                            </div>
+
+                            <div class="row mt-3 text-center">
+                                <div class="col-12">
+                                    <button mat-raised-button class="savebutton">{{btnsaveupdate}}</button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="row">
+                            <div class="col-12 text-right float-right">
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button"
+                                    style="background:none;">
+                                    <span class="material-icons" (click)="addmodelinvoicedata(modelinvoicedialog)"
+                                        style="margin-top:9%;">
+                                        add
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row m-t-10">
+                            <div class="col-md-12 col-12">
+                                <div class="table table-responsive" mat-table-wrapper>
+                                    <div class="example-table-container">
+                                        <table mat-table [dataSource]="dataSource">
+                                            <ng-container matColumnDef="sno">
+                                                <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                <td mat-cell *matCellDef="let row;let i=index;">{{i+1}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="description">
+                                                <th mat-header-cell *matHeaderCellDef>Description</th>
+                                                <td mat-cell *matCellDef="let row">{{row.description}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="uom">
+                                                <th mat-header-cell *matHeaderCellDef>Unit of Measurement</th>
+                                                <td mat-cell *matCellDef="let row">{{row.unit_of_measurment || row.UOM}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="quantity">
+                                                <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                                                <td mat-cell *matCellDef="let row">{{row.quantity}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="unitprice">
+                                                <th mat-header-cell *matHeaderCellDef>Unit Price</th>
+                                                <td mat-cell *matCellDef="let row">{{row.unit_price}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="taxdesc">
+                                                <th mat-header-cell *matHeaderCellDef>Tax Description</th>
+                                                <td mat-cell *matCellDef="let row">{{row.tax_description}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="tacprcnt">
+                                                <th mat-header-cell *matHeaderCellDef>Tax Percentage</th>
+                                                <td mat-cell *matCellDef="let row">{{row.tax_percent}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="comments">
+                                                <th mat-header-cell *matHeaderCellDef>Comments</th>
+                                                <td mat-cell *matCellDef="let row">{{row.comments}}</td>
+                                                <td mat-footer-cell *matFooterCellDef></td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef>Action</th>
+                                                <td mat-cell *matCellDef="let row ; let i=index">
+                                                    <button class="btn" style="border:none">
+                                                        <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                                            class="text-primary"
+                                                            (click)="editmodelinvoicedata(row,i,editmodelinvoiceDialog)">
+                                                            edit</mat-icon>
+                                                    </button>
+                                                    <button mat-icon-button
+                                                        style="color: red;border:none;background: none;"
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        (click)="deleterowData(i)">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef></td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true">
+                                            </tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <h2 *ngIf="logdata" class="activitylog">Activity Log</h2>
+<div class="tablediv" *ngIf="logdata">
+    <table >
+        <thead style="background: #e9ecef;" class="text-center headerclass">
+            <!-- <tr> -->
+                <th>SNO</th>
+                <th style="padding:10px;">User Name</th>
+                <th>Created Date</th>
+                <th>Reference Number</th>
+                <th>Description</th>
+                <th>Reason</th>
+                <th>Action</th>
+            <!-- </tr> -->
+        </thead>
+        <tbody class="text-center">
+            <tr *ngFor="let item of logdata;let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{item.username}}</td>
+                <td>{{item.date_time | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                <td >{{item.reference_number}} </td>
+                <td >{{item.description}}</td>
+                <td >{{item.reason}} </td>
+                    <td>{{item.action}}
+                        <!-- <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                           aria-label="Example icon button with a vertical three dot icon"
+                            >
+                             <mat-icon>delete</mat-icon>
+                             </button> -->
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                List
+            </ng-template>
+            <ng-template matTabContent>
+                <ng-container>
+                    <div class="row m-t-10">
+                        <div class="col-md-12 col-12">
+                            <div class="table table-responsive" mat-table-wrapper>
+                                <div class="example-table-container" style="width:213%;">
+                                    <table mat-table [dataSource]="dataSourceList">
+                                        <ng-container matColumnDef="sno">
+                                            <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                            <td mat-cell *matCellDef="let row;let i=index;">{{(i+1) +
+                                                (modelinvoicepaginator.pageIndex *
+                                                modelinvoicepaginator.pageSize)}}</td>
+                                        </ng-container>
+                                        <!-- <ng-container matColumnDef="lineItem">
+                                            <th mat-header-cell *matHeaderCellDef>Line Item</th>
+                                            <td mat-cell *matCellDef="let row">{{row.line_item}}</td>
+                                        </ng-container> -->
+                                        <ng-container matColumnDef="date">
+                                            <th mat-header-cell *matHeaderCellDef>Date</th>
+                                            <td mat-cell *matCellDef="let row">{{row.date | date:'dd-MM-yyyy'}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="contractorname">
+                                            <th mat-header-cell *matHeaderCellDef>Contractor Name</th>
+                                            <td mat-cell *matCellDef="let row">{{row.contractor_name}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="serial">
+                                            <th mat-header-cell *matHeaderCellDef>Seerial</th>
+                                            <td mat-cell *matCellDef="let row">{{row.serial}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="cmpnyname">
+                                            <th mat-header-cell *matHeaderCellDef>Company Name</th>
+                                            <td mat-cell *matCellDef="let row">{{row.company_name}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="number">
+                                            <th mat-header-cell *matHeaderCellDef>Number</th>
+                                            <td mat-cell *matCellDef="let row">{{row.number}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="invoicedate">
+                                            <th mat-header-cell *matHeaderCellDef>Invoice Date</th>
+                                            <td mat-cell *matCellDef="let row">{{row.invoice_date | date:'dd-MM-yyyy'}}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="wonumber">
+                                            <th mat-header-cell *matHeaderCellDef>WO Number</th>
+                                            <td mat-cell *matCellDef="let row">{{row.work_order_number}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="wodate">
+                                            <th mat-header-cell *matHeaderCellDef>WO Date</th>
+                                            <td mat-cell *matCellDef="let row">{{row.work_order_date |
+                                                date:'dd-MM-yyyy'}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="description">
+                                            <th mat-header-cell *matHeaderCellDef>Description</th>
+                                            <td mat-cell *matCellDef="let row">{{row.description}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="uom">
+                                            <th mat-header-cell *matHeaderCellDef>UOM</th>
+                                            <td mat-cell *matCellDef="let row">{{row.unit_of_measurment}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="quantity">
+                                            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                                            <td mat-cell *matCellDef="let row">{{row.quantity}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="unit_price">
+                                            <th mat-header-cell *matHeaderCellDef>Unit Price</th>
+                                            <td mat-cell *matCellDef="let row">{{row.unit_price}}</td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="basic_price">
+                                            <th mat-header-cell *matHeaderCellDef>Basic Price</th>
+                                            <td mat-cell *matCellDef="let row">{{row.basic_price}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="tax_description">
+                                            <th mat-header-cell *matHeaderCellDef style="width:10%;">Tax Description</th>
+                                            <td mat-cell *matCellDef="let row">{{row.tax_description}}</td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="tax_percent">
+                                            <th mat-header-cell *matHeaderCellDef>Tax Percentage</th>
+                                            <td mat-cell *matCellDef="let row">{{row.tax_percent}}</td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="tax_value">
+                                            <th mat-header-cell *matHeaderCellDef>Tax Value</th>
+                                            <td mat-cell *matCellDef="let row">{{row.tax_value}}</td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="total_price">
+                                            <th mat-header-cell *matHeaderCellDef>Total price</th>
+                                            <td mat-cell *matCellDef="let row">{{row.total_price}}</td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="comments">
+                                            <th mat-header-cell *matHeaderCellDef>Comments</th>
+                                            <td mat-cell *matCellDef="let row">{{row.comments}}</td>
+                                        </ng-container>
+
+
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef>Action</th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <div class="mb-0">
+                                                <!-- <mat-icon (click)="editcompleteData(row,Editmodel)" style="cursor: pointer;">edit</mat-icon>&nbsp; -->
+                                                    <mat-icon (click)="deletemodelinvoicelistdata(row, deletedata)"
+                                                    style="color: red;border:none;background: none;cursor: pointer;">delete</mat-icon>&nbsp;
+                                               
+                                            <mat-icon (click)="printmodelinvoice(row)" style="cursor:pointer;"> local_printshop</mat-icon>&nbsp;
+                                            <!-- <mat-icon (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                            style="cursor:pointer;font-size:24px">file_upload</mat-icon> -->
+                                            </div> 
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsList;sticky: true">
+                                        </tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsList"></tr>
+                                    </table>
+                                    <div *ngIf="reaData==true" class="text-center">
+                                        <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                            Loading...
+                                        </h4>
+                                        <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                            No Records Found
+                                        </h4>
+                                    </div>
+                                    <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                        [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #modelinvoicepaginator
+                                        (page)="onpageevent($event)">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<ng-template #modelinvoicedialog>
+    <div mat-dialog-title class="dialog-title">
+        <div class="row">
+            <div class="col-11">
+                <h2>Add Model Invoice Data</h2>
+            </div>
+            <div class="col-1">
+                <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon float-right"
+                    (click)="closedialogdata()" style="border:none;background:none">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <form #myformdata="ngForm" (ngSubmit)="binddatatotable(myformdata)">
+            <div class="row">
+                <div class="col-2">
+                    <label>Service Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="example-full-width" appearance="outline" class="matformfieldstyles">
+                        <input type="text"  placeholder="Search Service Code/Name" aria-label="Number" matInput
+                             class="inputdropdown1" name="description" [(ngModel)]="dialogdata.description"
+                             (keyup)="filterdata($event)" [matAutocomplete]="auto4" />
+
+                        <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete"
+                        (optionSelected)="selectedserviceuom()">
+
+                            <mat-option *ngFor="let item of servicemasterData" [value]="item.description">
+                                {{item.description}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-2">
+                    <label>UOM<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.unit_of_measurment" name="unit_of_measurment"
+                        placeholder="Enter UOM">
+                </div>
+            </div>
+            <div class="row topclass" >
+                <div class="col-2">
+                    <label>Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.quantity" name="quantity"
+                        placeholder="Enter Quantity" (keypress)="validateNumber($event)">
+                </div>
+                <div class="col-2">
+                    <label>Unit Price<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.unit_price" name="unit_price"
+                        placeholder="Enter Unit Price" (keypress)="validateNumber($event)">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <label>Tax Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <mat-form-field  appearance="outline" class="matformfieldstyles">
+                        <input type="text" class="inputdropdown1" placeholder="Search Tax Description" aria-label="Number"
+                            matInput name="tax_description" [(ngModel)]="dialogdata.tax_description" (keyup)="filtetaxdata($event)"
+                            [matAutocomplete]="auto1" >
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                            (optionSelected)="selectedtaxpercent()">
+
+                            <mat-option *ngFor="let item of taxData" [value]="item.description">
+                                {{item.description}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-2">
+                    <label>Tax Percent<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.tax_percent" name="tax_percent"
+                        placeholder="Enter Tax Percent">
+                </div>
+            </div>
+            <div class="row topclass" >
+                <div class="col-2">
+                    <label>Comments<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.comments" name="comments"
+                        placeholder="Enter Comments">
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    <button mat-raised-button class="savebutton" style="width:6%">Add</button>
+                </div>
+            </div>
+        </form>
+    </mat-dialog-content>
+
+</ng-template>
+
+<ng-template #editmodelinvoiceDialog>
+    <div mat-dialog-title class="dialog-title">
+        <div class="row">
+            <div class="col-11">
+                <h2>Edit Model Invoice Data</h2>
+            </div>
+            <div class="col-1">
+                <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon float-right"
+                    (click)="closedialogdata()" style="border:none;background:none">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <mat-dialog-content>
+        <form #myeditformdata="ngForm" (ngSubmit)="editbindedDatatotable(myeditformdata)">
+            <div class="row">
+                <div class="col-2">
+                    <label>Service Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="outline" class="matformfieldstyles">
+                        <input type="text" class="inputdropdown1" placeholder="Search Service Code/Name"
+                            aria-label="Number" matInput name="description" [(ngModel)]="editdialogdata.description"
+                            (keyup)="filterdataedit($event)" [matAutocomplete]="auto">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                            (optionSelected)="selectedserviceuomedit()">
+
+                            <mat-option *ngFor="let item of servicemasterData" [value]="item.description">
+                                {{item.description}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-2">
+                    <label>UOM<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.unit_of_measurment" name="unit_of_measurment"
+                        placeholder="Enter UOM">
+                </div>
+            </div>
+            <div class="row topclass" >
+                <div class="col-2">
+                    <label>Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.quantity"
+                        name="quantity" placeholder="Enter Quantity">
+                </div>
+                <div class="col-2">
+                    <label>Unit Price<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.unit_price" name="unit_price"
+                        placeholder="Enter Unit Price">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <label>Tax Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="outline" class="matformfieldstyles">
+                        <input type="text" class="inputdropdown1" placeholder="Search Tax Description" aria-label="Number"
+                            matInput name="tax_description" [(ngModel)]="editdialogdata.tax_description" (keyup)="editfiltetaxdata($event)"
+                            [matAutocomplete]="auto1" >
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                            (optionSelected)="editselectedtaxpercent()">
+
+                            <mat-option *ngFor="let item of taxData" [value]="item.description">
+                                {{item.description}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-2">
+                    <label>Tax Percent<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.tax_percent" name="tax_percent"
+                        placeholder="Enter Tax Percent">
+                </div>
+            </div>
+            <div class="row topclass">
+                <div class="col-2">
+                    <label>Comments<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.comments" name="comments"
+                        placeholder="Enter Comments">
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    <button mat-raised-button class="savebutton">Update</button>
+                </div>
+            </div>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #deletedata>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="padding-top:5px;">Reason</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+          [(ngModel)]="deletemodel.reason" style="width: 181%;">  
+            </div>
+        </div>
+    </div><br>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" style="background: transparent;">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteItem()" class="matButton"
+        [disabled]="!deletemodel.reason">Delete</button>
+    </div>
+</ng-template>
+<ng-template #Editmodel>
+    <h1 mat-dialog-title></h1>
+    <div mat-dialog-content>
+<div class="row">
+    <div class="col-md-2">
+        <label style="padding-top:5px;">Reason</label>
+    </div>
+    <div class="col-md-4">
+        <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+  [(ngModel)]="editModel.reason" style="width: 181%;">  
+    </div>
+</div>
+</div><br>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close class="matButton" >Close</button>&nbsp;
+    <button mat-button cdkFocusInitial (click)="saveeditreason()" class="matButton"
+    [disabled]="!editModel.reason">Submit</button>
+</div>
+</ng-template>
+<ng-template #fileuploadmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Qsd Services: {{qsdservicenumber}}</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon"
+            (click)="closemodel()" style="border:none;background:none;margin-top: -9%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+   <div  mat-dialog-content class="row">
+    <div *ngIf="filedata">
+    <table>
+        <thead style="background: #e9ecef;">
+                <th>Cread By</th>
+                <th>Created Date</th>
+                <th>File Name</th>
+                <th>Action</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of filedata">
+                <td>{{item.created_by}}</td>
+                <td>{{item.created_date}}</td>
+                <td >{{item.file_name}} &nbsp;&nbsp;&nbsp;<i class="fas fa-eye text-cyan m-r-20 " 
+                    style="cursor: pointer;" title="View File" (click)="viewDoc(item)"></i></td>
+                    <td>
+                        <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                           aria-label="Example icon button with a vertical three dot icon"
+                            (click)="deleterowfile(deletefileModel,item)">
+                             <mat-icon>delete</mat-icon>
+                             </button>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+   </div><br>
+<button mat-raised-button type="button" (click)="autoFileUpload1.click()">Attach File</button>
+<div class="file">
+<input hidden class="form-control-file" name="file" type="file"
+(change)="uploadWbsFile($event);showContent(i);" #autoFileUpload1 />
+<ng-container *ngIf="fileUploadUrls.length>0">
+<div *ngFor="let item of filenamearray;let i=index;">{{i+1}}.&nbsp;{{item}}</div>
+
+<!-- <span >{{createNewFile.fileName}}</span>   -->
+</ng-container>         
+</div>
+</ng-template>
+<ng-template #deletefileModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete file?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" >Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteexistingfile()" class="matButton">Delete</button>
+    </div>
+</ng-template>

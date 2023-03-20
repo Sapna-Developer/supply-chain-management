@@ -1,0 +1,75 @@
+.printworkorder{
+    background-color: #fff;
+}
+.logo img{
+    width:150px !important;
+}
+.paddng{
+    padding:2px;
+}
+.head h2{
+    text-decoration: underline;
+}
+table tr,th{
+    text-align: center;
+    vertical-align: middle;
+}
+.border tr,th,td{
+    border:1px solid #000
+}
+.Annexure h2{
+    text-decoration: underline;
+}
+@media print{
+    .Annexure{
+        page-break-before:always;;
+        display:block
+    }
+    .print{
+        display:none;
+    }
+}
+
+
+//signature
+.sign-width {
+    width: 150px;
+    height: 50px;
+  }
+  .col:first-child{
+    text-align: start;
+  }
+  .col{
+    text-align: center;
+  }
+  .col:last-child{
+    text-align: end;
+  }
+  .btn-custom{
+    background-color: #888;
+    padding: 5px 10px;
+    width: 80px;
+    color: #fff;
+    border-radius: 3px;
+  }
+  
+  .companyAddr{
+    // text-align: justify;
+    font-size: 16px;
+    line-height: 22px;
+  }
+  
+    .inputstyles {
+    padding: 5px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    height: 35px;
+    width: 100%;
+    }
+    .inputstyles:placeholder-shown {
+        color: #da2424;
+    }
+    .inputstyles:hover {
+        border: 2px solid black
+    }

@@ -1,0 +1,160 @@
+.border{
+    border: 1px solid black !important;
+   }
+.row p{
+     margin-top:14px;
+   }
+   .row .sub{
+         padding: 7px;
+   }
+   .row .side{
+     padding: 5px 0px 5px 5px;
+   }
+.formbody{
+  // margin:30px;
+  padding:5px;
+  margin-bottom:2.2em;
+}
+.line-height{
+  line-height:1.2em;
+}
+// @media print{
+//   .print{
+//     display: none !important;
+//   }
+
+//   .pagebreak { page-break-before: always; }
+//   .tablesize p{
+//   font-size:13px !important;
+//   line-height: 14px !important;
+//   padding: -16px !important;
+// }
+// .pagebreak { page-break-before: always; }
+//  .tabblesize {
+//   font: size 20px;
+//   line-height: 2em;
+//    padding: -7px;
+  
+// }
+
+// }
+
+
+
+// @media print {
+// .print {
+//     display: none !important;
+//   }
+ 
+// }
+.border-bottom{
+  border-bottom: 1px solid black !important;
+  // padding-left:-30px !important;
+  // padding-right: 10px;
+}
+.border-side{
+  border-right: 1px solid black ;
+  // border: none;
+  // border-right: 1px solid black;
+}
+.center{
+  text-align: center;
+}
+.right{
+  text-align: right;
+}
+.margin{
+  width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: -16px;
+    margin-bottom: auto;
+}
+h1{
+  color: rgb(35, 150, 196)
+}
+hr{
+     position: relative;
+        width: 104%;
+        border: none;
+        height: 5px;
+        background: black;
+        margin-bottom: 15px;
+            margin-left: -12px;
+         box-shadow: 0px 1px 0px rgb(123, 121, 121); 
+}
+
+// .paragraph{
+//   line-height: 15px;
+// }
+.font5{
+  // font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 16px;
+}
+.font1{
+  // font-family: 'Segoe UI';
+  font-size: 25px;
+}
+.font2{
+  // font-family: 'Segoe UI';
+  font-size: 15px;
+}
+.font3{
+  // font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 16px;
+}
+.font4{
+  // font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 11px;
+}
+.font6{
+  // font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 7px;
+}
+.table th, .table td{
+  padding: 10px;
+}
+.printMe {display: none;}
+
+//signature
+.sign-width {
+  width: 150px;
+  height: 50px;
+}
+.col:first-child{
+  text-align: start;
+}
+.col{
+  text-align: center;
+}
+.col:last-child{
+  text-align: end;
+}
+.btn-custom{
+  background-color: #888;
+  padding: 5px 10px;
+  width: 80px;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.companyAddr{
+  // text-align: justify;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+  .inputstyles {
+  padding: 5px;
+  margin: 5px 0px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  height: 35px;
+  width: 100%;
+  }
+  .inputstyles:placeholder-shown {
+      color: #da2424;
+  }
+  .inputstyles:hover {
+      border: 2px solid black
+  }

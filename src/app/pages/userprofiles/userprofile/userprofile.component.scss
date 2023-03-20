@@ -1,0 +1,48 @@
+.border-dashed {
+    border: 1.5px dashed #e9ecef !important;
+}
+
+.sign-width {
+    width: auto;
+    height: auto;
+}
+.btn-secondary{
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+h1{
+    margin-bottom: 0px;
+}
+.box{
+    width: 400px;
+    height: 300px;
+    overflow-y: hidden;
+    border: 1px solid #62beda !important;
+}
+hr{
+    border: 1px solid #62beda;
+    margin: 2px 0px;
+}
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    color:white;
+    background-color: rgba(0, 0, 0);
+    // border: 5px solid orange
+    }
+    .view_Signature{
+        display: flex;
+        justify-content: space-between;
+    }
+    .blue{
+        background-color: blue;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    .black{
+        background-color:black;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }

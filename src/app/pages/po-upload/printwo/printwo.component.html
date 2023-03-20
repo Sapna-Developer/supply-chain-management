@@ -1,0 +1,251 @@
+<mat-card>
+    <div class="print">
+    <button
+    [print]="['demo', config]"
+    class="btn btn-info"
+    style="margin-right: 1%; margin-left: 2%"
+  >
+    Print
+  </button>
+  <button (click)="backtoworkreq()" class="btn btn-info">Back</button>
+</div>
+    <div class="woprintdata p-3" id="demo">
+        <div class="row">
+            <div class="col-8">
+                <h2 *ngFor="let item of WOdetails">{{item.company_name}}</h2>
+                <p>(CIN : U40200TG2020PTC139744</p>
+            </div>
+            <div class="col-4 text-right logo">
+                <img src="https://testgeps.greenko.net/ui/assets/greenko/newlogo_greeenko_eps.svg">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 bg-success paddng"></div>
+            <div class="col-4 bg-primary paddng"></div>
+            <div class="col-4 bg-warning paddng"></div>
+        </div>
+        <div class="row text-center mt-2">
+            <div class="col-12 head">
+                <h2><b>WORK ORDER</b></h2>
+            </div>
+        </div>
+        <div class="row pl-3">
+            <div class="col-6">
+                <p *ngFor="let item of WOdetails"><b>Ref No : {{item.number}}</b></p>
+            </div>
+            <div class="col-6 text-right">
+                <p *ngFor="let item of WOdetails"><b>Date : {{item.created_date | date:'dd-MM-yy'}}</b></p>
+            </div>
+        </div>
+        <div class="row pl-3">
+            <div class="col-10">
+                <p>To,</p>
+                <p *ngFor="let item of WOdetails">{{item.contractor_name}}</p>
+                <p *ngFor="let item of contractorData">{{item.address_1}}, {{item.city}}</p>
+                <p *ngFor="let item of contractorData">{{item.pin_code}}, {{item.state}}</p>
+                <p *ngFor="let item of contractorData"><b>Code : {{item.code}}</b></p>
+                <p *ngFor="let item of contractorData"><b>{{item.name}}, CEO, Mobile#{{item.contact_number}}</b></p>
+                <p *ngFor="let item of WOdetails"><b>Sub: </b> Work Order for "{{item.subject}}" at kurnool, Andhra Pradesh.</p>
+                <p *ngFor="let item of WOdetails">Ref: 1)Your Email Offered dated {{item.date | date:'MMMM d, y'}}</p><br>
+                <p>Dear Sir,</p><br>
+                <p *ngFor="let item of WOdetails">With reference to the above and the subsequent discussion had with you we are pleased to award
+                    this Work Order for {{item.subject}} with the following scope, Price, Terma
+                    and Conditions</p>
+                <p></p>
+            </div>
+            <div class="col-2">
+                <ngx-qrcode *ngIf="data1" [elementType]="elementType" [width]="150" [errorCorrectionLevel]="correctionLevel"
+                [value]="data1" alt="Demo QR Code" cssClass="bshadow">
+            </ngx-qrcode>
+            <ngx-qrcode *ngIf="document_no" [elementType]="elementType" [width]="150" [errorCorrectionLevel]="correctionLevel"
+            [value]="document_no" alt="Demo QR Code" cssClass="bshadow">
+          </ngx-qrcode>
+            </div>
+        </div>
+        <div class="row pl-3 table-responsive mt-2">
+            <p><b>WORK ORDER PRICE</b></p>
+            <table class="table border">
+
+                <tr>
+                    <th>Sl.No</th>
+                    <th>Description</th>
+                    <th>UOM</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                </tr>
+ 
+                <tr class="text-center" *ngFor="let item of WOdetails;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{item.service_description}}</td>
+                    <td>{{item.unit_of_measurment}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.unit_price}}</td>
+                    <td>{{item.basic_price}}</td>
+                </tr>
+                <tr class="text-center">
+                    <td colspan="5" class="text-right"><b>Total Basic Price(INR)</b></td>
+                    <td><b>{{totalsum}}</b></td>
+                </tr>
+                <tr class="text-left">
+                    <td colspan="6"><b>{{inwords | titlecase}}</b></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row padding1  align-items-center  mt-3" *ngIf="signStatus ">
+            <div class="col-4"   *ngFor="let item of SignData">
+              <img [src]="item.signature" class="sign-width" />
+              <p class="ml-1 ">{{item.updated_by}}</p>
+              <p class="ml-1 ">{{item.description}}</p>
+            </div>
+          </div>
+          <div class="row padding1  align-items-center   mt-3" *ngIf="!signStatus "
+             >
+          <div class="col-4"  *ngFor="let item of SignData" >
+            <img *ngIf="item.signature!==null" [src]="item.signature" class="sign-width" />
+            <p class="ml-1" *ngIf="item.signbtn===false&&item.signature===null">Need to be Signature</p>
+            <span>
+                <button type="button" class="btn btn-custom mr-3" *ngIf="item.signbtn===true&&item.signature===null"
+                  (click)="getSignatureView(item,viewSignmodel)">Sign</button>
+                <button type="button" class="btn btn-custom" *ngIf="item.signbtn===true&&item.signature===null"
+                (click)="deleteItem(row,deleteitemofList)">Cancel</button>
+            </span>
+            <p class="ml-1 ">{{item.updated_by}}</p>
+            <p class="ml-1 " >{{item.description}}</p>
+          </div>
+        </div>
+        <div class="Annexure pageBreak">
+            <div class="row text-center">
+                <div class="col-12">
+                    <p><b>Annexure - 1</b></p>
+                    <p><b>Ref No :<span *ngFor="let item of WOdetails">{{item.number}}</span></b></p>
+                    <h2>
+                        <p *ngFor="let item of WOdetails;">{{item.service_description}}</p>
+                    </h2>
+                </div>
+            </div>
+            <div class="row pl-3 table-responsive mt-2">
+                <table class="table border">
+                    <tr>
+                        <th rowspan="2">Sl.No</th>
+                        <th rowspan="2">Item Description</th>
+                        <th rowspan="2">UOM</th>
+                        <th rowspan="2">Quantity</th>
+                        <th colspan="2">All Prices are in INR only</th>
+                    </tr>
+                    <tr>
+                        <th>Unit Price</th>
+                        <th>Total Amount</th>
+                    </tr>
+                    <tr *ngFor="let item of anexure;let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{item.item_description}}</td>
+                        <td>{{item.unit_of_measurment}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.unit_price}}</td>
+                        <td>{{item.total_amount}}</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan="5" class="text-right"><b>Total Price(INR)</b></td>
+                        <td><b>{{totalsum1}}</b></td>
+                    </tr>
+                    <tr class="text-left">
+                        <td colspan="6"><b>{{inwords1 | titlecase}}</b></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</mat-card>
+
+<!-- model -->
+<ng-template #viewSignmodel>
+    <h1 mat-dialog-title>View Signature</h1>
+    <div mat-dialog-content>
+      <div class="row">
+        <div class="col-12 text-center">
+          <img [src]="Viewsign" class="sign-width" />
+        </div>
+      </div>
+    </div><br>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+      <button mat-button cdkFocusInitial (click)="SignatureFile()" class="matButton"
+        [disabled]="!Viewsign">Confirm</button>
+    </div>
+  </ng-template>
+  
+  <!-- Cancel -->
+  <ng-template #deleteitemofList>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+        <div class="row">
+            <div class="col-md-12">
+                <label style="padding-top: 5px">Reason</label>
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                    [(ngModel)]="deletemodel.reason" style="width: 100%" />
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+            Close</button>&nbsp;
+        <button  mat-button cdkFocusInitial (click)="deleteFile()" class="matButton" [disabled]="!deletemodel.reason">
+            Delete
+        </button>
+    </div>
+  </ng-template>
+  <ng-template #deletedocsigned>
+    <span class="d-flex justify-content-between">
+        <h1 mat-dialog-title>Document Signed Already</h1>
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon">close</mat-icon>
+        </button>
+    </span>
+    <div mat-dialog-content>
+        <p>Still want to delete ? </p>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial class="matButton" (click)="deleteSeleted(deletedocsigneddata)" >
+            Yes
+        </button>&nbsp;
+        <button mat-button mat-dialog-close class="matButton"  style="background: transparent">
+            No</button>
+    </div>
+  </ng-template>
+  
+  <ng-template #deletedocsigneddata>
+    <span class="d-flex justify-content-between">
+        <h1 mat-dialog-title>&nbsp;</h1>
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon">close</mat-icon>
+        </button>
+    </span>
+    <div mat-dialog-content>
+       <p><b>Document Number :</b> {{deleteNumber}}</p>
+       <div class="row">
+        <div class="col-md-12">
+            <label style="padding-top: 5px">Reason</label>
+            <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                [(ngModel)]="deletemodel.reason" style="width: 100%" />
+        </div>
+        <div class="col-md-12">
+            <label style="padding-top: 5px">Password</label>
+            <input type="text" placeholder="Enter Password" class="inputstyles" name="pwd"
+                [(ngModel)]="deletemodel.pwd" style="width: 100%" />
+        </div>
+    </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial class="matButton" (click)="deleteFile()"  [disabled]="!deletemodel.reason">
+            Confirm
+        </button>
+        <!-- <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+            No</button> -->
+    </div>
+  </ng-template>
+
+

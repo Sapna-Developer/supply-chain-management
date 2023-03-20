@@ -1,0 +1,1090 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">QSD Services</h4> -->
+            <!-- <div class="d-flex align-items-center m-t-10">
+                <span class="m-r-20">Start Date : {{startDate | date}} </span>
+                <span>End Date : {{endDate | date}} </span>
+            </div> -->
+        <!-- </div>
+    </div>
+</div> -->
+<div class="material-tab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" #tabGroup [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                QSD Services
+            </ng-template>
+            <ng-template matTabContent>
+<mat-card  >
+    <mat-card-content>
+        <div class="row">
+            <span >
+                <button mat-raised-button type="submit" (click)="opengrnmodel(grnmodel)" class="savebutton" style="margin-left:9px;">Add Work Order</button>
+            </span>
+            </div><br>
+<form #myform="ngForm" (ngSubmit)="savefinaldata(myform)">
+    <div class="row">
+        <div class="col-md-2">
+            <label>Work Order Number<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="workordernumber" [(ngModel)]="model1.workordernumber" >
+        </div>
+        <div class="col-md-2">
+            <label>Work Order Value<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="workordervalue"
+                            [(ngModel)]="model1.workordervalue" >
+        </div>
+       
+      
+     </div>
+<div class="row">
+    <div class="col-md-2">
+        <label>Work Order Date<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-4">
+        <input type="date" class="inputstyles" name="wodate" [(ngModel)]="model1.wodate" style="text-transform:uppercase ;">
+        
+    </div>
+    <div class="col-md-2">
+        <label>Description Of Work<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-4">
+        <input type="text"  class="inputstyles" name="description"
+                        [(ngModel)]="model1.description" >
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>RA Bill Number<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" name="rabillnumber" 
+            [(ngModel)]="model1.rabillnumber">   
+        </div>
+        <div class="col-md-2">
+            <label>RA Bill Date<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="date"  placeholder="Enter RA Bill Date" class="inputstyles" name="rabilldate" style="text-transform:uppercase;" 
+            [(ngModel)]="model1.rabilldate">   
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Contractor Name<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="contractorname"
+                            [(ngModel)]="model1.contractorname" >
+        </div>
+        <div class="col-md-2">
+            <label>Order Duration<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  placeholder="Enter Order Duration" class="inputstyles" name="orderduration" [(ngModel)]="model1.orderduration"
+            >
+           
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Start Date<span class="mandetory">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <input type="date" style="text-transform: uppercase;" class="inputstyles" name="startdate" [(ngModel)]="model1.startdate" >
+            </div>
+            <div class="col-md-2">
+                <label>Completion Date<span class="mandetory">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <input type="date"  class="inputstyles" name="completiondate" style="text-transform:uppercase;"
+                 [(ngModel)]="model1.completiondate" 
+                 >
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Previous Information Location<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" name="preinfolocation" [(ngModel)]="model1.preinfolocation"
+           >
+        </div>
+        <div class="col-md-2">
+            <label>Observations<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" name="observations" [(ngModel)]="model1.observations"
+           >
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Environment Cess Percentage<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="envcesspercent" [(ngModel)]="model1.envcesspercent"
+           >
+        </div>
+        <div class="col-md-2">
+            <label>Environment Cess Amount<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="environment_cess_amount" [(ngModel)]="model1.environment_cess_amount"
+           >
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Mobilisation Recovery Percentage<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" name="mobilisation_recovery_percentage" [(ngModel)]="model1.mobilisation_recovery_percentage">
+            
+        </div>
+        <div class="col-md-2">
+            <label>Mobilisation Recovery Amount<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" name="mobilisation_recovery_amount" [(ngModel)]="model1.mobilisation_recovery_amount">
+            
+        </div>
+        </div>
+        <div class="row"> 
+        <div class="col-md-2">
+            <label>Machinery Recovery Percentage<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="machinery_recovery_percentage" [(ngModel)]="model1.machinery_recovery_percentage"
+            >
+        </div>
+        <div class="col-md-2">
+            <label>Machinery Recovery Amount<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="machinery_recovery_amount" [(ngModel)]="model1.machinery_recovery_amount"
+            >
+        </div>
+   </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Retention Money Percentage<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" name="retention_money_percentage" [(ngModel)]="model1.retention_money_percentage">
+            
+        </div>
+        <div class="col-md-2">
+            <label>Retention Money<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" name="retention_money" [(ngModel)]="model1.retention_money">
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Bill Copy<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="bill_copy" [(ngModel)]="model1.bill_copy"
+         >
+        </div>
+        <div class="col-md-2">
+            <label>Company Name<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" name="companyname" [(ngModel)]="model1.companyname">
+            
+        </div>
+        <!-- <div class="col-md-2">
+            <label>Project Name</label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="projectname" [(ngModel)]="model1.projectname"
+            >
+        </div> -->
+        </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Invoice Number<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="invoicenumber" [(ngModel)]="model1.invoicenumber"
+           >
+        </div>
+        <div class="col-md-2">
+            <label>Invoice Date<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="date" style="text-transform: uppercase;" class="inputstyles" name="invoicedate" [(ngModel)]="model1.invoicedate">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Absract Value<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="abstractvalue" [(ngModel)]="model1.abstractvalue">
+        </div>
+        <div class="col-md-2">
+            <label>Gate Entry Number<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="gateentrynumber" [(ngModel)]="model1.gateentrynumber">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Delivery Challan<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text"  class="inputstyles" name="deliverychallannumber" [(ngModel)]="model1.deliverychallannumber">
+        </div>
+        <div class="col-md-2">
+            <label>Other Tax Description<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" name="othertaxdesc" [(ngModel)]="model1.othertaxdesc">
+            
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>PAN Number<span class="mandetory">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <input type="text"  class="inputstyles" name="vendoepannumber" [(ngModel)]="model1.vendoepannumber"
+                >
+            </div>
+            <div class="col-md-2">
+                <label>GST Number<span class="mandetory">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="inputstyles" name="vendorgst" [(ngModel)]="model1.vendorgst">
+            </div>
+        </div>
+       <div class="row">
+        <div class="col-md-2">
+            <label>Amendment Number<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4" >
+            <input type="number" class="inputstyles" placeholder="Enter Amendment Number"
+             name="amendment_number" [(ngModel)]="model1.amendment_number" >
+        </div>
+        <div class="col-md-2">
+            <label>Amendment Value<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="number" class="inputstyles" placeholder="Enter Amendment Value"
+             name="amendment_value" [(ngModel)]="model1.amendment_value" (keyup)="getcummulativevalue()">
+        </div>
+       </div>
+    <div class="row" >
+        <div class="col-md-2">
+            <label>Amendment Date<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="date" class="inputstyles" style="text-transform: uppercase;"
+                [(ngModel)]="model1.amendment_date" name="amendment_date" >
+        </div>
+        <div class="col-md-2">
+            <label>Cummulative Order Value<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="inputstyles" 
+                [(ngModel)]="model1.cummulative_order_value" name="cummulative_order_value" >
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-2">
+            <label>Site Document Received Date<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="date" class="inputstyles" style="text-transform:uppercase;"
+             name="sitedocrecdate" [(ngModel)]="model1.sitedocrecdate">
+        </div>
+        <div class="col-md-2">
+            <label>HO Document Received Date<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-4">
+            <input type="date" class="inputstyles" style="text-transform: uppercase;"
+                [(ngModel)]="model1.hodocrecdate" name="hodocrecdate" >
+        </div>
+    </div>
+   <div class="row">
+    <div class="col-md-2">
+        <label>Comments<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-4">
+        <input type="text" class="inputstyles" 
+            [(ngModel)]="model1.comments" name="comments" >
+    </div>
+    <div class="col-md-2">
+        <label>Total Value<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-4">
+        <input type="text" class="inputstyles"
+            [(ngModel)]="model1.totalvalue" name="totalvalue" >
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-2">
+        <label>Net Payable<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-4">
+        <input type="text" class="inputstyles" 
+            [(ngModel)]="model1.netpayable" name="netpayable" >
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <h1>Checklists</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Is Order Copy<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-2">
+            <select class="dropdownstyles" 
+            name="ordercopy" [(ngModel)]="model1.ordercopy">
+                <option selected disabled>Select One</option>
+                <option value=true>Yes
+                </option>
+                <option value=false>No
+                </option>
+            </select>
+      </div>
+      <div class="col-md-2">
+        <label>Is Invoice<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-2">
+        <select class="dropdownstyles" 
+        name="isinvoice" [(ngModel)]="model1.isinvoice">
+            <option selected disabled>Select One</option>
+            <option value=true>Yes
+            </option>
+            <option value=false>No
+            </option>
+        </select>
+  </div>
+  <div class="col-md-2">
+    <label>Is Bill Abstract<span class="mandetory">*</span></label>
+</div>
+<div class="col-md-2">
+    <select class="dropdownstyles" 
+    name="isbillabstract" [(ngModel)]="model1.isbillabstract">
+        <option selected disabled>Select One</option>
+        <option value=true>Yes
+        </option>
+        <option value=false>No
+        </option>
+    </select>
+</div>
+  </div><br>
+ 
+ <div class="row">
+    <div class="col-md-2">
+        <label>Is Jms Logsheets Reports<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-2">
+        <select class="dropdownstyles" 
+        name="jmslogistics" [(ngModel)]="model1.jmslogistics">
+            <option selected disabled>Select One</option>
+            <option value=true>Yes
+            </option>
+            <option value=false>No
+            </option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label>Is Amendments<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-2">
+        <select class="dropdownstyles" 
+        name="ambendments" [(ngModel)]="model1.ambendments">
+            <option selected disabled>Select One</option>
+            <option value=true>Yes
+            </option>
+            <option value=false>No
+            </option>
+        </select>
+  </div>
+  <div class="col-md-2">
+    <label>Is Debit Note</label><span class="mandetory">*</span>
+</div>
+<div class="col-md-2">
+    <select class="dropdownstyles" 
+    name="debitnote" [(ngModel)]="model1.debitnote">
+        <option selected disabled>Select One</option>
+        <option value=true>Yes
+        </option>
+        <option value=false>No
+        </option>
+    </select>
+</div>
+ </div><br>
+      <div class="row">
+      <div class="col-md-2">
+        <label>Is Reconcillation<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-2">
+        <select class="dropdownstyles" 
+        name="reconcillatiuon" [(ngModel)]="model1.reconcillatiuon">
+            <option selected disabled>Select One</option>
+            <option value=true>Yes
+            </option>
+            <option value=false>No
+            </option>
+        </select>
+  </div>
+  <div class="col-md-2">
+    <label>Is Packing List<span class="mandetory">*</span></label>
+</div>
+<div class="col-md-2">
+    <select class="dropdownstyles" 
+    name="packinglist" [(ngModel)]="model1.packinglist">
+        <option [value]="undefined"selected disabled>Select One</option>
+        <option value=true>Yes
+        </option>
+        <option value=false>No
+        </option>
+    </select>
+</div>
+<div class="col-md-2">
+    <label>Is Site Certification<span class="mandetory">*</span></label>
+</div>
+<div class="col-md-2">
+    <select class="dropdownstyles" 
+    name="issitecerity" [(ngModel)]="model1.issitecerity">
+        <option selected disabled>Select One</option>
+        <option value=true>Yes
+        </option>
+        <option value=false>No
+        </option>
+    </select>
+
+</div>
+      </div><br>
+<div class="row">
+    <div class="col-md-2">
+        <label>Is Test Reports<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-2">
+        <select class="dropdownstyles" 
+        name="istestreports" [(ngModel)]="model1.istestreports">
+            <option selected disabled>Select One</option>
+            <option value=true>Yes
+            </option>
+            <option value=false>No
+            </option>
+        </select>
+    </div>  
+  <div class="col-md-2">
+    <label>Is Freight<span class="mandetory">*</span></label>
+</div>
+<div class="col-md-2">
+    <select class="dropdownstyles" 
+    name="isfreight" [(ngModel)]="model1.isfreight">
+        <option selected disabled>Select One</option>
+        <option value=true>Yes
+        </option>
+        <option value=false>No
+        </option>
+    </select>
+</div>
+<div class="col-md-2">
+    <label>Is Statutory Compliance<span class="mandetory">*</span></label>
+</div>
+<div class="col-md-2">
+    <select class="dropdownstyles" 
+    name="statutorycompliance" [(ngModel)]="model1.statutorycompliance">
+        <option selected disabled>Select One</option>
+        <option value=true>Yes
+        </option>
+        <option value=false>No
+        </option>
+    </select>
+</div>
+      </div><br>
+      <div class="row">
+        <div class="col-md-2">
+            <label>Is Bank Details<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-2">
+            <select class="dropdownstyles" 
+            name="bankdetails" [(ngModel)]="model1.bankdetails">
+                <option selected disabled>Select One</option>
+                <option value=true>Yes
+                </option>
+                <option value=false>No
+                </option>
+            </select>
+      </div>
+      <div class="col-md-2">
+        <label>Is Mrn<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-2">
+        <select class="dropdownstyles" 
+        name="ismrn" [(ngModel)]="model1.ismrn">
+            <option selected disabled>Select One</option>
+            <option value=true>Yes
+            </option>
+            <option value=false>No
+            </option>
+        </select>
+  </div>
+  <div class="col-md-2">
+    <label>Is Work Completion Certificate<span class="mandetory">*</span></label>
+</div>
+<div class="col-md-2">
+    <select class="dropdownstyles" 
+    name="workcompletion" [(ngModel)]="model1.workcompletion">
+        <option selected disabled>Select One</option>
+        <option value=true>Yes
+        </option>
+        <option value=false>No
+        </option>
+    </select>
+</div>
+      </div><br>
+      
+      <div class="row">
+        <div class="col-md-2">
+            <label>Is Asbuilt Drgs And Sketches<span class="mandetory">*</span></label>
+        </div>
+        <div class="col-md-2">
+            <select class="dropdownstyles" 
+            name="asbuiltdrgs" [(ngModel)]="model1.asbuiltdrgs">
+                <option selected disabled>Select One</option>
+                <option value=true>Yes
+                </option>
+                <option value=false>No
+                </option>
+            </select>
+        </div>
+      <div class="col-md-2">
+        <label>Is Photographs<span class="mandetory">*</span></label>
+    </div>
+    <div class="col-md-2">
+        <select class="dropdownstyles" 
+        name="isphotographs" [(ngModel)]="model1.isphotographs">
+            <option selected disabled>Select One</option>
+            <option value=true>Yes
+            </option>
+            <option value=false>No
+            </option>
+        </select>
+  </div>
+      </div><br>
+     <div class="row">
+        <div class="col-md-6">
+            <button mat-raised-button class="m-t-10" class="savebutton" style="float: right;" 
+            color="secondary" [disabled]="initialdata">Save</button>
+        </div>
+        <div class="col-md-6">
+            <button [disabled]="initialdata"
+            type="button"
+            mat-raised-button
+            class="m-t-10 attachfile"
+            color="secondary"
+            (click)="autoFileUpload2.click()"
+          >
+            Attach File&nbsp;  <mat-icon 
+            style="cursor:pointer;font-size:24px">file_upload</mat-icon></button>
+            <div class="file">
+              <input hidden class="form-control-file" name="file" type="file" multiple
+              (change)="uploadqsdfiles($event)" #autoFileUpload2  >
+              <ng-container *ngIf=" fileUploadUrlsqsd.length > 0">
+                <div *ngFor="let item of filenamearray1;let i=index;">{{i+1}}.&nbsp;{{item}}</div>
+              <!-- <span style="margin-left:3px">Selected : {{fileurls.length}} files</span>   -->
+              </ng-container>         
+              </div>
+        </div>
+     </div>
+  
+   
+</form><br>
+<ng-container >
+    <!-- <div class="row">
+        <div class="col-12 text-right float-right">
+            <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button " style="background:none">
+                <span class="material-icons" (click)="addQSD(qsdverificationform)"
+                style="margin-top:9%;">
+                    add
+                </span>
+            </button>
+        </div>
+    </div> -->
+    <div class="row p-t-10">
+        <div class="col-12 col-md-12">
+            <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+            <div class="table-responsive" mat-table-wrapper>
+                <div class="example-table-container" style="overflow-x:acroll;width:138%">
+                    <table mat-table [dataSource]="dataSource" >
+                        <ng-container matColumnDef="sno">
+                            <th mat-header-cell *matHeaderCellDef style="width:5%">SNO</th>
+                            <td mat-cell *matCellDef="let row;let i=index;">
+                                {{i+1}}
+
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="service_code">
+                            <th mat-header-cell *matHeaderCellDef style="width:5%">Service Code
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.service_code}}
+
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="service_description">
+                            <th mat-header-cell *matHeaderCellDef style="width:5%">Service
+                                Description
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{ row.service_description}}
+                            </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="unit_of_measurement">
+                            <th mat-header-cell *matHeaderCellDef style="width:3%">UOM
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.unit_of_measurement}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="quantity">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Quantity
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.quantity }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="unit_price">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Unit Price
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.unit_price }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="basic_price">
+                            <th mat-header-cell *matHeaderCellDef style="width:3%">
+                                Basic Price
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{(row.basic_price) | number:'1.2-2' }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="tax_description">
+                            <th mat-header-cell *matHeaderCellDef style="width:6%">
+                                Tax Description
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{ row.tax_description }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="tax_percent">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Tax Percentage
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.tax_percentage}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="tax_value">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Tax Value
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{(row.tax_value) | number:'1.2-2' }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="tds_percentage">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Tds Percentage
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{(row.tds_percentage)  }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="tds_value">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Tds Value
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{(row.tds_value) | number:'1.2-2' }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="labour_cess_percentage">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Labour Cess Percentage
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.labour_cess_percentage }}
+                            </td>
+                        </ng-container>
+                         <ng-container matColumnDef="labour_cess_value">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Labour Cess Value
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{(row.labour_cess_value) | number:'1.2-2' }}
+                            </td>
+                        </ng-container>
+                     <ng-container matColumnDef="debit_value_royalty">
+                        <th mat-header-cell *matHeaderCellDef style="width:4%">
+                            Debit Value Royalty
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{(row.debit_value_royalty) | number:'1.2-2' }}
+                        </td>
+                    </ng-container>
+                        <ng-container matColumnDef="diesel_recovery">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Diesel Recovery
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.diesel_recovery
+                                }}
+                            </td>
+                        </ng-container>
+                      
+                        <ng-container matColumnDef="total_price">
+                            <th mat-header-cell *matHeaderCellDef style="width:4%">
+                                Total Price
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                               {{row.total_price | number:'1.2-2'}}
+                            </td>
+                       </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true">
+                        </tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                      
+                </div>
+                
+                    
+            </div>
+        </div>
+    </div>
+</ng-container>
+<h2 *ngIf="logdata" class="activitylog">Activity Log</h2>
+<div class="tablediv" *ngIf="logdata">
+    <table >
+        <thead style="background: #e9ecef;" class="text-center headerclass">
+            <!-- <tr> -->
+                <th>SNO</th>
+                <th style="padding:10px;">User Name</th>
+                <th>Created Date</th>
+                <th>Reference Number</th>
+                <th>Description</th>
+                <th>Reason</th>
+                <th>Action</th>
+            <!-- </tr> -->
+        </thead>
+        <tbody class="text-center">
+            <tr *ngFor="let item of logdata;let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{item.username}}</td>
+                <td>{{item.date_time | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                <td >{{item.reference_number}} </td>
+                <td >{{item.description}}</td>
+                <td >{{item.reason}} </td>
+                    <td>{{item.action}}
+                        <!-- <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                           aria-label="Example icon button with a vertical three dot icon"
+                            >
+                             <mat-icon>delete</mat-icon>
+                             </button> -->
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+</mat-card-content>
+</mat-card>
+</ng-template>
+</mat-tab>
+<mat-tab>
+    <ng-template mat-tab-label>
+        List
+    </ng-template>
+    <ng-template matTabContent>
+        <mat-card>
+            <mat-card-content>
+                <ng-container >
+                    <div class="row p-t-10">
+                        <div class="col-12 col-md-12">
+                            <!-- <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar> -->
+                            <div class="table-responsive mat-table-wrapper">
+                                <div class="example-table-container" >
+                                    <table mat-table [dataSource]="dataSourcemain">
+                
+                
+                                        <ng-container matColumnDef="sno">
+                                            <th mat-header-cell *matHeaderCellDef >SNO</th>
+                                            <td mat-cell *matCellDef="let row;let i=index;">
+                                                {{(i+1) + (masterpaginator.pageIndex * masterpaginator.pageSize)}}
+                
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="number">
+                                            <th mat-header-cell *matHeaderCellDef style="width:12%">Number
+                                                </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.number}}
+                
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="date">
+                                            <th mat-header-cell *matHeaderCellDef style="width:8%">Date
+                                                </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.date | date:"dd-MM-YYY"}}
+                
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="company_name">
+                                            <th mat-header-cell *matHeaderCellDef style="width:15%">Company Name
+                                                </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.company_name}}
+                
+                                            </td>
+                                        </ng-container>
+                
+                                      <ng-container matColumnDef="contractor_name">
+                                            <th mat-header-cell *matHeaderCellDef >Contractor Name
+                </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.contractor_name }}
+                                            </td>
+                                        </ng-container>
+                                         <ng-container matColumnDef="work_order_number">
+                                            <th mat-header-cell *matHeaderCellDef >Work Order Number
+                                            </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.work_order_number }}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="ra_bill_number">
+                                            <th mat-header-cell *matHeaderCellDef >RA Bill Number
+                                            </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.ra_bill_number}}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef style="width:17%" class="text-center">
+                                                Action
+                                            </th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <!-- <button mat-icon-button style="margin-left:-11%"
+                                                    aria-label="Example icon button with a vertical three dot icon"
+                                                   (click)="editsaveddata(row);tabGroup.selectedIndex = 0" >
+                                                    <mat-icon>edit</mat-icon>
+                                                </button> -->
+                                                 <div class="mb-0">
+                                                    <mat-icon style="border:none;background: none;cursor: pointer;"
+                                                    (click)="editqsddata(row)" matTooltip="View">remove_red_eye</mat-icon>&nbsp;
+                                                    <mat-icon style="color: red;border:none;background: none;cursor: pointer;" 
+                                                    (click)="deleteItem(row,deleteItemModel)">delete</mat-icon>
+                                                <!-- </button> -->
+                                                <mat-icon (click)="printqsdservices(row)" style="cursor:pointer;"> local_printshop</mat-icon>
+                                            &nbsp;
+                                            <mat-icon (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                            style="cursor:pointer;font-size:24px">file_upload</mat-icon>
+                                           
+                                                    <!-- <button 
+                                                    class="savebutton" style="margin-left: 1%;height: 21px;padding-right:33px;font-size: 93%;"
+                                                    aria-label="Example icon button with a vertical three dot icon"
+                                                    (click)="printpurchasereq(row)">Print
+                                                    
+                                                </button>&nbsp;
+                                                <i class="fa fa-paperclip" aria-hidden="true" (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                                            style="cursor:pointer;font-size:16px"></i> -->
+                                                        </div>
+                                                 
+                                            </td>
+                                        </ng-container>
+                
+                
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns1;sticky: true">
+                                        </tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+                                    </table>
+                                </div>
+                                <div *ngIf="reaData==true" class="text-center">
+                                    <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                        Loading...
+                                    </h4>
+                                    <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                        No Records Found
+                                    </h4>
+                                </div>
+                                    <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                        [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #masterpaginator
+                                        (page)="onpageevent($event)">
+                                    </mat-paginator>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </mat-card-content>
+</mat-card>
+</ng-template>
+</mat-tab>
+</mat-tab-group>
+</div>
+<ng-template #grnmodel>
+    <div mat-dialog-title class="dialog-title">
+        <div class="row">
+            <div class="col-11">
+                <h2>Add Work Order</h2>
+            </div>
+            <div class="col-1">
+                <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon float-right"
+                    (click)="closedialogdata()" style="border:none;background:none">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <form #mygrnformdata="ngForm" (ngSubmit)="bindgrndatatotable(mygrnformdata)">
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Work Order Number<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width" style="width: 100%; border: 1px solid;
+                    border-radius: 5px;height:63%" appearance="none">
+                                    <input type="text" placeholder="Search WO Number " aria-label="Number" matInput
+                                        style="border:none;margin-bottom: 2%;" class="inputdropdown" name="wonumber" [(ngModel)]="wonumber" 
+                                        (keyup)="workorderdata($event)" 
+                                        [matAutocomplete]="auto" />
+        
+                                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                                    (optionSelected)="selectedwonumber()">
+        
+                                        <mat-option *ngFor="let item of woDATA" [value]="item.number"  >
+                                            {{item.number}}</mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                </div>
+            </div><br>
+            <div class="row" >
+                <div class="col-md-4">
+                    <label>RA Bill Number<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-6" >
+                    <select
+                    class="dropdownstyles"
+                    name="rabillno" [(ngModel)]="rabillno"
+                    style="width:100%" >
+                    <option selected disabled>Select One</option>
+                    <option *ngFor="let item of rabillnumdata" [ngValue]="item.ra_bill_number">
+                      {{ item.ra_bill_number }}
+                    </option>
+                  </select>
+                </div>
+                </div><br>
+            <div class="save text-center m-t-20">
+                <button mat-raised-button class="savebutton" style="margin-left:0%" [disabled]="!wonumber||!rabillno">Select</button>
+            </div>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+
+<ng-template #deleteItemModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="padding-top:5px;">Reason</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+          [(ngModel)]="deletemodel.reason" style="width: 181%;">  
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteFile()" class="matButton"
+         [disabled]="!deletemodel.reason">Delete</button>
+    </div>
+</ng-template>
+<ng-template #fileuploadmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Qsd Services: {{qsdservicenumber}}</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon"
+            (click)="closemodel()" style="border:none;background:none;margin-top: -9%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+   <div  mat-dialog-content class="row">
+    <div *ngIf="filedata">
+    <table>
+        <thead style="background: #e9ecef;">
+                <th>Cread By</th>
+                <th>Created Date</th>
+                <th>File Name</th>
+                <th>Action</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of filedata">
+                <td>{{item.created_by}}</td>
+                <td>{{item.created_date}}</td>
+                <td >{{item.file_name}} &nbsp;&nbsp;&nbsp;<i class="fas fa-eye text-cyan m-r-20 " 
+                    style="cursor: pointer;" title="View File" (click)="viewDoc(item)"></i></td>
+                    <td>
+                        <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                           aria-label="Example icon button with a vertical three dot icon"
+                            (click)="deleterowfile(deletefileModel,item)">
+                             <mat-icon>delete</mat-icon>
+                             </button>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+   </div><br>
+<button mat-raised-button type="button" (click)="autoFileUpload1.click()">Attach File</button>
+<div class="file">
+<input hidden class="form-control-file" name="file" type="file"
+(change)="uploadWbsFile($event);showContent(i);" #autoFileUpload1 />
+<ng-container *ngIf="fileUploadUrls.length>0">
+<div *ngFor="let item of filenamearray;let i=index;">{{i+1}}.&nbsp;{{item}}</div>
+
+<!-- <span >{{createNewFile.fileName}}</span>   -->
+</ng-container>         
+</div>
+</ng-template>
+<ng-template #deletefileModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete file?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" >Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteexistingfile()" class="matButton">Delete</button>
+    </div>
+</ng-template>
+
+
+
+

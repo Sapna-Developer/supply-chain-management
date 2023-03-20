@@ -1,0 +1,203 @@
+.inputstyles{
+    width: 100%;
+    height: 35px;
+    padding:5px;
+    margin:5px;
+    border-radius: 5px;
+    border:1px solid rgba(0,0,0,0.12);
+}
+.mandetory{
+  color:red;
+  font-size: 17px;
+}
+.inputstyles:hover{
+    border:2px solid black ;
+}
+.dropdown:hover{
+    border:2px solid black !important;
+}
+.inputdropdown{
+    // height: 35px;
+    border: none;
+    // margin-bottom: 3%;
+    // margin-top: -37%;
+    // margin-left: 4%;
+}
+.mat-select:hover{
+  margin-top: 5px;
+}
+.savebutton{
+    // margin-left: 43%;
+    // margin-top: 3%;
+    height: 33px;
+    // width: 78%;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    outline: none;
+    // border: 1px solid;
+    font-size: medium;
+}
+
+.dropdownstyles{
+    padding:5px;
+    margin:5px;
+    border-radius: 5px;
+    border:1px solid rgba(0,0,0,0.12);
+    height:35px;
+    width: 100%;
+}
+.downloadbtn{
+ font-size: 13px;
+ font-weight: 700;
+ outline: none;
+ border: none;
+}
+.mat-stroked-button {
+    padding: 0px 0px ;
+    // width: 30%;
+     border:1px solid rgba(0,0,0,0.12);
+    font-size: 12px;
+      // font-weight: 800;
+    // line-height: 34px;
+}
+.downloadbtn:hover{
+  border-radius: 5px;
+  border: 1px solid currentColor;
+  // text-align: right;
+  // margin-left: 2000px;
+ 
+}
+.savebtn:hover{
+  border-radius: 5px;
+  border: 1px solid currentColor;
+}
+.m-t-2:hover{
+  border-radius: 5px;
+  border:1px solid rgba(0,0,0,0.12);
+}
+.dropdownstyles:hover{
+  border:2px solid black !important;
+}
+.tablestyles{
+  background: #e9ecef;
+  font-weight: 600;
+  height: 41px;
+}
+.matselect{
+  border: none;
+   margin-bottom: 33px;
+    margin-top: -5px;
+}
+.matformfield{
+  width: 99%;
+  border: 1px solid;
+  border-radius: 5px;
+  height: 50%;
+}
+.container{
+  max-width: fit-content;
+  max-height: fit-content;
+}
+.fixed{
+  overflow-x: scroll;
+  overflow-y: scroll;
+  height: fit-content;
+  // max-height: 70vh;
+}
+// @media (max-width: 600px) {
+//     table {
+//       display: block;
+//       max-width: -moz-fit-content;
+//       max-width: fit-content;
+//       margin: 0 auto;
+//       overflow-x: auto;
+//       white-space: nowrap;
+//     }
+// }
+div.scroll{
+        margin: 4px, 4px;
+        padding: 4px;
+        // background-color: #08c708;
+        width: 1500px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+}
+.center{
+  text-align: center;
+}
+.right{
+  text-align: right;
+}
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+  color:white;
+  background-color: rgba(0, 0, 0);
+  // border: 5px solid orange
+  }
+  table tr th, table tr td {
+     border: 1px solid #e5dfdf !important;
+  }
+  .tableclass{
+    max-height:60vh;
+    overflow-y: auto;
+    // overflow-x: hidden;
+  }
+  .headerstyles{
+    position: sticky;
+    top: -2px;
+    background: #e9ecef;
+    // border:1px solid #e5dfdf;
+  }
+  label{
+    font-weight: 500;
+  }
+  table tr th,table tr td{
+    text-align: center;
+    vertical-align: middle;
+  }
+  .matformfieldstyles{
+    width: 100%;
+    // border: 1px solid;
+    border-radius: 5px;
+    height: 38px;
+    padding: 0.1rem 0 !important;
+    border:1px solid rgba(0, 0, 0, 0.12);
+}
+
+//   .mat-form-field-infix {
+//     display: block;
+//     position: relative;
+//     flex: auto;
+//     min-width: 0;
+//     width: 180px;
+//     height: 38px !important;
+//     padding: 0.5rem 0 !important;
+// }
+// .mySelect .mat-select-trigger {
+//   height: 35px !important;
+// }
+// .mat-form-field-appearance-outline .mat-form-field-infix {
+//   padding: 0.5rem 0 !important;
+// }
+::ng-deep .selectC .mat-form-field-appearance-outline .mat-form-field-flex {
+  height: 38px !important;
+  }
+  ::ng-deep .selectC .mat-form-field-infix {
+    padding: 0.5rem 0 !important;
+    }
+    ::ng-deep  .matAC .mat-form-field-infix{
+     padding: 0 !important;
+  }
+  ::ng-deep .matAC .mat-form-field-appearance-outline .mat-form-field-outline-thick{
+    color: transparent !important;
+  }
+//     ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+// ::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+
+// ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+//     transform: translateY(-1.1em) scale(.75);
+//     width: 133.33333%;
+// }
+table tr th{
+  text-transform: capitalize !important;
+}

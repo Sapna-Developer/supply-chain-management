@@ -1,0 +1,25 @@
+select{
+  border: none;
+margin-top: 15px;
+padding: 6px;
+// background: rgb(222, 219, 219);
+}
+table, th, td {
+border: 1px solid #E5DFDF;
+}
+.file{
+margin-top: 17px;
+// border: 2px solid black;
+border-radius: 5px;
+padding: 5px;
+}
+
+.downloadbtn{
+  display: flex;
+  justify-content: end;
+}
+.poexcelbtn{
+  border: none !important;
+  background-color: #62beda !important;
+  color: #fff;
+}

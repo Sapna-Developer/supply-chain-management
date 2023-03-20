@@ -1,0 +1,253 @@
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>User</mat-label>
+                    <input type="text" placeholder="Search User" required [formControl]="myControl" matInput
+                        [(ngModel)]="addUserObj.user" [matAutocomplete]="auto" name="user">
+                    <mat-autocomplete #auto="matAutocomplete"
+                        (optionSelected)="addUserObj.user?projectControl.enable():projectControl.disable();loadUserProjects($event.option.value)">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.usename">
+                            <span> {{option.usename}}</span> |
+                            <small> {{option.work_email}}</small>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Project </mat-label>
+
+                    <input type="text" placeholder="Search Project" required name="project"
+                        [(ngModel)]="addUserObj.project" [formControl]="projectControl" matInput
+                        [matAutocomplete]="auto1">
+                    <mat-autocomplete #auto1="matAutocomplete" (optionSelected)='getDataObj($event.option.value)'>
+                        <mat-option *ngFor="let option of filteredProjects | async" [value]="option.proj_short_name">
+                            <span> {{option.proj_short_name}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 float-right">
+                <button mat-icon-button value="Add"
+                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_PROJECT_WBS'])" matTooltip="Add"
+                    (click)="addNewUser()" class="custom-icon-button m-r-10">
+                    <span class="material-icons">
+                        add
+                    </span>
+                </button>
+            </div>
+        </div>
+
+    </mat-card-content>
+</mat-card>
+
+<ng-container *ngIf="projectObj.data.ativity_data && projectObj.data.ativity_data.length > 0">
+    <div class="card m-t-20">
+        <div class="card-body p-0">
+            <div class="table-responsive w-100">
+                <table class="table table-bordered m-b-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <!-- <th scope="col">
+                                [indeterminate]="someComplete(projectObj.data.ativity_data,projectObj.data.allComplete)"
+                                <mat-checkbox color="primary" class="example-margin"
+                                    [checked]="projectObj.data.allComplete"
+                                    (change)="setAll($event.checked,projectObj.data.ativity_data)">
+                                    {{projectObj.data.allComplete}}
+                                </mat-checkbox>
+                            </th> -->
+                            <th scope="col">Task Code</th>
+                            <th scope="col">Activity Name</th>
+                            <th scope="col">UOM</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">Planned Qty</th>
+                            <th scope="col">Actual Qty</th>
+                            <th scope="col">Accepted Qty</th>
+                            <th scope="col">Dependent Tasks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let table of projectObj.data.ativity_data;let k= index;">
+
+                            <!-- <th>
+                                <input type="checkbox" value="{{table.id}}" [(ngModel)]="projectObj.data.ativity_data[i].checked">
+
+                                <mat-checkbox color="primary" [(ngModel)]="table.completed"
+                                    (change)="updateAllComplete(projectObj.data.ativity_data,table,$event.checked)">
+                                </mat-checkbox>
+
+                            </th> -->
+                            <th scope="row" class="text-info">
+                                {{table.task_code}}
+                            </th>
+                            <td>{{table.task_name}}</td>
+                            <td>{{table.uom}}</td>
+                            <td>{{table.target_start_date | date}}</td>
+                            <td>{{table.target_end_date | date}}</td>
+                            <td>
+                                <span *ngIf="table.target_end_date && table.target_start_date">
+
+                                    {{utils.getDateDiff(table.target_start_date,table.target_end_date)}}
+                                    {{utils.getDateDiff(table.target_start_date,table.target_end_date) == 1 ?
+                                    'Day':'Days'}}
+                                </span>
+
+                                <span *ngIf="!table.target_end_date || !table.target_start_date">
+                                    ----
+                                </span>
+
+                            </td>
+                            <td>{{table.quantity}}</td>
+                            <td>
+                                {{table.actual_qty | number:'1.2-2'}}
+
+                            </td>
+                            <td>
+                                {{table.accepted_qty | number:'1.2-2'}}
+
+                            <td nowrap>
+                                <span *ngIf="table.dependent_tasks.dependent_task_codes.length == 0">-----</span>
+                                <span *ngIf="table.dependent_tasks.dependent_task_codes.length == 1">
+                                    {{table.dependent_tasks.dependent_task_codes[0]}}
+                                </span>
+                                <span *ngIf="table.dependent_tasks.dependent_task_codes.length > 1">
+                                    <span
+                                        *ngFor="let dept of table.dependent_tasks.dependent_task_codes;let d=index;">{{dept}}<span
+                                            *ngIf="d != table.dependent_tasks.dependent_task_codes.length - 1">, </span>
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="dataSource.data.length != 0" class="m-t-20">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="m-t-20">
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <button matTreeNodeToggle mat-icon-button [attr.aria-label]="'Toggle ' + node.item">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+
+                        {{node.item?.wbs_name}}
+
+                        <!-- <mat-checkbox color="primary" [(ngModel)]="node?.item.isSelected"
+                            [checked]="descendantsAllSelected(node) || checklistSelection.isSelected(node)"
+                            [indeterminate]="descendantsPartiallySelected(node)"
+                            (change)="todoItemSelectionToggle(node)">
+                            {{node.item?.wbs_name}}
+                        </mat-checkbox> -->
+
+
+                        <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate" class="example-tree-progress-bar">
+                        </mat-progress-bar>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="table-responsive p-l-40 p-r-20 w-100"
+                            *ngIf="node.item.table && node.item.table.length > 0">
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <!-- <th>
+                                            <mat-checkbox class="example-margin" color="primary"
+                                                [checked]="node.item.allComplete"
+                                                [indeterminate]="someComplete(node.item.table)"
+                                                (change)="setAll($event.checked,node.item.table)">
+                                            </mat-checkbox>
+                                        </th> -->
+                                        <th scope="col">Task Code</th>
+                                        <th scope="col">Activity Name</th>
+
+                                        <th scope="col">UOM</th>
+                                        <th scope="col">Start Date</th>
+                                        <th scope="col">End Date</th>
+                                        <th scope="col">Duration</th>
+                                        <th scope="col">Planned Qty</th>
+                                        <th scope="col">Actual Qty</th>
+                                        <th scope="col">Accepted Qty</th>
+                                        <th scope="col">Dependent Tasks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let table of node.item.table;let k= index;">
+                                        <!-- <td>
+                                            <mat-checkbox color="primary" [(ngModel)]="table.completed"
+                                                (change)="updateAllComplete(node.item.table,table,$event.checked)">
+                                            </mat-checkbox>
+
+                                        </td> -->
+
+
+                                        <th scope="row" class="text-info ">
+                                            {{table.task_code}}
+                                        </th>
+
+                                        <td>{{table.task_name}}</td>
+                                        <td>{{table.uom}}</td>
+                                        <td>{{table.target_start_date | date}}</td>
+                                        <td>{{table.target_end_date | date}}</td>
+                                        <td>
+                                            <span *ngIf="table.target_end_date && table.target_start_date">
+                                                {{utils.getDateDiff(table.target_start_date,table.target_end_date)}}
+                                                {{utils.getDateDiff(table.target_start_date,table.target_end_date)
+                                                == 1 ?
+                                                'Day':'Days'}}
+                                            </span>
+
+                                            <span *ngIf="!table.target_end_date || !table.target_start_date">
+                                                ----
+                                            </span>
+
+                                        </td>
+                                        <td>{{table.quantity}}</td>
+                                        <td>
+                                            {{table.actual_qty | number:'1.2-2'}}
+
+                                        </td>
+                                        <td>
+                                            {{table.accepted_qty | number:'1.2-2'}}
+
+                                        <td nowrap>
+                                            <span
+                                                *ngIf="table.dependent_tasks.dependent_task_codes.length == 0">-----</span>
+                                            <span *ngIf="table.dependent_tasks.dependent_task_codes.length == 1">
+                                                {{table.dependent_tasks.dependent_task_codes[0]}}
+                                            </span>
+                                            <span *ngIf="table.dependent_tasks.dependent_task_codes.length > 1">
+                                                <span
+                                                    *ngFor="let dept of table.dependent_tasks.dependent_task_codes;let d=index;">{{dept}}<span
+                                                        *ngIf="d != table.dependent_tasks.dependent_task_codes.length - 1">,
+                                                    </span>
+                                                </span>
+                                            </span>
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </mat-tree-node>
+    </mat-tree>
+</ng-container>
+<ng-container *ngIf="dataSource.data.length == 0">
+    <p class="text-center font-24 mt-5">No Records Found</p>
+</ng-container>

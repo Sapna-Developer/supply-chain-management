@@ -1,0 +1,171 @@
+
+<mat-card>
+    <mat-card-content>
+            <div class="row mb-2" >
+                <div class="col-12 align-self-center bg-wave" >
+                   <div class="d-flex justify-content-start">
+                    <img class="p-1" src="assets/greenko/Dashboard-Icon.png">
+                    <span class="ml-3 mt-2">
+                        <h1 class="page-title mb-0"><b>Dashboard</b></h1>
+                        <h4 class="page-title mb-0"><b style="font-weight: 500;font-size: 18px;">Projects</b> </h4>
+                    </span>
+                   </div>
+                </div>
+                <!-- <div class="col-6">
+                    <img src="assets/greenko/wave-bg.png">
+                </div> -->
+            </div>
+        <div class="row ">
+            <div class="col-md-6">
+                <div class="table table-responsive" mat-table-wrapper>
+                    <div class="example-table-container">
+                        <div class="d-flex justify-content-start bg-git mb-2">
+                            <img src="assets/greenko/goods-icon.png"><h3 class="ml-3 h3-title"><b>Purchase Order</b></h3>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <input type="text" class="dropdownstyles" placeholder="Search Vendor Name"
+                            aria-label="Number" matInput name="vendorname" [(ngModel)]="vendorname"
+                            (keyup)="filterVendorData($event)" [matAutocomplete]="auto2" />
+                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete"
+                            (optionSelected)="getVendorCode()">
+                            <mat-option *ngFor="let user of vendorData" [value]="user.name">{{ user.name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                                  <button mat-icon-button value="Refresh" matTooltip="Refresh"  (click)="clearpoData()"
+                                  class="custom-icon-button">
+                                  <span class="material-icons">
+                                      refresh 
+                                  </span>
+                              </button>
+                           
+                        </div>
+                        <div class="example-container">
+                            <table mat-table [dataSource]="dataSourceList">
+                                <ng-container matColumnDef="sno">
+                                    <th mat-header-cell *matHeaderCellDef style="width: 8%">
+                                        SNO
+                                    </th>
+                                    <td mat-cell *matCellDef="let row; let i = index">
+                                        {{
+                                        i +
+                                        1 +
+                                        purcreqpaginator.pageIndex * purcreqpaginator.pageSize
+                                        }}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="PO_NO">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                       Purchase Order No
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">{{ row.number }}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="Value">
+                                    <th mat-header-cell *matHeaderCellDef>Value</th>
+                                    <td mat-cell *matCellDef="let row">{{ row.value }}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="Pending">
+                                    <th mat-header-cell *matHeaderCellDef>Pending</th>
+                                    <td mat-cell *matCellDef="let row">{{ row.pending }}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="Completed">
+                                    <th mat-header-cell *matHeaderCellDef>Completed</th>
+                                    <td mat-cell *matCellDef="let row">{{ row.completed }}</td>
+                                </ng-container>
+            
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsList; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsList"></tr>
+                            </table>
+                            <div *ngIf="reaData == true" class="text-center">
+                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                    Loading...
+                                </h4>
+                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                    No Records Found
+                                </h4>
+                            </div>
+                        </div>
+                        <mat-paginator [length]="totalRecords" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                            #purcreqpaginator (page)="onpageevent($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="table table-responsive" mat-table-wrapper>
+                    <div class="example-table-container">
+                        <div  class="d-flex justify-content-start bg-git mb-2">
+                            <img src="assets/greenko/tracking-icon.png"> <h3 class="ml-3 h3-title"><b>Work Order</b></h3>
+                        </div>
+                       <div class="d-flex justify-content-between">
+                        <input type="text" class="dropdownstyles" placeholder="Search Contractor Name" aria-label="Number"
+                        matInput name="ContractorName" (keyup)="filterContractordata($event)"
+                        [(ngModel)]="contractor_name" [matAutocomplete]="auto11" />
+                      <mat-autocomplete autoActiveFirstOption #auto11="matAutocomplete" (optionSelected)="getContactorCode()">
+                        <mat-option *ngFor="let item of contractorData" [value]="item.name">
+                          {{ item.name }}</mat-option>
+                      </mat-autocomplete>
+                              <button mat-icon-button value="Refresh" matTooltip="Refresh"  (click)="clearwoData()"
+                              class="custom-icon-button ml-3">
+                              <span class="material-icons">
+                                  refresh
+                              </span>
+                          </button>
+                       
+                       </div>
+                       <div class="example-container">
+                           <table mat-table [dataSource]="dataSourceList1">
+                               <ng-container matColumnDef="sno">
+                                   <th mat-header-cell *matHeaderCellDef style="width: 8%">
+                                       SNO
+                                   </th>
+                                   <td mat-cell *matCellDef="let row; let i = index">
+                                       {{
+                                       i +
+                                       1 +
+                                       purcreqpaginator.pageIndex * purcreqpaginator.pageSize
+                                       }}
+                                   </td>
+                               </ng-container>
+                               <ng-container matColumnDef="WO_NO">
+                                   <th mat-header-cell *matHeaderCellDef>
+                                      Work Order No
+                                   </th>
+                                   <td mat-cell *matCellDef="let row">{{ row.number }}</td>
+                               </ng-container>
+                               <ng-container matColumnDef="Value">
+                                   <th mat-header-cell *matHeaderCellDef>Value</th>
+                                   <td mat-cell *matCellDef="let row">{{ row.value }}</td>
+                               </ng-container>
+                               <ng-container matColumnDef="Pending">
+                                   <th mat-header-cell *matHeaderCellDef>Pending</th>
+                                   <td mat-cell *matCellDef="let row">{{ row.pending }}</td>
+                               </ng-container>
+                               <ng-container matColumnDef="Completed">
+                                   <th mat-header-cell *matHeaderCellDef>Completed</th>
+                                   <td mat-cell *matCellDef="let row">{{ row.completed }}</td>
+                               </ng-container>
+                               <tr mat-header-row *matHeaderRowDef="displayedColumnsList1; sticky: true"></tr>
+                               <tr mat-row *matRowDef="let row; columns: displayedColumnsList1"></tr>
+                           </table>
+                           <div *ngIf="reaData1 == true" class="text-center">
+                               <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                   Loading...
+                               </h4>
+                               <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                   No Records Found
+                               </h4>
+                           </div>
+                        </div>
+                        <mat-paginator [length]="totalRecords1" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                            #purcreqpaginator (page)="onpageevent1($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-6 text-right">
+                <p class="mb-0 mt-0 version">version 2023.02.02</p>
+            </div> -->
+        </div>
+    </mat-card-content>
+</mat-card>
+<p class="version">Production version:2023.03.02</p>

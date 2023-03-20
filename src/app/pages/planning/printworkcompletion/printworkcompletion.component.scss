@@ -1,0 +1,52 @@
+.printworkorder{
+    background-color: #fff;
+}
+.formbody{
+    margin:10px;
+    padding:10px;
+    // border:2px solid black;
+    // line-height: 11px;
+  font-size: 12px;
+  }
+  p{
+  
+    padding: 2px !important;
+   
+  }
+  hr{
+    border-top: 1px solid black ;
+    // text-align: right;
+    margin-left:22px;
+  }
+  .border{
+    border:1px solid black !important;
+  }
+  .row{
+     margin-right: 15px; 
+    margin-left: 15px;
+  }
+  
+  img{
+    margin-top: 2px;
+  }
+   @media print {
+  .noPrint {
+      display: none !important;
+    }
+  .formbody{
+    line-height: 5px;
+    font-size: 12px;
+    // padding: 7px;
+  }
+  p{
+   margin-top: 10px !important;
+   line-height: 4px;
+  }
+  
+  }
+  input{
+    width: 70px;
+    height: 20px;
+    border: 1px solid black;
+     border-radius: 4px;
+  }

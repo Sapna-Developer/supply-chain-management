@@ -1,0 +1,219 @@
+.inputstyles{
+    padding:5px;
+    width:89%;
+    height: 35px;
+    //margin-top:5px;
+    border-radius: 5px;
+    border:1px solid #b0b0b0;
+}
+.closeicon{
+    float: right;
+    margin-top: -6%;
+}
+table, th, td {
+    border: 1px solid #e5dfdf;
+  }
+  .searchdropdownstyles{
+    width: 89%;
+    height: 95%;
+    border-radius: 5px;
+    background-color: #fff !important; 
+}
+ .searchdropdownstyles:hover{
+     border: 2px solid #000;
+ }
+.dropdownstyles{
+    width: 89%;
+    height: 35px;
+    // height: 56%!important;
+    border-radius: 5px;
+    background-color: #fff !important; 
+}
+.dropdownStyles{
+        width: 89%;
+    height: 118%!important;
+    border-radius: 5px;
+    background-color: #fff !important; 
+}
+.valutiontype{
+    width: 89%;
+    height: 100%;
+    border-radius: 5px;
+    background-color: #fff !important;    
+}
+ .dropdownStyles:hover{
+     border: 2px solid #000;
+ }
+.savebutton{
+    // margin-left: 43%;
+    // margin-top: 3%;
+    height: 33px;
+    // width: 11%;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.12);
+    font-size: medium;
+}
+.searchfield{
+    padding: 0.375rem 0.75rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    outline: none;
+}
+.material-icons{
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    // -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+}
+label {
+    font-weight: 450;
+}
+.matButton {
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    overflow: visible;
+}
+.inputstyles:hover{
+    border: 2px solid #000; 
+ }
+ .nguntouched:hover {
+    border: 2px solid #000;
+ }
+ .dropdownstyles:hover{
+     border: 2px solid #000;
+ }
+ 
+ .savebutton:hover{
+    background-color: whitesmoke;
+  
+ }
+ .input1{
+    height:130%; 
+    width:89%;
+    border-radius: 5px;
+    border-width: thin; 
+}
+.input2{
+    height: 73%; 
+    width: 107%;
+    border-radius: 5px;
+    border-width: thin; 
+}
+.input1:hover{
+    width: 87%;
+    height:130%; 
+    border-radius: 5px;
+    border: 2px solid #000;
+}
+.input2:hover{
+    width: 107%;
+    height: 73%;
+    border-radius: 5px;
+    border: 2px solid #000;
+    
+}
+// .inputdropdown{
+//     height: 102%;
+//     border: none;
+//     margin-bottom: 3%;
+//     margin-top: -37%;
+//     margin-left: 4%;
+// }
+.inputdropdown{
+    margin-top: -4%!important;
+    margin-bottom: 4px!important;
+    margin-left: 1%!important;
+}
+.inputdropdown1{
+    margin-top: -5%;
+    margin-bottom: 9px;
+    margin-left: 2%;
+}
+.uom{
+    margin-top: -13px;
+}
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    color:white;
+    background-color: rgba(0, 0, 0);
+    // border: 5px solid orange
+    }
+    .attachfile{
+        // margin-top: 2.8%;
+        background-color: rgba(0, 0, 0, 0.12);
+        height: 33px;
+      }
+      .mandetory{
+        color:red;
+        font-size: 17px;
+      }
+    .activitylog{
+        font-size: 16px;
+    margin-bottom: 0px;
+    margin-left:5px;
+    }
+    .tablediv{
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    .activitylog{
+        font-size: 16px;
+    margin-bottom: 0px;
+    margin-left:5px;
+    }
+    .headerclass{
+        position: sticky;
+        top: -2px; 
+        background: #e9ecef;
+    }
+ .col-md-1{
+    padding-right: 1px;
+ }
+
+ .disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color:grey
+}
+.enabled{
+    cursor: pointer;
+}

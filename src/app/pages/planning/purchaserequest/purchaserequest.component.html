@@ -1,0 +1,739 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Purchase Request</h4>
+        </div>
+    </div>
+</div> -->
+<div class="purchace-requestTab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Purchase Request
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <form #finalform="ngForm" (ngSubmit)="finalform.form.valid && savefinaldata(finalform)">
+                            <div class="row mb-3">
+                                <div class="col-md-1">
+                                    <button mat-raised-button class="savebutton" style="float:right"
+                                        [disabled]="formdatatotablearray.length==0">{{btn}}</button>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" mat-raised-button class=" attachfile" color="secondary"
+                                        (click)="autoFileUpload2.click()">
+                                        Attach File&nbsp; <mat-icon style="cursor:pointer;font-size:24px">file_upload
+                                        </mat-icon></button>
+                                    <div class="file">
+                                        <input hidden class="form-control-file" name="file" type="file" multiple
+                                            (change)="uploadprfiles($event)" #autoFileUpload2>
+                                        <ng-container *ngIf=" fileUploadUrlspr.length > 0">
+                                            <!-- <span style="margin-left:3px">Selected : {{fileUploadUrlsdmr.length}} files</span>  -->
+                                            <!-- <table>
+                                        <tr class="text-center">
+                                            <th>SNO</th>
+                                            <th>FileName</th>
+                                        </tr>
+                                        <tr *ngFor="let item of filenamearray;let i=index;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item}}</td>
+                                        </tr>
+                                      </table> -->
+                                            <div *ngFor="let item of filenamearray1;let i=index;" style="white-space: nowrap;">{{i+1}}.&nbsp;{{item}}
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-left:5px;">
+                                <h2 *ngIf="editednumber">PR Number:&nbsp;{{editednumber}}</h2>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <label>Company Name<span class="mandetory">*</span></label>
+                                    <select class="dropdownstyles" [(ngModel)]="formdata.companyname"
+                                        name="companyname">
+                                        <option selected disabled>Select One</option>
+                                        <option *ngFor="let item of companyData" [ngValue]="item.name">{{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-2">
+                                    <label>Date<span class="mandetory">*</span></label>
+                                    <input type="date" style="text-transform: uppercase;"
+                                        class="inputstyles form-control" dateFormat="yyyy/mm/dd"
+                                        [(ngModel)]="formdata.date" name="date" #date="ngModel" required>
+                                    <!-- <span class="text-danger"
+                                *ngIf="(date.touched || finalform.submitted) && date.errors?.required">
+                                Date is required
+                            </span> -->
+                                </div>
+                                <div class="col-3">
+                                    <label>Classification<span class="mandetory">*</span></label>
+                                    <input type="text" class="inputstyles" placeholder="Enter Classification"
+                                        [(ngModel)]="formdata.classification" name="classification">
+                                </div>
+                                <div class="col-3">
+                                    <label>PO Duration(In Days)<span class="mandetory">*</span></label>
+                                    <input type="text" placeholder="Enter PO Duration" class="inputstyles"
+                                        [(ngModel)]="formdata.poduration" name="poduration">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                
+                                <div class="col-4">
+                                    <label>Comments<span class="mandetory">*</span></label>
+                                    <input type="text" placeholder="Enter Comments" class="inputstyles"
+                                        [(ngModel)]="formdata.comments" name="comments">
+                                </div>
+                                <div class="col-2">
+                                    <label>Purpose<span class="mandetory">*</span></label>
+                                    <input type="text" placeholder="Enter Purpose" class="inputstyles"
+                                    [(ngModel)]="formdata.purpose" name="purpose">
+                                </div>
+                                <div class="col-3">
+                                    <label>Location<span class="mandetory">*</span></label>
+                                    <input type="text" placeholder="Enter Location" class="inputstyles"
+                                        [(ngModel)]="formdata.location" name="location">
+                                </div>
+                                <div class="col-3">
+                                    <label>Recommended Agency<span class="mandetory">*</span></label>
+                                    <input type="text" placeholder="Enter Recomended Agency" class="inputstyles"
+                                        [(ngModel)]="formdata.recomendedagency" name="recomendedagency">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                    <label>Indenter<span class="mandetory">*</span></label>
+                                    <input type="text" placeholder="Enter Identer" class="inputstyles"
+                                    [(ngModel)]="formdata.identer" name="identer">
+                                </div>
+                                <div class="col-2">
+                                    <label>Remarks<span class="mandetory">*</span></label>
+                                    <input type="text" placeholder="Enter Remarks" class="inputstyles"
+                                        [(ngModel)]="formdata.remarks" name="remarks">
+                                </div>
+                            </div>
+                          
+                        </form>
+                        <div class="row">
+                            <div class="col-12 text-right float-right">
+                                <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button"
+                                    style="background:none;">
+                                    <span class="material-icons"
+                                        (click)="addpurchacerequestdata(purchaerequestformdata)" style="margin-top:9%;">
+                                        add
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row m-t-10">
+                            <div class="col-md-12 col-12">
+                                <div class="table table-responsive" mat-table-wrapper>
+                                    <div class="example-table-container">
+                                        <table mat-table [dataSource]="dataSource">
+                                            <ng-container matColumnDef="lineItem">
+                                                <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                <td mat-cell *matCellDef="let row;let i=index;">{{i+1}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="materialCode">
+                                                <th mat-header-cell *matHeaderCellDef>Material Code</th>
+                                                <td mat-cell *matCellDef="let row">{{row.material_code}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="materialDescription">
+                                                <th mat-header-cell *matHeaderCellDef>Material Description</th>
+                                                <td mat-cell *matCellDef="let row">{{row.material_description}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="uom">
+                                                <th mat-header-cell *matHeaderCellDef>Unit of Measurement</th>
+                                                <td mat-cell *matCellDef="let row">{{row.uom || row.unit_of_measurment}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="unitPrice">
+                                                <th mat-header-cell *matHeaderCellDef>Unit Price</th>
+                                                <td mat-cell *matCellDef="let row">{{row.unitprice || row.unit_price |
+                                                    number:'1.2-2'}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Quantity">
+                                                <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                                                <td mat-cell *matCellDef="let row">{{row.quantity}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="totalPrice">
+                                                <th mat-header-cell *matHeaderCellDef>Total Price</th>
+                                                <td mat-cell *matCellDef="let row">{{(row.unitprice *
+                                                    row.quantity)||row.total_price | number:'1.2-2'}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="itemremarks">
+                                                <th mat-header-cell *matHeaderCellDef>Item Remarks</th>
+                                                <td mat-cell *matCellDef="let row">{{row.itemremarks ||
+                                                    row.item_remarks}}</td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef>Action</th>
+                                                <td mat-cell *matCellDef="let row ; let i=index">
+                                                    <button class="btn" style="border:none">
+                                                        <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                                            class="text-primary"
+                                                            (click)="editpurchaserequestdata(row,i,editpurchaserequestformdata)">
+                                                            edit</mat-icon>
+                                                    </button>
+                                                    <button mat-icon-button
+                                                        style="color: red;border:none;background: none;"
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        (click)="deleterowData(i)">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true">
+                                            </tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                List
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <ng-container>  
+                            <div class="row m-t-10">
+                                <div class="col-4 mt-2 mb-3 d-flex">
+                                    <label class="mt-2">Search&nbsp;Column&nbsp;By:&nbsp;</label>
+                                    <select class="dropdownstyles" name="columnname" [(ngModel)]="columnname" (change)="onChange()">
+                                        <option [value]="undefined" selected disabled>Select Column</option>
+                                        <option value="number">PR Number</option>
+                                        <option value="company_name">Company Name</option>
+                                        <!-- <option value="transfer_type">Transfer Type</option> -->
+                                    </select>
+                                </div>
+                                <div class="col-3 mt-2 mb-3 ">
+                                    <input type="search" class="searchfield inputstyles"  placeholder="Search" [(ngModel)]="searchData" (keyup)="search()">
+                                </div>
+                                <div class="col-md-12 col-12">
+                                    <div class="table table-responsive" mat-table-wrapper>
+                                        <div class="example-table-container">
+                                            <table mat-table [dataSource]="dataSourceList">
+                                                <ng-container matColumnDef="sno">
+                                                    <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                    <td mat-cell *matCellDef="let row;let i=index;">{{(i+1) +
+                                                        (purcreqpaginator.pageIndex *
+                                                        purcreqpaginator.pageSize)}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="MSRNnum">
+                                                    <th mat-header-cell *matHeaderCellDef>PR Number</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.number}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="date">
+                                                    <th mat-header-cell *matHeaderCellDef>Date</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.date | date:'dd-MM-yyyy'}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="cmpnyName">
+                                                    <th mat-header-cell *matHeaderCellDef>Company Name</th>
+                                                    <td mat-cell *matCellDef="let row">{{row.company_name}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                                                    <td mat-cell *matCellDef="let row" class="text-center">
+                                                        <div class="mb-0 ">
+                                                            <button class="material-icons"
+                                                                style="border:none;background: none;cursor: pointer;"
+                                                                (click)="editdata(row,Editmodel)"  matTooltip="Edit">edit
+        
+                                                            </button>
+                                                            <!-- <button mat-icon-button style="color: red;border:none;background: none;"
+                                                            aria-label="Example icon button with a vertical three dot icon"
+                                                            (click)="deletepurreqdata(row, deletedata)"> -->
+                                                            <button class="material-icons"
+                                                                [ngClass]="row.po_status === 'COMPLETED' ? 'disabled' : 'enabled'"
+                                                                style="color:red;border:none;background: none;cursor: pointer;"
+                                                                (click)="deletepurreqdata(row, deletedata)">delete
+                                                                <!-- <mat-icon color="warn" [disabled]="row.po_status=='null'" style="border:none;background: none;cursor: pointer;"
+                                                            (click)="deletepurreqdata(row, deletedata)" >delete
+                                                        </mat-icon>&nbsp; -->
+                                                            </button>
+                                                            <!-- </button> -->
+                                                            <!-- <button 
+                                                        class="savebutton" style="margin-left: 1%;height: 21px;padding-right:33px;font-size: 93%;"
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        > -->
+        
+                                                            <mat-icon (click)="printpurchasereq(row)" style="cursor:pointer;">
+                                                                local_printshop</mat-icon>
+        
+                                                            <!-- </button> -->
+                                                            &nbsp;
+                                                            <mat-icon (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                                                style="cursor:pointer;font-size:24px">file_upload</mat-icon> &nbsp;
+                                                                <mat-icon matTooltip="Approvals" 
+                                                                [ngClass]="row.doc_sign === 'SENT' ? 'disabled' : 'enabled'" (click)="getApprovals(approvalsmodel,row)"
+                                                               > how_to_reg </mat-icon>
+                                                            <!-- <i class="fa fa-paperclip" aria-hidden="true" (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                                                style="cursor:pointer;font-size:16px"></i> -->
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumnsList;sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsList"></tr>
+                                            </table>
+                                            <div *ngIf="reaData==true" class="text-center">
+                                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                                    Loading...
+                                                </h4>
+                                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                                    No Records Found
+                                                </h4>
+                                            </div>
+                                            <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                                [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #purcreqpaginator
+                                                (page)="onpageevent($event)">
+                                            </mat-paginator>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        </mat-card-content>
+                </mat-card>
+               
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Activity Log
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <ng-container>
+                            <!-- <h2 *ngIf="logdata" class="activitylog">Activity Log</h2> -->
+                            <div class="table-responsive mat-table-wrapper">
+                                <div class="example-table-container">
+                                  <table mat-table [dataSource]="dataSourcemainlog">
+                                    <ng-container matColumnDef="sno">
+                                      <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                                        SNO
+                                      </th>
+                                      <td mat-cell *matCellDef="let row; let i = index">
+                                        {{
+                                        i +
+                                        1 +
+                                        masterpaginator.pageIndex *
+                                        masterpaginator.pageSize
+                                        }}
+                                      </td>
+                                    </ng-container>
+                  
+                                    <ng-container matColumnDef="username">
+                                      <th mat-header-cell *matHeaderCellDef style="width:6%;">User Name</th>
+                                      <td mat-cell *matCellDef="let row">
+                                        {{ row.username }}
+                                      </td>
+                                    </ng-container>
+                  
+                                    <ng-container matColumnDef="created_date">
+                                      <th mat-header-cell *matHeaderCellDef style="width:6%;">Created Date</th>
+                                      <td mat-cell *matCellDef="let row">
+                                        {{ row.date_time | date: "dd-MM-yyyy HH:mm:ss" }}
+                                      </td>
+                                    </ng-container>
+                  
+                                    <ng-container matColumnDef="reference_number">
+                                      <th mat-header-cell *matHeaderCellDef style="width: 7%">
+                                        Reference Number
+                                      </th>
+                                      <td mat-cell *matCellDef="let row">
+                                        {{ row.reference_number }}
+                                      </td>
+                                    </ng-container>
+                  
+                                    <ng-container matColumnDef="description">
+                                      <th mat-header-cell *matHeaderCellDef style="width:12%;">
+                                        Description
+                                      </th>
+                                      <td mat-cell *matCellDef="let row">
+                                        {{ row.description }}
+                                      </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="remarks">
+                                      <th mat-header-cell *matHeaderCellDef style="width:12%;">
+                                        Remarks
+                                      </th>
+                                      <td mat-cell *matCellDef="let row">
+                                        {{ row.reason }}
+                                      </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="action">
+                                      <th mat-header-cell *matHeaderCellDef style="width:12%;">
+                                        Action
+                                      </th>
+                                      <td mat-cell *matCellDef="let row">
+                                        {{ row.action }}
+                                      </td>
+                                    </ng-container>
+                  
+                  
+                                    <tr mat-header-row *matHeaderRowDef="activitylogcolumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: activitylogcolumns"></tr>
+                                  </table>
+                                </div>
+                                <div *ngIf="reaDatalog == true" class="text-center">
+                                  <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                    Loading...
+                                  </h4>
+                                  <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                    No Records Found
+                                  </h4>
+                                </div>
+                                <mat-paginator [length]="totalRecordslog" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                                  #masterpaginator (page)="onpageeventlog($event)">
+                                </mat-paginator>
+                              </div>
+                        </ng-container>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+<ng-template #purchaerequestformdata>
+    <div mat-dialog-title class="dialog-title">
+        <div class="row">
+            <div class="col-11">
+                <h2>Add Items</h2>
+            </div>
+            <div class="col-1">
+                <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon float-right"
+                    (click)="closedialogdata()" style="border:none;background:none">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <form #myformdata="ngForm" (ngSubmit)="binddatatotable(myformdata)">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Material Code/Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-10">
+                    <mat-form-field class="dropdown" appearance="none" style="width: 100%;
+                    border: 1px solid rgba(0, 0, 0,0.12);
+                    border-radius: 5px;
+                    height: 52%;
+                    margin-left: 1%;">
+                        <input type="text" class="inputdropdown" placeholder="Search Material Code/Name"
+                            aria-label="Number" matInput name="matcode" [(ngModel)]="dialogdata.matcode"
+                            (keyup)="filterdata($event)" [matAutocomplete]="auto">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                            (optionSelected)="selectedmaterialuom()">
+
+                            <mat-option *ngFor="let item of masterData" [value]="item.system_reference_1">
+                                {{item.system_reference_1}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+               
+            </div>
+            <div class="row" style="margin-top:-2%">
+                <div class="col-md-2">
+                    <label>Unit of Measurement<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" placeholder="Enter UOM" name="uom"
+                        [(ngModel)]="dialogdata.uom">
+                </div>
+                <div class="col-2">
+                    <label>Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="number" class="inputstyles" placeholder="Enter Quantity"
+                        [(ngModel)]="dialogdata.quantity" name="quantity"
+                        (ngModelChange)="this.dialogdata.quantity=+$event;calcresult()">
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <label>Unit Price<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="number" class="inputstyles" placeholder="Enter Unit Price"
+                        [(ngModel)]="dialogdata.unitprice" name="unitprice"
+                        (ngModelChange)="this.dialogdata.unitprice=+$event;calcresult()">
+                </div>
+                <div class="col-2">
+                    <label>Total Price<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="number" class="inputstyles" placeholder="Enter Total Price"
+                        [(ngModel)]="dialogdata.totalprice" name="totalprice" (keypress)="validateNumber($event)">
+                </div>
+                <div class="col-2">
+                    <label>Item Remarks<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" placeholder="Enter Item Remarks"
+                        [(ngModel)]="dialogdata.itemremarks" name="itemremarks">
+                </div>
+            </div>
+
+            <div class="save text-center m-t-20">
+                <button mat-raised-button class="savebutton" [disabled]="!dialogdata.matcode||!dialogdata.itemremarks
+                ||!dialogdata.unitprice||!dialogdata.quantity" style="width:6%">Add</button>
+            </div>
+        </form>
+    </mat-dialog-content><br>
+    <div *ngIf="smsdata" class="dialogdata">
+        <table>
+            <thead>
+                <tr class="tablestyles">
+                    <th>Company Name</th>
+                    <th>Storage Location</th>
+                    <th>
+                        Valuation Type
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <!-- <th>Value</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of smsdata">
+                    <td style="width: 28%;">{{item.company_name}}</td>
+                    <td>{{item.storage_location}}</td>
+                    <td>{{item.valuation_type}}</td>
+                    <td>{{item.quantity}}</td>
+                    <!-- <td>{{item.value | number:'1.2-2'}}</td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+<ng-template #editpurchaserequestformdata>
+    <div mat-dialog-title class="dialog-title">
+        <div class="row">
+            <div class="col-11">
+                <h2>Edit Items</h2>
+            </div>
+            <div class="col-1">
+                <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon float-right"
+                    (click)="closeeditdialogdata()" style="border:none;background:none">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <form #myeditformdata="ngForm" (ngSubmit)="editbindedDatatotable(myeditformdata)">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Material Code/Name<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-10">
+                    <mat-form-field style="width: 100%;
+                    border: 1px solid rgba(0, 0, 0,0.12);
+                    border-radius: 5px;
+                    height: 52%;
+                    margin-left: 1%;" appearance="none">
+                        <input type="text" class="inputdropdown" placeholder="Search Material Code/Name"
+                            aria-label="Number" matInput name="matcode" [(ngModel)]="editeddialogdata.matcode"
+                            (keyup)="editfilterdata($event)" [matAutocomplete]="auto">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                            (optionSelected)="selectedmaterialuomedit()">
+
+                            <mat-option *ngFor="let item of masterData" [value]="item.system_reference_1">
+                                {{item.system_reference_1}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                       </div>
+            <div class="row" style="margin-top:-2%">
+                <div class="col-md-2">
+                    <label>Unit of Measurement<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="inputstyles" placeholder="Enter UOM" name="uom"
+                        [(ngModel)]="editeddialogdata.uom">
+                </div>
+
+                <div class="col-2">
+                    <label>Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" placeholder="Enter Quantity"
+                        [(ngModel)]="editeddialogdata.quantity" name="quantity"
+                        (ngModelChange)="this.editeddialogdata.quantity=+$event;calcresultedit()">
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <label>Unit Price<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" placeholder="Enter Unit Price"
+                        [(ngModel)]="editeddialogdata.unitprice" name="unitprice"
+                        (ngModelChange)="this.editeddialogdata.unitprice=+$event;calcresultedit()">
+                </div>
+                <div class="col-2">
+                    <label>Total Price<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" placeholder="Enter Total Price"
+                        [(ngModel)]="editeddialogdata.totalprice" name="totalprice" (keypress)="validateNumber($event)">
+                </div>
+                <div class="col-2">
+                    <label>Item Remarks<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" placeholder="Enter Item Remarks"
+                        [(ngModel)]="editeddialogdata.itemremarks" name="itemremarks">
+                </div>
+            </div>
+
+            <div class="save text-center m-t-20">
+                <button mat-raised-button class="savebutton" [disabled]="!editeddialogdata.matcode"
+                    style="width:8%">Update</button>
+            </div>
+        </form>
+    </mat-dialog-content>
+</ng-template>
+
+<ng-template #deletedata>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="padding-top:5px;">Reason</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                    [(ngModel)]="deletemodel.reason" style="width: 181%;">
+            </div>
+        </div>
+    </div><br>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" style="background: transparent;">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteItem()" class="matButton"
+            [disabled]="!deletemodel.reason">Delete</button>
+    </div>
+</ng-template>
+<ng-template #fileuploadmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Purchase Request: {{prnumber}}</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon" (click)="closemodel()"
+            style="border:none;background:none;margin-top: -9%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div mat-dialog-content class="row">
+        <div *ngIf="filedata">
+            <!-- <span *ngFor="let item of filedata"> -->
+            <!-- <span *ngFor="let item of filedata"> <a href="{{item.file_path}}">{{item.file_path}}</a></span> -->
+            <!-- <h4>View File:&nbsp;&nbsp; <i class="fas fa-eye text-cyan m-r-20 " 
+    style="cursor: pointer;" (click)="viewDoc(item)"></i></h4> -->
+            <table>
+                <thead style="background: #e9ecef;">
+                    <!-- <tr> -->
+                    <th>Cread By</th>
+                    <th>Created Date</th>
+                    <th>File Name</th>
+                    <th>Action</th>
+                    <!-- </tr> -->
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of filedata">
+                        <td>{{item.created_by}}</td>
+                        <td>{{item.created_date}}</td>
+                        <td>{{item.file_name}} &nbsp;&nbsp;&nbsp;<i class="fas fa-eye text-cyan m-r-20 "
+                                style="cursor: pointer;" title="View File" (click)="viewDoc(item)"></i></td>
+                        <td>
+                            <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                                aria-label="Example icon button with a vertical three dot icon"
+                                (click)="deleterowfile(deletefileModel,item)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <a style="cursor: pointer;" (click)="viewDoc(item)">{{item.file_name}}</a> -->
+            <!-- </span> -->
+        </div>
+    </div><br>
+    <button mat-raised-button type="button" (click)="autoFileUpload1.click()">Attach File</button>
+    <div class="file">
+        <input hidden class="form-control-file" name="file" type="file" multiple
+            (change)="uploadWbsFile($event);showContent(i);" #autoFileUpload1 />
+        <ng-container *ngIf="fileUploadUrls.length>0">
+            <div *ngFor="let item of filenamearray;let i=index;">{{i+1}}.&nbsp;{{item}}</div>
+            <!-- <span >{{createNewFile.fileName}}</span>   -->
+        </ng-container>
+    </div>
+</ng-template>
+<ng-template #deletefileModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete file?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteexistingfile()" class="matButton">Delete</button>
+    </div>
+</ng-template>
+<ng-template #Editmodel>
+    <h1 mat-dialog-title></h1>
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="padding-top:5px;">Reason</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                    [(ngModel)]="editModel.reason" style="width: 181%;">
+            </div>
+        </div>
+    </div><br>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="saveeditreason()" class="matButton"
+            [disabled]="!editModel.reason">Submit</button>
+    </div>
+</ng-template>
+
+<!-- Approvals -->
+<ng-template #approvalsmodel> 
+    <span class="d-flex justify-content-between">
+        <h1 mat-dialog-title>Document Number:{{documnet_nodata}}</h1>
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon">close</mat-icon>
+        </button>
+    </span>
+    <div mat-dialog-content>
+        <p>Do you confirm to proceed for Signatures</p>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial class="matButton" (click)="getConfirmData()" >
+            Confirm
+        </button>&nbsp;
+        <button mat-button mat-dialog-close class="matButton"  style="background: transparent">
+            Cancel</button>
+    </div>
+</ng-template>

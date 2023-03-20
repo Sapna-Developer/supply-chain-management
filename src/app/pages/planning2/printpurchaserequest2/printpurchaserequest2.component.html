@@ -1,0 +1,210 @@
+<mat-card>
+    <div class="print" style="margin-left: 53px">
+      <button [print]="['demo', config]" class="btn btn-info" style="margin-right: 1%; margin-left: 1%">
+        Print
+      </button>
+      <button (click)="backtodmr()" class="btn btn-info">Back</button>
+    </div>
+    <div class="formbody" id="demo">
+      <div class="container-fluid justify-content-center" style="margin-top: -24px">
+        <div class="row justify-content-center">
+          <table class="table table-bordered">
+            <tr class="text-center">
+              <td colspan="12" class="border">
+                <div class="row justify-content-center text-center">
+                  <div class="col">
+                    <h3><b>PURCHASE ORDER REQUISITION</b></h3>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <td colspan="5" class="border">
+              <div class="row">
+                <p>
+                  <span><b>Location/Stretch: </b> </span>
+                  <span *ngFor="let user of userData">{{ user.location }}</span>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+                  <span><b>Name of the Employer: </b> </span>
+                  <span *ngFor="let user of userData">{{
+                    user.company_name
+                    }}</span>
+                </p>
+              </div>
+            </td>
+            <td colspan="7" class="border">
+              <div class="row">
+                <p>
+                  <span><b>Requisition Ref No & Date: </b> </span>
+                  <span *ngFor="let user of userData">{{ user.number }}</span>&nbsp;&&nbsp;
+                  <span *ngFor="let user of userData">{{
+                    user.date | date: "dd-MM-yyyy"
+                    }}</span>
+                </p>
+              </div>
+            </td>
+            <tr>
+              <td colspan="5" class="border">
+                <div class="row">
+                  <p>
+                    <span><b>Classification: </b> </span>
+                    <span *ngFor="let user of userData">{{
+                      user.classification
+                      }}</span>
+                  </p>
+                </div>
+              </td>
+              <td colspan="7" class="border">
+                <div class="row">
+                  <p>
+                    <span><b>Purchase Order Duration: </b> </span>
+                    <span *ngFor="let user of userData">{{
+                      user.po_duration
+                      }}</span>
+                  </p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="5" class="border">
+                <div class="row">
+                  <p>
+                    <span><b>Purpose in Brief: </b> </span>
+                    <span *ngFor="let user of userData">{{ user.purpose }}</span>
+                  </p>
+                </div>
+              </td>
+              <td colspan="7" class="border">
+                <div class="row">
+                  <p>
+                    <span><b>Recommended Agency: </b> </span>
+                    <span *ngFor="let user of userData">{{
+                      user.recommended_agency
+                      }}</span>
+                  </p>
+                </div>
+              </td>
+            </tr>
+  
+            <tr class="center">
+              <th scope="col" class="border" style="width: 100px">S. No.</th>
+              <th scope="col" class="border">Service Code</th>
+              <th scope="col" class="border">Service Description</th>
+              <th scope="col" class="border">UoM</th>
+              <th scope="col" class="border">
+                Required
+                <p>Quantity</p>
+              </th>
+              <th scope="col" class="border">
+                Estimated Rate
+                <p>(In Rs)</p>
+              </th>
+              <th scope="col" class="border">
+                Estimated Cost
+                <p>(In Rs)</p>
+              </th>
+              <th scope="col" class="border" style="width: 166px">Remarks</th>
+            </tr>
+  
+            <tr scope="row" *ngFor="let user of table; let i = index">
+              <td class="center border">{{ i + 1 }}</td>
+              <td class="border">{{ user.material_code }}</td>
+              <td class="border">{{ user.material_description }}</td>
+              <td class="center border">{{ user.unit_of_measurment }}</td>
+              <td class="right border">{{ user.quantity.toFixed(2) }}</td>
+              <td class="right border">{{ user.unit_price.toFixed(2) }}</td>
+              <td class="right border">{{ user.total_price.toFixed(2) }}</td>
+  
+              <td class="center border" rowspan="">
+                {{ user.item_remarks }}
+              </td>
+            </tr>
+  
+            <tr class="text-center">
+              <td colspan="6" class="border">
+                <div class="row justify-content-center text-center">
+                  <div class="col right"><b>Total Estimated Cost</b></div>
+                </div>
+              </td>
+              <td colspan="2" class="border">
+                <div class="row justify-content-center text-center">
+                  <div class="col text-right">
+                    <b>&#x20b9; {{ total | currency: "INR":"" }}</b>
+                  </div>
+                </div>
+              </td>
+              <!-- <td colspan="1" class="border"></td> -->
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row border" style="
+      margin-left: 0px;
+      margin-right: 0px;border-top:none !important;margin-top:-17px !important
+  ">
+        <div class="col-4 " style="padding-top:7%;border-right:1px solid #000"></div>
+        <div class="col-4 " style="padding-top:7%;border-right:1px solid #000"></div>
+        <div class="col-4 " style="padding-top:7%;"></div>
+      </div>
+      <div class="row border" style="
+      margin-left: 0px;
+      margin-right: 0px;border-top:none !important
+  ">
+        <div class="col-4 " style="border-right:1px solid #000">
+          <p><b>Date : </b></p>
+        </div>
+        <div class="col-4 " style="border-right:1px solid #000">
+          <p><b>Date : </b></p>
+        </div>
+        <div class="col-4 ">
+          <p><b>Date : </b></p>
+        </div>
+      </div>
+      <div class="row border" style="
+      margin-left: 0px;
+      margin-right: 0px;border-top:none !important
+  ">
+        <div class="col-4 " style="padding-top:7%;border-right:1px solid #000"></div>
+        <div class="col-4 " style="padding-top:7%;border-right:1px solid #000"></div>
+        <div class="col-4 " style="padding-top:7%"></div>
+      </div>
+      <div class="row border" style="
+      margin-left: 0px;
+      margin-right: 0px;border-top:none !important
+  ">
+        <div class="col-4 " style="border-right:1px solid #000">
+          <p><b>Date : </b></p>
+        </div>
+        <div class="col-4 " style="border-right:1px solid #000">
+          <p><b>Date : </b></p>
+        </div>
+        <div class="col-4 ">
+          <p><b>Date : </b></p>
+        </div>
+      </div>
+      <div class="row border" style="
+      margin-left: 0px;
+      margin-right: 0px;border-top:none !important
+  ">
+        <div class="col-4 " style="padding-top:7%;border-right:1px solid #000"></div>
+        <div class="col-4 " style="padding-top:7%;border-right:1px solid #000"></div>
+        <div class="col-4 " style="padding-top:7%"></div>
+      </div>
+      <div class="row border" style="
+      margin-left: 0px;
+      margin-right: 0px;border-top:none !important
+  ">
+        <div class="col-4 " style="border-right:1px solid #000">
+          <p><b>Date : </b></p>
+        </div>
+        <div class="col-4 " style="border-right:1px solid #000">
+          <p><b>Date : </b></p>
+        </div>
+        <div class="col-4">
+          <p><b>Date : </b></p>
+        </div>
+      </div>
+    </div>
+  </mat-card>

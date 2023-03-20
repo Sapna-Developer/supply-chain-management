@@ -1,0 +1,113 @@
+<div class="row p-10">
+    <div class="col-12 col-md-10 float-right text-left">
+        All Roles
+    </div>
+    <div class="col-12 col-md-2 float-right text-right">
+        <button mat-icon-button value="Add" matTooltip="Add" (click)="addNew(content)" class="custom-icon-button m-r-10"
+            *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_SETTINGS'])">
+            <span class="material-icons">
+                add
+            </span>
+        </button>
+
+        <button mat-icon-button value="Refresh" matTooltip="Refresh" (click)="getAll()" class="custom-icon-button">
+            <span class="material-icons">
+                refresh
+            </span>
+        </button>
+    </div>
+
+</div>
+
+<ng-container>
+
+    <div class="row p-t-10">
+        <div class="col-12 col-md-12">
+            <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar>
+            <div class="table-responsive mat-table-wrapper">
+                <div class="example-table-container">
+                    <table mat-table [dataSource]="tableData$">
+
+
+                        <ng-container matColumnDef="sno">
+                            <th mat-header-cell *matHeaderCellDef>SNO#</th>
+                            <td mat-cell *matCellDef="let row;let i=index;">
+                                {{i+1}}
+
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef>Role</th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.role}}
+
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="created_by">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Created By
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.created_by}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="created_date">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Created At
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.created_date | date}}
+                            </td>
+                        </ng-container>
+
+
+
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                </div>
+
+
+                <ng-container *ngIf="tableData$.length > 0; then loadPlanData; else noRecords"></ng-container>
+
+                <ng-template #loadPlanData>
+                    <!-- <mat-paginator *ngIf="tableData$.length > 0" [length]="totalRecords"
+                                [pageSize]="recordsPerPage" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+                                (page)="pageChanged($event)">
+                            </mat-paginator> -->
+                </ng-template>
+
+                <ng-template #noRecords>
+                    <div *ngIf="tableData$.length <= 0" class="text-center">
+                        <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                            Loading...
+                        </h4>
+                        <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                            No Data Found
+                        </h4>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #content>
+    <h3 mat-dialog-title>Add New Role</h3>
+    <div mat-dialog-content>
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Role</mat-label>
+            <input matInput [(ngModel)]="addValue" required>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>No Thanks</button>
+        <button mat-button cdkFocusInitial [disabled]="!addValue" (click)="updateNew()">Ok</button>
+    </div>
+
+</ng-template>

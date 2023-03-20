@@ -1,0 +1,295 @@
+<mat-card>
+  <div class="print" style="margin-left: 53px">
+    <!-- *ngIf="printstatus===true" -->
+    <button   [print]="['demo', config]" class="btn btn-info" style="margin-right: 1%; margin-left: 1%">
+      Print
+    </button>
+    <button (click)="backtodmr()" class="btn btn-info">Back</button>
+  </div>
+  <div class="formbody" id="demo">
+    <div class="container-fluid justify-content-center" style="margin-top: -24px">
+      <div class="row justify-content-center">
+        <table class="table table-bordered">
+          <tr class="text-center">
+            <td colspan="9" class="border">
+              <div class="row justify-content-center text-center mt-3">
+                <div class="col text-center">
+                       <h3><b>PURCHASE ORDER REQUISITION</b></h3>
+                </div>
+              </div>
+            </td>
+            <td class="border text-center" colspan="3">      
+              <ngx-qrcode *ngIf="data1"
+              [elementType]="elementType" [width]="80"  
+              [errorCorrectionLevel]="correctionLevel" 
+              [value]="data1"
+              alt="Demo QR Code"
+              cssClass="bshadow">
+            </ngx-qrcode> 
+            <ngx-qrcode *ngIf="document_no"
+            [elementType]="elementType" [width]="80"  
+            [errorCorrectionLevel]="correctionLevel" 
+            [value]="document_no"
+            alt="Demo QR Code"
+            cssClass="bshadow">
+          </ngx-qrcode> 
+            </td>
+          </tr>
+          <td colspan="5" class="border">
+            <div class="row">
+              <p>
+                <span><b>Location/Stretch: </b> </span>
+                <span *ngFor="let user of userData">{{ user.location }}</span>
+              </p>
+            </div>
+            <div class="row">
+              <p>
+                <span><b>Name of the Employer: </b> </span>
+                <span *ngFor="let user of userData">{{
+                  user.company_name
+                  }}</span>
+              </p>
+            </div>
+          </td>
+          <td colspan="7" class="border">
+            <div class="row">
+              <p>
+                <span><b>Requisition Ref No & Date: </b> </span>
+                <span *ngFor="let user of userData">{{ user.number }}</span>&nbsp;&&nbsp;
+                <span *ngFor="let user of userData">{{
+                  user.date | date: "dd-MM-yyyy"
+                  }}</span>
+              </p>
+            </div>
+          </td>
+          <tr>
+            <td colspan="5" class="border">
+              <div class="row">
+                <p>
+                  <span><b>Classification: </b> </span>
+                  <span *ngFor="let user of userData">{{
+                    user.classification
+                    }}</span>
+                </p>
+              </div>
+            </td>
+            <td colspan="7" class="border">
+              <div class="row">
+                <p>
+                  <span><b>Purchase Order Duration: </b> </span>
+                  <span *ngFor="let user of userData">{{
+                    user.po_duration
+                    }}</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" class="border">
+              <div class="row">
+                <p>
+                  <span><b>Purpose in Brief: </b> </span>
+                  <span *ngFor="let user of userData">{{ user.purpose }}</span>
+                </p>
+              </div>
+            </td>
+            <td colspan="7" class="border">
+              <div class="row">
+                <p>
+                  <span><b>Recommended Agency: </b> </span>
+                  <span *ngFor="let user of userData">{{
+                    user.recommended_agency
+                    }}</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="center">
+            <th  class="border" style="width: 100px">S. No.</th>
+            <th class="border">Service Code</th>
+            <th colspan="2"  class="border">Service Description</th>
+            <th class="border">UoM</th>
+            <th class="border">
+              Required
+              <p>Quantity</p>
+            </th>
+            <th  class="border">
+              Estimated Rate
+              <p>(In Rs)</p>
+            </th>
+            <th class="border">
+              Estimated Cost
+              <p>(In Rs)</p>
+            </th>
+            <th  class="border" colspan="2" >Remarks</th>
+          </tr>
+
+          <tr scope="row" *ngFor="let user of table; let i = index">
+            <td class="center border">{{ i + 1 }}</td>
+            <td class="border">{{ user.material_code }}</td>
+            <td class="border" colspan="2">{{ user.material_description }}</td>
+            <td class="center border">{{ user.unit_of_measurment }}</td>
+            <td class="right border">{{ user.quantity.toFixed(2) }}</td>
+            <td class="right border">{{ user.unit_price.toFixed(2) }}</td>
+            <td class="right border">{{ user.total_price.toFixed(2) }}</td>
+
+            <td class="center border" colspan="2" >
+              {{ user.item_remarks }}
+            </td>
+          </tr> 
+
+          <tr class="text-center">
+            <td colspan="7" class="border">
+              <div class="row justify-content-center text-center">
+                <div class="col right"><b>Total Estimated Cost</b></div>
+              </div>
+            </td>
+            <td colspan="5" class="border">
+              <div class="row justify-content-center text-center">
+                <div class="col text-right">
+                  <b>&#x20b9; {{ total | currency: "INR":"" }}</b>
+                </div>
+              </div>
+            </td>
+            <!-- <td colspan="1" class="border"></td> -->
+          </tr>
+          <!-- <tr *ngIf="!signStatus">
+          
+            <th colspan="4"  class="border" *ngFor="let item of SignData">
+              <img *ngIf="item.signature!==null" [src]="item.signature" class="sign-width" />
+              <p class="ml-1" *ngIf="item.signbtn===false&&item.signature===null">Need to be Signature</p>
+              <button type="button" class="btn btn-custom" *ngIf="item.signbtn===true&&item.signature===null"
+                (click)="getSignatureView(item,viewSignmodel)">Sign</button>
+              <p class="ml-1 ">{{item.updated_by}}</p>
+              <p class="ml-1 ">{{item.description}}</p>
+           </th>
+          
+          </tr>
+          <tr *ngIf="signStatus">
+          
+            <th  colspan="4"  class="border" *ngFor="let item of SignData">
+              <img [src]="item.signature" class="sign-width" />
+              <p class="ml-1 ">{{item.updated_by}}</p>
+              <p class="ml-1 ">{{item.description}}</p>
+            </th>
+          </tr> -->
+        </table>
+      </div>
+      <div class="row padding1  align-items-center  mt-5" *ngIf="signStatus "
+        style="margin-bottom: 10%;">
+        <div class="col-4"   *ngFor="let item of SignData">
+            <!-- <span  *ngIf="item.description!== 'Recommanded by' &&  item.description!=='Approved by' "> -->
+          <img [src]="item.signature" class="sign-width" />
+          <p class="ml-1 ">{{item.updated_by}}</p>
+          <p class="ml-1 ">{{item.description}}</p>
+        <!-- </span> -->
+        </div>
+       
+      </div>
+      <div class="row padding1  align-items-center   mt-5" *ngIf="!signStatus "
+        style=" margin-bottom: 10%;"  >
+      <div class="col-4"  *ngFor="let item of SignData" >
+        <img *ngIf="item.signature!==null" [src]="item.signature" class="sign-width" />
+        <p class="ml-1" *ngIf="item.signbtn===false&&item.signature===null">Need to be Signature</p>
+        <span>
+            <button type="button" class="btn btn-custom mr-3" *ngIf="item.signbtn===true&&item.signature===null"
+              (click)="getSignatureView(item,viewSignmodel)">Sign</button>
+            <button type="button" class="btn btn-custom" *ngIf="item.signbtn===true&&item.signature===null"
+            (click)="deleteItem(row,deleteitemofList)">Cancel</button>
+        </span>
+        <p class="ml-1 ">{{item.updated_by}}</p>
+        <p class="ml-1 " >{{item.description}}</p>
+      </div>
+    
+    </div>
+    </div>
+</div>
+</mat-card>
+    <!-- model -->
+<ng-template #viewSignmodel>
+  <h1 mat-dialog-title>View Signature</h1>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-12 text-center">
+        <img [src]="Viewsign" class="sign-width" />
+      </div>
+    </div>
+  </div><br>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+    <button mat-button cdkFocusInitial (click)="SignatureFile()" class="matButton"
+      [disabled]="!Viewsign">Confirm</button>
+  </div>
+</ng-template>
+
+  <!-- Cancel -->
+  <ng-template #deleteitemofList>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+        <div class="row">
+            <div class="col-md-12">
+                <label style="padding-top: 5px">Reason</label>
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                    [(ngModel)]="deletemodel.reason" style="width: 100%" />
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+            Close</button>&nbsp;
+        <button  mat-button cdkFocusInitial (click)="deleteFile()" class="matButton" [disabled]="!deletemodel.reason">
+            Delete
+        </button>
+    </div>
+</ng-template>
+<ng-template #deletedocsigned>
+    <span class="d-flex justify-content-between">
+        <h1 mat-dialog-title>Document Signed Already</h1>
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon">close</mat-icon>
+        </button>
+    </span>
+    <div mat-dialog-content>
+        <p>Still want to delete ? </p>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial class="matButton" (click)="deleteSeleted(deletedocsigneddata)" >
+            Yes
+        </button>&nbsp;
+        <button mat-button mat-dialog-close class="matButton"  style="background: transparent">
+            No</button>
+    </div>
+</ng-template>
+
+<ng-template #deletedocsigneddata>
+    <span class="d-flex justify-content-between">
+        <h1 mat-dialog-title>&nbsp;</h1>
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon">close</mat-icon>
+        </button>
+    </span>
+    <div mat-dialog-content>
+       <p><b>Document Number :</b> {{deleteNumber}}</p>
+       <div class="row">
+        <div class="col-md-12">
+            <label style="padding-top: 5px">Reason</label>
+            <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                [(ngModel)]="deletemodel.reason" style="width: 100%" />
+        </div>
+        <div class="col-md-12">
+            <label style="padding-top: 5px">Password</label>
+            <input type="text" placeholder="Enter Password" class="inputstyles" name="pwd"
+                [(ngModel)]="deletemodel.pwd" style="width: 100%" />
+        </div>
+    </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial class="matButton" (click)="deleteFile()"  [disabled]="!deletemodel.reason">
+            Confirm
+        </button>
+        <!-- <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+            No</button> -->
+    </div>
+</ng-template>

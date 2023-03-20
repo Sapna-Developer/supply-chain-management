@@ -1,0 +1,490 @@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper" [ngClass]="{'show-sidebar': showMobileMenu}" [dir]="options.dir"
+  [attr.data-theme]="options.theme" [attr.data-layout]="options.layout" [attr.data-sidebartype]="options.sidebartype"
+  [attr.data-sidebar-position]="options.sidebarpos" [attr.data-header-position]="options.headerpos"
+  [attr.data-boxed-layout]="options.boxed">
+  <!-- ============================================================== -->
+  <!-- Topbar header - style you can find in topbar.scss -->
+  <!-- ============================================================== -->
+  <header class="topbar" [attr.data-navbarbg]="options.navbarbg">
+    <nav class="d-flex top-navbar navbar-expand-lg"
+      [ngClass]="(options.navbarbg=='skin6')?'navbar-light':'navbar-dark'">
+      <div class="navbar-header" [ngClass]="(expandLogo)?'expand-logo':''" [attr.data-logobg]="options.logobg">
+        <!-- This is for the sidebar toggle which is visible on mobile only -->
+        <a (click)="showMobileMenu = !showMobileMenu" class="nav-toggler waves-effect waves-light d-block d-lg-none"
+          href="javascript:void(0)">
+          <i class="ti-menu"></i>
+          <!-- <i [ngClass]="(showMobileMenu)?'ti-close':'ti-menu'"></i> -->
+        </a>
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <a class="navbar-brand" href="javascript:void(0)" [routerLink]="'/maindashboard'">
+          <!-- Logo icon -->
+          <b class="logo-icon">
+            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+            <!-- Dark Logo icon -->
+            <img *ngIf="companyName=='GREENKO' || 'Digitele' || 'Digitele Networks'"
+              src="assets/greenko/newlogo_greeenko_eps.svg" width="150" alt="homepage" class="dark-logo" />
+            <!-- Light Logo icon -->
+            <img *ngIf="companyName=='GREENKO' || 'Digitele' || 'Digitele Networks'"
+              src="assets/greenko/newlogo_greeenko_eps.svg" width="150" alt="homepage" class="light-logo" />
+          </b>
+          <b class="logo-icon">
+            <h3 *ngIf="companyName=='MEIL-HES'" style="margin-top:18px"><b>MEIL-HES<br>(Pinnapuram PSP Project) JV</b>
+            </h3>
+          </b>
+          <!--End Logo icon -->
+          <!-- Logo text -->
+          <span *ngIf="companyName=='GREENKO' || 'Digitele' || 'Digitele Networks'" class="logo-text"> | GEPS
+            <!-- <img src="assets/greenko/logo_greeenko_eps.svg" alt="homepage" class="dark-logo" />
+            <img src="assets/greenko/logo_greeenko_eps.svg" class="light-logo" alt="homepage" /> -->
+          </span>
+          <!-- <span *ngIf="companyName=='MEIL-HES'" class="logo-text"> | MEIL-HES
+          </span> -->
+        </a>
+        <a class="navbar-brand " href="javascript:void(0)"> <i class='ti-menu' (click)="toggleNavBar()"></i></a>
+        <!-- ============================================================== -->
+        <!-- End Logo -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Toggle which is visible on mobile only -->
+        <!-- ============================================================== -->
+        <a class="topbartoggler d-block d-lg-none waves-effect waves-light" href="javascript:void(0)"
+          (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent">
+          <i class="ti-more"></i>
+        </a>
+      </div>
+      <!-- ============================================================== -->
+      <!-- End Logo -->
+      <!-- ============================================================== -->
+      <div class="navbar-collapse collapse" id="navbarSupportedContent" [attr.data-navbarbg]="options.navbarbg"
+        [ngbCollapse]="!isCollapsed">
+        <!-- Vertical Header -->
+        <div *ngIf="options.layout==='horizontal'" class="w-100">
+          <app-horizontal-navigation class="w-100 d-flex align-items-center justify-content-between">
+          </app-horizontal-navigation>
+        </div>
+
+        <!-- Horizontal Header -->
+        <div *ngIf="options.layout==='vertical'" class="w-100 ml-4 ">
+          <ul class="navbar-nav float-left mr-auto search-bar mt-2">
+            <li class="nav-item" style="width: 260px;" *ngIf="showSearch">
+              <mat-form-field appearance="outline" [floatLabel]="'always'" class="w-full w-100 ">
+                <!-- <mat-label>Search Projects</mat-label> -->
+                <input matInput type="text" [(ngModel)]="searchValue" placeholder="Search Projects"
+                  (input)="filterProjects()">
+                <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="searchValue='';filterProjects()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </li>
+
+          </ul>
+          <ul class="navbar-nav float-right">
+            <!-- <ul class="list-style-none"> -->
+              <!-- <button class="mt-3" mat-button   matTooltip="UserName"
+              placement="left"><i class="fa fa-user"></i>&nbsp;<span class="usernameDetails">{{userDetails.username}}</span></button> -->
+              <!-- <li class="nav-item dropdown  top-navbar" ngbDropdown placement="bottom-right">
+                <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+                  href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"><i
+                      class="fas fa-user mt-1"></i> madan.G</button>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right user-dd pb-0 " ngbDropdownMenu>
+                  <span class="with-arrow">
+                    <span class="bg-success"></span>
+                  </span>
+                  <a class="dropdown-item " href="javascript:void(0)">
+                    dropdown</a>
+                  <a class="dropdown-item" href="javascript:void(0)">
+                    dropdown</a>
+                </div>
+              </li> -->
+            <!-- </ul> -->
+            <ul class="list-style-none">
+              <!-- <button class="mt-3" mat-button   matTooltip="Projects" (click)="projectsrouting()"
+              placement="left"  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_PROJECTS'])"><i class="fa fa-home"></i></button> -->
+
+              <button class="mt-3" mat-button  [matMenuTriggerFor]="dashBoards" matTooltip="Dashboards" placement="left"   *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_PROJECTS','PROJECT_DASHBOARD','GAMS_DASHBOARD'])"><i
+                class="fa fa-home"></i></button>
+                <mat-menu #dashBoards="matMenu">
+                  <button mat-menu-item  (click)="projectsrouting()"  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_PROJECTS'])">Projects</button>
+                  <button mat-menu-item (click)="gamdashboardrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GAMS_DASHBOARD'])">GAMS Dashboard</button>
+                  <button mat-menu-item (click)="projectdashboardrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','PROJECT_DASHBOARD'])">PROJECT Dashboard</button>
+                </mat-menu>
+              <!-- <li class="nav-item dropdown  top-navbar" ngbDropdown placement="bottom-right">
+                <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+                  href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" matTooltip="Projects"
+                    placement="left"><i class="fa fa-home mt-1 "></i></button>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right user-dd  pb-0 " ngbDropdownMenu>
+                  <span class="with-arrow">
+                    <span class="bg-success"></span>
+                  </span>
+                  <a class="dropdown-item " href="javascript:void(0)">
+                    dropdown</a>
+                  <a class="dropdown-item" href="javascript:void(0)">
+                    dropdown</a>
+                </div>
+              </li> -->
+            </ul>
+           
+        <ul class="list-style-none">
+          <button class="mt-3" mat-button  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','DAILY_MATERIAL_RECEIPT','QUALITY_CHECK','GOODS_RECEIPT','GOODS_ISSUE','GOODS_RETURN','DELIVERY_CHALLAN','OUT_GATE_PASS_RGP','OUT_GATE_PASS_NRGP','INVENTORY_REPORTS','GSS_REPORTS','GATE_INWARD','GATE_OUTWARD_RGP','GATE_OUTWARD_NRGP','GATE_OUTWARD_GI',
+          'PURCHASE_ORDER','PO_EXCEL_UPLOAD','GOODS_ISSUE_REQUEST_V2','GATE_INWARD_V2','GATE_OUTWARD_RGP_V2','GATE_OUTWARD_NRGP_V2','GATE_OUTWARD_GI_V2','INVENTORY_REPORTS_V2','GSS_REPORTS_V2' ])" [matMenuTriggerFor]="versions" matTooltip="Version" placement="left"><i
+              class="fa fa-folder-open"></i></button>
+          <mat-menu #versions="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="version1"
+            *ngIf="authService.checkUserPermission(['SUPER_ADMIN','DAILY_MATERIAL_RECEIPT','QUALITY_CHECK','GOODS_RECEIPT','GOODS_ISSUE','GOODS_RETURN','DELIVERY_CHALLAN','OUT_GATE_PASS_RGP','OUT_GATE_PASS_NRGP','INVENTORY_REPORTS','GSS_REPORTS','GATE_INWARD','GATE_OUTWARD_RGP','GATE_OUTWARD_NRGP','GATE_OUTWARD_GI',
+            'PURCHASE_ORDER','PO_EXCEL_UPLOAD' ])">Version 1</button>
+            <button mat-menu-item [matMenuTriggerFor]="version2"  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GOODS_ISSUE_REQUEST_V2','GATE_INWARD_V2','GATE_OUTWARD_RGP_V2','GATE_OUTWARD_NRGP_V2','GATE_OUTWARD_GI_V2','INVENTORY_REPORTS_V2','GSS_REPORTS_V2'])">Version 2</button>
+          </mat-menu>
+          <mat-menu #version1="matMenu">
+            <!-- <div *ngFor="let item of VersiondropdownData">
+              <button mat-menu-item [matMenuTriggerFor]="item.trigger">{{item.menu}}</button>
+            </div> -->
+            <button mat-menu-item [matMenuTriggerFor]="v1Inventory" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','DAILY_MATERIAL_RECEIPT','QUALITY_CHECK','GOODS_RECEIPT','GOODS_ISSUE','GOODS_RETURN','DELIVERY_CHALLAN','OUT_GATE_PASS_RGP','OUT_GATE_PASS_NRGP'])">Stores</button>
+            <button mat-menu-item [matMenuTriggerFor]="v1planning" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','PURCHASE_REQUEST', 'WORK_REQUEST'])">Planning</button>
+            <button mat-menu-item [matMenuTriggerFor]="v1reports" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','INVENTORY_REPORTS','GSS_REPORTS', 'PO_REPORTS'])">Reports</button>
+            <button mat-menu-item [matMenuTriggerFor]="v1gss" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_INWARD','GATE_OUTWARD_RGP','GATE_OUTWARD_NRGP','GATE_OUTWARD_GI'])">GSS</button>
+            <button mat-menu-item [matMenuTriggerFor]="v1cp" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','PURCHASE_ORDER','PO_EXCEL_UPLOAD'])">C&P</button>
+          </mat-menu>
+          <mat-menu #version2="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="v2planning" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GOODS_ISSUE_REQUEST_V2'])">Planning</button>
+            <button mat-menu-item [matMenuTriggerFor]="v2gss" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_INWARD_V2','GATE_OUTWARD_RGP_V2','GATE_OUTWARD_NRGP_V2','GATE_OUTWARD_GI_V2'])">GSS</button>
+            <button mat-menu-item [matMenuTriggerFor]="v2reports" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','INVENTORY_REPORTS_V2','GSS_REPORTS_V2'])">Reports</button>
+          </mat-menu>
+          <mat-menu #v1Inventory="matMenu">
+            <button mat-menu-item (click)="dmrrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','DAILY_MATERIAL_RECEIPT'])">Daily Material Receipt</button>
+            <button mat-menu-item (click)="qualitycheckrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','QUALITY_CHECK'])">Quality Check</button>
+            <button mat-menu-item (click)="goodsreceiptrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GOODS_RECEIPT'])">Goods Receipt</button>
+            <button mat-menu-item (click)="goodsissuerouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GOODS_ISSUE'])">Goods Issue</button>
+            <button mat-menu-item (click)="goodsreturnrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GOODS_RETURN'])">Goods Return</button>
+            <button mat-menu-item (click)="deliverychallanrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','DELIVERY_CHALLAN'])">Delivery Challan</button>
+            <button mat-menu-item (click)="outgatepassrgprouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','OUT_GATE_PASS_RGP'])">OutGatePass RGP</button>
+            <button mat-menu-item (click)="outgatepassnrgprouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','OUT_GATE_PASS_NRGP'])">OutGatePass NRGP</button>
+          </mat-menu>
+          <mat-menu #v1reports="matMenu">
+            <button mat-menu-item (click)="inventoryreportsrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','INVENTORY_REPORTS'])">Store Reports</button>
+            <button mat-menu-item (click)="gssreportsrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GSS_REPORTS'])">GSS Reports</button>
+            <button mat-menu-item (click)="transitreportsrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN'])">Transit Reports</button>
+            <button mat-menu-item (click)="poreportsrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN', 'PO_REPORTS'])">PO Reports</button>
+          </mat-menu>
+          <mat-menu #v1gss="matMenu">
+            <button mat-menu-item (click)="gateinwardrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_INWARD'])">Gate Inward</button>
+            <button mat-menu-item (click)="gateoutwardrgprouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_OUTWARD_RGP'])">Gate Outward RGP</button>
+            <button mat-menu-item (click)="gateoutwardnrgprouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_OUTWARD_NRGP'])">Gate Outward NRGP</button>
+            <button mat-menu-item (click)="gateoutwardgirouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_OUTWARD_GI'])">Gate Outward GI</button>
+          </mat-menu>
+          <mat-menu #v1cp="matMenu">
+            <button mat-menu-item (click)="purchaseorderrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','PURCHASE_ORDER'])">Purchase Order</button>
+            <button mat-menu-item (click)="v1workorderrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','WORK_ORDER'])">Work Order</button>
+            <button mat-menu-item (click)="exceluploadrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','PO_EXCEL_UPLOAD'])" >Excel Upload</button>
+          </mat-menu>
+          <mat-menu #v1planning="matMenu">
+            <button mat-menu-item (click)="v1purchaserequestrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','PURCHASE_REQUEST'])">Purchase Request</button>
+            <button mat-menu-item (click)="v1workrequestrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN', 'WORK_REQUEST',])">Work Request</button>
+          </mat-menu>
+          <mat-menu #v2planning="matMenu">
+            <button mat-menu-item (click)="v2goodsissuerequestrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GOODS_ISSUE_REQUEST_V2'])">Goods Issue Request</button>
+          </mat-menu>
+          <mat-menu #v2gss="matMenu">
+            <button mat-menu-item (click)="v2gateinwardrouting()"  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_INWARD_V2'])">Gate Inward</button>
+            <button mat-menu-item (click)="v2gateoutwardrgprouting()"  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_OUTWARD_RGP_V2'])">Gate Outward RGP</button>
+            <button mat-menu-item (click)="v2gateoutwardnrgprouting()"  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_OUTWARD_NRGP_V2'])">Gate Outward NRGP</button>
+            <button mat-menu-item (click)="v2gateoutwardgirouting()"  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GATE_OUTWARD_GI_V2'])">Gate Outward GI</button>
+          </mat-menu>
+          <mat-menu #v2reports="matMenu">
+            <button mat-menu-item (click)="v2inventoryreportsrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','INVENTORY_REPORTS_V2'])">Inventory Reports</button>
+            <button mat-menu-item (click)="v2gssreportsrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','GSS_REPORTS_V2'])">GSS Reports</button>
+          </mat-menu>
+        </ul>
+        <ul class="list-style-none">
+          <button class="mt-3" mat-button   matTooltip="Master"  [matMenuTriggerFor]="master" 
+          placement="left"  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_MATERIAL','VIEW_VENDORS','VIEW_CONTRACTORS','VIEW_COMPANIES','VIEW_TAX_LIST','VIEW_FINANCIAL_YEAR','SERVICE_MASTER','VEHICLE_MASTER'])"><i class="fas fa-list"></i></button>
+          <mat-menu #master="matMenu">
+            <button mat-menu-item (click)="materialmasterrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_MATERIAL'])">Material</button>
+            <button mat-menu-item (click)="vendormasterrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_VENDORS'])">Vendors</button>
+            <button mat-menu-item (click)="contractorsrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_CONTRACTORS'])">Contractors</button>
+            <button mat-menu-item (click)="companiesrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_COMPANIES'])">Companies</button>
+            <button mat-menu-item (click)="taxlistrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_TAX_LIST'])">Tax List</button>
+            <button mat-menu-item (click)="financialrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_FINANCIAL_YEAR'])">Financial Year</button>
+            <button mat-menu-item (click)="servicemasterrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','SERVICE_MASTER'])">Service Master</button>
+            <button mat-menu-item (click)="vehiclemasterrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VEHICLE_MASTER'])">Vehicle Master</button>
+          </mat-menu>
+          </ul>
+        <ul class="list-style-none">
+          <button class="mt-3" mat-button matTooltip="Tickets" placement="left" (click)="ticketrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_TICKETS'])"><i
+            class="fa fa-ticket-alt"></i></button>
+          <!-- <li class="nav-item dropdown  top-navbar" ngbDropdown placement="bottom-right">
+            <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+              href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" matTooltip="Tickets"
+                placement="left"><i class="fa fa-ticket-alt mt-1"></i></button>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right user-dd pb-0 " ngbDropdownMenu>
+              <span class="with-arrow">
+                <span class="bg-success"></span>
+              </span>
+              <a class="dropdown-item " href="javascript:void(0)">
+                dropdown</a>
+              <a class="dropdown-item" href="javascript:void(0)">
+                dropdown</a>
+            </div>
+          </li> -->
+        </ul>
+        <ul class="list-style-none">
+          <button class="mt-3" mat-button  matTooltip="Gallery" placement="left" (click)="galleryrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_GALLERY'])"><i
+            class="fa fa-image"></i></button>
+          <!-- <li class="nav-item dropdown  top-navbar" ngbDropdown placement="bottom-right">
+            <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+              href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" matTooltip="Gallery"
+                placement="left"><i class="fas fa-image mt-1"></i></button>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right user-dd pb-0 " ngbDropdownMenu>
+              <span class="with-arrow">
+                <span class="bg-success"></span>
+              </span>
+              <a class="dropdown-item " href="javascript:void(0)">
+                dropdown</a>
+              <a class="dropdown-item" href="javascript:void(0)">
+                dropdown</a>
+
+            </div>
+          </li> -->
+        </ul>
+        <ul class="list-style-none">
+          <button class="mt-3" mat-button  [matMenuTriggerFor]="userDetail"  matTooltip="User Details" placement="left"  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','PENDING_SIGNATURES','USER_PROFILE'])"><i
+            class="fas fa-id-card"></i></button>
+            <mat-menu #userDetail="matMenu">
+              <button mat-menu-item (click)="userprofilerouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','USER_PROFILE'])">User Profile</button>
+              <button mat-menu-item (click)="pendingsignaturesrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','PENDING_SIGNATURES'])">Pending Signatures</button>
+            </mat-menu>
+            </ul>
+        <ul class="list-style-none">
+          <button class="mt-3" mat-button  matTooltip="User Management" placement="left" (click)="usermanagementrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_USER_MANAGEMENT'])"><i
+            class="fa fa-users"></i></button>
+          <!-- <li class="nav-item dropdown  top-navbar" ngbDropdown placement="bottom-right">
+            <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+              href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" matTooltip="User Management"
+                placement="left"><i class="fas fa-user mt-1 "></i></button>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right user-dd pb-0 " ngbDropdownMenu>
+              <span class="with-arrow">
+                <span class="bg-success"></span>
+              </span>
+              <a class="dropdown-item " href="javascript:void(0)">
+                dropdown</a>
+              <a class="dropdown-item" href="javascript:void(0)">
+                dropdown</a>
+            </div>
+          </li> -->
+        </ul>
+        <ul class="list-style-none">
+          <button class="mt-3" mat-button matTooltip="UserProjectsWBS" placement="left" (click)="userprofileswbsrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_USER_PROJECT_WBS'])"><i
+            class="fa fa-user"></i></button>
+          <!-- <li class="nav-item dropdown  top-navbar" ngbDropdown placement="bottom-right">
+            <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+              href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" matTooltip="UserProjectsWBS "
+                placement="bottom-right"><i class="fas fa-users mt-1 "></i></button>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right user-dd pb-0 " ngbDropdownMenu>
+              <span class="with-arrow">
+                <span class="bg-success"></span>
+              </span>
+              <a class="dropdown-item " href="javascript:void(0)">
+                dropdown</a>
+              <a class="dropdown-item" href="javascript:void(0)">
+                dropdown</a>
+            </div>
+          </li> -->
+        </ul>
+        <ul class="list-style-none">
+          <button class="mt-3" mat-button  matTooltip="Menu Role" placement="left" (click)="menurolesrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_MENU_ROLES'])"><i
+            class="fa fa-th-large"></i></button>
+          <!-- <li class="nav-item dropdown  top-navbar" ngbDropdown placement="bottom-right">
+            <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+              href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" matTooltip="Menu Role"
+                placement="left"><i class="fas fa-bars mt-1"></i></button>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right user-dd pb-0 " ngbDropdownMenu>
+              <span class="with-arrow">
+                <span class="bg-success"></span>
+              </span>
+              <a class="dropdown-item " href="javascript:void(0)">
+                dropdown</a>
+              <a class="dropdown-item" href="javascript:void(0)">
+                dropdown</a>
+            </div>
+          </li> -->
+        </ul>
+        <ul class="list-style-none">
+          <button class="mt-3" mat-button matTooltip="Settings" placement="left" (click)="settingsrouting()" *ngIf="authService.checkUserPermission(['SUPER_ADMIN','VIEW_SETTINGS'])"><i
+            class="fa fa-cog"></i></button>
+        </ul>
+        <!-- <li class="nav-item d-none d-lg-block">
+              <a (click)="changeSideBar()" class="nav-link sidebartoggler waves-effect waves-light"
+                href="javascript:void(0)">
+                <i class="mdi mdi-menu font-24"></i>
+              </a>
+            </li> -->
+
+        <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
+          <!-- <a ngbDropdownToggle class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)"
+                *ngIf="applications$.length > 0" id="2" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <i class="font-24 mdi mdi-view-dashboard text-dark"></i>
+
+              </a> -->
+          <div class="dropdown-menu dropdown-menu-right mailbox " aria-labelledby="2" ngbDropdownMenu>
+            <span class="with-arrow">
+              <span class="bg-success"></span>
+            </span>
+            <ul class="list-style-none">
+              <li>
+                <div class="drop-title text-white bg-success">
+                  <h4 class="m-b-0 m-t-5">All Apps</h4>
+                  <span class="font-light">{{applications$.length}} Apps</span>
+                </div>
+              </li>
+              <li>
+                <div class="message-center message-body" [perfectScrollbar]="config">
+                  <!-- Message -->
+                  <a href="javascript:void(0)" class="message-item" *ngFor="let app of applications$"
+                    (click)="openNewApplication(app)">
+                    <span class="user-img">
+                      <img src="{{app.app_icon}}" alt="user" class="rounded-circle">
+                    </span>
+                    <span class="mail-contnet">
+                      <h3 class="message-title">{{app.app_name}}</h3>
+                    </span>
+                  </a>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </li>
+
+
+        <li class="nav-item dropdown " ngbDropdown placement="bottom-right">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+            href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="assets/greenko/profile.png" alt="user" class="rounded-circle" width="31">
+          </a>
+          <div class="dropdown-menu dropdown-menu-right user-dd pb-0" ngbDropdownMenu>
+            <span class="with-arrow">
+              <span class="bg-success"></span>
+            </span>
+            <div class="d-flex no-block align-items-center  bg-success text-white ">
+              <div class="">
+                <img src="assets/greenko/profile.png" alt="user" class="img-circle" width="60">
+              </div>
+              <div class="m-l-10">
+                <h4 class="m-b-0">{{userDetails.username}}</h4>
+                <p class=" m-b-0">{{userDetails.email}}</p>
+              </div>
+            </div>
+
+            <a class="dropdown-item" href="javascript:void(0)" (click)="logOut()">
+              <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+          </div>
+        </li>
+        </ul>
+
+      </div>
+</div>
+</nav>
+</header>
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<ng-container *ngIf="showNavbar">
+  <aside class="left-sidebar" [attr.data-sidebarbg]="options.sidebarbg" (mouseover)="Logo()" (mouseout)="Logo()">
+
+
+    <!-- Horizontal Header -->
+    <div class="scroll-sidebar" [perfectScrollbar]="config">
+      <app-vertical-sidebar (menuClick)="sideMenuClick()"></app-vertical-sidebar>
+    </div>
+
+    <!-- End Sidebar scroll-->
+  </aside>
+</ng-container>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper" [ngStyle]="{'margin-left': showNavbar?'250px':'0px'}">
+  <!-- <app-breadcrumb></app-breadcrumb> -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <router-outlet></router-outlet>
+    <!-- ============================================================== -->
+    <!-- End Start Page Content -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
+<aside class="customizer" [ngClass]="{'show-service-panel': showSettings}">
+  <a href="javascript:void(0)" class="service-panel-toggle" (click)="showSettings = !showSettings">
+    <i class="far   fa-bell"></i>
+    <!-- fa-spin -->
+  </a>
+  <div class="customizer-body custom-pills ps" [perfectScrollbar]="config">
+
+    <div class="p-15 ">
+      <h3 class="m-t-20 m-b-20">Recent Activity Log</h3>
+      <div class="steamline ">
+        <div class="sl-item" *ngFor="let item of activities$;">
+          <div class="sl-left bg-success">
+            <i class="ti-user"></i>
+          </div>
+          <div class="sl-right">
+            <div class="font-medium">{{item.proj_name}}
+              <br />
+              <span class=" m-r-20"><i class="fas fa-user-circle"></i> {{item.username}} </span> <span class="sl-date">
+                <i class="far fa-calendar-alt"></i> {{item.created_date |
+                date:'medium'}} </span>
+            </div>
+            <div class="desc">{{item.description}} </div>
+          </div>
+        </div>
+      </div>
+      <mat-paginator [length]="totalRecords" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]"
+        aria-label="Select page" (page)="onpageevent($event)">
+      </mat-paginator>
+    </div>
+
+  </div>
+</aside>
+</div>

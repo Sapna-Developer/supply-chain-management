@@ -1,0 +1,39 @@
+<form #addNewUserForm="ngForm" (ngSubmit)="addOrUpdateEmails()">
+    <h1 mat-dialog-title>Add/Update Emails</h1>
+    <div mat-dialog-content>
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Emails *</mat-label>
+
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let fruit of previousEmails" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(fruit)">
+                    {{fruit}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Enter email..." [formControl]="emailCtrl" [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let email of filteredEmails | async" [value]="email">
+                    {{email}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+
+
+
+
+
+
+
+
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close type="button">No Thanks</button>
+        <button mat-button type="submit" color="primary" cdkFocusInitial
+            [disabled]="previousEmails.length == 0">Save</button>
+    </div>
+
+</form>

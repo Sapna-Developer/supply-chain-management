@@ -1,0 +1,252 @@
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+
+
+            <div class="col-12 col-md-3">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Department</mat-label>
+                    <input type="text" placeholder="Search Department" name="dept" [formControl]="deptControl" matInput
+                        [matAutocomplete]="auto2">
+
+                    <button *ngIf="userSearchObj.dept" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.dept='';deptControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+
+                    <mat-autocomplete #auto2="matAutocomplete"
+                        (optionSelected)="getUserDetails($event.option.value,'dept')">
+                        <mat-option *ngFor="let option of filteredDept | async" [value]="option.deparment_name">
+                            <span> {{option.deparment_name}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Role</mat-label>
+                    <input type="text" placeholder="Search Role" [formControl]="roleControl" matInput
+                        [matAutocomplete]="auto3">
+
+                    <button *ngIf="userSearchObj.role" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.role='';roleControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+
+                    <mat-autocomplete #auto3="matAutocomplete"
+                        (optionSelected)="getUserDetails($event.option.value,'role')">
+                        <mat-option *ngFor="let option of filteredRoles | async" [value]="option.role">
+                            <span> {{option.role}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Sub Role</mat-label>
+                    <input type="text" placeholder="Search Sub Role" [formControl]="subRoleControl" matInput
+                        [matAutocomplete]="auto4">
+
+                    <button *ngIf="userSearchObj.subRole" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.subRole='';subRoleControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-autocomplete #auto4="matAutocomplete"
+                        (optionSelected)="getUserDetails($event.option.value,'sub_role')">
+                        <mat-option *ngFor="let option of filteredSubRoles | async" [value]="option.sub_role">
+                            <span> {{option.sub_role}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Menu</mat-label>
+                    <input type="text" placeholder="Search Menu" name="project" [formControl]="projectControl" matInput
+                        [matAutocomplete]="auto1">
+
+                    <button *ngIf="userSearchObj.menu" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="userSearchObj.menu='';projectControl.setValue(null);getUserRoleDetails()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-autocomplete #auto1="matAutocomplete"
+                        (optionSelected)="getUserDetails($event.option.value,'menu')">
+                        <mat-option *ngFor="let option of filteredProjects | async" [value]="option.menu_name">
+                            <span> {{option.menu_name}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </mat-card-content>
+</mat-card>
+
+
+<mat-card class="p-0 m-t-20">
+    <mat-card-content>
+        <div class="row p-10">
+            <div class="col-12 col-md-10 float-right text-left">
+                Records<br />
+                <p>{{totalRecords}} Found</p>
+            </div>
+            <div class="col-12 col-md-2 float-right text-right">
+                <button mat-icon-button value="Add Role Menu" matTooltip="Add Role Menu" (click)="addNewUser()"
+                    class="custom-icon-button m-r-10"
+                    *ngIf="authService.checkUserPermission(['SUPER_ADMIN','ADD_USER_MENU_ROLE'])">
+                    <span class="material-icons">
+                        add
+                    </span>
+                </button>
+
+
+                <!-- <button mat-icon-button value="Add Menu" matTooltip="Add Menu" (click)="addNewMenuDialog(content)"
+                    class="custom-icon-button m-r-10">
+                    <span class="material-icons">
+                        add
+                    </span>
+                </button> -->
+
+                <button mat-icon-button value="Refresh" matTooltip="Refresh" (click)="getUserRoleDetails()"
+                    class="custom-icon-button">
+                    <span class="material-icons">
+                        refresh
+                    </span>
+                </button>
+            </div>
+
+        </div>
+
+        <ng-container>
+
+            <div class="row p-t-10">
+                <div class="col-12 col-md-12">
+                    <mat-progress-bar mode="indeterminate" *ngIf="loadingRecords"></mat-progress-bar>
+                    <div class="table-responsive mat-table-wrapper">
+                        <div class="example-table-container">
+                            <table mat-table [dataSource]="dataSource">
+
+
+                                <ng-container matColumnDef="sno">
+                                    <th mat-header-cell *matHeaderCellDef>SNO#</th>
+                                    <td mat-cell *matCellDef="let row;let i=index;">
+                                        {{i+1}}
+
+                                    </td>
+                                </ng-container>
+
+
+
+
+                                <ng-container matColumnDef="dept">
+                                    <th mat-header-cell *matHeaderCellDef>Dept</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.dept_name }}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="role">
+                                    <th mat-header-cell *matHeaderCellDef>Role</th>
+                                    <td mat-cell *matCellDef="let row">{{row.role_name}}</td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="sub_role">
+                                    <th mat-header-cell *matHeaderCellDef> Sub Role</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.sub_role_name }}
+                                    </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="menu">
+                                    <th mat-header-cell *matHeaderCellDef>Menu </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.menu_name }}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="created_date">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        Created
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row.created_by}} <br />
+                                        {{row.created_date | date}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        Action
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <button mat-icon-button (click)="deleteFileConfirm(row,deleteFileModal)"
+                                            aria-label="Example icon button with a vertical three dot icon">
+                                            <mat-icon style="color:red;">delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                            </table>
+                        </div>
+
+
+                        <ng-container *ngIf="tableData$.length > 0; then loadPlanData; else noRecords"></ng-container>
+
+                        <ng-template #loadPlanData>
+                            <mat-paginator *ngIf="tableData$.length > 0" [length]="totalRecords"
+                                [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 75, 100]">
+                            </mat-paginator>
+                        </ng-template>
+
+                        <ng-template #noRecords>
+                            <div *ngIf="tableData$.length <= 0" class="text-center">
+                                <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                    Loading...
+                                </h4>
+                                <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                    No Data Found
+                                </h4>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+    </mat-card-content>
+</mat-card>
+
+
+<ng-template #content>
+    <form #menuForm="ngForm">
+        <h1 mat-dialog-title>Add Menu</h1>
+        <div mat-dialog-content>
+            <p>What's your enter here those related to application?</p>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Menu</mat-label>
+                <input matInput [(ngModel)]="menuName" name="menuName" required>
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>No Thanks</button>
+            <button mat-button (click)="addMenu()" [disabled]="menuForm.invalid" cdkFocusInitial>Ok</button>
+        </div>
+    </form>
+
+
+</ng-template>
+<ng-template #deleteFileModal>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete user activity?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+        <button mat-button cdkFocusInitial (click)="deleteFile()">Delete</button>
+    </div>
+</ng-template>

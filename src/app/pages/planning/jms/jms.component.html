@@ -1,0 +1,667 @@
+<!-- <div class="page-breadcrumb page-header">
+    <div class="row">
+        <div class="col-12 align-self-center">
+            <h4 class="page-title">Joint Measurement Sheet</h4>
+        </div>
+    </div>
+</div> -->
+<div class="work-requestTab">
+    <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms" [(selectedIndex)]="demo1TabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                JMS Report
+            </ng-template>
+            <ng-template matTabContent>
+                <mat-card>
+                    <mat-card-content>
+                        <div *ngIf="initialdata">
+                        <form>
+                            <div class="row">
+                                <div class="col-2">
+                                    <label>WO Number<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col-4">
+                                    <mat-form-field class="dropdown" appearance="none" style="width: 99%;
+                                   border: 1px solid;
+                                    border-radius: 5px;
+                                    height: 42%;
+                                    margin-left: 2%; padding-bottom:34px">
+                                        <input type="text" id="inputdropdown" placeholder="Search Material Code/Name"
+                                            aria-label="Number" matInput name="wonumbermain" [(ngModel)]="wonumbermain"
+                                            (keyup)="filterdatawo($event)" [matAutocomplete]="auto">
+                                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                                            (optionSelected)="selectedWO()">
+
+                                            <mat-option *ngFor="let item of WOLIST" [value]="item.number">
+                                                {{item.number}}</mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="row" *ngIf="tabledata.length!==0">
+                            <div class="col table-responssive">
+                                <table class="table table-bordered">
+                                    <tr style="background: #e9ecef;">
+                                        <th>S.No</th>
+                                        <th style="width:30%;">Description</th>
+                                        <th>Unit Of Measurement</th>
+                                        <th>Quantity</th>
+                                      <th>Balance Quantity</th>
+                                        <!-- <th>BOQ ID</th> -->
+                                        <th>Select</th>
+                                    </tr>
+                                    <tr *ngFor="let item of tabledata;let i=index;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.item_description}}</td>
+                                        <td>{{item.unit_of_measurment}}</td>
+                                        <td>{{item.quantity}}</td>
+                                        <td>{{item.balance_quantity}}</td>
+                                        <!-- <td>{{item.wr_boq_id}}</td> -->
+                                        <td><button mat-mini-fab color="primary"  (click)="selectedrow(item)">Select</button></td>
+                                      
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+</div>
+<div *ngIf="secondarydata">
+                        <!-- <form #finalform="ngForm" (ngSubmit)="savefinaldata(finalform)"> -->
+                            <div class="tablediv" >
+                                <table >
+                                    <thead style="background: #e9ecef;" class="text-center headerclass">
+                                        <!-- <tr> -->
+                                            <th style="padding:7px;">Work Order Number</th>
+                                            <th>BOQ Item Description</th>
+                                            <th>Unit Of Measurement</th>
+                                            <th>Balance Quantity</th>
+                                        <!-- </tr> -->
+                                    </thead>
+                                    <tbody class="text-center">
+                                        <tr >
+                                            <td style="padding:7px;">{{wonumbertable}}</td>
+                                            <td>{{description1}}</td>
+                                            <td >{{UOM}} </td>
+                                            <td >{{balanceqty}}</td>
+                                                    <!-- <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                                                       aria-label="Example icon button with a vertical three dot icon"
+                                                        >
+                                                         <mat-icon>delete</mat-icon>
+                                                         </button> -->
+                                               
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div><br><br>
+                            <!-- <h3><b>JMS - {{wonumbertable}} &nbsp; {{description1}}</b></h3><br> -->
+                            <div class="row">
+                                <div class="col-1">
+                                    <label style="margin-top: 9px;">Date<span class="mandetory">*</span></label>
+                                </div>
+                                <div class="col-4">
+                                    <input type="date" style="text-transform: uppercase;"
+                                        class="inputstyles form-control" dateFormat="yyyy/mm/dd"
+                                        [(ngModel)]="formdata.date" name="date">
+                                </div>
+                                <div class="col-7 text-right float-right">
+                                    <button mat-icon-button value="Add" matTooltip="Add" class="custom-icon-button"
+                                        style="background:none;margin-right:15px;">
+                                        <span class="material-icons" (click)="addjmsdata(jmsdataDialog)"
+                                            style="margin-top:9%;">
+                                            add
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                           
+                        
+                        
+                        <div class="row m-t-10">
+                            <div class="col-md-12 col-12">
+                                <div class="table table-responsive" mat-table-wrapper>
+                                    <div class="example-table-container">
+                                        
+                                        <table mat-table [dataSource]="dataSource">
+                                            <ng-container matColumnDef="lineItem">
+                                                <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                                <td mat-cell *matCellDef="let row;let i=index;">{{i+1}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="description">
+                                                <th mat-header-cell *matHeaderCellDef>Description</th>
+                                                <td mat-cell *matCellDef="let row">{{row.description}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="uom">
+                                                <th mat-header-cell *matHeaderCellDef>Unit of Measurement</th>
+                                                <td mat-cell *matCellDef="let row">{{UOM || row.unit_of_measurment}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="count">
+                                                <th mat-header-cell *matHeaderCellDef>Count</th>
+                                                <td mat-cell *matCellDef="let row">{{row.count||0}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="length">
+                                                <th mat-header-cell *matHeaderCellDef>Length</th>
+                                                <td mat-cell *matCellDef="let row">{{row.length||0}}</td>
+                                            </ng-container>
+                                            <!-- <ng-container matColumnDef="breadth">
+                                                <th mat-header-cell *matHeaderCellDef>Breadth</th>
+                                                <td mat-cell *matCellDef="let row">{{row.breadth||0}}</td>
+                                            </ng-container> -->
+                                            <ng-container matColumnDef="height">
+                                                <th mat-header-cell *matHeaderCellDef>Height</th>
+                                                <td mat-cell *matCellDef="let row">{{row.height ||0}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="width">
+                                                <th mat-header-cell *matHeaderCellDef>Width</th>
+                                                <td mat-cell *matCellDef="let row">{{row.width||0}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="quantity">
+                                                <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                                                <td mat-cell *matCellDef="let row">{{row.quantity||0}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="itemremarks">
+                                                <th mat-header-cell *matHeaderCellDef>Work Specification</th>
+                                                <td mat-cell *matCellDef="let row">{{row.itemremarks || row.item_remarks}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef>Action</th>
+                                                <td mat-cell *matCellDef="let row ; let i=index">
+                                                    <button class="btn" style="border:none">
+                                                        <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                                            class="text-primary"
+                                                            (click)="editjmsData(row,i,editjmsDialogData)">
+                                                            edit</mat-icon>
+                                                    </button>
+                                                    <button mat-icon-button
+                                                        style="color: red;border:none;background: none;"
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        (click)="deleterowData(i)">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true">
+                                            </tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <button
+                                    type="button"
+                                    mat-raised-button
+                                    class="attachfile"
+                                    color="secondary"
+                                    (click)="autoFileUpload2.click()"
+                                  >
+                                    Attach File&nbsp;  <mat-icon 
+                                    style="cursor:pointer;font-size:24px">file_upload</mat-icon></button>
+                                    <div class="file">
+                                      <input hidden class="form-control-file" name="file" type="file" multiple
+                                      (change)="uploadjmsfiles($event)" #autoFileUpload2  >
+                                      <ng-container *ngIf=" fileUploadUrlsjms.length > 0">
+                                    
+                                      <div *ngFor="let item of filenamearray1;let i=index;">{{i+1}}.&nbsp;{{item}}</div> 
+                                      </ng-container>         
+                                      </div>
+                                </div>
+                            <div class="col-md-7">
+                                <button mat-raised-button class="savebutton" (click)="backtoprevious()" style="margin-top: 0%;">Back</button>
+                                <button mat-raised-button class="savebutton" (click)="savefinaldata()" [disabled]="dialogdataArray.length==0"
+                                style="margin-top: 0%;">{{btn}}</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <h2 *ngIf="logdata" class="activitylog">Activity Log</h2>
+                    <div class="tablediv" *ngIf="logdata">
+                        <table >
+                            <thead style="background: #e9ecef;" class="text-center headerclass">
+                                <!-- <tr> -->
+                                    <th>SNO</th>
+                                    <th style="padding:10px;">User Name</th>
+                                    <th>Created Date</th>
+                                    <th>Reference Number</th>
+                                    <th>Description</th>
+                                    <th>Reason</th>
+                                    <th>Action</th>
+                                <!-- </tr> -->
+                            </thead>
+                            <tbody class="text-center">
+                                <tr *ngFor="let item of logdata;let i=index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.username}}</td>
+                                    <td>{{item.date_time | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                    <td >{{item.reference_number}} </td>
+                                    <td >{{item.description}}</td>
+                                    <td >{{item.reason}} </td>
+                                        <td>{{item.action}}
+                                            <!-- <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                                               aria-label="Example icon button with a vertical three dot icon"
+                                                >
+                                                 <mat-icon>delete</mat-icon>
+                                                 </button> -->
+                                        </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                List
+            </ng-template>
+            <ng-template matTabContent>
+                <ng-container>
+                    <div class="row m-t-10">
+                        <div class="col-md-12 col-12">
+                            <div class="table table-responsive" mat-table-wrapper>
+                                <div class="example-table-container">
+                                    <table mat-table [dataSource]="dataSourceList">
+                                        <ng-container matColumnDef="sno">
+                                            <th mat-header-cell *matHeaderCellDef>SNO</th>
+                                            <td mat-cell *matCellDef="let row;let i=index;">{{(i+1) +
+                                                (jmspaginator.pageIndex *
+                                                jmspaginator.pageSize)}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="number">
+                                            <th mat-header-cell *matHeaderCellDef>WO Number</th>
+                                            <td mat-cell *matCellDef="let row">{{row.work_order_number}}</td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="boqdesc">
+                                            <th mat-header-cell *matHeaderCellDef>BOQ Item Description</th>
+                                            <td mat-cell *matCellDef="let row">{{row.boq_item_description}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="isactive">
+                                            <th mat-header-cell *matHeaderCellDef>Is Active</th>
+                                            <td mat-cell *matCellDef="let row">{{row.is_active}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="totalquantity">
+                                            <th mat-header-cell *matHeaderCellDef>Total Quantity</th>
+                                            <td mat-cell *matCellDef="let row">{{row.Total_quantity}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
+                                            <td mat-cell *matCellDef="let row" class="text-center">
+                                                <div class="mb-0 ">
+                                                    <mat-icon style="border:none;background: none;cursor: pointer;"
+                                                    (click)="editJMSdata(row,Editmodel)">edit</mat-icon>&nbsp;
+                                                    <mat-icon style="color: red;border:none;background: none;cursor: pointer;"
+                                                    (click)="deletejmadata(row, deletedata)">delete</mat-icon>&nbsp;
+                                                <mat-icon (click)="openfileuploadmodel(fileuploadmodel,row)"
+                                                style="cursor:pointer;font-size:24px">file_upload</mat-icon>&nbsp;
+                                                <mat-icon (click)="printJMS(row)" style="cursor:pointer;"> local_printshop</mat-icon>
+
+                                            </div>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsList;sticky: true">
+                                        </tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsList"></tr>
+                                    </table>
+                                    <div *ngIf="reaData==true" class="text-center">
+                                        <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                                            Loading...
+                                        </h4>
+                                        <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                                            No Records Found
+                                        </h4>
+                                    </div>
+                                    <mat-paginator [length]="totalRecords" [pageSize]="10"
+                                        [pageSizeOptions]="[5,10, 25, 50, 75, 100]" #jmspaginator
+                                        (page)="onpageevent($event)">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<ng-template #jmsdataDialog>
+    <div mat-dialog-title class="dialog-title">
+        <div class="row">
+            <div class="col-11">
+                <h2>Add JMS data</h2>
+            </div>
+            <div class="col-1">
+                <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon float-right"
+                    (click)="closedialogdata()" style="border:none;background:none">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <form #myformdata="ngForm" (ngSubmit)="binddatatotable(myformdata)">
+            <div class="row">
+                <div class="col-2">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <!-- <mat-form-field class="dropdown" appearance="none" style="width: 99%;
+                                    border: 1px solid;
+                                    border-radius: 5px;
+                                    height: 42%;
+                                    margin-left: 2%; padding-bottom:34px;">
+                        <input type="text" id="inputdropdown" placeholder="Search Service Code/Name" aria-label="Number"
+                            matInput name="description" [(ngModel)]="dialogdata.description"
+                            (keyup)="filterdata($event)" [matAutocomplete]="auto" style="padding-top:-15px;margin:0px;">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                            (optionSelected)="selectedserviceuom()">
+
+                            <mat-option *ngFor="let item of servicemasterData" [value]="item.description">
+                                {{item.description}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field> -->
+                    <input type="text" class="inputstyles" name="description" [(ngModel)]="dialogdata.description" placeholder="Enter Description" >
+                </div>
+                <div class="col-2">
+                    <label>UOM<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.uom" placeholder="Enter UOM"
+                        name="uom" readonly>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-2">
+                    <label>Count<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.count"
+                        placeholder="Enter Count" name="count" (keypress)="validateNumber($event)" (keyup)="getqtydata($event)">
+                </div>
+              
+                <div class="col-2">
+                    <label>Length<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.length" placeholder="Enter Length"
+                        name="length" (keypress)="validateNumber($event)" [disabled]="LENGTH==false" (keyup)="getqtydatalength($event)">
+                </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col-2">
+                    <label>Breadth<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.breadth" placeholder="Enter Breadth"
+                        name="breadth" (keypress)="validateNumber($event)" >
+                </div> -->
+                <div class="col-2">
+                    <label>Height<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.height" placeholder="Enter Height"
+                        name="height" (keypress)="validateNumber($event)" [disabled]="HEIGHT==false" (keyup)="getqtydataheight($event)">
+                </div>
+                <div class="col-2">
+                    <label>Width<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.width" placeholder="Enter Width"
+                        name="width" (keypress)="validateNumber($event)" [disabled]="WIDTH==false" (keyup)="getqtydatawidth($event)">
+                </div>
+            </div>
+            <div class="row">
+               
+                <div class="col-2">
+                    <label>Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.quantity" 
+                        placeholder="Enter Quantity" name="quantity" (keypress)="validateNumber($event)" readonly>
+                </div>
+                <div class="col-2">
+                    <label>Work Specification<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="dialogdata.itemremarks"
+                        placeholder="Enter Work Specification" name="itemremarks">
+                </div>
+            </div>
+            
+            <div class="row mt-3 text-center">
+                <div class="col-12">
+                    <button mat-raised-button class="savebutton">Add</button>
+                </div>
+
+            </div>
+
+        </form>
+    </mat-dialog-content>
+
+</ng-template>
+
+
+<ng-template #editjmsDialogData>
+    <div mat-dialog-title class="dialog-title">
+        <div class="row">
+            <div class="col-11">
+                <h2>Edit JMS data</h2>
+            </div>
+            <div class="col-1">
+                <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon float-right"
+                    (click)="closedialogdata()" style="border:none;background:none">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <form #myeditformdata="ngForm" (ngSubmit)="editbindedDatatotable(myeditformdata)">
+            <div class="row">
+                <div class="col-2">
+                    <label>Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <!-- <mat-form-field class="dropdown" appearance="none" style="width: 99%;
+                                    border: 1px solid;
+                                    border-radius: 5px;
+                                    height: 42%;
+                                    margin-left: 2%; padding-bottom:34px;">
+                        <input type="text" id="inputdropdown" placeholder="Search Service Code/Name" aria-label="Number"
+                            matInput name="description" [(ngModel)]="editdialogdata.description"
+                            (keyup)="editfilterdata($event)" [matAutocomplete]="auto1"
+                            style="padding-top:-15px;margin:0px;">
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                            (optionSelected)="editselectedserviceuom()">
+
+                            <mat-option *ngFor="let item of servicemasterData" [value]="item.description">
+                                {{item.description}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field> -->
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.description" placeholder="Enter Description"
+                    name="description" >
+                </div>
+                <div class="col-2">
+                    <label>UOM<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.uom" placeholder="Enter UOM"
+                        name="uom" readonly>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-2">
+                    <label>Count<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.count"
+                        placeholder="Enter Count" name="count" (keypress)="validateNumber($event)" (keyup)="getqtydataedit($event)">
+                </div>
+                <div class="col-2">
+                    <label>Length<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.length"
+                        placeholder="Enter Length" name="length" (keypress)="validateNumber($event)" [disabled]="LENGTH==false" (keyup)="getqtydatalengthedit($event)">
+                </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col-2">
+                    <label>Breadth<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.breadth"
+                        placeholder="Enter Breadth" name="breadth" (keypress)="validateNumber($event)">
+                </div> -->
+                <div class="col-2">
+                    <label>Height<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.height"
+                        placeholder="Enter Height" name="height" (keypress)="validateNumber($event)" [disabled]="HEIGHT==false" (keyup)="getqtydataheightedit($event)">
+                </div>
+                <div class="col-2">
+                    <label>Width<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.width" placeholder="Enter Width"
+                        name="width" (keypress)="validateNumber($event)" [disabled]="WIDTH==false" (keyup)="getqtydatawidthedit($event)">
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="col-2">
+                    <label>Quantity<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.quantity"
+                        placeholder="Enter Quantity" name="quantity" (keypress)="validateNumber($event)" readonly>
+                </div>
+                <!-- <div class="col-2">
+                    <label>BOQ Item Description<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.boqitemdescription"
+                        placeholder="Enter BOQ Item Description" name="boqitemdescription">
+                </div> -->
+                <div class="col-2">
+                    <label>Work Specification<span class="mandetory">*</span></label>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="inputstyles" [(ngModel)]="editdialogdata.itemremarks"
+                        placeholder="Enter Work Specification" name="itemremarks">
+                </div>
+            </div>
+            <div class="row mt-3 text-center">
+                <div class="col-12">
+                    <button mat-raised-button class="savebutton">Update</button>
+                </div>
+            </div>
+
+        </form>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #deletedata>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>
+        <p>Are you sure, you want to delete record?</p>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="padding-top:5px;">Reason</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+          [(ngModel)]="deletemodel.reason" style="width: 181%;">  
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" style="background: transparent;">Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteItem()" class="matButton"
+        [disabled]="!deletemodel.reason">Delete</button>
+    </div>
+</ng-template>
+<ng-template #fileuploadmodel>
+    <div mat-dialog-title class="dialog-title">
+        <h2>Joint Measurement Sheet: {{jmsnumber}}</h2>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close class="closeicon"
+            (click)="closemodel()" style="border:none;background:none;margin-top: -9%;">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+   <div  mat-dialog-content class="row">
+    <div *ngIf="filedata">
+    <!-- <span *ngFor="let item of filedata"> -->
+   <!-- <span *ngFor="let item of filedata"> <a href="{{item.file_path}}">{{item.file_path}}</a></span> -->
+   <!-- <h4>View File:&nbsp;&nbsp; <i class="fas fa-eye text-cyan m-r-20 " 
+    style="cursor: pointer;" (click)="viewDoc(item)"></i></h4> -->
+    <table>
+        <thead style="background: #e9ecef;">
+            <!-- <tr> -->
+                <th>Cread By</th>
+                <th>Created Date</th>
+                <th>File Name</th>
+                <th>Action</th>
+            <!-- </tr> -->
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of filedata">
+                <td>{{item.created_by}}</td>
+                <td>{{item.created_date}}</td>
+                <td >{{item.file_name}} &nbsp;&nbsp;&nbsp;<i class="fas fa-eye text-cyan m-r-20 " 
+                    style="cursor: pointer;" title="View File" (click)="viewDoc(item)"></i></td>
+                    <td>
+                        <button mat-icon-button style="color: red;border:none;cursor: pointer;"
+                           aria-label="Example icon button with a vertical three dot icon"
+                            (click)="deleterowfile(deletefileModel,item)">
+                             <mat-icon>delete</mat-icon>
+                             </button>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <a style="cursor: pointer;" (click)="viewDoc(item)">{{item.file_name}}</a> -->
+<!-- </span> -->
+</div>
+   </div><br>
+<button mat-raised-button type="button" (click)="autoFileUpload1.click()">Attach File</button>
+<div class="file">
+<input hidden class="form-control-file" name="file" type="file" multiple
+(change)="uploadWbsFile($event)" #autoFileUpload1 />
+<ng-container *ngIf="fileUploadUrls.length>0">
+    <div *ngFor="let item of filenamearray;let i=index;">{{i+1}}.&nbsp;{{item}}</div>
+<!-- <span >{{createNewFile.fileName}}</span>   -->
+</ng-container>         
+</div>
+</ng-template>
+<ng-template #deletefileModel>
+    <h1 mat-dialog-title>Delete Activity</h1>
+    <div mat-dialog-content>Are you sure, you want to delete file?</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close class="matButton" >Close</button>&nbsp;
+        <button mat-button cdkFocusInitial (click)="deleteexistingfile()" class="matButton">Delete</button>
+    </div>
+</ng-template>
+<ng-template #Editmodel>
+    <h1 mat-dialog-title></h1>
+    <div mat-dialog-content>
+<div class="row">
+    <div class="col-md-2">
+        <label style="padding-top:5px;">Reason</label>
+    </div>
+    <div class="col-md-4">
+        <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+  [(ngModel)]="editModel.reason" style="width: 181%;">  
+    </div>
+</div>
+</div><br>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close class="matButton" >Close</button>&nbsp;
+    <button mat-button cdkFocusInitial (click)="saveeditreason()" class="matButton"
+    [disabled]="!editModel.reason">Submit</button>
+</div>
+</ng-template>
+

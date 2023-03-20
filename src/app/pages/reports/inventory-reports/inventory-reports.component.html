@@ -1,0 +1,1947 @@
+<!-- <div class="page-breadcrumb page-header">
+  <div class="row">
+    <div class="col-12 align-self-center">
+      <h4 class="page-title">Inventory Reports</h4>
+    </div>
+  </div>
+</div> -->
+<div class="inventory-reportsTab">
+  <mat-tab-group [backgroundColor]="'primary'" animationDuration="0ms">
+    <!-- Available stock tab -->
+
+    <mat-tab *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_AVAILABLE_STOCK'])">
+      <ng-template mat-tab-label> Available Stock </ng-template>
+      <mat-card>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-4">
+              <label>Company Name<span class="mandetory">*</span></label>
+              <select
+                class="dropdownstyles"
+                name="companyname"
+                [(ngModel)]="model.companyname"
+                style="
+                  height: 35px;
+                  width: 100%;">
+                <option [value]="undefined"selected disabled>Select One</option>
+                <option *ngFor="let item of companyData1" [ngValue]="item.company_name">
+                  {{ item.company_name }}
+                </option>
+                <!-- <option *ngFor="let item of projects" [ngValue]="item">
+                  {{ item }}
+                </option> -->
+              </select>
+            </div>
+            <div class="col-md-1">
+              <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              <button
+              mat-raised-button
+                class="mt-2"
+                [disabled]="!model.companyname"
+                (click)="getdata()"
+                color="secondary"
+                style="background-color:rgba(0, 0, 0, 0.12);color: black;"
+              >
+                Search
+              </button>
+            </div>
+            <div class="col-7 text-right" *ngIf="avaialablestockdata.length>0">
+              <br>
+              <button  mat-raised-button class="btn btn-success m-3" (click)="exportExcelpotNum()"
+              style="border: none;background-color: #62beda;">Export to Excel</button>
+          </div>
+          </div>
+      
+          <ng-container *ngIf="avaialablestockdata.length>0">
+            <div class="row p-t-10">
+              <div class="col-12 col-md-12">
+                <div class="table-responsive mat-table-wrapper">
+                  <div class="example-table-container" #TABLE class="tableclass">
+                    <table mat-table [dataSource]="dataSource" >
+                      <ng-container matColumnDef="sno">
+                        <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                          SNO#
+                        </th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                          {{ i + 1 }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="mat_code">
+                        <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                          Material Code
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.material_code }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="mat_description">
+                        <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                          Material Description
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.material_description }}
+                        </td>
+                      </ng-container>
+                      <!-- <ng-container matColumnDef="uom">
+                        <th mat-header-cell *matHeaderCellDef style="width: 5%">
+                          UOM
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.unit_of_measurment }}
+                        </td>
+                      </ng-container> -->
+                      <!-- <ng-container matColumnDef="storage_location">
+                        <th mat-header-cell *matHeaderCellDef style="width: 6%">
+                          Storage Location
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.storage_location }}
+                        </td>
+                      </ng-container> -->
+                      <ng-container matColumnDef="valuation_type">
+                        <th mat-header-cell *matHeaderCellDef style="width: 6%">
+                          Valuation Type
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.valuation_type }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="available_qty">
+                        <th mat-header-cell *matHeaderCellDef style="width: 4%">
+                          Available Quantity
+                        </th>
+                        <td class="text-right" mat-cell *matCellDef="let row">
+                          {{ row.Available_Quantity }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="available_value">
+                        <th class="text-right" mat-header-cell *matHeaderCellDef style="width: 5%">
+                          Available Value
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.Available_Value | number: "1.2-2" }}
+                        </td>
+                      </ng-container>
+
+                      <!-- <ng-container matColumnDef="unit_price">
+                        <th class="text-right" mat-header-cell *matHeaderCellDef style="width: 6%">
+                          Unit Price
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          {{ row.Unit_Price | number: "1.2-2" }}
+                        </td>
+                      </ng-container> -->
+                      <tr class="headerstyles"
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumns; sticky: true"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                      ></tr>
+                    </table>
+                  </div>
+                  <div *ngIf="reaData == true" class="text-center">
+                    <h4 class="text-secondary m-3" *ngIf="loadingRecords">
+                      Loading...
+                    </h4>
+                    <h4 class="text-secondary m-3" *ngIf="!loadingRecords">
+                      No Records Found
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+       
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <!-- Single material tab -->
+    <!-- *ngIf="userdetails.app_details.roles[0]!=='ADMIN'" -->
+    <mat-tab  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_SINGLE_MATERIAL_STOCK'])">
+      <ng-template mat-tab-label> Single Material Stock </ng-template>
+      <mat-card>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-4">
+              <label >Material Code/Description<span class="mandetory">*</span></label>
+        <mat-form-field
+              class="example-full-width dropdown matAC"
+              style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.12);border-radius: 5px;height: 35px;"
+              appearance="none"
+            >
+              <input
+                type="text"
+                placeholder="Search Material Code/Name "
+                aria-label="Number"
+                matInput
+                style="border: none;"
+                class="inputdropdown"
+                name="selectematcode"
+                [(ngModel)]="selectematcode"
+                (keyup)="getmaterialDATA($event)"
+                [matAutocomplete]="auto4"
+              />
+
+              <mat-autocomplete
+                autoActiveFirstOption
+                #auto4="matAutocomplete"
+                (optionSelected)="selectedmastergroup()"
+              >
+                <mat-option
+                  *ngFor="let item of masterData"
+                  [value]="item.system_reference_1"
+                >
+                  {{ item.system_reference_1 }}</mat-option
+                >
+              </mat-autocomplete>
+            </mat-form-field>
+            </div>
+            <div class="col-md-1">
+              <br>
+              <button
+              mat-raised-button
+              class="savebutton mt-2"
+              style="background-color: rgba(0, 0, 0, 0.12);color:black;"
+            (click)="saveformdata()">
+              Search
+            </button>
+            </div>
+          </div>
+         
+          <!-- <button
+            mat-icon-button
+            value="Add"
+            matTooltip="Add"
+            class="custom-icon-button"
+            (click)="addsms(smsmodel)"
+            style="margin-left: 95%"
+          >
+            <span class="material-icons"> add </span>
+          </button> -->
+         
+     
+            <div class="row mt-3" *ngIf="smsdata">
+              <div class="col-6">
+                <h2 style="font-weight: 400; font-size: 18px">
+                  Material:&nbsp;
+                  <span class="spanstyles">{{ selectematcode }}</span>
+                </h2>
+              </div>
+              <div class="col-3">
+                <h2 style="font-weight: 400; font-size: 18px">
+                  Total Quantity:&nbsp;
+                  <span class="spanstyles">{{ total }}</span>
+                </h2>
+              </div>
+              <div class="col-3">
+                <h2 style="font-weight: 400; font-size: 18px">
+                  Total Value: &nbsp;
+                  <span class="spanstyles">{{
+                    totalvalue | number: "1.2-2"
+                  }}</span>
+                </h2>
+              </div>
+            
+            <div class="col-12 tableclass">
+            <table >
+              <thead>
+                <tr class="tablestyles">
+                  <th class="text-center">Company Name</th>
+                  <th class="text-center">Storage Location</th>
+                  <th class="text-center">Valuation Type</th>
+                  <th class="text-center">Quantity</th>
+                  <th class="text-center">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of smsdata">
+                  <td style="width: 28%" class="text-center">{{ item.company_name }}</td>
+                  <td class="text-center">{{ item.storage_location }}</td>
+                  <td class="text-center">{{ item.valuation_type }}</td>
+                  <td class="text-right">{{ item.quantity }}</td>
+                  <td class="text-right">{{ item.value | number: "1.2-2" }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <ng-template #smsmodel>
+        <div mat-dialog-title class="dialog-title">
+          <div class="row">
+            <div class="col-11">
+              <h2>Add Single Material Stock</h2>
+            </div>
+            <div class="col-1">
+              <button
+                mat-icon-button
+                aria-label="close dialog"
+                class="closeicon"
+                (click)="closemodel()"
+                style="border: none; background: none"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <mat-dialog-content style="overflow: initial">
+          <form #goodsform="ngForm" (ngSubmit)="saveformdata(goodsform)">
+            <div class="row">
+              <div class="col-md-4">
+                <label style="margin-top: 7%">Material Code/Description</label>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field
+                  class="example-full-width dropdown matAC"
+                  style="
+                    width: 100%;
+                    border: 1px solid rgba(0, 0, 0, 0.12);
+                    border-radius: 5px;
+                    height: 35px;
+                  "
+                  appearance="none"
+                >
+                  <input
+                    type="text"
+                    placeholder="Search Material Code/Name "
+                    aria-label="Number"
+                    matInput
+                    style="border: none; "
+                    class="inputdropdown"
+                    name="selectematcode"
+                    [(ngModel)]="selectematcode"
+                    (keyup)="getmaterialDATA($event)"
+                    [matAutocomplete]="auto4"
+                  />
+
+                  <mat-autocomplete
+                    autoActiveFirstOption
+                    #auto4="matAutocomplete"
+                    (optionSelected)="selectedmastergroup()"
+                  >
+                    <mat-option
+                      *ngFor="let item of masterData"
+                      [value]="item.system_reference_1"
+                    >
+                      {{ item.system_reference_1 }}</mat-option
+                    >
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+            </div>
+           
+
+            <button
+            mat-raised-button
+              class="savebutton"
+              style="width: 15%; background-color: rgba(0, 0, 0, 0.12)"
+            >
+              Proceed
+            </button>
+            <!-- <button mat-raised-button class="savebutton" style="width:5%;margin-left:0%">Add</button> -->
+          </form>
+        </mat-dialog-content>
+      </ng-template>
+    </mat-tab>
+    <!-- Goods Issue tab -->
+
+    <mat-tab *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_GOODS_ISSUE'])">
+      <ng-template mat-tab-label> Goods Issue </ng-template>
+      <mat-card>
+        <mat-card-content>
+          <form id="form">
+            <div class="row">
+              <div class="col-md-2" >
+                <label>From Date<span class="mandetory">*</span></label>
+                <input
+                type="date"
+                class="inputstyles"
+                name="dateee"
+                dateFormat="yyyy/mm/dd"
+                [(ngModel)]="fromdate" style="text-transform: uppercase;"
+              />
+              </div>
+              <div class="col-md-2" >
+                <label>To Date<span class="mandetory">*</span></label>
+                <input
+                  type="date" style="text-transform: uppercase;"
+                  class="inputstyles"
+                  name="dateee"
+                  dateFormat="yyyy/mm/dd"
+                  [(ngModel)]="todate"
+                />
+              </div>
+              <div class="col-md-3" >
+                <label>Select Company<span class="mandetory">*</span></label>
+                <mat-form-field class="selectC"  appearance="outline" style="font-size:12px; width:100%;">
+                  <mat-select 
+                    placeholder="Selected Company List"
+                    [(ngModel)]="companyname"
+                     multiple
+                  >
+                
+                    <mat-option 
+                      *ngFor="let item of companyData1"
+                      [value]="item.company_name"
+                      >{{ item.company_name }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+             
+              <div class="col-md-3">
+                <label>Select Valuation Type<span class="mandetory">*</span></label>
+                <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%;">
+                  <mat-select 
+                    placeholder="Selected Valuation List"
+                    [(ngModel)]="valuationtype"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="let valution of valutiondata"
+                      [value]="valution.code"
+                      >{{ valution.code }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            <!-- </div>
+           
+            <div class="row justify-content-center mb-2" > -->
+              <div class="col-md-1 ">
+                <!-- <label>DOWNLOAD XL</label> -->
+               <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <br/>
+                <button
+                  mat-raised-button
+                  class="downloadbtn float-right"
+                  type="button"
+                  (click)="getgoodsissue()"
+                  style="background-color: rgba(0, 0, 0, 0.12)">
+                  VIEW
+                </button>
+              </div>
+              <div class="col-md-1 ">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <br/>
+                <button
+                mat-raised-button
+                  class="downloadbtn float-left"
+                  type="button"
+                  (click)="clearForm()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  RESET
+                </button>
+              </div>
+              <!-- <div class="col-md-2">
+                <button>CANCEL</button>
+              </div> -->
+            </div>
+          </form>
+        
+          <div class="row" *ngIf="goodsIssueData">
+            <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelgoodsissue()"
+            style="border: none;background-color: #62beda;">Export to Excel</button>
+        </div>
+          <div #TABLEgoodsissue class="row justify-content-center"  *ngIf="goodsIssueData">
+            <div class="example-table-container" class="tableclass">
+              <table #table class="table">
+                <tr class="center" class="headerstyles">
+                  <th scope="col" class="border">Sno</th>
+                  <th scope="col" class="border" >Date</th>
+                  <th scope="col" class="border">GI Numbet</th>
+                  <th scope="col" class="border">Goods Request Number</th>
+                  <th scope="col" class="border">From Company</th>
+                  <th scope="col" class="border">To Company</th>
+                  <th scope="col" class="border">Issue Type</th>
+                  <th scope="col" class="border">Material Code</th>
+                  <th scope="col" class="border">Material Description</th>
+                  <th scope="col" class="border">UOM</th>
+                  <th scope="col" class="border">Requested Qty</th>
+                  <th scope="col" class="border">Issued Qty</th>
+                  <th scope="col" class="border">Unit Price</th>
+                  <th scope="col" class="border">Total Price</th>
+                  <th scope="col" class="border">Contractor Name</th>
+                  <th scope="col" class="border">Receiver Name</th>
+                  <th scope="col" class="border">Remarks</th>
+                  
+                </tr>
+
+               
+
+                <tr *ngFor="let user of goodsIssueData;let i=index;">
+                  <td class="border">{{ i+1 }}</td>
+                  <td class="border" style="white-space: nowrap;">{{ user.Date }}</td>
+                  <td class="border center">{{ user.GI_Number }}</td>
+                  <td class="border">{{ user.Request_Number }}</td>
+                  <td class="border center">{{ user.Company_Name }}</td>
+                  <td class="border">{{ user.To_Company_Name }}</td>
+                  <td class="border">{{ user.Issue_Type }}</td>
+                  <td class="border">{{ user.Material_Code }}</td>
+                  <td class="center border">{{ user.Material_Description }}</td>
+                  <td class="border">{{ user.UOM }}</td>
+                  <td class="border text-right">{{ user.Request_Quantity }}</td>
+                  <td class="border text-right">{{ user.Issued_Quantity }}</td>
+                  <td class="border center text-right">{{ user.Unit_Price }}</td>
+                  <td class="border text-right">{{ user.Total_Price }}</td>
+                  <td class="border">{{ user.Contractor_Name }}</td>
+                  <td class="border">{{ user.Receiver_Name }}</td>
+                  <td class="border">{{ user.Remarks }}</td>
+                 
+                </tr>
+
+               
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <!-- Stock Statement -->
+
+    <mat-tab  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_STOCK_STATEMENT'])">
+      <ng-template mat-tab-label> Stock Statement </ng-template>
+      <mat-card>
+        <mat-card-content>
+          <form id="form">
+            <div class="row">
+              <div class="col-md-2" >
+                <label>From Date<span class="mandetory">*</span></label>
+                <input
+                type="date" style="text-transform: uppercase;"
+                class="inputstyles"
+                name="dateee"
+                dateFormat="yyyy/mm/dd"
+                [(ngModel)]="fromdate"
+              />
+              </div>
+              <div class="col-md-2" >
+                <label>To Date<span class="mandetory">*</span></label>
+                <input style="text-transform: uppercase;"
+                  type="date"
+                  class="inputstyles"
+                  name="dateee"
+                  dateFormat="yyyy/mm/dd"
+                  [(ngModel)]="todate"
+                />
+              </div>
+              <div class="col-md-3" >
+                <label>Select Company<span class="mandetory">*</span></label>
+                <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                  <mat-select 
+                    placeholder="Selected Company List"
+                    [(ngModel)]="companyname"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="let item of companyData1"
+                      [value]="item.company_name"
+                      >{{ item.company_name }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <label>Select Valuation Type<span class="mandetory">*</span></label>
+                <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                  <mat-select 
+                    placeholder="Selected Valuation List"
+                    [(ngModel)]="valuationtype"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="let valution of valutiondata"
+                      [value]="valution.code"
+                      >{{ valution.code }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <select class="dropdownstyles" name="valution_type" [(ngModel)]="model.valutiontype">
+                                <option selected disabled>Select One</option>
+                                <option *ngFor="let valution of valutiondata" [ngValue]="valution.code">{{valution.code}}
+                                </option>
+                            </select>  -->
+              </div>
+            <!-- </div> -->
+            
+            <!-- <div class="row">
+              <div class="col-md-2" style="margin-top: 40px">
+                <label>Select Company</label>
+              </div>
+              <div class="col-md-4" style="margin-top: 40px">
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Selected Company List"
+                    [(ngModel)]="companyname"
+                    multiple
+                  >
+                    <mat-option value="Company1">Company 1</mat-option>
+                    <mat-option value="Company2">Company 2</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2" style="margin-top: 40px">
+                <label>Select Valuation Type</label>
+              </div>
+              <div class="col-md-4" style="margin-top: 40px">
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Selected Valuation List"
+                    [(ngModel)]="valuationtype"
+                    multiple
+                  >
+                    <mat-option value="Ind">Ind</mat-option>
+                    <mat-option value="Imp">Imp</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div> -->
+            <br>
+            <!-- <div class="row justify-content-center" > -->
+              <div class="col-md-1 mt-4">
+                <!-- <label>DOWNLOAD XL</label> -->
+               
+                <button
+                mat-raised-button
+                  class="downloadbtn float-right"
+                  type="button"
+                  (click)="getstockstatement()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  VIEW
+                </button>
+              </div>
+              <div class="col-md-1 mt-4">
+              
+                <button
+                mat-raised-button
+                  class="downloadbtn float-left"
+                  type="button"
+                  (click)="clearForm()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  RESET
+                </button>
+              </div>
+              <!-- <div class="col-md-2">
+                <button>CANCEL</button>
+              </div> -->
+            </div>
+          </form>
+      
+          <div class="row" *ngIf="stockstatementdata">
+            <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelstockstmt()"
+            style="border: none;background-color: #62beda;">Export to Excel</button>
+        </div>
+          <div #TABLEstockstmt class="row justify-content-center" class="tableclass" *ngIf="stockstatementdata">
+            <div >
+              <table #table class="table">
+                <tr class="center" class="headerstyles">
+                  <th scope="col" class="border">Sno</th>
+                  <th scope="col" class="border">Material Description</th>
+                  <th scope="col" class="border">Material Code</th>
+                  <th scope="col" class="border">Valuation Type</th>
+                  <th scope="col" class="border">Units</th>
+                  <th scope="col" class="border">Opening Qty</th>
+                  <th scope="col" class="border">Receipt Qty</th>
+                  <th scope="col" class="border">Returned Qty</th>
+                  <th scope="col" class="border">Total Qty</th>
+                  <th scope="col" class="border">Issued Qty</th>
+                  <th scope="col" class="border">RGP Qty</th>
+                  <th scope="col" class="border">NRGP Qty</th>
+                  <th scope="col" class="border">Stock Transfer Qty</th>
+                  <th scope="col" class="border">Closing Balance Qty</th>
+                  <th scope="col" class="border">Rate</th>
+                  <th scope="col" class="border">Opening Balance</th>
+                  <th scope="col" class="border">Receipt Balance</th>
+                  <th scope="col" class="border">Returned Balance</th>
+                  <th scope="col" class="border">Total Value</th>
+                  <th scope="col" class="border">Issued Value</th>
+                  <th scope="col" class="border">RGP Value</th>
+                  <th scope="col" class="border">NRGP Value</th>
+                  <th scope="col" class="border">Stock Transfer Value</th>
+                  <th scope="col" class="border">Closing Balance</th>
+                  <th scope="col" class="border">Main Group</th>
+                  <th scope="col" class="border">Sub Group</th>
+                  <th scope="col" class="border">Storage Location</th>
+                </tr>
+
+               
+
+                <tr *ngFor="let user of stockstatementdata;let i=index;">
+                  <td class="border">{{ i+1 }}</td>
+                  <td class="border">{{ user.material_description }}</td>
+                  <td class="border center">{{ user.material_code }}</td>
+                  <td class="border">{{ user.valuation_type }}</td>
+                  <td class="border center">{{ user.unit_of_measurment }}</td>
+                  <td class="border text-right">{{ user.Opening_quantity | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.Receipt_quantity| number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.Return_quantity | number:'1.2-2' }}</td>
+                  <td class="center border text-right">{{ user.Total_quantity | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.Issued_quantity | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.RGP_quantity | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.NRGP_quantity | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{user.Transfer_quantity | number:'1.2-2'}}</td>
+                  <td class="border text-right">{{ user.Closing_Balance_quantity | number:'1.2-2' }}</td>
+                  <td class="border center">{{ user.Rate | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.Opening_value | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.Receipt_value | number:'1.2-2'}}</td>
+                  <td class="border text-right">{{ user.Return_value | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.Total_value | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.Issued_value | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.RGP_value  | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.NRGP_value | number:'1.2-2' }}</td>
+                  <td class="border center">{{user.Transfer_value | number:'1.2-2'}}</td>
+                  <td class="border">{{ user.Closing_Balance_value | number:'1.2-2' }}</td>
+                  <td class="border">{{ user.Main_Group }}</td>
+                  <td class="border">{{ user.Sub_Group }}</td>
+                  <td class="border">{{ user.storage_location }}</td>
+                
+                </tr>
+
+               
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <!-- Daily Material Receipt Tab -->
+
+    <mat-tab *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_DAILY_MATERIAL_RECEIPT'])">
+      <ng-template mat-tab-label> Daily Material Receipt</ng-template>
+      <mat-card>
+        <mat-card-content>
+          <form id="form">
+            <div class="row">
+              <div class="col-md-2" >
+                <label>From Date<span class="mandetory">*</span></label>
+                <input
+                type="date"
+                class="inputstyles"
+                name="dateee"
+                dateFormat="yyyy/mm/dd"
+                [(ngModel)]="fromdate"
+              />
+              </div>
+            
+              <div class="col-md-2" >
+                <label>To Date<span class="mandetory">*</span></label>
+                <input
+                type="date"
+                class="inputstyles"
+                name="dateee"
+                dateFormat="yyyy/mm/dd"
+                [(ngModel)]="todate"
+              />
+              </div>
+              <div class="col-md-3" >
+                <label>Select Company<span class="mandetory">*</span></label>
+                <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                  <mat-select 
+                    placeholder="Selected Company List"
+                    [(ngModel)]="companyname"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="let item of companyData1"
+                      [value]="item.company_name"
+                      >{{ item.company_name }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <label>Select Valuation Type<span class="mandetory">*</span></label>
+                  <mat-form-field  class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                    <mat-select
+                      placeholder="Selected Valuation List"
+                      [(ngModel)]="valuationtype"
+                      multiple
+                    >
+                      <mat-option
+                        *ngFor="let valution of valutiondata"
+                        [value]="valution.code"
+                        >{{ valution.code }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <!-- <select class="dropdownstyles" name="valution_type" [(ngModel)]="model.valutiontype">
+                                  <option selected disabled>Select One</option>
+                                  <option *ngFor="let valution of valutiondata" [ngValue]="valution.code">{{valution.code}}
+                                  </option>
+                              </select>  -->
+                </div>
+            <!-- </div>
+          
+            <div class="row justify-content-center mb-3" > -->
+              <div class="col-md-1 mt-4">
+                <!-- <label>DOWNLOAD XL</label> -->
+              
+                <button
+                mat-raised-button
+                  class="downloadbtn float-right"
+                  type="button"
+                  (click)="getdmr()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  VIEW
+                </button>
+              </div>
+              <div class="col-md-1 mt-4">
+           
+                <button
+                mat-raised-button
+                  class="downloadbtn float-left"
+                  type="button"
+                  (click)="clearForm()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  RESET
+                </button>
+              </div>
+              <!-- <div class="col-md-2">
+                <button>CANCEL</button>
+              </div> -->
+            </div>
+          </form>
+         
+          <div class="row" *ngIf="goodsIssueData">
+            <button mat-raised-button class="btn btn-success m-3" (click)="exportExceldmr()"
+            style="border: none;background-color: #62beda;">Export to Excel</button>
+        </div>
+          <div #TABLEdmr class="row justify-content-center" class="tableclass" *ngIf="dmrdata">
+            <div >
+              <table #table class="table">
+                <tr class="center" class="headerstyles">
+                  <th scope="col" class="border">Sno</th>
+                  <th scope="col" class="border">DMR Number</th>
+                  <th scope="col" class="border">DMR Date</th>
+                  <th scope="col" class="border">Purchase Order Number</th>
+                  <th scope="col" class="border">Purchase Order Date</th>
+                  <th scope="col" class="border">Project Name</th>
+                  <th scope="col" class="border">Supplier Name</th>
+                  <th scope="col" class="border">Invoice Number</th>
+                  <th scope="col" class="border">Invoice  Date</th>
+                  <th scope="col" class="border">Material Code</th>
+                  <th scope="col" class="border">Material Description</th>
+                  <th scope="col" class="border">UOM</th>
+                  <th scope="col" class="border">Received Qty</th>
+                  <th scope="col" class="border">Unit Price</th>
+                  <th scope="col" class="border">Discount Percentage</th>
+                  <th scope="col" class="border">Discount Value</th>
+                  <th scope="col" class="border">Total Price</th>
+                  <th scope="col" class="border">GST%</th>
+                  <th scope="col" class="border">GST Value</th>
+                  <th scope="col" class="border">Freight Charges</th>
+                  <th scope="col" class="border">Other Charges</th>
+                  <th scope="col" class="border">Total Value</th>
+                  <th scope="col" class="border">Transporter Name</th>
+                  <th scope="col" class="border">LR Number</th>
+                  <th scope="col" class="border">LR Date</th>
+                  <th scope="col" class="border">Vehicle Number</th>
+                  <th scope="col" class="border">Gate Entry Number</th>
+                  <th scope="col" class="border">Remarks</th>
+                  <th scope="col" class="border">GRN NUMBER</th>
+                  <th scope="col" class="border">GRN DATE</th>
+                </tr>
+
+               
+
+                <tr *ngFor="let user of dmrdata;let i=index;">
+                  <td class="border">{{ i+1 }}</td>
+                  <td class="border">{{ user.DmrNumber }}</td>
+                  <td class="border center" style="white-space: nowrap;">{{ user.DmrDate  }}</td>
+                  <td class="border">{{ user.PurchaseOrderNumber }}</td>
+                  <td class="border center" style="white-space: nowrap;">{{ user.PurchaseOrderDate  }}</td>
+                  <td class="border">{{ user.ProjectName  }}</td>
+                  <td class="border">{{ user.SupplierName }}</td>
+                  <td class="border">{{ user.InvoiceNumber  }}</td>
+                  <td class="center border">{{ user.InvoiceDate  }}</td>
+                  <td class="border">{{ user.MaterialCode  }}</td>
+                  <td class="border">{{user.MaterialDescription }}</td>
+                  <td class="border">{{ user.UnitOfMeasurment }}</td>
+                  <td class="border center text-right">{{ user.ReceivedQuantity  }}</td>
+                  <td class="border text-right">{{ user.UnitPrice | number:'1.2-2' }}</td>
+                  <td class="border">{{ user.DiscountPercent }}</td>
+                  <td class="border">{{ user.DiscountValue | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.TotalPrice | number:'1.2-2' }}</td>
+                  <td class="border">{{ user.TaxPercent  }}</td>
+                  <td class="border center">{{user.TaxValue | number:'1.2-2'}}</td>
+                  <td class="border">{{ user.TotalFreight | number:'1.2-2' }}</td>
+                  <td class="border">{{ user.OtherChargesValue | number:'1.2-2' }}</td>
+                  <td class="border text-right ">{{ user.TotalValue | number:'1.2-2' }}</td>
+                  <td class="border">{{ user.TransporterName }}</td>
+                  <td class="border">{{ user.LrNumber }}</td>
+                  <td class="border" style="white-space: nowrap;">{{ user.LrDate }}</td>
+                  <td class="border center">{{user.VehicleNumber}}</td>
+                  <td class="border">{{ user.GateEntryNumber }}</td>
+                  <td class="border">{{ user.ItemRemarks }}</td>
+                  <td class="border">{{ user.GrnNumber }}</td>
+                  <td class="border" style="white-space: nowrap;">{{ user.GrnDate }}</td>
+                </tr>
+
+               
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <!-- Goods Receipt tab -->
+
+    <mat-tab *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_GOODS_RECEIPT'])">
+      <ng-template mat-tab-label>Goods Receipt</ng-template>
+      <mat-card>
+        <mat-card-content>
+          <form id="form">
+            <div class="row">
+              <div class="col-md-2" >
+                <label>From Date<span class="mandetory">*</span></label>
+                <input
+                type="date" style="text-transform: uppercase;"
+                class="inputstyles"
+                name="dateee"
+                dateFormat="yyyy/mm/dd"
+                [(ngModel)]="fromdate"
+              />
+              </div>
+            
+              <div class="col-md-2" >
+                <label>To Date<span class="mandetory">*</span></label>
+                <input
+                type="date" style="text-transform: uppercase;"
+                class="inputstyles"
+                name="dateee"
+                dateFormat="yyyy/mm/dd"
+                [(ngModel)]="todate"
+              />
+            </div>
+            <div class="col-md-3 " >
+              <label>Select Company<span class="mandetory">*</span></label>
+              <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                <mat-select 
+                  placeholder="Selected Company List"
+                  [(ngModel)]="companyname"
+                  multiple
+                >
+                  <mat-option
+                    *ngFor="let item of companyData1"
+                    [value]="item.company_name"
+                    >{{ item.company_name }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <label>Select Valuation Type<span class="mandetory">*</span></label>
+              <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                <mat-select 
+                  placeholder="Selected Valuation List"
+                  [(ngModel)]="valuationtype"
+                  multiple
+                >
+                  <mat-option
+                    *ngFor="let valution of valutiondata"
+                    [value]="valution.code"
+                    >{{ valution.code }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!-- <select class="dropdownstyles" name="valution_type" [(ngModel)]="model.valutiontype">
+                              <option selected disabled>Select One</option>
+                              <option *ngFor="let valution of valutiondata" [ngValue]="valution.code">{{valution.code}}
+                              </option>
+                          </select>  -->
+            </div>
+          <!-- </div> -->
+             
+         
+            <!-- <div class="row">
+              <div class="col-md-2" style="margin-top: 40px">
+                <label>Select Company</label>
+              </div>
+              <div class="col-md-4" style="margin-top: 40px">
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Selected Company List"
+                    [(ngModel)]="companyname"
+                    multiple
+                  >
+                    <mat-option value="Company1">Company 1</mat-option>
+                    <mat-option value="Company2">Company 2</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2" style="margin-top: 40px">
+                <label>Select Valuation Type</label>
+              </div>
+              <div class="col-md-4" style="margin-top: 40px">
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Selected Valuation List"
+                    [(ngModel)]="valuationtype"
+                    multiple
+                  >
+                    <mat-option value="Ind">Ind</mat-option>
+                    <mat-option value="Imp">Imp</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div> -->
+            <br>
+            <!-- <div class="row justify-content-center" > -->
+              <div class="col-md-1 mt-4">
+        
+                <!-- <label>DOWNLOAD XL</label> -->
+                <button
+                mat-raised-button
+                  class="downloadbtn float-right"
+                  type="button"
+                  (click)="getgoodsreceipt()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  VIEW
+                </button>
+              </div>
+              <div class="col-md-1 mt-4">
+                
+                <button
+                mat-raised-button
+                  class="downloadbtn float-left"
+                  type="button "
+                  (click)="clearForm()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  RESET
+                </button>
+              </div>
+              <!-- <div class="col-md-2">
+                <button>CANCEL</button>
+              </div> -->
+            </div>
+          </form>
+          <div class="row" *ngIf="avaialablestockdata.length>0">
+            <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelgoodsreceipt()"
+            style="border: none;background-color: #62beda;">Export to Excel</button>
+        </div>
+          <div #TABLEgoodsreceipt class="row justify-content-center" class="tableclass" *ngIf="avaialablestockdata.length>0">
+            
+              <table #table class="table">
+                <tr class="center" class="headerstyles">
+                  <th scope="col" class="border">GRN NUMBER</th>
+                  <th scope="col" class="border">GRN DATE</th>
+                  <th scope="col" class="border">PURCHASE ORDER NUMBER</th>
+                  <th scope="col" class="border">PO DATE</th>
+                  <th scope="col" class="border">COMPANY NAME</th>
+                  <th scope="col" class="border">VENDOR NAME</th>
+                  <th scope="col" class="border">INVOICE NUMBER</th>
+                  <th scope="col" class="border">INVOICE DATE</th>
+                  <th scope="col" class="border">DC NUMBER</th>
+                  <th scope="col" class="border">TRANSPORTER NAME</th>
+                  <th scope="col" class="border">LR NUMBER</th>
+                  <th scope="col" class="border">LR DATE</th>
+                  <th scope="col" class="border">VEHICLE NUMBER</th>
+                  <th scope="col" class="border">WAY BILL NO</th>
+                  <th scope="col" class="border">GATE ENTRY NUMBER</th>
+                  <th scope="col" class="border">COMMENT</th>
+                  <th scope="col" class="border">ITEM REMARKS</th>
+                  <th scope="col" class="border">DMR NUMBER</th>
+                  <th scope="col" class="border">DMR DATE</th>
+                  <th scope="col" class="border">VALUATION TYPE</th>
+                  <th scope="col" class="border">STORAGE LOCATION</th>
+                  <th scope="col" class="border">MATERIAL CODE</th>
+                  <th scope="col" class="border">MATERIAL DESCRIPTION</th>
+                  <th scope="col" class="border">UOM</th>
+                  <th scope="col" class="border">INVOICE QUANTITY</th>
+                  <th scope="col" class="border">RECEIVED QUANTITY</th>
+                  <th scope="col" class="border">SHORTAGE QUANTITY</th>
+                  <th scope="col" class="border">EXCESS QUANTITY</th>
+                  <th scope="col" class="border">REJECTED QUANTITY</th>
+                  <th scope="col" class="border">ACCEPTED QUANTITY</th>
+                  <th scope="col" class="border">UNIT PRICE</th>
+                  <th scope="col" class="border">DISCOUNT PERCENTAGE</th>
+                  <th scope="col" class="border">DISCOUNT VALUE</th>
+                  <th scope="col" class="border">TOTAL PRICE</th>
+                  <th scope="col" class="border">GST PERCENTAGE</th>
+                  <th scope="col" class="border">GST VALUE</th>
+                  <th scope="col" class="border">FREIGHT CHARGES</th>
+                  <th scope="col" class="border">OTHER CHARGES</th>
+                  <th scope="col" class="border">MISCELLANIOUS CHARGES</th>
+                  <th scope="col" class="border">MISCELLANIOUS VALUE</th>
+                  <th scope="col" class="border">MISCELLANIOUS SPLIT</th>
+                  <th scope="col" class="border">TOTAL VALUE</th>
+                </tr>
+
+             
+
+                <tr *ngFor="let user of avaialablestockdata">
+                  <td class="border">{{ user.GRN_NUMBER }}</td>
+                  <td class="border center" style="white-space: nowrap;">{{ user.GRN_DATE }}</td>
+                  <td class="border">{{ user.Purchase_Order_Number }}</td>
+                  <td class="border center" style="white-space: nowrap;">{{ user.PO_Date }}</td>
+                  <td class="border">{{ user.Company_name }}</td>
+                  <td class="border">{{ user.vendor_name }}</td>
+                  <td class="border">{{ user.Invoice_Number }}</td>
+                  <td class="center border" style="white-space: nowrap;">{{ user.Invoice_Date }}</td>
+                  <td class="border">{{ user.DC_Number }}</td>
+                  <td class="border">{{ user.Transporter_Name }}</td>
+                  <td class="border">{{ user.LR_Number }}</td>
+                  <td class="border center" style="white-space: nowrap;">{{ user.LR_Date }}</td>
+                  <td class="border">{{ user.Vehicle_Number }}</td>
+                  <td class="border">{{ user.Way_Bill_No }}</td>
+                  <td class="border">{{ user.Gate_Entry_Number }}</td>
+                  <td class="border">{{ user.Comment }}</td>
+                  <td class="border">{{ user.Item_Remarks }}</td>
+                  <td class="border">{{ user.DMR_NUMBER }}</td>
+                  <td class="border center">{{ user.DMR_DATE }}</td>
+                  <td class="border">{{ user.Valuation_Type }}</td>
+                  <td class="border">{{ user.Storage_Location }}</td>
+                  <td class="border">{{ user.Material_Code }}</td>
+                  <td class="border">{{ user.Material_Description }}</td>
+                  <td class="border">{{ user.UOM }}</td>
+                  <td class="right border">
+                    {{ user.Invoice_Quantity| number:'1.2-2' }}
+                  </td>
+                  <td class="right border">
+                    {{ user.Received_Quantity| number:'1.2-2' }}
+                  </td>
+                  <td class="right border">
+                    {{ user.Shortage_Quantity| number:'1.2-2' }}
+                  </td>
+                  <td class="right border">
+                    {{ user.Excess_Quantity| number:'1.2-2' }}
+                  </td>
+                  <td class="right border">
+                    {{ user.Rejected_Quantity| number:'1.2-2' }}
+                  </td>
+                  <td class="right border">
+                    {{ user.Accepted_Quantity| number:'1.2-2' }}
+                  </td>
+                  <td class="right border">{{ user.Unit_Price| number:'1.2-2' }}</td>
+                  <td class="border">{{ user.Discount_Percentage }}</td>
+                  <td class="border">{{ user.Discount_Value }}</td>
+                  <td class="right border">
+                    {{ user.Total_Price| number:'1.2-2' }}
+                  </td>
+                  <td class="border">{{ user.GST_PERCENTAGE }}</td>
+                  <td class="border">{{ user.GST_Value }}</td>
+                  <td class="border">{{ user.Freight_Charges }}</td>
+                  <td class="border">{{ user.Other_Charges }}</td>
+                  <td class="border">{{ user.miscellanious_charges }}</td>
+                  <td class="border">{{ user.miscellanious_value }}</td>
+                  <td class="border">{{ user.miscellanious_split }}</td>
+                  <td class="border">{{ user.Total_Value }}</td>
+                </tr>
+
+                <!-- <tr class="text-center">
+                <td colspan="12" class="border">
+                  <div class="row justify-content-center text-center">
+                    <div class="col ">Total</div>
+                    <div class="col right"><b>{{ total | number: "2.0-0" }}.00</b></div>
+                  </div>
+                </td>
+              </tr> -->
+              </table>
+           
+          </div>
+       
+          <!-- <button mat-raised-button color="primary" (click)="export()">
+            Export as Excel
+          </button> -->
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <!-- Goods Return tab-->
+
+    <mat-tab *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_GOODS_RETURN'])">
+      <ng-template mat-tab-label>Goods Return</ng-template>
+      <mat-card>
+        <mat-card-content>
+          <form id="form">
+            <div class="row">
+              <div class="col-md-2" >
+                <label>From Date<span class="mandetory">*</span></label>
+                <input
+                  type="date" style="text-transform: uppercase;"
+                  class="inputstyles"
+                  name="dateee"
+                  dateFormat="yyyy/mm/dd"
+                  [(ngModel)]="fromdate"
+                />
+              </div>
+              <div class="col-md-2" >
+                <label>To Date<span class="mandetory">*</span></label>
+                <input
+                type="date" style="text-transform: uppercase;"
+                class="inputstyles"
+                name="dateee"
+                dateFormat="yyyy/mm/dd"
+                [(ngModel)]="todate"
+              />
+              </div>
+              <div class="col-md-3" >
+                <label>Select Company<span class="mandetory">*</span></label>
+                <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                  <mat-select 
+                    placeholder="Selected Company List"
+                    [(ngModel)]="companyname"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="let item of companyData1"
+                      [value]="item.company_name"
+                      >{{ item.company_name }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              
+              <div class="col-md-3" >
+                <label>Select Valuation Type<span class="mandetory">*</span></label>
+                <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                  <mat-select 
+                    placeholder="Selected Valuation List"
+                    [(ngModel)]="valuationtype"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="let valution of valutiondata"
+                      [value]="valution.code"
+                      >{{ valution.code }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <select class="dropdownstyles" name="valution_type" [(ngModel)]="model.valutiontype">
+                                <option selected disabled>Select One</option>
+                                <option *ngFor="let valution of valutiondata" [ngValue]="valution.code">{{valution.code}}
+                                </option>
+                            </select>  -->
+              </div>
+            <!-- </div> -->
+            <!-- <div class="row">
+              <div class="col-md-2" style="margin-top: 40px">
+                <label>Select Company</label>
+              </div>
+              <div class="col-md-4" style="margin-top: 40px">
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Selected Company List"
+                    [(ngModel)]="companyname"
+                    multiple
+                  >
+                    <mat-option value="Company1">Company 1</mat-option>
+                    <mat-option value="Company2">Company 2</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2" style="margin-top: 40px">
+                <label>Select Valuation Type</label>
+              </div>
+              <div class="col-md-4" style="margin-top: 40px">
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Selected Valuation List"
+                    [(ngModel)]="valuationtype"
+                    multiple
+                  >
+                    <mat-option value="Ind">Ind</mat-option>
+                    <mat-option value="Imp">Imp</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div> -->
+           
+            <!-- <div class="row justify-content-center" > -->
+              <div class="col-md-1 mt-4">
+                <!-- <label>DOWNLOAD XL</label> -->
+                <button
+                  mat-raised-button
+                  class="downloadbtn float-right"
+                  type="button"
+                  (click)="getgoodsreturn()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  VIEW
+                </button>
+              </div>
+              <div class="col-md-1 mt-4">
+                <button
+                  mat-raised-button
+                  class="downloadbtn float-left"
+                  type="button"
+                  (click)="clearForm()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  RESET
+                </button>
+              </div>
+              <!-- <div class="col-md-2">
+                <button>CANCEL</button>
+              </div> -->
+            </div>
+          </form>
+          <br />
+          <br />
+          <div class="row" *ngIf="goodsreturndata">
+            <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelgoodsreturn()"
+            style="border: none;background-color: #62beda;">Export to Excel</button>
+        </div>
+          <div #TABLEGR class="row justify-content-center" class="tableclass" *ngIf="goodsreturndata">
+            <div >
+              <table #table class="table">
+                <tr class="center" class="headerstyles">
+                  <th scope="col" class="border">Sno</th>
+                  <th scope="col" class="border">Date</th>
+                  <th scope="col" class="border">Goods Return Number</th>
+                  <th scope="col" class="border">Request Number</th>
+                  <th scope="col" class="border">Return Type</th>
+                  <th scope="col" class="border">Returned By</th>
+                  <th scope="col" class="border">Company Name</th>
+                  <th scope="col" class="border">Material Code</th>
+                  <th scope="col" class="border">Material Description</th>
+                  <th scope="col" class="border">UOM</th>
+                  <th scope="col" class="border">Qty</th>
+                  <th scope="col" class="border">Unit Price</th>
+                  <th scope="col" class="border">Total Price</th>
+                  <th scope="col" class="border">Remarks</th>
+                                 </tr>
+
+               
+
+                <tr *ngFor="let user of goodsreturndata;let i=index;">
+                  <td class="border">{{ i+1 }}</td>
+                  <td class="border" style="white-space: nowrap;">{{ user.date| date:'dd-MM-yyyy'  }}</td>
+                  <td class="border">{{ user.number  }}</td>
+                  <td class="border center">{{ user.Request_Number }}</td>
+                  <td class="border">{{ user.Return_Type }}</td>
+                  <td class="border center">{{ user.giver_name }}</td>
+                  <td class="border">{{ user.Company_Name  }}</td>
+                  <td class="border">{{ user.Material_Code }}</td>
+                  <td class="border">{{ user.Material_Description  }}</td>
+                  <td class="center border">{{ user.Unit_Of_Measurment }}</td>
+                  <td class="border text-right">{{ user.Quantity | number:'1.2-2'  }}</td>
+                  <td class="border text-right">{{user.Unit_Price | number:'1.2-2' }}</td>
+                  <td class="border text-right">{{ user.Total_Value | number:'1.2-2' }}</td>
+                  <td class="border center">{{ user.Item_Remarks  }}</td>
+                
+                </tr>
+
+               
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <mat-tab *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_MATERIAL_MOVEMENT_HISTORY'])">
+      <ng-template mat-tab-label>Material Movement History</ng-template>
+      <mat-card>
+        <mat-card-content>
+          <form id="form">
+            <div class="row">
+              <div class="col-md-2" >
+                <label>From Date<span class="mandetory">*</span></label>
+                <input
+                  type="date" style="text-transform: uppercase;"
+                  class="inputstyles"
+                  name="dateee"
+                  dateFormat="yyyy/mm/dd"
+                  [(ngModel)]="fromdate"
+                />
+              </div>
+              <div class="col-md-2" >
+                <label>To Date<span class="mandetory">*</span></label>
+                <input
+                type="date" style="text-transform: uppercase;"
+                class="inputstyles"
+                name="dateee"
+                dateFormat="yyyy/mm/dd"
+                [(ngModel)]="todate"
+              />
+              </div>
+              <div class="col-md-4" >
+                <label>Select Company<span class="mandetory">*</span></label>
+                <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                  <mat-select 
+                    placeholder="Selected Company List"
+                    [(ngModel)]="companyname"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="let item of companyData1"
+                      [value]="item.company_name"
+                      >{{ item.company_name }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <label>Select Valuation Type<span class="mandetory">*</span></label>
+                  <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                    <mat-select 
+                      placeholder="Selected Valuation List"
+                      [(ngModel)]="valuationtype"
+                      multiple
+                    >
+                      <mat-option
+                        *ngFor="let valution of valutiondata"
+                        [value]="valution.code"
+                        >{{ valution.code }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <!-- <select class="dropdownstyles" name="valution_type" [(ngModel)]="model.valutiontype">
+                                  <option selected disabled>Select One</option>
+                                  <option *ngFor="let valution of valutiondata" [ngValue]="valution.code">{{valution.code}}
+                                  </option>
+                              </select>  -->
+                </div>
+                <div class="col-md-4" >
+                  <label >Material Code/Description<span class="mandetory">*</span></label>
+                  <mat-form-field   class="example-full-width dropdown matAC"
+                  style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.12);border-radius: 5px;height: 35px;"
+                  appearance="none">
+                    <input 
+                      type="text"
+                      placeholder="Search Material Code/Name "
+                      aria-label="Number"
+                      matInput 
+                      style="border: none;"
+                      class="inputdropdown"
+                      name="selectematcode1"
+                      [(ngModel)]="selectematcode1"
+                      (keyup)="getmaterialDATA($event)"
+                      [matAutocomplete]="auto1"
+                    />
+  
+                    <mat-autocomplete
+                      autoActiveFirstOption
+                      #auto1="matAutocomplete"
+                      (optionSelected)="selected()"
+                    >
+                      <mat-option
+                        *ngFor="let item of masterData"
+                        [value]="item.system_reference_1"
+                      >
+                        {{ item.system_reference_1 }}</mat-option
+                      >
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+            <!-- </div>
+            <div class="row justify-content-center" > -->
+              <div class="col-md-2 mt-4">
+                <!-- <label>DOWNLOAD XL</label> -->
+                <button
+                mat-raised-button
+                  class="downloadbtn float-right"
+                  type="button"
+                  (click)="getmaterialmovdata()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  View
+                </button>
+              </div>
+              <div class="col-md-2 mt-4">
+                <button
+                mat-raised-button
+                  class="downloadbtn float-left"
+                  type="button"
+                  (click)="clearForm()"
+                  style="background-color: rgba(0, 0, 0, 0.12)"
+                >
+                  RESET
+                </button>
+              </div>
+              <!-- <div class="col-md-2">
+                <button>CANCEL</button>
+              </div> -->
+            </div>
+          </form>
+          <div class="row" *ngIf="materialmovementdata">
+            <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelmmh()"
+            style="border: none;background-color: #62beda;">Export to Excel</button>
+        </div>
+          <div #TABLEmmh class="row justify-content-center" class="tableclass" *ngIf="materialmovementdata">
+            <div >
+              <table #table class="table">
+                <tr class="center" class="headerstyles">
+                  <th scope="col" class="border">Sno</th>
+                  <th scope="col" class="border">Date</th>
+                  <th scope="col" class="border">Concern Name</th>
+                  <th scope="col" class="border">Company Name</th>
+                  <th scope="col" class="border">Document</th>
+                  <th scope="col" class="border">Opening Quantity</th>
+                  <th scope="col" class="border">Received Quantity</th>
+                  <th scope="col" class="border">Issued Quantity</th>
+                  <th scope="col" class="border">Transferred Quantity</th>
+                  <th scope="col" class="border">Returned Quantity</th>
+                  <th scope="col" class="border">Closing Quantity</th>
+                  <th scope="col" class="border">Opening Value</th>
+                  <th scope="col" class="border">Received Value</th>
+                  <th scope="col" class="border">Issued Value</th>
+                  <th scope="col" class="border">Transferred Value</th>
+                  <th scope="col" class="border">Returned Value</th>
+                  <th scope="col" class="border">Closing Value</th>
+                                 </tr>
+
+               
+
+                <tr *ngFor="let user of materialmovementdata;let i=index;">
+                  <td class="border">{{ i+1 }}</td>
+                  <td class="border" style="white-space: nowrap;">{{ user.date }}</td>
+                  <td class="border center">{{ user.Concern_Name }}</td>
+                  <td class="border">{{ user.Project_Name }}</td>
+                  <td class="border center">{{ user.Document }}</td>
+                  <td class="border">{{ user.opening_quantity  }}</td>
+                  <td class="border">{{ user.Received_Quantity }}</td>
+                  <td class="border">{{ user.Issued_quantity  }}</td>
+                  <td class="center border">{{ user.Transfered_Quantity }}</td>
+                  <td class="border">{{ user.Returned_Quantity  }}</td>
+                  <td class="border">{{user.Closing_Quantity }}</td>
+                  <td class="border">{{ user.opening_value | number:'1.2-2' }}</td>
+                  <td class="border center">{{ user.Received_Value | number:'1.2-2'  }}</td>
+                  <td class="border">{{ user.Issued_Value | number:'1.2-2' }}</td>
+                  <td class="border">{{ user.Transfered_Value | number:'1.2-2' }}</td>
+                  <td class="border">{{ user.Returned_Value | number:'1.2-2' }}</td>
+                  <td class="border">{{ user.Closing_Value | number:'1.2-2' }}</td>
+                 
+                </tr>
+
+               
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+      <!-- goods transfer -->
+      <mat-tab *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_GOODS_TRANSFER'])">
+        <ng-template mat-tab-label>Goods Transfer</ng-template>
+        <mat-card>
+          <mat-card-content>
+            <form id="form">
+              <div class="row">
+                <div class="col-md-2">
+                  <label>From Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="dateee"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="fromdate" />
+                </div>
+                <div class="col-md-2">
+                  <label>To Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="dateee"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="todate" />
+                </div>
+                <div class="col-md-3">
+                  <label>Transfer Type<span class="mandetory">*</span></label><br>
+                  <select class="dropdownstyles" name="transferType" [(ngModel)]="transferType">
+                    <option [value]="undefined" selected disabled>Select One</option>
+                    <option value="RGP">RGP</option>
+                    <option value="NRGP">NRGP</option>
+                  </select>
+                </div>
+
+                <div class="col-md-3" >
+                  <label>Select Company<span class="mandetory">*</span></label>
+                  <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                    <mat-select 
+                      placeholder="Selected Company List" name="companyname1"
+                      [(ngModel)]="companyname1"
+                      multiple
+                    >
+                      <mat-option
+                        *ngFor="let item of companyData1"
+                        [value]="item.company_name"
+                        >{{ item.company_name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+           
+              <!-- </div>
+              <div class="row justify-content-center"> -->
+                <div class="col-md-1 mt-4">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getgoodstransfer()"
+                    style="background-color: rgba(0, 0, 0, 0.12) ">
+                    VIEW
+                  </button>
+                </div>
+                <div class="col-md-1 mt-4">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-left" type="button" (click)="goodsTransferclearForm()"
+                    style="background-color: rgba(0, 0, 0, 0.12)">
+                    RESET
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="row" *ngIf="goodstransferdata.length>0">
+              <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelgoodstransfer()"
+                style="border: none;background-color: #62beda;">Export to Excel</button>
+            </div>
+            <div #TABLEgoodstransfer class="row justify-content-center" class="tableclass"
+              *ngIf="goodstransferdata.length>0">
+              <div>
+                <table #table class="table">
+                  <tr class="center" class="headerstyles">
+                    <th scope="col" class="border">Sno</th>
+                    <th scope="col" class="border">Date</th>
+                    <th scope="col" class="border">Company Name</th>
+                    <th scope="col" class="border">To_Company_Name</th>
+                      <th scope="col" class="border">Valuation_Type</th>
+                    <th scope="col" class="border">Number</th>
+                    <th scope="col" class="border">Batch Number</th>
+                    <th scope="col" class="border">Expected Return Date</th>
+                    <th scope="col" class="border">Overlap Days</th>
+                    <th scope="col" class="border">Line Item</th>
+                    <th scope="col" class="border">Lr Number</th>
+                    <th scope="col" class="border">Lr Date</th>
+                    <th scope="col" class="border">Receiver Name</th>
+                    <th scope="col" class="border">Request Date</th>
+                    <th scope="col" class="border">Request Quantity</th>
+                    <th scope="col" class="border">Request number</th>
+                    <th scope="col" class="border">Transporter Name</th>
+                    <th scope="col" class="border">Vehicle Number</th>
+                    <th scope="col" class="border">Serial</th>
+                    <th scope="col" class="border">Material Code</th>
+                    <th scope="col" class="border">Material Description</th>
+                    <th scope="col" class="border">UOM</th>
+                    <th scope="col" class="border">Qty</th>
+                    <th scope="col" class="border">Unit Price</th>
+                    <th scope="col" class="border">Total Price</th>
+                    <th scope="col" class="border">Remarks</th>
+                  </tr>
+  
+  
+  
+                  <tr *ngFor="let user of goodstransferdata;let i=index;">
+                    <td class="border">{{ i+1 }}</td>
+                    <td class="border" style="white-space: nowrap;">{{ user.Date }}</td>
+                    <td class="border">{{user.Company_Name}}</td>
+                    <td class="border">{{user.To_Company_Name}}</td>
+                    <td class="border">{{user.Valuation_Type}}</td>
+                    <td class="border">{{user.Number}}</td>
+                    <td class="border">{{ user.Batch_Number}}</td>
+                    <td class="border center">{{ user.Expected_Return_Date}}</td>
+                    <td class="border">{{ user.Overlap_Days}}</td>
+                    <td class="border center">{{ user.Line_Item }}</td>
+                    <td class="border">{{ user.Lr_Number}}</td>
+                    <td class="border" style="white-space: nowrap;">{{user.Lr_Date}}</td>
+                    <td class="border">{{user.Receiver_Name}}</td>
+                    <td class="border" style="white-space: nowrap;">{{user.Request_Date }}</td>
+                    <td class="border">{{user.Request_Quantity }}</td>
+                    <td class="border">{{user.Request_number}}</td>
+                    <td class="border">{{user.Transporter_Name }}</td>
+                    <td class="border">{{user.Vehicle_Number}}</td>
+                    <td class="border">{{user.Serial }}</td>
+                    <td class="border">{{ user.Material_Code }}</td>
+                    <td class="border">{{ user.Material_Description }}</td>
+                    <td class="center border">{{ user.Unit_Of_measurment }}</td>
+                    <td class="border text-right">{{ user.Quantity | number:'1.2-2' }}</td>
+                    <td class="border text-right">{{user.Unit_Price | number:'1.2-2' }}</td>
+                    <td class="border text-right">{{ user.Total_Value | number:'1.2-2' }}</td>
+                    <td class="border center">{{ user.Item_Remarks }}</td>
+  
+                  </tr>
+  
+  
+                </table>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+      <!-- OutGatePass RGP -->
+      <mat-tab  *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_OUTGATEPASS_RGP'])">
+        <ng-template mat-tab-label>OutGatePass RGP</ng-template>
+        <mat-card>
+          <mat-card-content>
+            <form id="ogpRGPform">
+              <div class="row">
+                <div class="col-md-2">
+                  <label>From Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="fromdate"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="ogpRGP.fromdate" />
+                </div>
+                <div class="col-md-2">
+                  <label>To Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="todate"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="ogpRGP.todate" />
+                </div>
+                <div class="col-md-3" >
+                  <label>Select Company<span class="mandetory">*</span></label>
+                  <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                    <mat-select 
+                      placeholder="Selected Company List" name="companyname"
+                      [(ngModel)]="ogpRGP.companyname"  
+                      #select multiple
+                    >
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allSelected"
+                      [ngModelOptions]="{standalone: true}"
+                      (change)="toggleAllSelection()">Select All</mat-checkbox>
+                  </div>
+                      <mat-option (click)="optionClick()"
+                        *ngFor="let item of companyData1"
+                        [value]="item.company_name"
+                        >{{ item.company_name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+                <div class="col-md-2">
+                  <label>Status<span class="mandetory">*</span></label>
+                  <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                    <mat-select 
+                      placeholder="Selected Status" name="status"
+                      [(ngModel)]="ogpRGP.status"
+                      multiple
+                    >
+                      <mat-option *ngFor="let item of status"
+                        [value]="item"
+                        >{{item}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <!-- <select class="dropdownstyles" name="status"
+                  [(ngModel)]="ogpRGP.status" (change)="statusData($event)">
+                  <option [value]="undefined" selected disabled>Select One</option>
+                  <option value="open">Opened</option>
+                  <option value="close">Closed</option>
+              </select> -->
+                 
+              </div>
+           
+              <!-- </div>
+              <div class="row justify-content-center"> -->
+                <div class="col-md-1 mt-4">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getogprgp()"
+                    style="background-color: rgba(0, 0, 0, 0.12) ">
+                    VIEW
+                  </button>
+                </div>
+                <div class="col-md-1 mt-4">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-left" type="button" (click)="ogprgpclearForm()"
+                    style="background-color: rgba(0, 0, 0, 0.12)">
+                    RESET
+                  </button>
+                </div>
+                <div class="col-md-6">
+                  <!-- <ng-multiselect-dropdown
+                                      [placeholder]="'To Location (In the plant)'"
+                                      [settings]="dropdownSettings"  name="to_location"
+                                      [(ngModel)]="ogpRGP.companyname"
+                                      [data]="dropdownList">
+                                  </ng-multiselect-dropdown> -->
+                                  
+                </div>
+              </div>
+            </form>
+            <div class="row" *ngIf="outGatePassRGPReports.length>0">
+              <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelogprgp()"
+                style="border: none;background-color: #62beda;">Export to Excel</button>
+            </div>
+            <div #TABLEOutGatePassRGP class="row justify-content-center" class="tableclass"
+              *ngIf="outGatePassRGPReports.length>0">
+              <div>
+                <table #table class="table">
+                  <tr class="center" class="headerstyles">
+                    <th scope="col" class="border">Sno</th>
+                    <th scope="col" class="border" *ngFor="let header of getHeaders()">{{header}}</th>
+                  </tr>
+                  <tr *ngFor="let user of outGatePassRGPReports;let i=index;">
+                    <td class="border">{{ i+1 }}</td>
+                    <td class="border" style="white-space: nowrap;" *ngFor="let key of getHeaders()">{{user[key]}}</td>
+                  </tr>
+  
+  
+                </table>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+       <!-- OutGatePass NRGP -->
+       <mat-tab *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_OUTGATEPASS_NRGP'])">
+        <ng-template mat-tab-label>OutGatePass NRGP</ng-template>
+        <mat-card>
+          <mat-card-content>
+            <form id="ogpNRGPform">
+              <div class="row">
+                <div class="col-md-2">
+                  <label>From Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="fromdate"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="ogpNRGP.fromdate" />
+                </div>
+                <div class="col-md-2">
+                  <label>To Date<span class="mandetory">*</span></label>
+                  <input type="date" style="text-transform: uppercase;" class="inputstyles" name="dateee"
+                    dateFormat="yyyy/mm/dd" [(ngModel)]="ogpNRGP.todate" />
+                </div>
+                <div class="col-md-3" >
+                  <label>Select Company<span class="mandetory">*</span></label>
+                  <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                    
+                    <mat-select 
+                      placeholder="Selected Company List" name="companyname"
+                      [(ngModel)]="ogpNRGP.companyname"
+                      #selectnrgp multiple
+                    >
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allSelectednrgp"
+                      [ngModelOptions]="{standalone: true}"
+                      (change)="toggleAllSelectionnrgp()">Select All</mat-checkbox>
+                  </div>
+                      <mat-option (click)="optionClicknrgp()"
+                        *ngFor="let item of companyData1"
+                        [value]="item.company_name"
+                        >{{ item.company_name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+           
+              <!-- </div>
+              <div class="row justify-content-center"> -->
+                <div class="col-md-1 mt-4">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getogpnrgp()"
+                    style="background-color: rgba(0, 0, 0, 0.12) ">
+                    VIEW
+                  </button>
+                </div>
+                <div class="col-md-1 mt-4">
+                  <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  <button mat-raised-button class="downloadbtn float-left" type="button" (click)="ogpnrgpclearForm()"
+                    style="background-color: rgba(0, 0, 0, 0.12)">
+                    RESET
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div class="row" *ngIf="outGatePassNRGPReports.length>0">
+              <button mat-raised-button class="btn btn-success m-3" (click)="exportExcelogpnrgp()"
+                style="border: none;background-color: #62beda;">Export to Excel</button>
+            </div>
+            <div #TABLEogpNRGP class="row justify-content-center" class="tableclass"
+              *ngIf="outGatePassNRGPReports.length>0">
+              <div>
+                <table #table class="table">
+                  <tr class="center" class="headerstyles">
+                    <th scope="col" class="border">Sno</th>
+                    <th scope="col" class="border" *ngFor="let header of getHeadersNRGP()">{{header}}</th>
+                  </tr>
+                  <tr *ngFor="let user of outGatePassNRGPReports;let i=index;">
+                    <td class="border">{{ i+1 }}</td>
+                    <td class="border" style="white-space: nowrap;" *ngFor="let key of getHeadersNRGP()">{{user[key]}}</td>
+                    
+                  </tr>
+  
+  
+                </table>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+         <!-- Delivery Challan -->
+         <mat-tab *ngIf="authService.checkUserPermission(['SUPER_ADMIN','STORE_REPORTS_DELIVERY_CHALLAN'])">
+          <ng-template mat-tab-label>Delivery Challan</ng-template>
+          <mat-card>
+            <mat-card-content>
+              <form id="dcform">
+                <div class="row">
+                  <div class="col-md-2">
+                    <label>From Date<span class="mandetory">*</span></label>
+                    <input type="date" style="text-transform: uppercase;" class="inputstyles" name="fromdate"
+                      dateFormat="yyyy/mm/dd" [(ngModel)]="dc.fromdate" />
+                  </div>
+                  <div class="col-md-2">
+                    <label>To Date<span class="mandetory">*</span></label>
+                    <input type="date" style="text-transform: uppercase;" class="inputstyles" name="dateee"
+                      dateFormat="yyyy/mm/dd" [(ngModel)]="dc.todate" />
+                  </div>
+                  <div class="col-md-3" >
+                    <label>Select Company<span class="mandetory">*</span></label>
+                    <mat-form-field class="selectC" appearance="outline" style="font-size:12px; width:100%">
+                      <mat-select 
+                        placeholder="Selected Company List" name="companyname"
+                        [(ngModel)]="dc.companyname"
+                        #selectdc multiple
+                      >
+                      <div class="select-all">
+                        <mat-checkbox [(ngModel)]="allSelecteddc"
+                        [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllSelectiondc()">Select All</mat-checkbox>
+                    </div>
+                        <mat-option (click)="optionClickdc()"
+                          *ngFor="let item of companyData1"
+                          [value]="item.company_name"
+                          >{{ item.company_name }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+             
+                <!-- </div>
+                <div class="row justify-content-center"> -->
+                  <div class="col-md-1 mt-4">
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <button mat-raised-button class="downloadbtn float-right" type="button" (click)="getdc()"
+                      style="background-color: rgba(0, 0, 0, 0.12) ">
+                      VIEW
+                    </button>
+                  </div>
+                  <div class="col-md-1 mt-4">
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <button mat-raised-button class="downloadbtn float-left" type="button" (click)="dcclearForm()"
+                      style="background-color: rgba(0, 0, 0, 0.12)">
+                      RESET
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <div class="row" *ngIf="outGatePassdc.length>0">
+                <button mat-raised-button class="btn btn-success m-3" (click)="exportExceldc()"
+                  style="border: none;background-color: #62beda;">Export to Excel</button>
+              </div>
+              <div #TABLEDC class="row justify-content-center" class="tableclass"
+                *ngIf="outGatePassdc.length>0">
+                <div>
+                  <table #table class="table">
+                    <tr class="center" class="headerstyles">
+                      <th scope="col" class="border">Sno</th>
+                      <th scope="col" class="border" *ngFor="let header of getHeadersdc()">{{header}}</th>
+                    </tr>
+                    <tr *ngFor="let user of outGatePassdc;let i=index;">
+                      <td class="border">{{ i+1 }}</td>
+                      <td class="border" style="white-space: nowrap;" *ngFor="let key of getHeadersdc()">{{user[key]}}</td>
+                      
+                    </tr>
+    
+    
+                  </table>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+  </mat-tab-group>
+</div>

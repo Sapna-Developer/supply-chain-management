@@ -1,0 +1,341 @@
+<mat-card>
+  <div class="print">
+    <button [print]="['demo', config]" class="btn btn-info" style="margin-right: 1%; margin-left: 1%">
+      Print
+    </button>
+    <button (click)="backtoworkreq()" class="btn btn-info">Back</button>
+  </div>
+  <div class="formbody" id="demo">
+    <div class="row justify-content-center">
+      <table class="table  table-bordered" style="width: 100%">
+        <tr class="border text-center">
+          <!-- <th class="border"></th> -->
+          <th colspan="12">Work Order Requisition</th>
+        </tr>
+        <tr>
+          <td colspan="6">
+            <b>Location/Stretch: </b><span *ngFor="let user of userData">{{ user.location }}</span>
+          </td>
+          <td colspan="6" class="border-left">
+            <b>Requisition Ref No </b><span *ngFor="let user of userData">{{ user.number }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6">
+            <b>Name of the Employer </b><span *ngFor="let user of userData">{{ user.company_name }}</span>
+          </td>
+          <td colspan="6" class="border-left">
+            <b>Dated </b>
+            <span *ngFor="let user of userData">{{
+              user.date | date: "dd-MM-yyyy"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6" class="border">
+            <b>Classification: </b><span *ngFor="let user of userData">{{
+              user.classification
+              }}</span>
+          </td>
+          <td colspan="6" class="border">
+            <b>Work Order Duration </b><span *ngFor="let user of userData">{{ user.po_duration }}</span>
+          </td>
+        </tr>
+        <tr class="border">
+          <td colspan="6" class="border">
+            <b>Purpose in Brief: </b><span *ngFor="let user of userData">{{ user.purpose }}</span>
+          </td>
+          <td colspan="6" class="border">
+            <b>Recommended Agency: </b><span *ngFor="let user of userData">{{
+              user.recommended_agency
+              }}</span>
+          </td>
+        </tr>
+        <tr class="center text-center">
+          <th colspan="1" class="border">S. No.</th>
+          <th colspan="1" class="border">Service</th>
+          <th colspan="3" class="border">Service Description</th>
+          <th colspan="1" class="border">UoM</th>
+          <th colspan="1" class="border">Required Quantity</th>
+          <th colspan="1" class="border">
+            <p>Rate</p>
+            <p>(In Rs.)</p>
+          </th>
+          <th colspan="1" class="border">
+            <p>Estimated Cost</p>
+            <p>(In Rs.)</p>
+          </th>
+          <th colspan="3" class="border">Remarks</th>
+        </tr>
+        <tr *ngFor="let user of table; let i = index">
+          <td colspan="1" class="border text-center">{{ i + 1 }}</td>
+          <td colspan="1" class="border text-center">
+            {{ user.service_code }}
+          </td>
+          <td colspan="3" class="border text-center">
+            {{ user.service_description }}
+          </td>
+          <td colspan="1" class="border text-center">
+            {{ user.unit_of_measurment }}
+          </td>
+          <td colspan="1" class="border text-right">{{ user.quantity }}</td>
+          <td colspan="1" class="border text-right">{{ user.unit_price | number:'1.2-2' }}</td>
+          <td colspan="1" class="border text-right">{{ user.total_price | currency: "INR":"" }}</td>
+          <td colspan="3" class="border text-center">
+            {{ user.item_remarks }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="8" class="border text-right">
+            <b>Total Estimated Cost</b>
+          </td>
+          <td colspan="1" class="border text-right" span *ngFor="let user of table">
+            <b>{{ user.total_price | currency: "INR":"" }}</b>
+          </td>
+          <td colspan="3" class="border text-center"><b>Taxes Extra</b></td>
+        </tr>
+      </table>
+      <div class="container-fluid margin justify-content-center">
+        <div class="row border"  *ngIf="signStatus ">
+          <div class="col-4 "  style="padding-top: 69px"  *ngFor="let item of SignData">
+          <img [src]="item.signature" class="sign-width" />
+          <p class="ml-1 ">{{item.updated_by}}</p>
+          <p class="ml-1 ">{{item.description}}</p>
+        </div>
+          <!-- <div class="col-4 border-style" style="padding-top: 69px">
+            <p></p>
+          </div>
+          <div class="col-4 border-style-right" style="padding-top: 69px">
+            <p></p>
+          </div> -->
+        </div>
+        <div class="row border"  *ngIf="!signStatus ">
+          <div class="col-4 " style="padding-top: 69px"  *ngFor="let item of SignData" >
+            <img *ngIf="item.signature!==null" [src]="item.signature" class="sign-width" />
+            <p class="ml-1" *ngIf="item.signbtn===false&&item.signature===null">Need to be Signature</p>
+            <span>
+                <button type="button" class="btn btn-custom mr-3" *ngIf="item.signbtn===true&&item.signature===null"
+                  (click)="getSignatureView(item,viewSignmodel)">Sign</button>
+                <button type="button" class="btn btn-custom" *ngIf="item.signbtn===true&&item.signature===null"
+                (click)="deleteItem(row,deleteitemofList)">Cancel</button>
+            </span>
+            <p class="ml-1 ">{{item.updated_by}}</p>
+            <p class="ml-1 " >{{item.description}}</p>
+          </div>
+        </div>
+        <!-- <div class="row justify-content-center">
+          <div class="col-4 border-style">
+            <p><b>Date:-</b></p>
+          </div>
+          <div class="col-4 border-style">
+            <p><b>Date:-</b></p>
+          </div>
+
+          <div class="col-4 border-style-right">
+            <p><b>Date:-</b></p>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4 border-style" style="padding-top: 69px">
+            <p></p>
+          </div>
+          <div class="col-4 border-style" style="padding-top: 69px">
+            <p></p>
+          </div>
+          <div class="col-4 border-style-right" style="padding-top: 69px">
+            <p></p>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4 border-style">
+            <p><b>Date:-</b></p>
+          </div>
+          <div class="col-4 border-style">
+            <p><b>Date:-</b></p>
+          </div>
+
+          <div class="col-4 border-style-right">
+            <p><b>Date:-</b></p>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4 border-style" style="padding-top: 69px">
+            <p></p>
+          </div>
+          <div class="col-4 border-style" style="padding-top: 69px">
+            <p></p>
+          </div>
+          <div class="col-4 border-style-right" style="padding-top: 69px">
+            <p></p>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4 border-style">
+            <p><b>Date:-</b></p>
+          </div>
+          <div class="col-4 border-style">
+            <p><b>Date:-</b></p>
+          </div>
+
+          <div class="col-4 border-style-right">
+            <p><b>Date:-</b></p>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <br />
+    <div class="row border" style="padding-bottom: 7%">
+      <p>
+        <b>Comments, if any (#): (Optional) </b><span *ngFor="let user of userData">{{ user.comments }}</span>
+      </p>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-1">
+        <p><b>Enclosure:-</b></p>
+      </div>
+      <div class="col">
+        <p>1. Signed Hard Copy of WOR</p>
+        <p>2. Bill of Quantities</p>
+        <p>3. Technical Specification for Drilling Works</p>
+        <p>4. Plan of Bore Hole</p>
+        <p>5. Signed Copy of Budget Approval @Shahpur PSP.</p>
+      </div>
+    </div>
+    <div class="row justify-content-center text-center page-break">
+      <p>
+        <b><u>Bill of Quantities (BOQ)</u></b>
+      </p>
+    </div>
+    <div class="row justify-content-center text-center" >
+      <p  >
+        <b><u>BOQ FOR <span *ngFor="let user of table;" style="text-transform: uppercase;">{{user.service_description}}</span> </u></b>
+      </p>
+    </div>
+    <table class="table border" style="width: 100%">
+      <tr class="center text-center">
+        <th colspan="1" rowspan="2" class="border">S. No.</th>
+        <th colspan="7" rowspan="2" class="border">Description</th>
+
+        <th colspan="1" rowspan="2" class="border">UoM</th>
+        <th colspan="3" class="border">BOQ</th>
+      </tr>
+      <tr>
+        <td class="border text-center">Qty</td>
+        <td class="border text-center">Rate</td>
+        <td class="border text-center">Amt</td>
+      </tr>
+
+      <tr *ngFor="let user of Table; let i = index">
+        <td colspan="1" class="text-center border">{{ i + 1 }}</td>
+        <td colspan="7" class="border">{{ user.item_description }}</td>
+        <td colspan="1" class="text-center border">
+          {{ user.unit_of_measurment }}
+        </td>
+        <td colspan="1" class="text-center border">{{ user.quantity }}</td>
+        <td colspan="1" class="text-right border">{{ user.unit_price }}</td>
+        <td colspan="1" class="text-right border">{{ user.total_amount }}</td>
+      </tr>
+      <tr>
+        <td colspan="8" class="border"></td>
+        <td colspan="1" class="border"><b></b></td>
+        <td colspan="1" class="border"><b></b></td>
+        <td colspan="1" class="border text-right">
+          <b>Total</b>
+        </td>
+        <td colspan="1" class="border text-right">
+          <b>{{ total }}</b>
+        </td>
+      </tr>
+    </table>
+
+    <!-- <button onclick="window.print()" class="noPrint">Print</button> -->
+  </div>
+</mat-card>
+<!-- model -->
+<ng-template #viewSignmodel>
+  <h1 mat-dialog-title>View Signature</h1>
+  <div mat-dialog-content>
+    <div class="row">
+      <div class="col-12 text-center">
+        <img [src]="Viewsign" class="sign-width" />
+      </div>
+    </div>
+  </div><br>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close class="matButton">Close</button>&nbsp;
+    <button mat-button cdkFocusInitial (click)="SignatureFile()" class="matButton"
+      [disabled]="!Viewsign">Confirm</button>
+  </div>
+</ng-template>
+
+<!-- Cancel -->
+<ng-template #deleteitemofList>
+  <h1 mat-dialog-title>Delete Activity</h1>
+  <div mat-dialog-content>
+      <p>Are you sure, you want to delete record?</p>
+      <div class="row">
+          <div class="col-md-12">
+              <label style="padding-top: 5px">Reason</label>
+              <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+                  [(ngModel)]="deletemodel.reason" style="width: 100%" />
+          </div>
+      </div>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+          Close</button>&nbsp;
+      <button  mat-button cdkFocusInitial (click)="deleteFile()" class="matButton" [disabled]="!deletemodel.reason">
+          Delete
+      </button>
+  </div>
+</ng-template>
+<ng-template #deletedocsigned>
+  <span class="d-flex justify-content-between">
+      <h1 mat-dialog-title>Document Signed Already</h1>
+      <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+          <mat-icon class="close-icon">close</mat-icon>
+      </button>
+  </span>
+  <div mat-dialog-content>
+      <p>Still want to delete ? </p>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-button cdkFocusInitial class="matButton" (click)="deleteSeleted(deletedocsigneddata)" >
+          Yes
+      </button>&nbsp;
+      <button mat-button mat-dialog-close class="matButton"  style="background: transparent">
+          No</button>
+  </div>
+</ng-template>
+
+<ng-template #deletedocsigneddata>
+  <span class="d-flex justify-content-between">
+      <h1 mat-dialog-title>&nbsp;</h1>
+      <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+          <mat-icon class="close-icon">close</mat-icon>
+      </button>
+  </span>
+  <div mat-dialog-content>
+     <p><b>Document Number :</b> {{deleteNumber}}</p>
+     <div class="row">
+      <div class="col-md-12">
+          <label style="padding-top: 5px">Reason</label>
+          <input type="text" placeholder="Please Enter Reason" class="inputstyles" name="reason"
+              [(ngModel)]="deletemodel.reason" style="width: 100%" />
+      </div>
+      <div class="col-md-12">
+          <label style="padding-top: 5px">Password</label>
+          <input type="text" placeholder="Enter Password" class="inputstyles" name="pwd"
+              [(ngModel)]="deletemodel.pwd" style="width: 100%" />
+      </div>
+  </div>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-button cdkFocusInitial class="matButton" (click)="deleteFile()"  [disabled]="!deletemodel.reason">
+          Confirm
+      </button>
+      <!-- <button mat-button mat-dialog-close class="matButton" style="background: transparent">
+          No</button> -->
+  </div>
+</ng-template>

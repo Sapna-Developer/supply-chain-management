@@ -1,0 +1,110 @@
+.border{
+    border: 1px solid black !important;
+   }
+.row p{
+     margin-top:14px;
+   }
+   .row .sub{
+         padding: 5px;
+   }
+.formbody{
+  margin:40px;
+  padding:30px;
+  font-size:small;
+}
+.remarks-margin{
+  margin-left:0px !important;
+  margin-right:0px !important;
+}
+@media print{
+  .print{
+    display: none;
+  }
+    .table p{
+  font-size:12px !important;
+  line-height: 4px !important;
+}
+}
+.border-bottom{
+  border-bottom: 1px solid black !important;
+}
+.center{
+  text-align: center;
+}
+.right{
+  text-align: right;
+}
+.middle{
+  padding-bottom: 70%;
+  padding-top: 70%;
+}
+.margin{
+    margin-top: -16px;
+}
+.print{
+  padding-top: 15px;
+}
+.border-style{
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+.border-style-right{
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+h1{
+  color: rgb(35, 150, 196)
+}
+hr{
+     position: relative;
+        width: 100%;
+        border: none;
+        height: 5px;
+        background: black;
+        margin-bottom: 15px;
+         box-shadow: 0px 1px 0px rgb(123, 121, 121); 
+}
+
+
+
+.sign-width {
+  width: 150px;
+  height: 50px;
+}
+.col-md-4:first-child{
+  text-align: start;
+}
+.col-md-4:nth-child(2){
+  text-align: center;
+}
+.col-md-4:nth-child(3){
+  text-align: end;
+}
+.btn-custom{
+  background-color: #888;
+  padding: 5px 10px;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.companyAddr{
+  // text-align: justify;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+  .inputstyles {
+  padding: 5px;
+  margin: 5px 0px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  height: 35px;
+  width: 100%;
+  }
+  .inputstyles:placeholder-shown {
+      color: #da2424;
+  }
+  .inputstyles:hover {
+      border: 2px solid black
+  }
